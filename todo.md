@@ -1,4 +1,12 @@
-# Física ENEM Descomplicada - TODO
+# Pensar Exatas - TODO
+
+**Nome do Projeto:** pensar-exatas
+**Domínio:** pensarexatas.com.br
+**GitHub:** github.com/diegoalves1988/pensar-exatas
+**Supabase:** pensar-exatas
+**Vercel:** pensar-exatas
+
+---
 
 ## Arquitetura e Banco de Dados
 - [x] Definir schema do banco de dados (questões, matérias, aulas, portfólio)
@@ -63,7 +71,23 @@
 ## Testes e Polimento
 - [x] Testar responsividade em mobile
 - [x] Testar fluxo de usuário completo
-- [ ] Otimizar performance
+- [x] Otimizar performance
 - [ ] Verificar SEO básico
 - [x] Criar checkpoint final
+
+## Deployment
+- [x] Criar guia de deployment Vercel
+- [x] Criar guia de variáveis de ambiente
+- [x] Preparar projeto para GitHub
+- [x] Converter para PostgreSQL (Supabase)
+- [x] Criar guia Supabase
+- [ ] Criar repositório GitHub: pensar-exatas (em progresso - usuário está fazendo)
+- [x] Criar projeto Supabase: pensar-exatas
+- [ ] Rodar migrações no Supabase (pnpm db:push)
+- [ ] Fazer push pro GitHub
+- [ ] Criar projeto Vercel: pensar-exatas
+- [ ] Deploy no Vercel
+- [ ] Conectar domínio pensarexatas.com.br
+- [ ] Configurar Google AdSense
+- [ ] Adicionar conteúdo inicial (questões, aulas, portfólio)
 
