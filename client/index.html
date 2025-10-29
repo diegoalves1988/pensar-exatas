@@ -6,8 +6,11 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <link rel="icon" type="image/png" href="%VITE_APP_LOGO%" />
-    <link rel="apple-touch-icon" href="%VITE_APP_LOGO%" />
+    <!-- Fallback favicon and title. If you set VITE_APP_LOGO / VITE_APP_TITLE in
+      your environment, Vite will replace the %...% tokens at build time. We
+      guard here to avoid runtime errors when those variables are not set. -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.ico" />
     <title>%VITE_APP_TITLE%</title>
     <!-- Add Google Fonts here, example:
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,13 +24,20 @@
     <script type="module" src="/src/main.tsx"></script>
     <!-- Analytics (optional) -->
     <script>
-      if ('%VITE_ANALYTICS_ENDPOINT%' !== '' && '%VITE_ANALYTICS_WEBSITE_ID%' !== '') {
-        var script = document.createElement('script');
-        script.defer = true;
-        script.src = '%VITE_ANALYTICS_ENDPOINT%/umami';
-        script.setAttribute('data-website-id', '%VITE_ANALYTICS_WEBSITE_ID%');
-        document.body.appendChild(script);
-      }
+      // Prevent injecting an invalid URL when env tokens were not replaced
+      (function(){
+        var endpoint = '%VITE_ANALYTICS_ENDPOINT%';
+        var siteId = '%VITE_ANALYTICS_WEBSITE_ID%';
+        // Vite replaces %VITE_...% at build-time. When not defined the token
+        // remains (contains '%') — treat that as "not set".
+        if (endpoint && siteId && !endpoint.includes('%') && !siteId.includes('%')) {
+          var script = document.createElement('script');
+          script.defer = true;
+          script.src = endpoint.replace(/\/$/, '') + '/umami';
+          script.setAttribute('data-website-id', siteId);
+          document.body.appendChild(script);
+        }
+      })();
     </script>
   </body>
 
