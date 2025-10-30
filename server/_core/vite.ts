@@ -49,10 +49,10 @@ export async function setupVite(app: Express, server: Server) {
 
 export function serveStatic(app: Express) {
   // Em produção devemos servir os arquivos gerados pelo Vite em `dist/public`.
-  // O branch anterior invertia a lógica e tentava servir uma pasta `public` local,
-  // o que pode fazer com que o source TypeScript seja exposto se o build
-  // não estiver no local esperado.
-  const distPath = path.resolve(import.meta.dirname, "../..", "dist", "public");
+  // Usar `process.cwd()` aqui garante que o caminho seja resolvido a partir
+  // da raiz do projeto em tempo de execução (evita problemas quando o
+  // bundle altera `import.meta.dirname` durante o empacotamento).
+  const distPath = path.resolve(process.cwd(), "dist", "public");
   if (!fs.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`

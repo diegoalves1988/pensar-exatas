@@ -1,5 +1,6 @@
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import type { Express, Request, Response } from "express";
+import { ENV } from "./env";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
@@ -10,6 +11,32 @@ function getQueryParam(req: Request, key: string): string | undefined {
 }
 
 export function registerOAuthRoutes(app: Express) {
+  // Entry point used by the frontend: /app-auth?appId=...&redirectUri=...&state=...&type=signIn
+  // If an external OAuth portal is configured (OAUTH_SERVER_URL), forward the request there.
+  // Otherwise return a friendly 404 explaining the missing configuration.
+  app.get("/app-auth", (req: Request, res: Response) => {
+    const { appId, redirectUri, state, type } = req.query as Record<string, string | undefined>;
+
+    if (ENV.oAuthServerUrl && ENV.oAuthServerUrl.trim() !== "") {
+      const base = ENV.oAuthServerUrl.replace(/\/$/, "");
+      const url = `${base}/app-auth?${new URLSearchParams({
+        appId: appId ?? "",
+        redirectUri: redirectUri ?? "",
+        state: state ?? "",
+        type: type ?? "",
+      }).toString()}`;
+
+      // Redirect the browser to the external portal which will start the OAuth flow.
+      res.redirect(302, url);
+      return;
+    }
+
+    // No external portal configured. Inform the caller so the developer can configure OAUTH_SERVER_URL.
+    res.status(404).send(
+      `No OAuth portal configured. Set the OAUTH_SERVER_URL environment variable to a valid OAuth portal that supports /app-auth. Received params: appId=${appId}, redirectUri=${redirectUri}`
+    );
+  });
+
   app.get("/api/oauth/callback", async (req: Request, res: Response) => {
     const code = getQueryParam(req, "code");
     const state = getQueryParam(req, "state");

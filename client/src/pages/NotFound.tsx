@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, Home } from "lucide-react";
 import { useLocation } from "wouter";
+import { getLoginUrl, getRegisterUrl } from "@/const";
 
 export default function NotFound() {
   const [, setLocation] = useLocation();
@@ -37,6 +38,21 @@ export default function NotFound() {
             id="not-found-button-group"
             className="flex flex-col sm:flex-row gap-3 justify-center"
           >
+            <Button
+              onClick={() => (window.location.href = getLoginUrl())}
+              className="bg-gradient-to-r from-purple-500 to-orange-500 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              Entrar
+            </Button>
+
+            <Button
+              onClick={() => (window.location.href = getRegisterUrl())}
+              variant="outline"
+              className="border-purple-500 text-purple-600 px-6 py-2.5 rounded-lg"
+            >
+              Cadastrar
+            </Button>
+
             <Button
               onClick={handleGoHome}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"

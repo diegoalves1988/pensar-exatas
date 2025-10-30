@@ -1,6 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
+import { APP_LOGO, APP_TITLE, getLoginUrl, getRegisterUrl } from "@/const";
 import { Menu, X, LogOut, User, Settings } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
@@ -71,12 +71,22 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
                 </Button>
               </div>
             ) : (
-              <Button
-                onClick={() => (window.location.href = getLoginUrl())}
-                className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg transition"
-              >
-                Entrar
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={() => (window.location.href = getLoginUrl())}
+                  className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg transition"
+                >
+                  Entrar
+                </Button>
+                <Button
+                  onClick={() => (window.location.href = getRegisterUrl())}
+                  variant="outline"
+                  size="sm"
+                  className="border-purple-500 text-purple-600 hover:bg-purple-50"
+                >
+                  Cadastrar
+                </Button>
+              </div>
             )}
 
             <button
