@@ -1,5 +1,5 @@
 import { trpc } from "@/lib/trpc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, Filter, Heart, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -14,8 +14,24 @@ export default function Questions() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
 
-  const { data: subjects } = trpc.subjects.list.useQuery();
+  // Use tRPC in dev; fall back to serverless /api/questions in production (Vercel)
   const { data: questions } = trpc.questions.list.useQuery();
+  const [publicQuestions, setPublicQuestions] = useState<any[] | null>(null);
+  useEffect(() => {
+    // If tRPC isn’t available in prod, this ensures list of questions is still shown
+    let cancelled = false;
+    fetch("/api/questions")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data?.items) setPublicQuestions(data.items);
+      })
+      .catch(() => {
+        // ignore silently; tRPC may still work in dev
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const { data: favorites } = trpc.favorites.list.useQuery(undefined, { enabled: isAuthenticated });
 
   const subjectList = [
@@ -26,13 +42,14 @@ export default function Questions() {
     { id: 5, name: "Óptica", icon: "💡", color: "from-green-400 to-green-600" },
   ];
 
-  const filteredQuestions = questions?.filter((q) => {
+  const allQuestions = questions ?? publicQuestions ?? [];
+  const filteredQuestions = allQuestions.filter((q: any) => {
     const matchesSearch = q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          q.statement.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSubject = !selectedSubject || q.subjectId === selectedSubject;
     const matchesDifficulty = !selectedDifficulty || q.difficulty === selectedDifficulty;
     return matchesSearch && matchesSubject && matchesDifficulty;
-  }) || [];
+  });
 
   const isFavorite = (questionId: number) => {
     return favorites?.some(f => f.id === questionId) || false;
@@ -252,7 +269,7 @@ export default function Questions() {
 
       {/* Pagination Info */}
       <div className="text-center text-gray-600 py-4">
-        Mostrando {filteredQuestions.length} de {questions?.length || 0} questões
+        Mostrando {filteredQuestions.length} de {(questions?.length ?? publicQuestions?.length ?? 0)} questões
       </div>
     </div>
   );

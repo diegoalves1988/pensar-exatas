@@ -4,12 +4,25 @@ import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 import { ArrowRight, Zap, Trophy, BookOpen } from "lucide-react";
 import { Link } from "wouter";
+import { useEffect, useState } from "react";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { data: subjects } = trpc.subjects.list.useQuery();
+  // Keep tRPC for dev; add public API fallback for production (Vercel)
   const { data: questions } = trpc.questions.list.useQuery();
+  const [publicQuestions, setPublicQuestions] = useState<any[] | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/questions")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data?.items) setPublicQuestions(data.items);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   const subjectList = [
     { id: 1, name: "Mecânica", icon: "⚙️", color: "from-blue-400 to-blue-600", description: "Movimento, força e energia" },
@@ -66,7 +79,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
-              <p className="text-4xl font-bold text-gray-900 mt-2">{questions?.length || 0}+</p>
+              <p className="text-4xl font-bold text-gray-900 mt-2">{(questions?.length ?? publicQuestions?.length ?? 0)}+</p>
             </div>
             <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
           </div>

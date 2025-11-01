@@ -1,0 +1,18 @@
+[
+  {
+    "subject": "Mecânica",
+    "title": "Movimento uniformemente acelerado (exemplo)",
+    "statement": "Um móvel parte do repouso com aceleração constante de 2 m/s². Qual a velocidade após 5 s?",
+    "solution": "v = v0 + a·t = 0 + 2·5 = 10 m/s",
+    "difficulty": "easy",
+    "year": 2024
+  },
+  {
+    "subject": "Eletromagnetismo",
+    "title": "Potência em resistor (exemplo)",
+    "statement": "Um resistor de 5 Ω recebe corrente de 3 A. Qual a potência dissipada?",
+    "solution": "P = I²·R = 3²·5 = 45 W",
+    "difficulty": "medium",
+    "year": 2023
+  }
+]
