@@ -49,7 +49,7 @@ export default function Home() {
             )}
             <Link href="/portfolio">
               <Button variant="outline" className="border-white text-white hover:bg-white/20 font-bold text-lg px-8 py-6 h-auto">
-                Conhecer o Criador
+                Conhecer a professora Rejane
               </Button>
             </Link>
           </div>

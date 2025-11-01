@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE } from "@/const";
 import { Menu, X, LogOut, User, Settings } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
 interface DashboardLayoutProps {
@@ -12,6 +12,18 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const { user, logout, isAuthenticated } = useAuth();
+  // Fallback for production (Vercel) when tRPC might be unavailable: attempt /api/me
+  const [meFallback, setMeFallback] = useState<{ role?: string } | null>(null);
+  useEffect(() => {
+    if (isAuthenticated) return; // prefer tRPC auth when present
+    let cancelled = false;
+    fetch('/api/me')
+      .then(r => r.ok ? r.json() : null)
+      .then((data) => { if (!cancelled) setMeFallback(data); })
+      .catch(() => { /* ignore */ });
+    return () => { cancelled = true; };
+  }, [isAuthenticated]);
+  const isAdmin = (user?.role === 'admin') || (meFallback?.role === 'admin');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const subjects = [
@@ -48,6 +60,11 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
               Portfólio
             </Link>
             {isAuthenticated && user?.role === "admin" && (
+              <Link href="/admin" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                Admin
+              </Link>
+            )}
+            {!isAuthenticated && isAdmin && (
               <Link href="/admin" className="text-gray-700 hover:text-purple-600 font-medium transition">
                 Admin
               </Link>
@@ -143,7 +160,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
                 <User className="w-5 h-5" />
                 <span className="text-sm font-medium">Meu Perfil</span>
               </Link>
-              {user?.role === "admin" && (
+              {isAdmin && (
                 <Link
                   href="/admin"
                   className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-purple-100 rounded-lg transition"

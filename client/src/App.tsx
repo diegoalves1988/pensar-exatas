@@ -11,6 +11,7 @@ import Portfolio from "./pages/Portfolio";
 import AdminPanel from "./pages/AdminPanel";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AdminQuestions from "./pages/AdminQuestions";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
       <Route path={"/questoes"} component={Questions} />
       <Route path={"/portfolio"} component={Portfolio} />
       <Route path={"/admin"} component={AdminPanel} />
+  <Route path={"/admin/questions"} component={AdminQuestions} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
