@@ -20,12 +20,12 @@ export default function Portfolio() {
             👨‍🏫
           </div>
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl font-bold mb-2">{profile?.name || "Seu Nome"}</h1>
+            <h1 className="text-4xl font-bold mb-2">{profile?.name || "Rejane Dorn"}</h1>
             <p className="text-xl text-white/90 mb-4">
-              {profile?.title || "Professor de Física e Criador de Conteúdo"}
+              {profile?.title || "Professora de Física e Criador de Conteúdo"}
             </p>
             <p className="text-white/80 mb-6">
-              {profile?.bio || "Apaixonado por ensinar física de forma clara e divertida"}
+              {profile?.bio || "Apaixonada por ensinar física de forma clara e divertida"}
             </p>
             <div className="flex gap-3 justify-center md:justify-start flex-wrap">
               <a href="mailto:seu@email.com">
