@@ -15,11 +15,11 @@ Quando você fizer deploy no Vercel, você precisa adicionar estas variáveis de
 
 ### 1. DATABASE_URL (OBRIGATÓRIO)
 ```
-DATABASE_URL=mysql://usuario:senha@host:3306/banco_de_dados
+DATABASE_URL=postgresql://usuario:senha@host:5432/banco_de_dados
 ```
-- Você precisa de um banco de dados MySQL
-- Opções: Planetscale, Railway, AWS RDS, etc
-- **Recomendado**: Planetscale (gratuito até certo ponto)
+- O projeto usa PostgreSQL (drizzle-orm/postgres-js)
+- Opções: Supabase, Railway, Neon, AWS RDS, Render, etc
+- Recomendado: Supabase (fácil de iniciar) ou Railway/Neon
 
 ### 2. JWT_SECRET (OBRIGATÓRIO)
 ```
@@ -86,11 +86,11 @@ BUILT_IN_FORGE_API_KEY=sua_chave_api
 
 ## 🚀 Passo a Passo Rápido
 
-1. **Banco de Dados** (escolha um):
-   - Planetscale: https://planetscale.com (recomendado, gratuito)
+1. **Banco de Dados (PostgreSQL)** (escolha um):
+   - Supabase: https://supabase.com (recomendado para começar)
    - Railway: https://railway.app
-   - AWS RDS
-   - Seu próprio servidor
+   - Neon: https://neon.tech
+   - AWS RDS / Render / Seu próprio servidor
 
 2. **Gere JWT_SECRET**:
    ```bash
@@ -110,7 +110,29 @@ BUILT_IN_FORGE_API_KEY=sua_chave_api
 
 - **Nunca** compartilhe suas chaves secretas
 - Use variáveis diferentes para dev e produção
-- Planetscale é gratuito e fácil de usar
+- Prefira provedores PostgreSQL (o projeto não usa MySQL)
+
+## 💻 Desenvolvimento local (.env)
+
+Crie um arquivo `.env` na raiz do projeto com, no mínimo:
+
+```
+DATABASE_URL=postgresql://usuario:senha@host:5432/banco_de_dados
+JWT_SECRET=sua_chave_secreta_aleatoria
+```
+
+Depois rode as migrações:
+
+```
+pnpm run db:push
+```
+
+E inicie o servidor de desenvolvimento:
+
+```
+# PowerShell
+$env:NODE_ENV = "development"; pnpm dlx tsx watch server/_core/index.ts
+```
 - Se tiver dúvidas, consulte a documentação de cada serviço
 
 ---
