@@ -29,7 +29,14 @@ let _client: ReturnType<typeof postgres> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _client = postgres(process.env.DATABASE_URL);
+      // Ensure sslmode=require for Supabase if not provided
+      const raw = process.env.DATABASE_URL;
+      const conn = raw!.includes("sslmode=")
+        ? raw!
+        : raw!.includes("?")
+          ? `${raw}&sslmode=require`
+          : `${raw}?sslmode=require`;
+      _client = postgres(conn);
       _db = drizzle(_client);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
