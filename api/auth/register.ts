@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
-import * as db from "../../server/db";
-import { sdk } from "../../server/_core/sdk";
+import postgres from "postgres";
+import { SignJWT } from "jose";
 import { COOKIE_NAME, ONE_YEAR_MS } from "../../shared/const";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -11,46 +11,63 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  try {
-    const { name, email, password } = req.body || {};
-    if (!email || !password) {
-      res.status(400).json({ error: "email and password are required" });
-      return;
-    }
+  const { name, email, password } = (req.body as any) || {};
+  if (!email || !password) {
+    return res.status(400).json({ error: "email and password are required" });
+  }
 
-    const existing = await db.getUserByEmail(email);
+  // DB connection (force sslmode=require)
+  const baseUrl = process.env.DATABASE_URL || "";
+  if (!baseUrl) return res.status(500).json({ error: "server misconfigured" });
+  const url = baseUrl.includes("sslmode=") ? baseUrl : (baseUrl.includes("?") ? `${baseUrl}&sslmode=require` : `${baseUrl}?sslmode=require`);
+
+  let sql: ReturnType<typeof postgres> | null = null;
+  try {
+    sql = postgres(url, { prepare: false });
+
+    const existingRows = await sql`
+      select id, "openId", "passwordHash" from users where email = ${email} limit 1
+    `;
+    const existing = existingRows?.[0];
+
     if (existing && existing.passwordHash) {
-      res.status(400).json({ error: "User already exists" });
-      return;
+      return res.status(400).json({ error: "User already exists" });
     }
 
     const openId = existing?.openId ?? `local:${nanoid()}`;
     const passwordHash = await bcrypt.hash(password, 10);
 
-    await db.upsertUser({
-      openId,
-      name: name ?? null,
-      email,
-      loginMethod: "email",
-      passwordHash,
-      lastSignedIn: new Date(),
-    } as any);
+    if (existing) {
+      await sql`
+        update users
+        set name = ${name ?? null}, "loginMethod" = 'email', "passwordHash" = ${passwordHash}, "lastSignedIn" = now()
+        where id = ${existing.id}
+      `;
+    } else {
+      await sql`
+        insert into users ("openId", name, email, "loginMethod", "passwordHash", role, "lastSignedIn")
+        values (${openId}, ${name ?? null}, ${email}, 'email', ${passwordHash}, 'user', now())
+      `;
+    }
 
-    const sessionToken = await sdk.createSessionToken(openId, { name: name ?? "", expiresInMs: ONE_YEAR_MS });
+    const jwtSecret = process.env.JWT_SECRET || "";
+    if (!jwtSecret) return res.status(500).json({ error: "server misconfigured" });
 
-    // Determine secure flag
+    const sessionToken = await new SignJWT({ openId, appId: process.env.VITE_APP_ID ?? "", name: name ?? "" })
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+      .setExpirationTime(Math.floor((Date.now() + ONE_YEAR_MS) / 1000))
+      .sign(new TextEncoder().encode(jwtSecret));
+
     const forwarded = req.headers["x-forwarded-proto"];
     const secure = forwarded ? String(forwarded).split(",")[0].trim() === "https" : process.env.NODE_ENV === "production";
-
     const maxAgeSec = Math.floor(ONE_YEAR_MS / 1000);
-    const cookie = `${COOKIE_NAME}=${sessionToken}; Path=/; Max-Age=${maxAgeSec}; HttpOnly; SameSite=None; ${
-      secure ? "Secure" : ""
-    }`;
-
+    const cookie = `${COOKIE_NAME}=${sessionToken}; Path=/; Max-Age=${maxAgeSec}; HttpOnly; SameSite=None; ${secure ? "Secure" : ""}`;
     res.setHeader("Set-Cookie", cookie);
-    res.json({ ok: true });
+    return res.status(200).json({ ok: true });
   } catch (err) {
     console.error("[Serverless][Auth][register]", err);
-    res.status(500).json({ error: "register failed" });
+    return res.status(500).json({ error: "register failed" });
+  } finally {
+    try { if (sql) await sql.end({ timeout: 1 }); } catch {}
   }
 }
