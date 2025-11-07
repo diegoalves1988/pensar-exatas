@@ -1,7 +1,6 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import postgres from "postgres";
 
-export default async function handler(_req: VercelRequest, res: VercelResponse) {
+export default async function handler(_req: any, res: any) {
   // Lightweight query without importing the whole server/db to avoid bundling/runtime issues on Vercel
   const baseUrl = process.env.DATABASE_URL || "";
   if (!baseUrl) {
@@ -21,7 +20,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
       order by id desc
       limit 1000
     `;
-    return res.status(200).json({ items: rows });
+  return res.status(200).json({ items: rows });
   } catch (err) {
     console.error("[Serverless] GET /api/questions failed", err);
     // Be lenient in prod — return empty list instead of failing hard

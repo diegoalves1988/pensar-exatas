@@ -1,9 +1,8 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { parse as parseCookieHeader } from "cookie";
 import * as db from "../../server/db";
 import { sdk } from "../../server/_core/sdk";
 
-async function requireAdminFromReq(req: VercelRequest) {
+async function requireAdminFromReq(req: any) {
   const cookies = parseCookieHeader(req.headers.cookie || "");
   const token = cookies["app_session_id"];
   const session = await sdk.verifySession(token);
@@ -13,7 +12,7 @@ async function requireAdminFromReq(req: VercelRequest) {
   return user;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: any, res: any) {
   if (req.method === "GET") {
     // Could be used too, but we already expose /api/subjects for listing
     try {
