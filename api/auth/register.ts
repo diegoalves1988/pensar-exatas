@@ -4,20 +4,48 @@ import postgres from "postgres";
 import { SignJWT } from "jose";
 import { COOKIE_NAME, ONE_YEAR_MS } from "../../shared/const";
 
+async function readJsonBody(req: any): Promise<any> {
+  // Try to use provided body
+  if (req?.body && typeof req.body === "object") return req.body;
+  if (typeof req?.body === "string") {
+    try { return JSON.parse(req.body); } catch { return null; }
+  }
+  // Fallback: read stream
+  try {
+    const chunks: Buffer[] = [];
+    await new Promise<void>((resolve, reject) => {
+      req.on("data", (c: Buffer) => chunks.push(Buffer.from(c)));
+      req.on("end", () => resolve());
+      req.on("error", reject);
+    });
+    const raw = Buffer.concat(chunks).toString("utf8");
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch { return null; }
+  } catch {
+    return null;
+  }
+}
+
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
+    res.setHeader("Content-Type", "application/json");
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
 
-  const { name, email, password } = (req.body as any) || {};
+  const parsed = await readJsonBody(req);
+  const { name, email, password } = (parsed as any) || {};
   if (!email || !password) {
+    res.setHeader("Content-Type", "application/json");
     return res.status(400).json({ error: "email and password are required" });
   }
 
   // DB connection (force sslmode=require)
   const baseUrl = process.env.DATABASE_URL || "";
-  if (!baseUrl) return res.status(500).json({ error: "server misconfigured" });
+  if (!baseUrl) {
+    res.setHeader("Content-Type", "application/json");
+    return res.status(500).json({ error: "server misconfigured" });
+  }
   const url = baseUrl.includes("sslmode=") ? baseUrl : (baseUrl.includes("?") ? `${baseUrl}&sslmode=require` : `${baseUrl}?sslmode=require`);
 
   let sql: ReturnType<typeof postgres> | null = null;
@@ -62,9 +90,11 @@ export default async function handler(req: any, res: any) {
     const maxAgeSec = Math.floor(ONE_YEAR_MS / 1000);
     const cookie = `${COOKIE_NAME}=${sessionToken}; Path=/; Max-Age=${maxAgeSec}; HttpOnly; SameSite=None; ${secure ? "Secure" : ""}`;
     res.setHeader("Set-Cookie", cookie);
+    res.setHeader("Content-Type", "application/json");
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error("[Serverless][Auth][register]", err);
+    res.setHeader("Content-Type", "application/json");
     return res.status(500).json({ error: "register failed" });
   } finally {
     try { if (sql) await sql.end({ timeout: 1 }); } catch {}
