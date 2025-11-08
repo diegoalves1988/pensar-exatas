@@ -8,7 +8,9 @@ export const config = { runtime: "nodejs18.x" } as const;
 const handler = createHTTPHandler({
   router: appRouter,
   createContext,
-  endpoint: "/api/trpc",
+  // Use basePath so procedure paths like `auth.me` are resolved instead of
+  // including the `/api/trpc` prefix in the lookup.
+  basePath: "/api/trpc/",
 });
 
 export default async function trpcHandler(req: VercelRequest, res: VercelResponse) {
