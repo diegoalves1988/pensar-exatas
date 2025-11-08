@@ -13,23 +13,20 @@ async function requireAdminFromReq(req: any) {
 }
 
 export default async function handler(req: any, res: any) {
-  if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
-    return;
+  function send(code: number, body: any) {
+    res.statusCode = code;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(body));
   }
+
+  if (req.method !== "POST") return send(405, { error: "Method not allowed" });
 
   try {
     const admin = await requireAdminFromReq(req);
-    if (!admin) {
-      res.status(403).json({ error: "forbidden" });
-      return;
-    }
+    if (!admin) return send(403, { error: "forbidden" });
 
     const { subjectId, title, statement, solution, difficulty, year, sourceUrl } = req.body || {};
-    if (!subjectId || !title || !statement || !solution) {
-      res.status(400).json({ error: "subjectId, title, statement, solution are required" });
-      return;
-    }
+    if (!subjectId || !title || !statement || !solution) return send(400, { error: "subjectId, title, statement, solution are required" });
 
     const result = await db.createQuestion({
       subjectId: Number(subjectId),
@@ -40,9 +37,9 @@ export default async function handler(req: any, res: any) {
       year: typeof year === "number" ? year : null,
       sourceUrl: sourceUrl ?? null,
     });
-    res.status(200).json({ ok: true, result });
+    return send(200, { ok: true, result });
   } catch (err) {
     console.error("[Serverless] POST /api/admin/questions failed", err);
-    res.status(500).json({ error: "failed to create question" });
+    return send(500, { error: "failed to create question" });
   }
 }

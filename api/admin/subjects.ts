@@ -13,36 +13,30 @@ async function requireAdminFromReq(req: any) {
 }
 
 export default async function handler(req: any, res: any) {
+  function send(code: number, body: any) {
+    res.statusCode = code;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(body));
+  }
   if (req.method === "GET") {
     // Could be used too, but we already expose /api/subjects for listing
     try {
       const items = await db.getAllSubjects();
-      res.status(200).json({ items });
-      return;
+      return send(200, { items });
     } catch (err) {
       console.error("[Serverless] GET /api/admin/subjects failed", err);
-      res.status(500).json({ error: "failed to list subjects" });
-      return;
+      return send(500, { error: "failed to list subjects" });
     }
   }
 
-  if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
-    return;
-  }
+  if (req.method !== "POST") return send(405, { error: "Method not allowed" });
 
   try {
     const admin = await requireAdminFromReq(req);
-    if (!admin) {
-      res.status(403).json({ error: "forbidden" });
-      return;
-    }
+    if (!admin) return send(403, { error: "forbidden" });
 
     const { name, description, icon, color, order } = req.body || {};
-    if (!name) {
-      res.status(400).json({ error: "name is required" });
-      return;
-    }
+    if (!name) return send(400, { error: "name is required" });
 
     const result = await db.createSubject({
       name,
@@ -51,9 +45,9 @@ export default async function handler(req: any, res: any) {
       color: color ?? null,
       order: typeof order === "number" ? order : 0,
     });
-    res.status(200).json({ ok: true, result });
+    return send(200, { ok: true, result });
   } catch (err) {
     console.error("[Serverless] POST /api/admin/subjects failed", err);
-    res.status(500).json({ error: "failed to create subject" });
+    return send(500, { error: "failed to create subject" });
   }
 }

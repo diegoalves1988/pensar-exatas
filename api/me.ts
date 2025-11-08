@@ -7,22 +7,28 @@ export default async function handler(req: any, res: any) {
   const cookies = parseCookieHeader(req.headers.cookie || "");
   const token = cookies["app_session_id"] as string | undefined;
 
+  function send(code: number, body: any) {
+    res.statusCode = code;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(body));
+  }
+
   try {
-    if (!token) return res.status(200).json(null);
+    if (!token) return send(200, null);
 
     const secret = process.env.JWT_SECRET || "";
-    if (!secret) return res.status(200).json(null);
+    if (!secret) return send(200, null);
 
     // Verify JWT
     const { payload } = await jwtVerify(token, new TextEncoder().encode(secret), {
       algorithms: ["HS256"],
     });
-    const openId = String((payload as any)?.openId || "");
-    if (!openId) return res.status(200).json(null);
+  const openId = String((payload as any)?.openId || "");
+  if (!openId) return send(200, null);
 
     // Query user directly
-    const baseUrl = process.env.DATABASE_URL || "";
-    if (!baseUrl) return res.status(200).json(null);
+  const baseUrl = process.env.DATABASE_URL || "";
+  if (!baseUrl) return send(200, null);
     const url = baseUrl.includes("sslmode=") ? baseUrl : (baseUrl.includes("?") ? `${baseUrl}&sslmode=require` : `${baseUrl}?sslmode=require`);
 
     let sql: ReturnType<typeof postgres> | null = null;
@@ -35,7 +41,7 @@ export default async function handler(req: any, res: any) {
         limit 1
       `;
       const user = rows?.[0];
-      return res.status(200).json(user ? {
+      return send(200, user ? {
         id: user.id,
         openId: user.openId,
         name: user.name,
@@ -48,6 +54,6 @@ export default async function handler(req: any, res: any) {
   } catch (err) {
     console.error("[Serverless] GET /api/me failed", err);
     // Be lenient: return null instead of 500 to avoid breaking UI
-    return res.status(200).json(null);
+    return send(200, null);
   }
 }

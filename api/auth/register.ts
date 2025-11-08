@@ -4,6 +4,12 @@ import postgres from "postgres";
 import { SignJWT } from "jose";
 import { COOKIE_NAME, ONE_YEAR_MS } from "../../shared/const";
 
+function send(res: any, code: number, body: any) {
+  res.statusCode = code;
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(body));
+}
+
 async function readJsonBody(req: any): Promise<any> {
   // Try to use provided body
   if (req?.body && typeof req.body === "object") return req.body;
@@ -27,25 +33,15 @@ async function readJsonBody(req: any): Promise<any> {
 }
 
 export default async function handler(req: any, res: any) {
-  if (req.method !== "POST") {
-    res.setHeader("Content-Type", "application/json");
-    res.status(405).json({ error: "Method not allowed" });
-    return;
-  }
+  if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
 
   const parsed = await readJsonBody(req);
   const { name, email, password } = (parsed as any) || {};
-  if (!email || !password) {
-    res.setHeader("Content-Type", "application/json");
-    return res.status(400).json({ error: "email and password are required" });
-  }
+  if (!email || !password) return send(res, 400, { error: "email and password are required" });
 
   // DB connection (force sslmode=require)
   const baseUrl = process.env.DATABASE_URL || "";
-  if (!baseUrl) {
-    res.setHeader("Content-Type", "application/json");
-    return res.status(500).json({ error: "server misconfigured" });
-  }
+  if (!baseUrl) return send(res, 500, { error: "server misconfigured" });
   const url = baseUrl.includes("sslmode=") ? baseUrl : (baseUrl.includes("?") ? `${baseUrl}&sslmode=require` : `${baseUrl}?sslmode=require`);
 
   let sql: ReturnType<typeof postgres> | null = null;
@@ -57,9 +53,7 @@ export default async function handler(req: any, res: any) {
     `;
     const existing = existingRows?.[0];
 
-    if (existing && existing.passwordHash) {
-      return res.status(400).json({ error: "User already exists" });
-    }
+    if (existing && existing.passwordHash) return send(res, 400, { error: "User already exists" });
 
     const openId = existing?.openId ?? `local:${nanoid()}`;
     const passwordHash = await bcrypt.hash(password, 10);
@@ -78,7 +72,7 @@ export default async function handler(req: any, res: any) {
     }
 
     const jwtSecret = process.env.JWT_SECRET || "";
-    if (!jwtSecret) return res.status(500).json({ error: "server misconfigured" });
+  if (!jwtSecret) return send(res, 500, { error: "server misconfigured" });
 
     const sessionToken = await new SignJWT({ openId, appId: process.env.VITE_APP_ID ?? "", name: name ?? "" })
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
@@ -90,12 +84,10 @@ export default async function handler(req: any, res: any) {
     const maxAgeSec = Math.floor(ONE_YEAR_MS / 1000);
     const cookie = `${COOKIE_NAME}=${sessionToken}; Path=/; Max-Age=${maxAgeSec}; HttpOnly; SameSite=None; ${secure ? "Secure" : ""}`;
     res.setHeader("Set-Cookie", cookie);
-    res.setHeader("Content-Type", "application/json");
-    return res.status(200).json({ ok: true });
+    return send(res, 200, { ok: true });
   } catch (err) {
     console.error("[Serverless][Auth][register]", err);
-    res.setHeader("Content-Type", "application/json");
-    return res.status(500).json({ error: "register failed" });
+    return send(res, 500, { error: "register failed" });
   } finally {
     try { if (sql) await sql.end({ timeout: 1 }); } catch {}
   }
