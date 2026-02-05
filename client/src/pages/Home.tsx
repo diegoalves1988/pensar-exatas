@@ -75,15 +75,17 @@ export default function Home() {
 
       {/* Stats Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
-              <p className="text-4xl font-bold text-gray-900 mt-2">{(questions?.length ?? publicQuestions?.length ?? 0)}+</p>
+        <Link href="/questoes">
+          <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver questões">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
+                <p className="text-4xl font-bold text-gray-900 mt-2">{(questions?.length ?? publicQuestions?.length ?? 0)}+</p>
+              </div>
+              <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
             </div>
-            <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
           </div>
-        </div>
+        </Link>
 
         <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500">
           <div className="flex items-center justify-between">
