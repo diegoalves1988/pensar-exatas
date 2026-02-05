@@ -8,6 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Questions from "./pages/Questions";
 import Portfolio from "./pages/Portfolio";
+import PhysicsFormulas from "./pages/PhysicsFormulas";
 import AdminPanel from "./pages/AdminPanel";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -19,6 +20,7 @@ function Router() {
   <Route path={"/"} component={Home} />
   <Route path={"/login"} component={Login} />
   <Route path={"/register"} component={Register} />
+  <Route path={"/formulas"} component={PhysicsFormulas} />
       <Route path={"/questoes"} component={Questions} />
       <Route path={"/portfolio"} component={Portfolio} />
       <Route path={"/admin"} component={AdminPanel} />

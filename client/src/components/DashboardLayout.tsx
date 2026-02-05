@@ -56,6 +56,9 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             <Link href="/questoes" className="text-gray-700 hover:text-purple-600 font-medium transition">
               Questões
             </Link>
+            <Link href="/formulas" className="text-gray-700 hover:text-purple-600 font-medium transition">
+              Fórmulas
+            </Link>
             <Link href="/portfolio" className="text-gray-700 hover:text-purple-600 font-medium transition">
               Portfólio
             </Link>
