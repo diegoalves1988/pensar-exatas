@@ -6,6 +6,7 @@ import { ArrowRight, Zap, Trophy, BookOpen } from "lucide-react";
 import { Link } from "wouter";
 import { useEffect, useState } from "react";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
+import KaTeXRenderer from "@/components/KaTeXRenderer";
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -68,6 +69,17 @@ export default function Home() {
           </div>
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-48 -mt-48 blur-3xl"></div>
+      </section>
+
+      {/* Teste de fórmula (KaTeX) */}
+      <section className="my-8">
+        <div className="bg-white rounded-xl p-6 shadow-md">
+          <h3 className="text-lg font-medium mb-2">Teste de fórmula</h3>
+          <p className="text-sm text-gray-600 mb-4">Exemplo renderizado com KaTeX:</p>
+          <div className="text-2xl">
+            <KaTeXRenderer formula={"E = mc^2"} displayMode={true} />
+          </div>
+        </div>
       </section>
 
       {/* Ad Banner */}
