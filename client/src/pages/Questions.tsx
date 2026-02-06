@@ -6,6 +6,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
+import InlineKaTeX from "@/components/InlineKaTeX";
 
 export default function Questions() {
   const [, setLocation] = useLocation();
@@ -184,7 +185,7 @@ export default function Questions() {
                         {subjectList.find(s => s.id === question.subjectId)?.icon}
                       </span>
                       <h3 className="text-lg font-bold text-gray-900">
-                        {question.title}
+                        <InlineKaTeX text={String(question.title || "")} />
                       </h3>
                     </div>
                     <div className="text-gray-600 text-sm line-clamp-2">
