@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
-import KaTeXRenderer from "@/components/KaTeXRenderer";
+import MaybeKaTeX from "@/components/MaybeKaTeX";
 
 export default function Questions() {
   const [, setLocation] = useLocation();
@@ -188,7 +188,7 @@ export default function Questions() {
                       </h3>
                     </div>
                     <div className="text-gray-600 text-sm line-clamp-2">
-                      <KaTeXRenderer formula={String(question.statement || "")} displayMode={false} />
+                      <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
                     </div>
                     <div className="flex gap-2 mt-3 flex-wrap">
                       <span
@@ -227,7 +227,7 @@ export default function Questions() {
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                     <div className="text-gray-700 whitespace-pre-wrap">
-                      <KaTeXRenderer formula={String(question.statement || "")} displayMode={false} />
+                      <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
                     </div>
                   </div>
 
@@ -235,7 +235,7 @@ export default function Questions() {
                     <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                     <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
                       <div className="text-gray-700 whitespace-pre-wrap">
-                        <KaTeXRenderer formula={String(question.solution || "")} displayMode={false} />
+                        <MaybeKaTeX text={String(question.solution || "")} displayMode={false} />
                       </div>
                     </div>
                   </div>
