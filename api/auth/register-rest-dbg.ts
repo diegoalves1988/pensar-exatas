@@ -9,8 +9,14 @@ function send(res: any, code: number, body: any) {
 
 export default async function handler(req: any, res: any) {
   try {
+    // CORS friendly
     res.setHeader("Content-Type", "application/json");
-    if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+
+    if (req.method === "OPTIONS") return send(res, 204, null);
+    if (req.method !== "POST" && req.method !== "GET") return send(res, 405, { error: "Method not allowed" });
 
     const supabaseUrl = process.env.SUPABASE_URL || null;
     const serviceRole = process.env.SUPABASE_SERVICE_ROLE || null;
@@ -18,7 +24,7 @@ export default async function handler(req: any, res: any) {
 
     const info: any = { env: { hasSupabaseUrl: !!supabaseUrl, hasServiceRole: !!serviceRole, hasJwtSecret: !!jwtSecret } };
 
-    if (!supabaseUrl || !serviceRole) return send(res, 200, { info, note: "missing supabase envs" });
+  if (!supabaseUrl || !serviceRole) return send(res, 200, { info, note: "missing supabase envs" });
 
     const headers: Record<string, string> = { apikey: serviceRole, Authorization: `Bearer ${serviceRole}` };
     const url = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/users?select=id&limit=1`;
