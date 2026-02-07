@@ -48,21 +48,29 @@ async function readJsonBody(req: any): Promise<any> {
 
 export default async function handler(req: any, res: any) {
   try {
+    // Ensure JSON content-type for all responses from this handler
+    res.setHeader("Content-Type", "application/json");
     if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
 
-    const parsed = await readJsonBody(req);
+  const parsed = await readJsonBody(req);
+  console.log("[Serverless][Auth][register] parsed body:", parsed);
     const { name, email, password } = (parsed as any) || {};
     if (!email || !password) return send(res, 400, { error: "email and password are required" });
 
     // DB connection (force sslmode=require)
     const baseUrl = process.env.DATABASE_URL || "";
-    if (!baseUrl) return send(res, 500, { error: "server misconfigured" });
+    if (!baseUrl) {
+      console.error("[Serverless][Auth][register] missing DATABASE_URL env var");
+      return send(res, 500, { error: "server misconfigured: missing DATABASE_URL" });
+    }
+    console.log("[Serverless][Auth][register] using DATABASE_URL present?", !!baseUrl);
     const url = baseUrl.includes("sslmode=") ? baseUrl : (baseUrl.includes("?") ? `${baseUrl}&sslmode=require` : `${baseUrl}?sslmode=require`);
 
     let sql: ReturnType<typeof postgres> | null = null;
     try {
       sql = postgres(url, { prepare: false });
 
+      console.log("[Serverless][Auth][register] connected to postgres, checking existing user", email);
       const existingRows = await sql`
         select id, "openId", "passwordHash" from users where email = ${email} limit 1
       `;
@@ -87,7 +95,10 @@ export default async function handler(req: any, res: any) {
       }
 
       const jwtSecret = process.env.JWT_SECRET || "";
-      if (!jwtSecret) return send(res, 500, { error: "server misconfigured" });
+      if (!jwtSecret) {
+        console.error("[Serverless][Auth][register] missing JWT_SECRET env var");
+        return send(res, 500, { error: "server misconfigured: missing JWT_SECRET" });
+      }
 
       const sessionToken = await new SignJWT({ openId, appId: process.env.VITE_APP_ID ?? "", name: name ?? "" })
         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
@@ -99,12 +110,15 @@ export default async function handler(req: any, res: any) {
       const maxAgeSec = Math.floor(ONE_YEAR_MS / 1000);
       const cookie = `${COOKIE_NAME}=${sessionToken}; Path=/; Max-Age=${maxAgeSec}; HttpOnly; SameSite=None; ${secure ? "Secure" : ""}`;
       res.setHeader("Set-Cookie", cookie);
+      console.log("[Serverless][Auth][register] user registered/signed-in", { openId });
       return send(res, 200, { ok: true });
     } finally {
       try { if (sql) await sql.end({ timeout: 1 }); } catch {}
     }
   } catch (err) {
-    console.error("[Serverless][Auth][register]", err);
-    return send(res, 500, { error: "register failed" });
+    console.error("[Serverless][Auth][register] unexpected error", err);
+    // Try to return a helpful message but avoid leaking secrets
+    const msg = err instanceof Error ? (err.message || String(err)) : String(err);
+    return send(res, 500, { error: `register failed: ${msg}` });
   }
 }
