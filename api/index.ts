@@ -182,8 +182,7 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
       return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
     }
 
-    const safeChoices = Array.isArray(choices) && choices.length >= 2 ? JSON.stringify(choices) : null;
-    // postgres package needs raw JSON string for jsonb columns
+    const hasChoices = Array.isArray(choices) && choices.length >= 2;
     const safeCorrectChoice = typeof correctChoice === "number" ? correctChoice : null;
     const safeYear = typeof year === "number" ? year : null;
 
@@ -198,15 +197,15 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
         ${safeYear},
         ${sourceUrl || null},
         ${imageUrl || null},
-        ${safeChoices}::jsonb,
+        ${hasChoices ? sql.json(choices) : sql`'[]'::jsonb`},
         ${safeCorrectChoice}
       )
       RETURNING id
     `;
     return res.json({ ok: true, id: row.id });
-  } catch (err) {
+  } catch (err: any) {
     console.error("[API] POST /api/admin/questions failed", err);
-    return res.status(500).json({ error: "failed to create question" });
+    return res.status(500).json({ error: "failed to create question", detail: String(err?.message || err) });
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 

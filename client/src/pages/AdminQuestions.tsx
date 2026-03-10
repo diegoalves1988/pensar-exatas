@@ -97,7 +97,7 @@ export default function AdminQuestions() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data?.error || "Erro ao criar questão");
+        setError(data?.detail || data?.error || `Erro ao criar questão (status ${res.status})`);
         return;
       }
       setSuccess("Questão criada com sucesso!");
