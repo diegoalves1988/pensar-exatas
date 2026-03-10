@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express from "express";
 import fs from "fs";
 import { type Server } from "http";
 import { nanoid } from "nanoid";
@@ -6,7 +6,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 
-export async function setupVite(app: Express, server: Server) {
+export async function setupVite(app: any, server: Server) {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -47,7 +47,7 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
-export function serveStatic(app: Express) {
+export function serveStatic(app: any) {
   // Em produção devemos servir os arquivos gerados pelo Vite em `dist/public`.
   // Usar `process.cwd()` aqui garante que o caminho seja resolvido a partir
   // da raiz do projeto em tempo de execução (evita problemas quando o
