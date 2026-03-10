@@ -4,12 +4,12 @@
  */
 
 import express from "express";
-import { createServer } from "http";
+import fs from "fs";
+import path from "path";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "../server/_core/oauth";
 import { appRouter } from "../server/routers";
 import { createContext } from "../server/_core/context";
-import { serveStatic, setupVite } from "../server/_core/vite";
 import postgres from "postgres";
 
 const app = express();
@@ -57,10 +57,13 @@ app.use(
 
 // Serve static files in production
 if (process.env.NODE_ENV === "production") {
-  serveStatic(app);
-} else {
-  // In development, you might want to use Vite
-  // setupVite(app, server);
+  const distPath = path.resolve(process.cwd(), "dist", "public");
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+  }
+  app.use("*", (_req: any, res: any) => {
+    res.sendFile(path.resolve(distPath, "index.html"));
+  });
 }
 
 // Export for Vercel
