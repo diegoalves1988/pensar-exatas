@@ -55,13 +55,21 @@ export default function AdminQuestions() {
     setError(null);
     setSuccess(null);
 
+    // Validation (no HTML required — we show errors visibly)
+    if (!form.subjectId) { setError("Selecione uma matéria."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (!form.title.trim()) { setError("Preencha o título da questão."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (!form.statement.trim()) { setError("Preencha o enunciado da questão."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (!form.solution.trim()) { setError("Preencha a resolução da questão."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+
     const filledChoices = choices.filter((c) => c.trim() !== "");
     if (filledChoices.length > 0 && filledChoices.length < 2) {
       setError("Preencha pelo menos 2 alternativas ou deixe todas em branco para questão dissertativa.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     if (filledChoices.length > 0 && correctIndex === null) {
-      setError("Selecione a alternativa correta.");
+      setError("Selecione a alternativa correta (clique na letra).");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -93,11 +101,14 @@ export default function AdminQuestions() {
         return;
       }
       setSuccess("Questão criada com sucesso!");
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setForm({ subjectId: "", title: "", statement: "", solution: "", difficulty: "medium", year: "", sourceUrl: "", imageUrl: "" });
       setChoices(["", "", "", "", ""]);
       setCorrectIndex(null);
-    } catch {
+    } catch (err) {
+      console.error("[AdminQuestions] submit error", err);
       setError("Erro inesperado ao enviar o formulário");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       setSubmitting(false);
     }
@@ -194,7 +205,6 @@ export default function AdminQuestions() {
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   value={form.subjectId}
                   onChange={(e) => updateField("subjectId", e.target.value)}
-                  required
                 >
                   <option value="">Selecione...</option>
                   {subjects.map((s) => (
@@ -247,7 +257,6 @@ export default function AdminQuestions() {
                 value={form.title}
                 onChange={(e) => updateField("title", e.target.value)}
                 placeholder="Ex: Cinemática — Velocidade Média"
-                required
               />
               {form.title && (
                 <div className="mt-2 p-2 bg-gray-50 rounded text-sm text-gray-600">
@@ -268,7 +277,6 @@ export default function AdminQuestions() {
                 value={form.statement}
                 onChange={(e) => updateField("statement", e.target.value)}
                 placeholder={"Um corpo de massa $m = 2\\,\\text{kg}$ é submetido a uma força resultante...\n\nUse $...$ para fórmulas inline e $$...$$ para fórmulas em bloco."}
-                required
               />
               {form.statement && (
                 <div className="mt-2 p-3 bg-gray-50 rounded border text-sm">
@@ -362,7 +370,6 @@ export default function AdminQuestions() {
                 value={form.solution}
                 onChange={(e) => updateField("solution", e.target.value)}
                 placeholder={"Resolução detalhada da questão.\n\nUse $v = \\frac{\\Delta s}{\\Delta t}$ para fórmulas."}
-                required
               />
               {form.solution && (
                 <div className="mt-2 p-3 bg-gray-50 rounded border text-sm">

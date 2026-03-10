@@ -183,6 +183,7 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
     }
 
     const safeChoices = Array.isArray(choices) && choices.length >= 2 ? JSON.stringify(choices) : null;
+    // postgres package needs raw JSON string for jsonb columns
     const safeCorrectChoice = typeof correctChoice === "number" ? correctChoice : null;
     const safeYear = typeof year === "number" ? year : null;
 
@@ -197,7 +198,7 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
         ${safeYear},
         ${sourceUrl || null},
         ${imageUrl || null},
-        ${safeChoices},
+        ${safeChoices}::jsonb,
         ${safeCorrectChoice}
       )
       RETURNING id
