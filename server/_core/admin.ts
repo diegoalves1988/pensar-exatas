@@ -1,8 +1,7 @@
-import type { Express, Request, Response } from "express";
 import { sdk } from "./sdk";
 import * as db from "../db";
 
-async function requireAdmin(req: Request): Promise<Awaited<ReturnType<typeof db.getUserByOpenId>>> {
+async function requireAdmin(req: any) {
   const user = await sdk.authenticateRequest(req);
   if (!user || user.role !== "admin") {
     const err: any = new Error("Forbidden");
@@ -12,9 +11,9 @@ async function requireAdmin(req: Request): Promise<Awaited<ReturnType<typeof db.
   return user;
 }
 
-export function registerAdminRoutes(app: Express) {
-  // Auth: who am I (dev/express only; production uses serverless /api/me)
-  app.get("/api/me", async (req: Request, res: Response) => {
+export function registerAdminRoutes(app: any) {
+  // Auth: who am I
+  app.get("/api/me", async (req: any, res: any) => {
     try {
       const user = await sdk.authenticateRequest(req);
       res.json({ id: user.id, openId: user.openId, name: user.name, role: user.role, email: user.email });
@@ -22,8 +21,9 @@ export function registerAdminRoutes(app: Express) {
       res.json(null);
     }
   });
-  // Public: list subjects (useful for admin form)
-  app.get("/api/subjects", async (_req: Request, res: Response) => {
+
+  // Public: list subjects
+  app.get("/api/subjects", async (_req: any, res: any) => {
     try {
       const subjects = await db.getAllSubjects();
       res.json({ items: subjects });
@@ -34,7 +34,7 @@ export function registerAdminRoutes(app: Express) {
   });
 
   // Admin: create subject
-  app.post("/api/admin/subjects", async (req: Request, res: Response) => {
+  app.post("/api/admin/subjects", async (req: any, res: any) => {
     try {
       await requireAdmin(req);
       const { name, description, icon, color, order } = req.body || {};
@@ -55,10 +55,10 @@ export function registerAdminRoutes(app: Express) {
   });
 
   // Admin: create question
-  app.post("/api/admin/questions", async (req: Request, res: Response) => {
+  app.post("/api/admin/questions", async (req: any, res: any) => {
     try {
       await requireAdmin(req);
-      const { subjectId, title, statement, solution, difficulty, year, sourceUrl } = req.body || {};
+      const { subjectId, title, statement, solution, difficulty, year, sourceUrl, choices, correctChoice } = req.body || {};
       if (!subjectId || !title || !statement || !solution) {
         return res.status(400).json({ error: "subjectId, title, statement, solution are required" });
       }
@@ -70,6 +70,8 @@ export function registerAdminRoutes(app: Express) {
         difficulty: difficulty ?? null,
         year: typeof year === "number" ? year : null,
         sourceUrl: sourceUrl ?? null,
+        choices: Array.isArray(choices) ? choices : null,
+        correctChoice: typeof correctChoice === "number" ? correctChoice : null,
       });
       res.json({ ok: true, result });
     } catch (err: any) {
