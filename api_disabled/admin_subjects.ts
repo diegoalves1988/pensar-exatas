@@ -19,7 +19,6 @@ export default async function handler(req: any, res: any) {
     res.end(JSON.stringify(body));
   }
   if (req.method === "GET") {
-    // Could be used too, but we already expose /api/subjects for listing
     try {
       const items = await db.getAllSubjects();
       return send(200, { items });

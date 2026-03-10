@@ -61,7 +61,6 @@ export default async function handler(req: any, res: any) {
       Authorization: `Bearer ${serviceRole}`,
     };
 
-    // 1) Check existing user by email
     const q = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=id,openId,passwordHash`;
     const getRes = await fetch(q, { method: "GET", headers });
     if (!getRes.ok) {
@@ -80,7 +79,6 @@ export default async function handler(req: any, res: any) {
     }
 
     if (existing) {
-      // update existing row (set passwordHash and name/loginMethod/lastSignedIn)
       const patchUrl = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/users?id=eq.${encodeURIComponent(existing.id)}`;
       const patchBody = {
         name: name ?? null,
@@ -97,7 +95,6 @@ export default async function handler(req: any, res: any) {
       const upd = await patchRes.json();
       openId = upd?.[0]?.openId ?? openId;
     } else {
-      // insert new user
       openId = `local:${nanoid()}`;
       const insertUrl = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/users`;
       const insertBody = [{
@@ -115,7 +112,6 @@ export default async function handler(req: any, res: any) {
         console.error("[Serverless][Auth][register-rest] supabase INSERT failed:", txt);
         return send(res, 500, { error: "failed to insert user", details: txt });
       }
-      // const inserted = await insertRes.json();
     }
 
     const jwtSecret = process.env.JWT_SECRET || "";

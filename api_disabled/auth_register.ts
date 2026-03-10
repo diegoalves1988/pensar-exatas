@@ -15,11 +15,8 @@ function send(res: any, code: number, body: any) {
 
 async function readJsonBody(req: any): Promise<any> {
   try {
-    // 1) Already-parsed body (Node frameworks)
     if (req?.body && typeof req.body === "object") return req.body;
     if (typeof req?.body === "string") { try { return JSON.parse(req.body); } catch { /* ignore */ } }
-
-    // 2) Edge/Web Request style
     if (typeof req?.json === "function") {
       return await req.json();
     }
@@ -27,8 +24,6 @@ async function readJsonBody(req: any): Promise<any> {
       const t = await req.text();
       try { return JSON.parse(t); } catch { return null; }
     }
-
-    // 3) Node IncomingMessage stream
     if (typeof req?.on === "function") {
       const chunks: Uint8Array[] = [];
       await new Promise<void>((resolve, reject) => {
@@ -48,7 +43,6 @@ async function readJsonBody(req: any): Promise<any> {
 
 export default async function handler(req: any, res: any) {
   try {
-    // Ensure JSON content-type for all responses from this handler
     res.setHeader("Content-Type", "application/json");
     if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
 
@@ -57,7 +51,6 @@ export default async function handler(req: any, res: any) {
     const { name, email, password } = (parsed as any) || {};
     if (!email || !password) return send(res, 400, { error: "email and password are required" });
 
-    // DB connection (force sslmode=require)
     const baseUrl = process.env.DATABASE_URL || "";
     if (!baseUrl) {
       console.error("[Serverless][Auth][register] missing DATABASE_URL env var");
@@ -117,7 +110,6 @@ export default async function handler(req: any, res: any) {
     }
   } catch (err) {
     console.error("[Serverless][Auth][register] unexpected error", err);
-    // Try to return a helpful message but avoid leaking secrets
     const msg = err instanceof Error ? (err.message || String(err)) : String(err);
     return send(res, 500, { error: `register failed: ${msg}` });
   }
