@@ -1,68 +1,176 @@
 /**
- * Vercel Serverless Function Entry Point
- * NOTE: do NOT import anything from server/_core/vite.ts — it pulls in vite (devDep).
+ * Vercel Serverless Function Entry Point — self-contained, no server/ imports.
+ * Uses only npm packages so Vercel can bundle reliably without path-alias issues.
  */
 
 import express from "express";
 import postgres from "postgres";
+import bcrypt from "bcryptjs";
+import { nanoid } from "nanoid";
+import { SignJWT, jwtVerify } from "jose";
+import { parse as parseCookieHeader } from "cookie";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "../server/_core/oauth";
-import { registerAdminRoutes } from "../server/_core/admin";
 import { appRouter } from "../server/routers";
 import { createContext } from "../server/_core/context";
 
-const app = express();
+// ─── Constants ────────────────────────────────────────────────────────────────
+const COOKIE_NAME = "app_session_id";
+const ONE_YEAR_MS = 1000 * 60 * 60 * 24 * 365;
+const COOKIE_OPTIONS = { httpOnly: true, path: "/", sameSite: "none" as const, secure: true };
 
+// ─── DB helpers ───────────────────────────────────────────────────────────────
+function getDb() {
+  const raw = process.env.DATABASE_URL || "";
+  if (!raw) return null;
+  const url = raw.includes("sslmode=") ? raw : raw.includes("?") ? `${raw}&sslmode=require` : `${raw}?sslmode=require`;
+  return postgres(url, { prepare: false });
+}
+
+// ─── JWT helpers ──────────────────────────────────────────────────────────────
+function jwtSecret() {
+  return new TextEncoder().encode(process.env.JWT_SECRET || "dev-secret-change-me");
+}
+
+async function signToken(openId: string, name: string) {
+  const exp = Math.floor((Date.now() + ONE_YEAR_MS) / 1000);
+  return new SignJWT({ openId, appId: process.env.VITE_APP_ID || "", name })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setExpirationTime(exp)
+    .sign(jwtSecret());
+}
+
+async function verifyToken(token: string | undefined) {
+  if (!token) return null;
+  try {
+    const { payload } = await jwtVerify(token, jwtSecret(), { algorithms: ["HS256"] });
+    return payload as { openId: string; name: string; appId: string };
+  } catch { return null; }
+}
+
+function getCookie(req: any) {
+  const cookieHeader: string = req?.headers?.cookie ?? "";
+  const cookies = parseCookieHeader(cookieHeader);
+  return cookies[COOKIE_NAME];
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
+const app = express();
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-// Auth routes (register, login, OAuth callback)
-registerOAuthRoutes(app);
-
-// Admin + misc routes (/api/me, /api/subjects, /api/admin/*)
-registerAdminRoutes(app);
-
-// tRPC
-app.use(
-  "/api/trpc",
-  createExpressMiddleware({ router: appRouter, createContext })
-);
-
 // Health check
-app.get("/api/health", (_req: any, res: any) => {
+app.get("/api/health", (_req: any, res: any) => res.json({ ok: true }));
+
+// ── GET /api/me ───────────────────────────────────────────────────────────────
+app.get("/api/me", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.json(null);
+  try {
+    const session = await verifyToken(getCookie(req));
+    if (!session) return res.json(null);
+    const [user] = await sql`SELECT id, "openId", name, email, role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
+    return res.json(user ?? null);
+  } catch { return res.json(null); }
+  finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/auth/register ───────────────────────────────────────────────────
+app.post("/api/auth/register", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const { name, email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "email and password are required" });
+
+    const [existing] = await sql`SELECT id, "openId", "passwordHash" FROM users WHERE email = ${email} LIMIT 1`;
+    if (existing?.passwordHash) return res.status(400).json({ error: "User already exists" });
+
+    const openId = existing?.openId ?? `local:${nanoid()}`;
+    const passwordHash = await bcrypt.hash(password, 10);
+    const ownerOpenId = process.env.OWNER_OPEN_ID ?? "";
+    const role = openId === ownerOpenId ? "admin" : "user";
+
+    await sql`
+      INSERT INTO users ("openId", name, email, "loginMethod", "passwordHash", role, "lastSignedIn")
+      VALUES (${openId}, ${name ?? null}, ${email}, 'email', ${passwordHash}, ${role}, NOW())
+      ON CONFLICT ("openId") DO UPDATE SET
+        name = EXCLUDED.name,
+        email = EXCLUDED.email,
+        "passwordHash" = EXCLUDED."passwordHash",
+        role = ${role},
+        "lastSignedIn" = NOW()
+    `;
+
+    const token = await signToken(openId, name ?? "");
+    res.cookie(COOKIE_NAME, token, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[Auth] register failed", err);
+    return res.status(500).json({ error: "register failed" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/auth/login ──────────────────────────────────────────────────────
+app.post("/api/auth/login", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "email and password are required" });
+
+    const [user] = await sql`SELECT id, "openId", name, "passwordHash", role FROM users WHERE email = ${email} LIMIT 1`;
+    if (!user?.passwordHash) return res.status(400).json({ error: "invalid credentials" });
+
+    const ok = await bcrypt.compare(password, String(user.passwordHash));
+    if (!ok) return res.status(400).json({ error: "invalid credentials" });
+
+    const token = await signToken(user.openId, user.name ?? "");
+    res.cookie(COOKIE_NAME, token, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[Auth] login failed", err);
+    return res.status(500).json({ error: "login failed" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/auth/logout ─────────────────────────────────────────────────────
+app.post("/api/auth/logout", (_req: any, res: any) => {
+  res.clearCookie(COOKIE_NAME, { path: "/" });
   res.json({ ok: true });
 });
 
-// Public questions listing
-app.get("/api/questions", async (_req: any, res: any) => {
-  const send = (code: number, body: any) => res.status(code).json(body);
-  const baseUrl = process.env.DATABASE_URL || "";
-  if (!baseUrl) return send(200, { items: [] });
-  const url = baseUrl.includes("sslmode=")
-    ? baseUrl
-    : baseUrl.includes("?")
-      ? `${baseUrl}&sslmode=require`
-      : `${baseUrl}?sslmode=require`;
-
-  let sql: ReturnType<typeof postgres> | null = null;
+// ── GET /api/subjects ─────────────────────────────────────────────────────────
+app.get("/api/subjects", async (_req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.json({ items: [] });
   try {
-    sql = postgres(url, { prepare: false });
-    const rows = await sql`
-      select id, "subjectId", title, statement, solution, difficulty, year,
-             "sourceUrl", "imageUrl", choices, "correctChoice"
-      from questions
-      order by id desc
-      limit 1000
-    `;
-    return send(200, { items: rows });
+    const rows = await sql`SELECT id, name, description, icon, color, "order" FROM subjects ORDER BY "order" ASC, id ASC`;
+    return res.json({ items: rows });
   } catch (err) {
-    console.error("[Serverless] GET /api/questions failed", err);
-    return send(500, { items: [], error: String(err) });
-  } finally {
-    try { if (sql) await (sql as any).end({ timeout: 1 }); } catch {}
-  }
+    console.error("[API] GET /api/subjects failed", err);
+    return res.json({ items: [] });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
-// Export for Vercel
+// ── GET /api/questions ────────────────────────────────────────────────────────
+app.get("/api/questions", async (_req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.json({ items: [] });
+  try {
+    const rows = await sql`
+      SELECT id, "subjectId", title, statement, solution, difficulty, year,
+             "sourceUrl", "imageUrl", choices, "correctChoice"
+      FROM questions ORDER BY id DESC LIMIT 1000
+    `;
+    return res.json({ items: rows });
+  } catch (err) {
+    console.error("[API] GET /api/questions failed", err);
+    return res.json({ items: [] });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── tRPC (rich API for dev / when available) ──────────────────────────────────
+app.use("/api/trpc", createExpressMiddleware({ router: appRouter, createContext }));
+
 export default app;
 
