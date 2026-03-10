@@ -22,7 +22,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 registerOAuthRoutes(app);
 
 // Lightweight questions endpoint for production (keeps payload small)
-app.get("/api/questions", async (_req, res) => {
+app.get("/api/questions", async (_req: any, res: any) => {
   const send = (code: number, body: any) => res.status(code).json(body);
   const baseUrl = process.env.DATABASE_URL || "";
   if (!baseUrl) return send(200, { items: [] });

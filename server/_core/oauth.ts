@@ -8,8 +8,8 @@ import { sdk } from "./sdk";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
-function getQueryParam(req: Request, key: string): string | undefined {
-  const value = req.query[key];
+function getQueryParam(req: any, key: string): string | undefined {
+  const value = req?.query?.[key];
   return typeof value === "string" ? value : undefined;
 }
 
