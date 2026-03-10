@@ -23,7 +23,8 @@
     "difficulty": "medium",
     "year": 2022,
     "sourceUrl": "https://exemplo.com/enem/queda-livre",
-    "imageUrl": "https://via.placeholder.com/400x300?text=Diagrama+Queda+Livre"  },
+    "imageUrl": "https://via.placeholder.com/400x300?text=Diagrama+Queda+Livre"
+  },
   {
     "subject": "Mecânica",
     "title": "Resistor e circuito",
@@ -37,5 +38,21 @@
     "correctChoice": 2,
     "solution": "Pela Lei de Ohm, I = V/R = 20/10 = 2 A",
     "difficulty": "easy",
-    "year": 2023  }
+    "year": 2023
+  },
+  {
+    "subject": "Ondulatória",
+    "title": "Frequência de uma onda",
+    "statement": "Uma onda se propaga com velocidade de 300 m/s e tem comprimento de onda de 0,6 m. Qual é a frequência dessa onda?",
+    "choices": [
+      "50 Hz",
+      "180 Hz",
+      "300 Hz",
+      "500 Hz"
+    ],
+    "correctChoice": 3,
+    "solution": "v = f·λ ⇒ f = v/λ = 300/0,6 = 500 Hz",
+    "difficulty": "medium",
+    "year": 2021
+  }
 ]
