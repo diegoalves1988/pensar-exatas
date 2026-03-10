@@ -38,7 +38,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600 via-purple-500 to-orange-500 p-8 md:p-16 text-white shadow-xl">
         <div className="relative z-10 max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Domine a Física do ENEM</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Domine as Exatas no ENEM</h1>
           <p className="text-lg md:text-xl text-purple-100 mb-8">
             Aprenda através de questões resolvidas, aulas interativas e um sistema de gamificação que torna o aprendizado divertido!
           </p>
