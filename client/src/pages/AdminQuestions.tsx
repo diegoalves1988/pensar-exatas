@@ -18,6 +18,8 @@ export default function AdminQuestions() {
     year: "",
     sourceUrl: "",
   });
+  const [choices, setChoices] = useState<string[]>([]);
+  const [correctIndex, setCorrectIndex] = useState<number | "">("");
   const [result, setResult] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function AdminQuestions() {
     setError(null);
     setResult(null);
     try {
-      const payload = {
+      const payload: any = {
         subjectId: Number(form.subjectId),
         title: form.title.trim(),
         statement: form.statement.trim(),
@@ -48,6 +50,8 @@ export default function AdminQuestions() {
         year: form.year ? Number(form.year) : undefined,
         sourceUrl: form.sourceUrl || undefined,
       };
+      if (choices.length > 0) payload.choices = choices;
+      if (correctIndex !== "" && typeof correctIndex === "number") payload.correctChoice = correctIndex;
       const res = await fetch("/api/admin/questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -147,6 +151,55 @@ export default function AdminQuestions() {
               placeholder="https://..."
             />
           </div>
+        </div>
+        {/* choices inputs */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Alternativas</label>
+          {choices.map((c, i) => (
+            <div key={i} className="flex gap-2 mb-1">
+              <input
+                className="flex-1 border rounded px-3 py-2"
+                value={c}
+                onChange={(e) => {
+                  const newChoices = [...choices];
+                  newChoices[i] = e.target.value;
+                  setChoices(newChoices);
+                }}
+                placeholder={`Opção ${i + 1}`}
+              />
+              <button
+                type="button"
+                className="text-red-500 px-2"
+                onClick={() => {
+                  setChoices(choices.filter((_, idx) => idx !== i));
+                }}
+              >
+                &times;
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            className="text-blue-600 text-sm mt-1"
+            onClick={() => setChoices([...choices, ""])}
+          >
+            + Adicionar alternativa
+          </button>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Índice da alternativa correta (0-based)</label>
+          <input
+            type="number"
+            min={0}
+            max={choices.length - 1}
+            className="w-full border rounded px-3 py-2"
+            value={correctIndex}
+            onChange={(e) => {
+              const v = e.target.value;
+              setCorrectIndex(v === "" ? "" : Number(v));
+            }}
+            placeholder="ex: 0"
+          />
         </div>
         <div className="pt-2">
           <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar</button>

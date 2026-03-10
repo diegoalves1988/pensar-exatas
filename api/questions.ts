@@ -17,7 +17,7 @@ export default async function handler(_req: any, res: any) {
   try {
     sql = postgres(url, { prepare: false });
     const rows = await sql`
-      select id, "subjectId", title, statement, solution, difficulty, year, "sourceUrl"
+      select id, "subjectId", title, statement, solution, difficulty, year, "sourceUrl", "imageUrl", choices, "correctChoice"
       from questions
       order by id desc
       limit 1000

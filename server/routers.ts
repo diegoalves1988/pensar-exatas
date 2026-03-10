@@ -101,6 +101,9 @@ export const appRouter = router({
         year: z.number().optional(),
         sourceUrl: z.string().optional(),
         imageUrl: z.string().optional(),
+        // multiple-choice fields
+        choices: z.array(z.string()).optional(),
+        correctChoice: z.number().int().optional(),
       }))
       .mutation(async ({ input }) => {
         return db.createQuestion(input);
@@ -117,6 +120,8 @@ export const appRouter = router({
         year: z.number().optional(),
         sourceUrl: z.string().optional(),
         imageUrl: z.string().optional(),
+        choices: z.array(z.string()).optional(),
+        correctChoice: z.number().int().optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, ...data } = input;

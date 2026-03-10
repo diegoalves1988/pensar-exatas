@@ -15,6 +15,8 @@ export default function Questions() {
   const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
+  // track answers for multiple-choice questions: questionId -> selected index
+  const [answers, setAnswers] = useState<Record<number, number>>({});
 
   // Use tRPC in dev; fall back to serverless /api/questions in production (Vercel)
   const { data: questions } = trpc.questions.list.useQuery();
@@ -251,6 +253,45 @@ export default function Questions() {
                       <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
                     </div>
                   </div>
+
+                  {/* multiple-choice interaction */}
+                  {question.choices && question.choices.length > 0 && (
+                    <div className="space-y-2">
+                      {question.choices.map((opt: string, idx: number) => {
+                        const selected = answers[question.id] === idx;
+                        const correct = question.correctChoice === idx;
+                        const disabled = answers[question.id] !== undefined;
+                        let bg = "bg-white hover:bg-gray-100";
+                        if (disabled && selected) {
+                          bg = correct ? "bg-green-200" : "bg-red-200";
+                        }
+                        return (
+                          <button
+                            key={idx}
+                            className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300`}
+                            onClick={() => {
+                              if (disabled) return;
+                              setAnswers(a => ({ ...a, [question.id]: idx }));
+                            }}
+                            disabled={disabled}
+                          >
+                            {opt}
+                          </button>
+                        );
+                      })}
+                      {answers[question.id] !== undefined && (
+                        <div className="mt-2">
+                          {answers[question.id] === question.correctChoice ? (
+                            <span className="text-green-600 font-semibold">Você acertou!</span>
+                          ) : (
+                            <span className="text-red-600 font-semibold">
+                              Errado. Resposta correta: {question.choices[question.correctChoice]}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>

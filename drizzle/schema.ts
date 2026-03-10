@@ -1,4 +1,4 @@
-import { integer, text, timestamp, varchar, boolean, pgEnum, pgTable } from "drizzle-orm/pg-core";
+import { integer, text, timestamp, varchar, boolean, pgEnum, pgTable, jsonb } from "drizzle-orm/pg-core";
 
 /**
  * Core user table backing auth flow.
@@ -56,6 +56,9 @@ export const questions = pgTable("questions", {
   year: integer("year"), // ENEM year (e.g., 2023)
   sourceUrl: varchar("sourceUrl", { length: 500 }), // link to original source
   imageUrl: varchar("imageUrl", { length: 500 }), // URL to question image
+  // multiple-choice support
+  choices: jsonb("choices").$type<string[]>().default([]), // array of option strings
+  correctChoice: integer("correctChoice"), // zero-based index of right alternative
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });

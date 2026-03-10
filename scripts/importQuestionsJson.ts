@@ -13,6 +13,8 @@ type SeedQuestion = {
   year?: number;
   sourceUrl?: string;
   imageUrl?: string;
+  choices?: string[];
+  correctChoice?: number;
 };
 
 async function ensureSubject(name: string) {
@@ -67,6 +69,8 @@ async function main() {
       year: q.year ?? null,
       sourceUrl: q.sourceUrl ?? null,
       imageUrl: q.imageUrl ?? null,
+      choices: q.choices ?? undefined,
+      correctChoice: typeof q.correctChoice === 'number' ? q.correctChoice : undefined,
     });
     ok++;
   }

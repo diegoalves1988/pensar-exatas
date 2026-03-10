@@ -23,6 +23,19 @@
     "difficulty": "medium",
     "year": 2022,
     "sourceUrl": "https://exemplo.com/enem/queda-livre",
-    "imageUrl": "https://via.placeholder.com/400x300?text=Diagrama+Queda+Livre"
-  }
+    "imageUrl": "https://via.placeholder.com/400x300?text=Diagrama+Queda+Livre"  },
+  {
+    "subject": "Mecânica",
+    "title": "Resistor e circuito",
+    "statement": "Um circuito contém um resistor de 10 Ω ligado a uma fonte de 20 V. Qual é a corrente?",
+    "choices": [
+      "0,5 A",
+      "1 A",
+      "2 A",
+      "4 A"
+    ],
+    "correctChoice": 2,
+    "solution": "Pela Lei de Ohm, I = V/R = 20/10 = 2 A",
+    "difficulty": "easy",
+    "year": 2023  }
 ]
