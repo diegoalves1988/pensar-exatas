@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
-import { ArrowLeft, Eye, EyeOff, ImageIcon, Save } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, ImageIcon, Save, Upload, X } from "lucide-react";
 import { Link } from "wouter";
 
 type Subject = { id: number; name: string };
@@ -12,6 +12,7 @@ export default function AdminQuestions() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
@@ -48,6 +49,59 @@ export default function AdminQuestions() {
       next[i] = value;
       return next;
     });
+  }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type and size
+    if (!file.type.startsWith("image/")) {
+      setError("Selecione um arquivo de imagem (PNG, JPG, etc.)");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("A imagem deve ter no máximo 5 MB.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    setUploading(true);
+    setError(null);
+    try {
+      // Read file as base64
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          resolve(result.split(",")[1]); // Remove data:image/...;base64, prefix
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ data: base64, filename: file.name, contentType: file.type }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json?.detail || json?.error || "Erro ao fazer upload da imagem");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      updateField("imageUrl", json.url);
+    } catch {
+      setError("Erro inesperado ao fazer upload da imagem");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      setUploading(false);
+      // Reset input so same file can be re-selected
+      e.target.value = "";
+    }
   }
 
   async function onSubmit(e: React.FormEvent) {
@@ -294,20 +348,55 @@ export default function AdminQuestions() {
                 <ImageIcon className="w-4 h-4 inline mr-1" />
                 Imagem (opcional)
               </label>
-              <input
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                value={form.imageUrl}
-                onChange={(e) => updateField("imageUrl", e.target.value)}
-                placeholder="URL da imagem (ex: https://i.imgur.com/...)"
-              />
-              {form.imageUrl && (
-                <div className="mt-2 border rounded-lg overflow-hidden inline-block bg-gray-50 p-2">
-                  <img
-                    src={form.imageUrl}
-                    alt="Preview"
-                    className="max-w-full max-h-64 object-contain"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                  />
+
+              {form.imageUrl ? (
+                <div className="space-y-3">
+                  <div className="relative inline-block">
+                    <img
+                      src={form.imageUrl}
+                      alt="Preview"
+                      className="max-w-full max-h-64 object-contain rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => updateField("imageUrl", "")}
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 shadow"
+                      title="Remover imagem"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-400 break-all">{form.imageUrl}</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <label
+                    className={`flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer transition ${
+                      uploading
+                        ? "border-purple-400 bg-purple-50"
+                        : "border-gray-300 hover:border-purple-400 hover:bg-gray-50"
+                    }`}
+                  >
+                    {uploading ? (
+                      <div className="flex flex-col items-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mb-2" />
+                        <span className="text-sm text-purple-600">Enviando...</span>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center">
+                        <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                        <span className="text-sm text-gray-600">Clique para selecionar uma imagem</span>
+                        <span className="text-xs text-gray-400 mt-1">PNG, JPG ou GIF (máx. 5 MB)</span>
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                      disabled={uploading}
+                    />
+                  </label>
                 </div>
               )}
             </div>

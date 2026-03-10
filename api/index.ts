@@ -50,6 +50,33 @@ function getCookie(req: any) {
   return cookies[COOKIE_NAME];
 }
 
+// ─── Supabase Storage helpers ─────────────────────────────────────────────────
+function getSupabaseConfig() {
+  const dbUrl = process.env.DATABASE_URL || "";
+  const match = dbUrl.match(/postgres\.([^:@]+)/);
+  const ref = match?.[1] || "";
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+  return { url: ref ? `https://${ref}.supabase.co` : "", serviceKey, ref };
+}
+
+const STORAGE_BUCKET = "question-images";
+
+async function ensureBucket(supabaseUrl: string, serviceKey: string) {
+  const headers = { Authorization: `Bearer ${serviceKey}`, apikey: serviceKey, "Content-Type": "application/json" };
+  // Try to get bucket; if 404, create it
+  const check = await fetch(`${supabaseUrl}/storage/v1/bucket/${STORAGE_BUCKET}`, { headers });
+  if (check.ok) return;
+  const create = await fetch(`${supabaseUrl}/storage/v1/bucket`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ id: STORAGE_BUCKET, name: STORAGE_BUCKET, public: true }),
+  });
+  if (!create.ok) {
+    const msg = await create.text().catch(() => "");
+    throw new Error(`Failed to create storage bucket: ${create.status} ${msg}`);
+  }
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -206,6 +233,63 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
   } catch (err: any) {
     console.error("[API] POST /api/admin/questions failed", err);
     return res.status(500).json({ error: "failed to create question", detail: String(err?.message || err) });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/admin/upload ────────────────────────────────────────────────────
+app.post("/api/admin/upload", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    // Auth + admin check
+    const session = await verifyToken(getCookie(req));
+    if (!session) return res.status(401).json({ error: "not authenticated" });
+    const [user] = await sql`SELECT role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
+    if (!user || user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+
+    const { data, filename, contentType } = req.body || {};
+    if (!data || !filename) return res.status(400).json({ error: "data and filename are required" });
+
+    const { url: supabaseUrl, serviceKey } = getSupabaseConfig();
+    if (!supabaseUrl || !serviceKey) {
+      return res.status(500).json({ error: "Supabase Storage not configured. Set SUPABASE_SERVICE_ROLE_KEY env var." });
+    }
+
+    // Ensure bucket exists
+    await ensureBucket(supabaseUrl, serviceKey);
+
+    // Decode base64 → Buffer
+    const buffer = Buffer.from(data, "base64");
+
+    // Unique filename to avoid collisions
+    const ext = filename.split(".").pop() || "png";
+    const uniqueName = `${nanoid()}.${ext}`;
+
+    // Upload to Supabase Storage
+    const uploadRes = await fetch(
+      `${supabaseUrl}/storage/v1/object/${STORAGE_BUCKET}/${uniqueName}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${serviceKey}`,
+          apikey: serviceKey,
+          "Content-Type": contentType || "image/png",
+        },
+        body: buffer,
+      }
+    );
+
+    if (!uploadRes.ok) {
+      const msg = await uploadRes.text().catch(() => "");
+      return res.status(500).json({ error: `Upload failed: ${uploadRes.status}`, detail: msg });
+    }
+
+    // Public URL
+    const publicUrl = `${supabaseUrl}/storage/v1/object/public/${STORAGE_BUCKET}/${uniqueName}`;
+    return res.json({ ok: true, url: publicUrl });
+  } catch (err: any) {
+    console.error("[API] POST /api/admin/upload failed", err);
+    return res.status(500).json({ error: "upload failed", detail: String(err?.message || err) });
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
