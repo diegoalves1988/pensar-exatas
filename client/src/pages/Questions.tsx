@@ -290,9 +290,14 @@ export default function Questions() {
                           )}
                         </div>
                       )}
+                      {answers[question.id] === undefined && (
+                        <p className="text-sm text-gray-400 mt-2 italic">Selecione uma alternativa para ver a resolução.</p>
+                      )}
                     </div>
                   )}
 
+                  {/* Resolução: sempre visível para dissertativas; só após responder para múltipla escolha */}
+                  {(!(question.choices && question.choices.length > 0) || answers[question.id] !== undefined) && (
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                     <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
@@ -301,6 +306,7 @@ export default function Questions() {
                       </div>
                     </div>
                   </div>
+                  )}
 
                   <div className="flex gap-3 pt-4">
                     {question.sourceUrl && (
