@@ -80,7 +80,10 @@ export default function AdminPanel() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-900">Gerenciar Questões</h2>
-              <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white">
+              <Button
+                onClick={() => setLocation("/admin/questions")}
+                className="bg-gradient-to-r from-purple-500 to-orange-500 text-white"
+              >
                 <Plus className="w-4 h-4 mr-2" />
                 Nova Questão
               </Button>

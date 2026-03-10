@@ -166,6 +166,49 @@ app.get("/api/questions", async (_req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── POST /api/admin/questions ──────────────────────────────────────────────────
+app.post("/api/admin/questions", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    // Auth + admin check
+    const session = await verifyToken(getCookie(req));
+    if (!session) return res.status(401).json({ error: "not authenticated" });
+    const [user] = await sql`SELECT role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
+    if (!user || user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+
+    const { subjectId, title, statement, solution, difficulty, year, sourceUrl, imageUrl, choices, correctChoice } = req.body || {};
+    if (!subjectId || !title || !statement || !solution) {
+      return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
+    }
+
+    const safeChoices = Array.isArray(choices) && choices.length >= 2 ? JSON.stringify(choices) : null;
+    const safeCorrectChoice = typeof correctChoice === "number" ? correctChoice : null;
+    const safeYear = typeof year === "number" ? year : null;
+
+    const [row] = await sql`
+      INSERT INTO questions ("subjectId", title, statement, solution, difficulty, year, "sourceUrl", "imageUrl", choices, "correctChoice")
+      VALUES (
+        ${Number(subjectId)},
+        ${String(title).trim()},
+        ${String(statement).trim()},
+        ${String(solution).trim()},
+        ${difficulty || 'medium'},
+        ${safeYear},
+        ${sourceUrl || null},
+        ${imageUrl || null},
+        ${safeChoices},
+        ${safeCorrectChoice}
+      )
+      RETURNING id
+    `;
+    return res.json({ ok: true, id: row.id });
+  } catch (err) {
+    console.error("[API] POST /api/admin/questions failed", err);
+    return res.status(500).json({ error: "failed to create question" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── tRPC placeholder (disabled until import chain issues are resolved) ─────────
 app.use("/api/trpc", (_req: any, res: any) => res.status(503).json({ error: "tRPC not available" }));
 
