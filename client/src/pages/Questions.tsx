@@ -191,6 +191,15 @@ export default function Questions() {
                     <div className="text-gray-600 text-sm line-clamp-2">
                       <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
                     </div>
+                    {question.imageUrl && (
+                      <div className="mt-3 mb-3">
+                        <img
+                          src={question.imageUrl}
+                          alt="Imagem da questao"
+                          className="h-20 w-auto object-cover rounded-md border border-gray-200"
+                        />
+                      </div>
+                    )}
                     <div className="flex gap-2 mt-3 flex-wrap">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(
@@ -225,6 +234,17 @@ export default function Questions() {
               {/* Expanded Content */}
               {expandedQuestion === question.id && (
                 <div className="border-t border-gray-200 p-6 bg-gray-50 space-y-4">
+                  {question.imageUrl && (
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Imagem</h4>
+                      <img
+                        src={question.imageUrl}
+                        alt="Imagem da questão"
+                        className="w-full h-auto object-cover rounded-lg border border-gray-300 max-h-96"
+                      />
+                    </div>
+                  )}
+
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                     <div className="text-gray-700 whitespace-pre-wrap">

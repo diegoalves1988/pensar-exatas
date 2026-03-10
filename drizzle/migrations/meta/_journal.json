@@ -15,6 +15,13 @@
       "when": 1761962122033,
       "tag": "0001_sour_tomas",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773155324647,
+      "tag": "0002_fair_thor",
+      "breakpoints": true
     }
   ]
 }

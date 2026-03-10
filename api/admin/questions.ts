@@ -25,7 +25,7 @@ export default async function handler(req: any, res: any) {
     const admin = await requireAdminFromReq(req);
     if (!admin) return send(403, { error: "forbidden" });
 
-    const { subjectId, title, statement, solution, difficulty, year, sourceUrl } = req.body || {};
+    const { subjectId, title, statement, solution, difficulty, year, sourceUrl, imageUrl } = req.body || {};
     if (!subjectId || !title || !statement || !solution) return send(400, { error: "subjectId, title, statement, solution are required" });
 
     const result = await db.createQuestion({
@@ -36,6 +36,7 @@ export default async function handler(req: any, res: any) {
       difficulty: difficulty ?? null,
       year: typeof year === "number" ? year : null,
       sourceUrl: sourceUrl ?? null,
+      imageUrl: imageUrl ?? null,
     });
     return send(200, { ok: true, result });
   } catch (err) {

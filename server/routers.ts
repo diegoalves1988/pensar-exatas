@@ -100,6 +100,7 @@ export const appRouter = router({
         difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
         year: z.number().optional(),
         sourceUrl: z.string().optional(),
+        imageUrl: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
         return db.createQuestion(input);
@@ -115,6 +116,7 @@ export const appRouter = router({
         difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
         year: z.number().optional(),
         sourceUrl: z.string().optional(),
+        imageUrl: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, ...data } = input;

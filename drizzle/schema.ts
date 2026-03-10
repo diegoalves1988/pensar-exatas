@@ -55,6 +55,7 @@ export const questions = pgTable("questions", {
   difficulty: difficultyEnum("difficulty").default("medium"),
   year: integer("year"), // ENEM year (e.g., 2023)
   sourceUrl: varchar("sourceUrl", { length: 500 }), // link to original source
+  imageUrl: varchar("imageUrl", { length: 500 }), // URL to question image
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });

@@ -12,6 +12,7 @@ type SeedQuestion = {
   difficulty?: "easy" | "medium" | "hard";
   year?: number;
   sourceUrl?: string;
+  imageUrl?: string;
 };
 
 async function ensureSubject(name: string) {
@@ -65,6 +66,7 @@ async function main() {
       difficulty: q.difficulty ?? null,
       year: q.year ?? null,
       sourceUrl: q.sourceUrl ?? null,
+      imageUrl: q.imageUrl ?? null,
     });
     ok++;
   }

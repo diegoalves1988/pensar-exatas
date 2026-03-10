@@ -17,6 +17,7 @@ type SeedQuestion = {
   difficulty?: "easy" | "medium" | "hard";
   year?: number;
   sourceUrl?: string;
+  imageUrl?: string;
 };
 
 async function ensureSubjects(subjectsToSeed: SeedSubject[]) {
@@ -63,6 +64,7 @@ async function seedQuestions(questions: SeedQuestion[]) {
         difficulty: q.difficulty ?? "medium",
         year: q.year ?? null,
         sourceUrl: q.sourceUrl ?? null,
+        imageUrl: q.imageUrl ?? null,
       });
       ok++;
     } catch (err) {
