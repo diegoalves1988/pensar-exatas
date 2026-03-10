@@ -1,4 +1,4 @@
-import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { COOKIE_NAME, ONE_YEAR_MS } from "../../shared/const";
 // use relaxed types to avoid build-time TypeScript mismatches in hosted CI
 import type { Request, Response } from "express";
 import { ENV } from "./env";
