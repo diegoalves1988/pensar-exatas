@@ -9,9 +9,6 @@ import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 import { SignJWT, jwtVerify } from "jose";
 import { parse as parseCookieHeader } from "cookie";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../server/routers";
-import { createContext } from "../server/_core/context";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const COOKIE_NAME = "app_session_id";
@@ -169,8 +166,8 @@ app.get("/api/questions", async (_req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
-// ── tRPC (rich API for dev / when available) ──────────────────────────────────
-app.use("/api/trpc", createExpressMiddleware({ router: appRouter, createContext }));
+// ── tRPC placeholder (disabled until import chain issues are resolved) ─────────
+app.use("/api/trpc", (_req: any, res: any) => res.status(503).json({ error: "tRPC not available" }));
 
 export default app;
 
