@@ -1,16 +1,32 @@
 /**
  * Vercel Serverless Function Entry Point
- * Kept minimal to avoid bundling dev-only or complex imports.
- * Only `postgres` is imported for DB access; no tRPC/drizzle/shared aliases.
+ * NOTE: do NOT import anything from server/_core/vite.ts — it pulls in vite (devDep).
  */
 
 import express from "express";
 import postgres from "postgres";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { registerOAuthRoutes } from "../server/_core/oauth";
+import { registerAdminRoutes } from "../server/_core/admin";
+import { appRouter } from "../server/routers";
+import { createContext } from "../server/_core/context";
 
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+// Auth routes (register, login, OAuth callback)
+registerOAuthRoutes(app);
+
+// Admin + misc routes (/api/me, /api/subjects, /api/admin/*)
+registerAdminRoutes(app);
+
+// tRPC
+app.use(
+  "/api/trpc",
+  createExpressMiddleware({ router: appRouter, createContext })
+);
 
 // Health check
 app.get("/api/health", (_req: any, res: any) => {
