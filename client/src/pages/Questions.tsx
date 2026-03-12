@@ -110,7 +110,7 @@ export default function Questions() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-6xl mx-auto w-full px-2 sm:px-0">
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Questões do ENEM</h1>
@@ -260,7 +260,7 @@ export default function Questions() {
               {/* Expanded Content */}
               {expandedQuestion === question.id && (
                 <div className="border-t border-gray-200 p-6 bg-gray-50">
-                  <div className="max-w-5xl mx-auto space-y-4">
+                  <div className="max-w-4xl mx-auto space-y-4">
                     {question.imageUrl && (
                       <div>
                         <h4 className="font-bold text-gray-900 mb-2">Imagem</h4>
