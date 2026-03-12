@@ -16,8 +16,8 @@ export default function Portfolio() {
       {/* Profile Header */}
       <section className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl p-8 md:p-12 text-white">
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-          <div className="w-32 h-32 rounded-full bg-white/20 flex items-center justify-center text-6xl flex-shrink-0">
-            👨‍🏫
+          <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-white/30 shadow-lg">
+            <img src="/profile-photo.jpg" alt="Rejane Dorn" className="w-full h-full object-cover" />
           </div>
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-4xl font-bold mb-2">{profile?.name || "Rejane Dorn"}</h1>
