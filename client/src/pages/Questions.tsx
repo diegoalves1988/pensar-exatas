@@ -8,8 +8,43 @@ import { AdBannerPlaceholder } from "@/components/AdBanner";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
 import InlineKaTeX from "@/components/InlineKaTeX";
 
+type SubjectItem = {
+  id: number;
+  name: string;
+  description?: string | null;
+  icon?: string | null;
+  color?: string | null;
+  order?: number | null;
+};
+
+const FALLBACK_SUBJECTS: SubjectItem[] = [
+  { id: 1, name: "Mecânica", icon: "⚙️", description: "Movimento, força e energia", order: 1 },
+  { id: 2, name: "Eletromagnetismo", icon: "⚡", description: "Eletricidade e magnetismo", order: 2 },
+  { id: 3, name: "Ondulatória", icon: "〰️", description: "Ondas e fenômenos ondulatórios", order: 3 },
+  { id: 4, name: "Termodinâmica", icon: "🔥", description: "Calor e temperatura", order: 4 },
+  { id: 5, name: "Óptica", icon: "💡", description: "Luz e óptica", order: 5 },
+  { id: 6, name: "Cinemática", icon: "🏃", description: "Descrição do movimento", order: 6 },
+  { id: 7, name: "Dinâmica", icon: "🧲", description: "Forças e leis de Newton", order: 7 },
+  { id: 8, name: "Hidrostática", icon: "🌊", description: "Fluidos em equilíbrio", order: 8 },
+  { id: 101, name: "Aritmética", icon: "➗", description: "Números e operações", order: 101 },
+  { id: 102, name: "Álgebra", icon: "🧮", description: "Expressões e equações", order: 102 },
+  { id: 103, name: "Funções", icon: "📈", description: "Estudo de funções", order: 103 },
+  { id: 104, name: "Geometria", icon: "📐", description: "Plana e espacial", order: 104 },
+  { id: 105, name: "Trigonometria", icon: "📏", description: "Razões trigonométricas", order: 105 },
+  { id: 106, name: "Probabilidade", icon: "🎲", description: "Contagem e chance", order: 106 },
+  { id: 107, name: "Estatística", icon: "📊", description: "Leitura de dados", order: 107 },
+];
+
+function getSubjectArea(name: string): "Física" | "Matemática" {
+  const normalized = name.toLowerCase();
+  const physicsTerms = [
+    "mec", "cinem", "din", "eletro", "onda", "termo", "opt", "ópt", "hidro", "física", "fisica",
+  ];
+  return physicsTerms.some((term) => normalized.includes(term)) ? "Física" : "Matemática";
+}
+
 export default function Questions() {
-  const [, setLocation] = useLocation();
+  const [location] = useLocation();
   const { isAuthenticated } = useAuth();
   const isLocalDev =
     typeof window !== "undefined" &&
@@ -61,20 +96,55 @@ export default function Questions() {
     };
   }, []);
   const { data: favorites } = trpc.favorites.list.useQuery(undefined, { enabled: isAuthenticated });
+  const [publicSubjects, setPublicSubjects] = useState<SubjectItem[]>(FALLBACK_SUBJECTS);
 
-  const subjectList = [
-    { id: 1, name: "Mecânica", icon: "⚙️", color: "from-blue-400 to-blue-600" },
-    { id: 2, name: "Eletromagnetismo", icon: "⚡", color: "from-yellow-400 to-yellow-600" },
-    { id: 3, name: "Ondulatória", icon: "〰️", color: "from-cyan-400 to-cyan-600" },
-    { id: 4, name: "Termodinâmica", icon: "🔥", color: "from-red-400 to-red-600" },
-    { id: 5, name: "Óptica", icon: "💡", color: "from-green-400 to-green-600" },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/subjects")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items) && data.items.length > 0) {
+          setPublicSubjects(data.items);
+        }
+      })
+      .catch(() => {
+        // Keep fallback subject catalog when API fails.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const subjectList = (publicSubjects.length > 0 ? publicSubjects : FALLBACK_SUBJECTS)
+    .slice()
+    .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
+  const physicsSubjects = subjectList.filter((s) => getSubjectArea(s.name) === "Física");
+  const mathSubjects = subjectList.filter((s) => getSubjectArea(s.name) === "Matemática");
+
+  const normalizeQuestionText = (text: string) =>
+    text
+      .replace(/\r\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      // single line breaks from copied PDFs become spaces; paragraph breaks are kept
+      .replace(/([^\n])\n([^\n])/g, "$1 $2");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const subjectParam = Number(params.get("subject"));
+    if (Number.isFinite(subjectParam) && subjectParam > 0) {
+      setSelectedSubject(subjectParam);
+      return;
+    }
+    setSelectedSubject(null);
+  }, [location]);
 
   const allQuestions = questions ?? publicQuestions ?? [];
   const filteredQuestions = allQuestions.filter((q: any) => {
     const matchesSearch = q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          q.statement.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSubject = !selectedSubject || q.subjectId === selectedSubject;
+    const matchesSubject = !selectedSubject || Number(q.subjectId) === selectedSubject;
     const matchesDifficulty = !selectedDifficulty || q.difficulty === selectedDifficulty;
     return matchesSearch && matchesSubject && matchesDifficulty;
   });
@@ -179,6 +249,62 @@ export default function Questions() {
             Difícil
           </button>
         </div>
+
+        {/* Subject Filter */}
+        <div className="space-y-3">
+          <p className="text-sm font-semibold text-gray-700">Matéria</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedSubject(null)}
+              className={`px-3 py-1 rounded-full text-sm font-medium transition ${
+                selectedSubject === null
+                  ? "bg-purple-500 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              Todas
+            </button>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Física</p>
+              <div className="flex flex-wrap gap-2">
+                {physicsSubjects.map((subject) => (
+                  <button
+                    key={subject.id}
+                    onClick={() => setSelectedSubject(subject.id)}
+                    className={`px-3 py-1 rounded-full text-sm font-medium transition ${
+                      selectedSubject === subject.id
+                        ? "bg-blue-600 text-white"
+                        : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                    }`}
+                  >
+                    {subject.icon || "📘"} {subject.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Matemática</p>
+              <div className="flex flex-wrap gap-2">
+                {mathSubjects.map((subject) => (
+                  <button
+                    key={subject.id}
+                    onClick={() => setSelectedSubject(subject.id)}
+                    className={`px-3 py-1 rounded-full text-sm font-medium transition ${
+                      selectedSubject === subject.id
+                        ? "bg-emerald-600 text-white"
+                        : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                    }`}
+                  >
+                    {subject.icon || "📘"} {subject.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Ad Banner */}
@@ -208,14 +334,14 @@ export default function Questions() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <span className="text-2xl">
-                        {subjectList.find(s => s.id === question.subjectId)?.icon}
+                        {subjectList.find((s) => s.id === Number(question.subjectId))?.icon || "📘"}
                       </span>
                       <h3 className="text-lg font-bold text-gray-900">
                         <InlineKaTeX text={String(question.title || "")} />
                       </h3>
                     </div>
                     <div className="text-gray-600 text-sm line-clamp-2">
-                      <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
+                      <MaybeKaTeX text={normalizeQuestionText(String(question.statement || ""))} displayMode={false} />
                     </div>
                     {question.imageUrl && (
                       <div className="mt-3 mb-3">
@@ -274,8 +400,8 @@ export default function Questions() {
 
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
-                      <div className="text-gray-700 whitespace-pre-wrap">
-                        <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
+                      <div className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+                        <MaybeKaTeX text={normalizeQuestionText(String(question.statement || ""))} displayMode={false} />
                       </div>
                     </div>
 
@@ -347,8 +473,8 @@ export default function Questions() {
                       <div>
                         <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                         <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
-                          <div className="text-gray-700 whitespace-pre-wrap">
-                            <MaybeKaTeX text={String(question.solution || "")} displayMode={false} />
+                          <div className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+                            <MaybeKaTeX text={normalizeQuestionText(String(question.solution || ""))} displayMode={false} />
                           </div>
                         </div>
                       </div>

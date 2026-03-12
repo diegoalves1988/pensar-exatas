@@ -87,8 +87,20 @@ async function main() {
 
   const subjects: SeedSubject[] = [
     { name: "Mecânica", description: "Cinemática, Dinâmica, Trabalho e Energia", icon: "⚙️", color: "#2563eb", order: 1 },
-    { name: "Eletromagnetismo", description: "Eletrostática, Eletrodinâmica e Magnetismo", icon: "⚡", color: "#16a34a", order: 2 },
-    { name: "Ondas", description: "Óptica e Ondulatória", icon: "🌊", color: "#ea580c", order: 3 },
+    { name: "Cinemática", description: "Descrição do movimento e suas grandezas", icon: "🏃", color: "#1d4ed8", order: 2 },
+    { name: "Dinâmica", description: "Leis de Newton e aplicações", icon: "🧲", color: "#1e40af", order: 3 },
+    { name: "Eletromagnetismo", description: "Eletrostática, Eletrodinâmica e Magnetismo", icon: "⚡", color: "#16a34a", order: 4 },
+    { name: "Ondulatória", description: "Ondas mecânicas, sonoras e eletromagnéticas", icon: "〰️", color: "#0ea5e9", order: 5 },
+    { name: "Termodinâmica", description: "Calor, temperatura e termologia", icon: "🔥", color: "#dc2626", order: 6 },
+    { name: "Óptica", description: "Reflexão, refração e instrumentos ópticos", icon: "💡", color: "#65a30d", order: 7 },
+    { name: "Hidrostática", description: "Fluidos em equilíbrio e empuxo", icon: "🌊", color: "#0284c7", order: 8 },
+    { name: "Aritmética", description: "Números, razões e proporções", icon: "➗", color: "#0f766e", order: 101 },
+    { name: "Álgebra", description: "Equações, polinômios e sistemas", icon: "🧮", color: "#0d9488", order: 102 },
+    { name: "Funções", description: "Função afim, quadrática, exponencial e log", icon: "📈", color: "#0f766e", order: 103 },
+    { name: "Geometria", description: "Geometria plana e espacial", icon: "📐", color: "#0e7490", order: 104 },
+    { name: "Trigonometria", description: "Razões trigonométricas e ciclos", icon: "📏", color: "#0f766e", order: 105 },
+    { name: "Probabilidade", description: "Análise combinatória e probabilidade", icon: "🎲", color: "#0e7490", order: 106 },
+    { name: "Estatística", description: "Medidas estatísticas e gráficos", icon: "📊", color: "#0891b2", order: 107 },
   ];
 
   await ensureSubjects(subjects);
@@ -117,7 +129,7 @@ async function main() {
       sourceUrl: "https://exemplo.com/enem/lei-de-ohm",
     },
     {
-      subject: "Ondas",
+      subject: "Ondulatória",
       title: "Frequência e comprimento de onda",
       statement:
         "Uma onda se propaga com velocidade 300 m/s e tem comprimento de onda 0,6 m. Qual é a frequência dessa onda?",

@@ -1,13 +1,38 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import { useLocation } from "wouter";
+
+type SubjectItem = {
+  id: number;
+  name: string;
+  icon?: string | null;
+};
 
 export default function AdminPanel() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<"questions" | "lessons" | "subjects" | "portfolio">("questions");
+  const [subjects, setSubjects] = useState<SubjectItem[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/subjects", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items)) {
+          setSubjects(data.items);
+        }
+      })
+      .catch(() => {
+        // Keep empty list on fetch failure.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Redirect if not admin
   if (user?.role !== "admin") {
@@ -121,16 +146,10 @@ export default function AdminPanel() {
               </Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { name: "Mecânica", icon: "⚙️" },
-                { name: "Eletromagnetismo", icon: "⚡" },
-                { name: "Ondulatória", icon: "〰️" },
-                { name: "Termodinâmica", icon: "🔥" },
-                { name: "Óptica", icon: "💡" },
-              ].map((subject) => (
+              {subjects.map((subject) => (
                 <div key={subject.name} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{subject.icon}</span>
+                    <span className="text-2xl">{subject.icon || "📘"}</span>
                     <span className="font-medium text-gray-900">{subject.name}</span>
                   </div>
                   <div className="flex gap-2">
@@ -143,6 +162,11 @@ export default function AdminPanel() {
                   </div>
                 </div>
               ))}
+              {subjects.length === 0 && (
+                <div className="col-span-full text-center text-sm text-gray-500 py-6">
+                  Nenhuma matéria encontrada.
+                </div>
+              )}
             </div>
           </div>
         )}

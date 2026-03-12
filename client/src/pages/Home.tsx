@@ -8,12 +8,48 @@ import { useEffect, useState } from "react";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
 import KaTeXRenderer from "@/components/KaTeXRenderer";
 
+type SubjectItem = {
+  id: number;
+  name: string;
+  description?: string | null;
+  icon?: string | null;
+  order?: number | null;
+};
+
+const FALLBACK_SUBJECTS: SubjectItem[] = [
+  { id: 1, name: "Mecânica", icon: "⚙️", description: "Movimento, força e energia", order: 1 },
+  { id: 2, name: "Eletromagnetismo", icon: "⚡", description: "Eletricidade e magnetismo", order: 2 },
+  { id: 3, name: "Ondulatória", icon: "〰️", description: "Ondas e fenômenos ondulatórios", order: 3 },
+  { id: 4, name: "Termodinâmica", icon: "🔥", description: "Calor e temperatura", order: 4 },
+  { id: 5, name: "Óptica", icon: "💡", description: "Luz e fenômenos ópticos", order: 5 },
+  { id: 6, name: "Cinemática", icon: "🏃", description: "Descrição do movimento", order: 6 },
+  { id: 7, name: "Dinâmica", icon: "🧲", description: "Forças e leis de Newton", order: 7 },
+  { id: 8, name: "Hidrostática", icon: "🌊", description: "Fluidos e empuxo", order: 8 },
+  { id: 101, name: "Álgebra", icon: "🧮", description: "Expressões e equações", order: 101 },
+  { id: 102, name: "Funções", icon: "📈", description: "Análise de funções", order: 102 },
+  { id: 103, name: "Geometria", icon: "📐", description: "Plana e espacial", order: 103 },
+  { id: 104, name: "Trigonometria", icon: "📏", description: "Relações e identidades", order: 104 },
+  { id: 105, name: "Probabilidade", icon: "🎲", description: "Contagem e probabilidade", order: 105 },
+  { id: 106, name: "Estatística", icon: "📊", description: "Leitura e análise de dados", order: 106 },
+];
+
+function getSubjectGradient(name: string) {
+  const normalized = name.toLowerCase();
+  if (normalized.includes("mec") || normalized.includes("cinem") || normalized.includes("din")) return "from-blue-500 to-indigo-600";
+  if (normalized.includes("eletro")) return "from-yellow-400 to-amber-600";
+  if (normalized.includes("onda") || normalized.includes("hidro")) return "from-cyan-400 to-blue-600";
+  if (normalized.includes("termo")) return "from-red-400 to-red-600";
+  if (normalized.includes("opt") || normalized.includes("ópt")) return "from-lime-500 to-green-600";
+  return "from-emerald-500 to-teal-600";
+}
+
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { data: subjects } = trpc.subjects.list.useQuery();
   // Keep tRPC for dev; add public API fallback for production (Vercel)
   const { data: questions } = trpc.questions.list.useQuery();
   const [publicQuestions, setPublicQuestions] = useState<any[] | null>(null);
+  const [publicSubjects, setPublicSubjects] = useState<SubjectItem[] | null>(null);
   useEffect(() => {
     let cancelled = false;
     fetch("/api/questions")
@@ -22,16 +58,25 @@ export default function Home() {
         if (!cancelled && data?.items) setPublicQuestions(data.items);
       })
       .catch(() => {});
+
+    fetch("/api/subjects")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items)) setPublicSubjects(data.items);
+      })
+      .catch(() => {});
+
     return () => { cancelled = true; };
   }, []);
 
-  const subjectList = [
-    { id: 1, name: "Mecânica", icon: "⚙️", color: "from-blue-400 to-blue-600", description: "Movimento, força e energia" },
-    { id: 2, name: "Eletromagnetismo", icon: "⚡", color: "from-yellow-400 to-yellow-600", description: "Eletricidade e magnetismo" },
-    { id: 3, name: "Ondulatória", icon: "〰️", color: "from-cyan-400 to-cyan-600", description: "Ondas e fenômenos ondulatórios" },
-    { id: 4, name: "Termodinâmica", icon: "🔥", color: "from-red-400 to-red-600", description: "Calor e temperatura" },
-    { id: 5, name: "Óptica", icon: "💡", color: "from-green-400 to-green-600", description: "Luz e fenômenos ópticos" },
-  ];
+  const subjectList: SubjectItem[] =
+    (subjects as SubjectItem[] | undefined) ??
+    publicSubjects ??
+    FALLBACK_SUBJECTS;
+
+  const orderedSubjects = subjectList
+    .slice()
+    .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
 
   return (
     <div className="space-y-12">
@@ -92,7 +137,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Matérias</p>
-              <p className="text-4xl font-bold text-gray-900 mt-2">5</p>
+              <p className="text-4xl font-bold text-gray-900 mt-2">{orderedSubjects.length}</p>
             </div>
             <Zap className="w-12 h-12 text-orange-500 opacity-20" />
           </div>
@@ -117,15 +162,15 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {subjectList.map((subject) => (
+          {orderedSubjects.map((subject) => (
             <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
               <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:scale-105 cursor-pointer h-full">
-                <div className={`bg-gradient-to-r ${subject.color} p-8 text-white text-4xl text-center`}>
-                  {subject.icon}
+                <div className={`bg-gradient-to-r ${getSubjectGradient(subject.name)} p-8 text-white text-4xl text-center`}>
+                  {subject.icon || "📘"}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{subject.name}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{subject.description}</p>
+                  <p className="text-gray-600 text-sm mb-4">{subject.description || "Conteúdo focado em ENEM com questões resolvidas."}</p>
                   <div className="flex items-center text-purple-600 font-medium text-sm">
                     Explorar <ArrowRight className="ml-2 w-4 h-4" />
                   </div>

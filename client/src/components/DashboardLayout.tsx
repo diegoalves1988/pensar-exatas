@@ -1,8 +1,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { APP_LOGO, APP_TITLE } from "@/const";
+import { APP_TITLE } from "@/const";
 import { Menu, X, LogOut, User, Settings } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
 interface DashboardLayoutProps {
@@ -10,17 +10,81 @@ interface DashboardLayoutProps {
   title?: string;
 }
 
+type SubjectItem = {
+  id: number;
+  name: string;
+  icon?: string | null;
+  order?: number | null;
+};
+
+const FALLBACK_SUBJECTS: SubjectItem[] = [
+  { id: 1, name: "Mecânica", icon: "⚙️", order: 1 },
+  { id: 2, name: "Eletromagnetismo", icon: "⚡", order: 2 },
+  { id: 3, name: "Ondulatória", icon: "〰️", order: 3 },
+  { id: 4, name: "Termodinâmica", icon: "🔥", order: 4 },
+  { id: 5, name: "Óptica", icon: "💡", order: 5 },
+  { id: 6, name: "Cinemática", icon: "🏃", order: 6 },
+  { id: 7, name: "Dinâmica", icon: "🧲", order: 7 },
+  { id: 8, name: "Hidrostática", icon: "🌊", order: 8 },
+  { id: 101, name: "Aritmética", icon: "➗", order: 101 },
+  { id: 102, name: "Álgebra", icon: "🧮", order: 102 },
+  { id: 103, name: "Funções", icon: "📈", order: 103 },
+  { id: 104, name: "Geometria", icon: "📐", order: 104 },
+  { id: 105, name: "Trigonometria", icon: "📏", order: 105 },
+  { id: 106, name: "Probabilidade", icon: "🎲", order: 106 },
+  { id: 107, name: "Estatística", icon: "📊", order: 107 },
+];
+
+function getSubjectArea(name: string): "Física" | "Matemática" {
+  const normalized = name.toLowerCase();
+  const physicsTerms = [
+    "mec", "cinem", "din", "eletro", "onda", "termo", "opt", "ópt", "hidro", "física", "fisica",
+  ];
+  return physicsTerms.some((term) => normalized.includes(term)) ? "Física" : "Matemática";
+}
+
 export default function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const { user, logout, isAuthenticated } = useAuth();
   const isAdmin = user?.role === 'admin';
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [subjects, setSubjects] = useState<SubjectItem[]>(FALLBACK_SUBJECTS);
 
-  const subjects = [
-    { id: 1, name: "Mecânica", icon: "⚙️", color: "from-blue-400 to-blue-600" },
-    { id: 2, name: "Eletromagnetismo", icon: "⚡", color: "from-yellow-400 to-yellow-600" },
-    { id: 3, name: "Ondulatória", icon: "〰️", color: "from-cyan-400 to-cyan-600" },
-    { id: 4, name: "Termodinâmica", icon: "🔥", color: "from-red-400 to-red-600" },
-    { id: 5, name: "Óptica", icon: "💡", color: "from-green-400 to-green-600" },
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/subjects")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items) && data.items.length > 0) {
+          setSubjects(data.items);
+        }
+      })
+      .catch(() => {
+        // Keep fallback catalog when API is unavailable.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const orderedSubjects = subjects
+    .slice()
+    .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
+
+  const physicsItems = orderedSubjects.filter((item) => getSubjectArea(item.name) === "Física");
+  const mathItems = orderedSubjects.filter((item) => getSubjectArea(item.name) === "Matemática");
+
+  const subjectGroups = [
+    {
+      name: "Física",
+      color: "from-blue-500 to-indigo-600",
+      items: physicsItems,
+    },
+    {
+      name: "Matemática",
+      color: "from-emerald-500 to-teal-600",
+      items: mathItems,
+    },
   ];
 
   return (
@@ -124,16 +188,28 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         <aside className="hidden md:flex md:w-64 bg-white shadow-md flex-col border-r border-gray-200">
           <div className="p-6 border-b border-gray-200">
             <h2 className="font-bold text-lg text-gray-900 mb-4">Matérias</h2>
-            <div className="space-y-2">
-              {subjects.map((subject) => (
-                <Link
-                  key={subject.id}
-                  href={`/questoes?subject=${subject.id}`}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg bg-gradient-to-r ${subject.color} text-white font-medium hover:shadow-lg transition transform hover:scale-105`}
-                >
-                  <span className="text-xl">{subject.icon}</span>
-                  <span className="text-sm">{subject.name}</span>
-                </Link>
+            <div className="space-y-3 max-h-[52vh] overflow-y-auto pr-1">
+              {subjectGroups.map((group, idx) => (
+                <details key={group.name} open={idx === 0} className="group rounded-lg border border-gray-200 bg-gray-50">
+                  <summary className="list-none cursor-pointer select-none px-3 py-2 flex items-center justify-between">
+                    <span className={`text-sm font-bold text-white px-2 py-1 rounded bg-gradient-to-r ${group.color}`}>
+                      {group.name}
+                    </span>
+                    <span className="text-xs text-gray-500">{group.items.length} tópicos</span>
+                  </summary>
+                  <div className="px-2 pb-2 space-y-1">
+                    {group.items.map((subject) => (
+                      <Link
+                        key={subject.id}
+                        href={`/questoes?subject=${subject.id}`}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-white hover:shadow-sm transition"
+                      >
+                        <span>{subject.icon || "📘"}</span>
+                        <span>{subject.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </details>
               ))}
             </div>
           </div>
