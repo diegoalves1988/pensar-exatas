@@ -17,6 +17,8 @@ export default function Questions() {
   const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
   // track answers for multiple-choice questions: questionId -> selected index
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  // track if the user chose to reveal the answer/solution for each question
+  const [showSolution, setShowSolution] = useState<Record<number, boolean>>({});
 
   // Use tRPC in dev; fall back to serverless /api/questions in production (Vercel)
   const { data: questions } = trpc.questions.list.useQuery();
@@ -284,20 +286,33 @@ export default function Questions() {
                           {answers[question.id] === question.correctChoice ? (
                             <span className="text-green-600 font-semibold">Você acertou!</span>
                           ) : (
-                            <span className="text-red-600 font-semibold">
-                              Errado. Resposta correta: {question.choices[question.correctChoice]}
-                            </span>
+                            <span className="text-red-600 font-semibold">Você errou.</span>
                           )}
                         </div>
                       )}
                       {answers[question.id] === undefined && (
-                        <p className="text-sm text-gray-400 mt-2 italic">Selecione uma alternativa para ver a resolução.</p>
+                        <p className="text-sm text-gray-400 mt-2 italic">Selecione uma alternativa e, se quiser, clique em Mostrar resposta.</p>
                       )}
                     </div>
                   )}
 
-                  {/* Resolução: sempre visível para dissertativas; só após responder para múltipla escolha */}
-                  {(!(question.choices && question.choices.length > 0) || answers[question.id] !== undefined) && (
+                  <div>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        setShowSolution((prev) => ({
+                          ...prev,
+                          [question.id]: !prev[question.id],
+                        }))
+                      }
+                      className="w-full sm:w-auto"
+                    >
+                      {showSolution[question.id] ? "Ocultar resposta" : "Mostrar resposta"}
+                    </Button>
+                  </div>
+
+                  {/* Resolução: exibida somente quando o usuário clicar no botão */}
+                  {showSolution[question.id] && (
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                     <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
