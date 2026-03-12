@@ -22,10 +22,10 @@ export default function Portfolio() {
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-4xl font-bold mb-2">{profile?.name || "Rejane Dorn"}</h1>
             <p className="text-xl text-white/90 mb-4">
-              {profile?.title || "Professora de Física"}
+              {profile?.title || "Autoria de materiais didáticos de Física, Matemática e Robótica Educacional | Edição de livros| Elaboradora de itens | Leitura crítica | Doutora em Física | Licenciada em Física, Matemática e Pedagogia."}
             </p>
             <p className="text-white/80 mb-6">
-              {profile?.bio || "Apaixonada por ensinar física"}
+              {profile?.bio || "Doutorado, mestrado e licenciatura a em Física. Licenciada em Matemática. Licenciada em Pedagogia. Especialista em Neurociência e Aprendizagem. Especialização em Educação e Novas Tecnologias. Experiência em produção e revisão de material didático para ensino médio e superior na na área de Física e Matemática. Experiência em elaboração de itens para simulados Saeb, Enem e Fuvest. Autora de curso na Udemy sobre robótica para crianças. Experiência de mais de 15 anos como professora de Física, Cálculo e Matemática para ensino superior."}
             </p>
             <div className="flex gap-3 justify-center md:justify-start flex-wrap">
               <a href="mailto:rejane.dorn@gmail.com">
