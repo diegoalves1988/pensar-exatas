@@ -289,17 +289,21 @@ export default function Questions() {
                         if (disabled && selected) {
                           bg = correct ? "bg-green-200" : "bg-red-200";
                         }
+                        const label = String.fromCharCode(65 + idx); // A, B, C, D, E
                         return (
                           <button
                             key={idx}
-                            className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300`}
+                            className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300 flex items-start gap-3`}
                             onClick={() => {
                               if (disabled) return;
                               setAnswers(a => ({ ...a, [question.id]: idx }));
                             }}
                             disabled={disabled}
                           >
-                            {opt}
+                            <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
+                              {label}
+                            </span>
+                            <span>{opt}</span>
                           </button>
                         );
                       })}
