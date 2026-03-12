@@ -259,117 +259,119 @@ export default function Questions() {
 
               {/* Expanded Content */}
               {expandedQuestion === question.id && (
-                <div className="border-t border-gray-200 p-6 bg-gray-50 space-y-4">
-                  {question.imageUrl && (
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Imagem</h4>
-                      <img
-                        src={question.imageUrl}
-                        alt="Imagem da questão"
-                        className="w-full h-auto object-cover rounded-lg border border-gray-300 max-h-96"
-                      />
-                    </div>
-                  )}
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
-                    <div className="text-gray-700 whitespace-pre-wrap">
-                      <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
-                    </div>
-                  </div>
-
-                  {/* multiple-choice interaction */}
-                  {question.choices && question.choices.length > 0 && (
-                    <div className="space-y-2">
-                      {question.choices.map((opt: string, idx: number) => {
-                        const selected = answers[question.id] === idx;
-                        const correct = question.correctChoice === idx;
-                        const disabled = answers[question.id] !== undefined;
-                        let bg = "bg-white hover:bg-gray-100";
-                        if (disabled && selected) {
-                          bg = correct ? "bg-green-200" : "bg-red-200";
-                        }
-                        const label = String.fromCharCode(65 + idx); // A, B, C, D, E
-                        return (
-                          <button
-                            key={idx}
-                            className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300 flex items-start gap-3`}
-                            onClick={() => {
-                              if (disabled) return;
-                              setAnswers(a => ({ ...a, [question.id]: idx }));
-                            }}
-                            disabled={disabled}
-                          >
-                            <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
-                              {label}
-                            </span>
-                            <span>{opt}</span>
-                          </button>
-                        );
-                      })}
-                      {answers[question.id] !== undefined && (
-                        <div className="mt-2">
-                          {answers[question.id] === question.correctChoice ? (
-                            <span className="text-green-600 font-semibold">Você acertou!</span>
-                          ) : (
-                            <span className="text-red-600 font-semibold">Você errou.</span>
-                          )}
-                        </div>
-                      )}
-                      {answers[question.id] === undefined && (
-                        <p className="text-sm text-gray-400 mt-2 italic">Selecione uma alternativa e, se quiser, clique em Mostrar resposta.</p>
-                      )}
-                    </div>
-                  )}
-
-                  <div>
-                    {question.choices && question.choices.length > 0 && answers[question.id] === undefined && (
-                      <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
+                <div className="border-t border-gray-200 p-6 bg-gray-50">
+                  <div className="max-w-5xl mx-auto space-y-4">
+                    {question.imageUrl && (
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-2">Imagem</h4>
+                        <img
+                          src={question.imageUrl}
+                          alt="Imagem da questão"
+                          className="w-full h-auto object-cover rounded-lg border border-gray-300 max-h-96"
+                        />
+                      </div>
                     )}
-                    <Button
-                      variant="outline"
-                      disabled={Boolean(question.choices && question.choices.length > 0 && answers[question.id] === undefined)}
-                      onClick={() =>
-                        setShowSolution((prev) => ({
-                          ...prev,
-                          [question.id]: !prev[question.id],
-                        }))
-                      }
-                      className="w-full sm:w-auto"
-                    >
-                      {showSolution[question.id] ? "Ocultar resposta" : "Mostrar resposta"}
-                    </Button>
-                  </div>
 
-                  {/* Resolução: exibida somente quando o usuário clicar no botão */}
-                  {showSolution[question.id] && (
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
-                    <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                    <div>
+                      <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                       <div className="text-gray-700 whitespace-pre-wrap">
-                        <MaybeKaTeX text={String(question.solution || "")} displayMode={false} />
+                        <MaybeKaTeX text={String(question.statement || "")} displayMode={false} />
                       </div>
                     </div>
-                  </div>
-                  )}
 
-                  <div className="flex gap-3 pt-4">
-                    {question.sourceUrl && (
-                      <a
-                        href={question.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1"
-                      >
-                        <Button variant="outline" className="w-full">
-                          Ver Fonte Original
-                        </Button>
-                      </a>
+                    {/* multiple-choice interaction */}
+                    {question.choices && question.choices.length > 0 && (
+                      <div className="space-y-2">
+                        {question.choices.map((opt: string, idx: number) => {
+                          const selected = answers[question.id] === idx;
+                          const correct = question.correctChoice === idx;
+                          const disabled = answers[question.id] !== undefined;
+                          let bg = "bg-white hover:bg-gray-100";
+                          if (disabled && selected) {
+                            bg = correct ? "bg-green-200" : "bg-red-200";
+                          }
+                          const label = String.fromCharCode(65 + idx); // A, B, C, D, E
+                          return (
+                            <button
+                              key={idx}
+                              className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300 flex items-start gap-3`}
+                              onClick={() => {
+                                if (disabled) return;
+                                setAnswers(a => ({ ...a, [question.id]: idx }));
+                              }}
+                              disabled={disabled}
+                            >
+                              <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
+                                {label}
+                              </span>
+                              <span>{opt}</span>
+                            </button>
+                          );
+                        })}
+                        {answers[question.id] !== undefined && (
+                          <div className="mt-2">
+                            {answers[question.id] === question.correctChoice ? (
+                              <span className="text-green-600 font-semibold">Você acertou!</span>
+                            ) : (
+                              <span className="text-red-600 font-semibold">Você errou.</span>
+                            )}
+                          </div>
+                        )}
+                        {answers[question.id] === undefined && (
+                          <p className="text-sm text-gray-400 mt-2 italic">Selecione uma alternativa e, se quiser, clique em Mostrar resposta.</p>
+                        )}
+                      </div>
                     )}
-                    <Button className="flex-1 bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-                      <BookOpen className="w-4 h-4 mr-2" />
-                      Ver Aula Relacionada
-                    </Button>
+
+                    <div>
+                      {question.choices && question.choices.length > 0 && answers[question.id] === undefined && (
+                        <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
+                      )}
+                      <Button
+                        variant="outline"
+                        disabled={Boolean(question.choices && question.choices.length > 0 && answers[question.id] === undefined)}
+                        onClick={() =>
+                          setShowSolution((prev) => ({
+                            ...prev,
+                            [question.id]: !prev[question.id],
+                          }))
+                        }
+                        className="w-full sm:w-auto"
+                      >
+                        {showSolution[question.id] ? "Ocultar resposta" : "Mostrar resposta"}
+                      </Button>
+                    </div>
+
+                    {/* Resolução: exibida somente quando o usuário clicar no botão */}
+                    {showSolution[question.id] && (
+                      <div>
+                        <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
+                        <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                          <div className="text-gray-700 whitespace-pre-wrap">
+                            <MaybeKaTeX text={String(question.solution || "")} displayMode={false} />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex gap-3 pt-4">
+                      {question.sourceUrl && (
+                        <a
+                          href={question.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1"
+                        >
+                          <Button variant="outline" className="w-full">
+                            Ver Fonte Original
+                          </Button>
+                        </a>
+                      )}
+                      <Button className="flex-1 bg-gradient-to-r from-purple-500 to-orange-500 text-white">
+                        <BookOpen className="w-4 h-4 mr-2" />
+                        Ver Aula Relacionada
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
