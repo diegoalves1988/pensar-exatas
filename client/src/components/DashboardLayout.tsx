@@ -30,11 +30,11 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
             <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-              F
+              PE
             </div>
             <div className="hidden sm:block">
               <h1 className="font-bold text-xl text-gray-900">{APP_TITLE}</h1>
-              <p className="text-xs text-gray-500">Domina a Física!</p>
+              <p className="text-xs text-gray-500">Domine as exatas!</p>
             </div>
           </Link>
 
@@ -179,8 +179,8 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-white mb-4">Física ENEM</h3>
-              <p className="text-sm">Aprenda física de forma gamificada e divertida!</p>
+              <h3 className="font-bold text-white mb-4">Pensar Exatas</h3>
+              <p className="text-sm">Aprenda exatas de forma gamificada!</p>
             </div>
             <div>
               <h4 className="font-bold text-white mb-4">Recursos</h4>
@@ -208,7 +208,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             </div>
           </div>
           <div className="border-t border-gray-700 pt-8 text-center text-sm">
-            <p>&copy; 2024 Física ENEM Descomplicada. Todos os direitos reservados.</p>
+            <p>&copy; 2026 Pensar Exatas. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
