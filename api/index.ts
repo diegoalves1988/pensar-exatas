@@ -165,6 +165,8 @@ app.post("/api/auth/logout", (_req: any, res: any) => {
 
 // ── GET /api/subjects ─────────────────────────────────────────────────────────
 app.get("/api/subjects", async (_req: any, res: any) => {
+  // Cache static-ish content at the CDN edge
+  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=1800");
   const sql = getDb();
   if (!sql) return res.json({ items: [] });
   try {
@@ -178,6 +180,8 @@ app.get("/api/subjects", async (_req: any, res: any) => {
 
 // ── GET /api/questions ────────────────────────────────────────────────────────
 app.get("/api/questions", async (_req: any, res: any) => {
+  // Cache question list at the CDN edge to reduce cold-load latency
+  res.setHeader("Cache-Control", "public, s-maxage=120, stale-while-revalidate=900");
   const sql = getDb();
   if (!sql) return res.json({ items: [] });
   try {

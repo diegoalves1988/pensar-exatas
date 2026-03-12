@@ -11,6 +11,9 @@ import InlineKaTeX from "@/components/InlineKaTeX";
 export default function Questions() {
   const [, setLocation] = useLocation();
   const { isAuthenticated } = useAuth();
+  const isLocalDev =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
@@ -20,16 +23,35 @@ export default function Questions() {
   // track if the user chose to reveal the answer/solution for each question
   const [showSolution, setShowSolution] = useState<Record<number, boolean>>({});
 
-  // Use tRPC in dev; fall back to serverless /api/questions in production (Vercel)
-  const { data: questions } = trpc.questions.list.useQuery();
-  const [publicQuestions, setPublicQuestions] = useState<any[] | null>(null);
+  // Use tRPC in local dev; in production use /api/questions directly.
+  const { data: questions } = trpc.questions.list.useQuery(undefined, {
+    enabled: isLocalDev,
+    retry: false,
+    staleTime: 60_000,
+  });
+  const [publicQuestions, setPublicQuestions] = useState<any[] | null>(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const cached = sessionStorage.getItem("questions-cache-v1");
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
   useEffect(() => {
-    // If tRPC isn’t available in prod, this ensures list of questions is still shown
+    // Always refresh in background; sessionStorage gives instant first paint on repeat visits.
     let cancelled = false;
     fetch("/api/questions")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (!cancelled && data?.items) setPublicQuestions(data.items);
+        if (!cancelled && data?.items) {
+          setPublicQuestions(data.items);
+          try {
+            sessionStorage.setItem("questions-cache-v1", JSON.stringify(data.items));
+          } catch {
+            // ignore storage quota/unavailable errors
+          }
+        }
       })
       .catch(() => {
         // ignore silently; tRPC may still work in dev
