@@ -297,8 +297,12 @@ export default function Questions() {
                   )}
 
                   <div>
+                    {question.choices && question.choices.length > 0 && answers[question.id] === undefined && (
+                      <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
+                    )}
                     <Button
                       variant="outline"
+                      disabled={Boolean(question.choices && question.choices.length > 0 && answers[question.id] === undefined)}
                       onClick={() =>
                         setShowSolution((prev) => ({
                           ...prev,
