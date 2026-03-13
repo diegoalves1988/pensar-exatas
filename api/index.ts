@@ -433,7 +433,7 @@ app.get("/api/subjects", async (_req: any, res: any) => {
   const sql = getDb();
   if (!sql) return res.json({ items: [] });
   try {
-    const rows = await sql`SELECT id, name, description, icon, color, "order" FROM subjects ORDER BY "order" ASC, id ASC`;
+    const rows = await sql`SELECT id, name, description, icon, color, area, "order" FROM subjects ORDER BY "order" ASC, id ASC`;
     return res.json({ items: rows });
   } catch (err) {
     console.error("[API] GET /api/subjects failed", err);

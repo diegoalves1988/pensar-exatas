@@ -35,7 +35,8 @@ export const subjects = pgTable("subjects", {
   description: text("description"),
   icon: varchar("icon", { length: 255 }), // emoji or icon name
   color: varchar("color", { length: 7 }), // hex color for gamification
-  order: integer("order").default(0),
+    area: varchar("area", { length: 20 }), // 'physics' or 'math'
+    order: integer("order").default(0),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 });

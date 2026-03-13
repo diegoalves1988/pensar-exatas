@@ -59,8 +59,8 @@ export default function Home() {
     FALLBACK_SUBJECTS;
 
   const orderedSubjects = sortSubjects(subjectList);
-  const physicsTopics = orderedSubjects.filter((subject) => getSubjectArea(subject.name) === "Física");
-  const mathTopics = orderedSubjects.filter((subject) => getSubjectArea(subject.name) === "Matemática");
+  const physicsTopics = orderedSubjects.filter((subject) => getSubjectArea(subject) === "Física");
+  const mathTopics = orderedSubjects.filter((subject) => getSubjectArea(subject) === "Matemática");
   const todayGoal = 10;
   const todayProgress = Math.min(profileSummary?.questionsToday ?? 0, todayGoal);
 
