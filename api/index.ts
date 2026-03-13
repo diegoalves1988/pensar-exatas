@@ -14,13 +14,22 @@ import { parse as parseCookieHeader } from "cookie";
 const COOKIE_NAME = "app_session_id";
 const ONE_YEAR_MS = 1000 * 60 * 60 * 24 * 365;
 const COOKIE_OPTIONS = { httpOnly: true, path: "/", sameSite: "none" as const, secure: true };
+let cachedSql: any = null;
+let resolutionsSchemaEnsured = false;
+let questionReportsSchemaEnsured = false;
 
 // ─── DB helpers ───────────────────────────────────────────────────────────────
 function getDb() {
+  if (cachedSql) return cachedSql;
   const raw = process.env.DATABASE_URL || "";
   if (!raw) return null;
   const url = raw.includes("sslmode=") ? raw : raw.includes("?") ? `${raw}&sslmode=require` : `${raw}?sslmode=require`;
-  return postgres(url, { prepare: false });
+  const sql = postgres(url, { prepare: false, max: 5 });
+  // Keep a warm pooled connection in serverless; endpoints already call sql.end() in finally blocks.
+  // Override end() to no-op so we do not pay reconnect cost on every request.
+  (sql as any).end = async () => {};
+  cachedSql = sql;
+  return cachedSql;
 }
 
 // ─── JWT helpers ──────────────────────────────────────────────────────────────
@@ -58,6 +67,7 @@ async function getSessionUser(req: any, sql: any) {
 }
 
 async function ensureResolutionsTable(sql: any) {
+  if (resolutionsSchemaEnsured) return;
   await sql`
     CREATE TABLE IF NOT EXISTS user_question_resolutions (
       id bigserial PRIMARY KEY,
@@ -79,6 +89,24 @@ async function ensureResolutionsTable(sql: any) {
     ALTER TABLE user_question_resolutions
     ADD COLUMN IF NOT EXISTS "updatedAt" timestamptz NOT NULL DEFAULT NOW()
   `;
+  resolutionsSchemaEnsured = true;
+}
+
+async function ensureQuestionReportsTable(sql: any) {
+  if (questionReportsSchemaEnsured) return;
+  await sql`
+    CREATE TABLE IF NOT EXISTS question_reports (
+      id bigserial PRIMARY KEY,
+      "userId" integer NOT NULL,
+      "questionId" integer NOT NULL,
+      category varchar(100) NOT NULL,
+      description text,
+      status varchar(32) NOT NULL DEFAULT 'open',
+      "createdAt" timestamptz NOT NULL DEFAULT NOW(),
+      "updatedAt" timestamptz NOT NULL DEFAULT NOW()
+    )
+  `;
+  questionReportsSchemaEnsured = true;
 }
 
 async function recalculateUserProgress(sql: any, userId: number) {
@@ -512,18 +540,7 @@ app.post("/api/questions/:id/report", async (req: any, res: any) => {
       return res.status(400).json({ error: "invalid category" });
     }
 
-    await sql`
-      CREATE TABLE IF NOT EXISTS question_reports (
-        id bigserial PRIMARY KEY,
-        "userId" integer NOT NULL,
-        "questionId" integer NOT NULL,
-        category varchar(100) NOT NULL,
-        description text,
-        status varchar(32) NOT NULL DEFAULT 'open',
-        "createdAt" timestamptz NOT NULL DEFAULT NOW(),
-        "updatedAt" timestamptz NOT NULL DEFAULT NOW()
-      )
-    `;
+    await ensureQuestionReportsTable(sql);
 
     await sql`
       INSERT INTO question_reports ("userId", "questionId", category, description)
@@ -546,18 +563,7 @@ app.get("/api/admin/question-reports", async (req: any, res: any) => {
     if (!user) return res.status(401).json({ error: "not authenticated" });
     if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
 
-    await sql`
-      CREATE TABLE IF NOT EXISTS question_reports (
-        id bigserial PRIMARY KEY,
-        "userId" integer NOT NULL,
-        "questionId" integer NOT NULL,
-        category varchar(100) NOT NULL,
-        description text,
-        status varchar(32) NOT NULL DEFAULT 'open',
-        "createdAt" timestamptz NOT NULL DEFAULT NOW(),
-        "updatedAt" timestamptz NOT NULL DEFAULT NOW()
-      )
-    `;
+    await ensureQuestionReportsTable(sql);
 
     const rows = await sql`
       SELECT

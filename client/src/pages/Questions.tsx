@@ -1,6 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
-import { Search, Heart, BookOpen } from "lucide-react";
+import { Search, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
@@ -685,24 +685,6 @@ export default function Questions() {
                       </div>
                     )}
 
-                    <div className="flex gap-3 pt-4">
-                      {question.sourceUrl && (
-                        <a
-                          href={question.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1"
-                        >
-                          <Button variant="outline" className="w-full">
-                            Ver Fonte Original
-                          </Button>
-                        </a>
-                      )}
-                      <Button className="flex-1 bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-                        <BookOpen className="w-4 h-4 mr-2" />
-                        Ver Aula Relacionada
-                      </Button>
-                    </div>
                   </div>
                 </div>
               )}
