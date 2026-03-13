@@ -175,6 +175,18 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         {/* Sidebar - Desktop */}
         <aside className="hidden md:flex md:w-64 bg-white shadow-md flex-col border-r border-gray-200">
           <div className="p-6 border-b border-gray-200">
+            {isAuthenticated && (
+              <div className="mb-5 pb-4 border-b border-gray-200 space-y-2">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Conta</p>
+                <Link
+                  href="/perfil"
+                  className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-purple-100 rounded-lg transition"
+                >
+                  <User className="w-5 h-5" />
+                  <span className="text-sm font-medium">Meu Perfil</span>
+                </Link>
+              </div>
+            )}
             <h2 className="font-bold text-lg text-gray-900 mb-4">Matérias</h2>
             <div className="mb-4">
               <input
@@ -243,13 +255,6 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
 
           {isAuthenticated && (
             <div className="p-6 border-t border-gray-200 mt-auto space-y-3">
-              <Link
-                href="/perfil"
-                className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-purple-100 rounded-lg transition"
-              >
-                <User className="w-5 h-5" />
-                <span className="text-sm font-medium">Meu Perfil</span>
-              </Link>
               {isAdmin && (
                 <Link
                   href="/admin"
