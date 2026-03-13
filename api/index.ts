@@ -683,7 +683,25 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
       return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
     }
 
-    const hasChoices = Array.isArray(choices) && choices.length >= 2;
+    const normalizedChoices = Array.isArray(choices)
+      ? choices
+          .map((choice: any) => {
+            if (typeof choice === "string") {
+              const text = choice.trim();
+              return text ? text : null;
+            }
+            if (choice && typeof choice === "object") {
+              const text = choice.text == null ? null : String(choice.text).trim();
+              const image = choice.imageUrl == null ? null : String(choice.imageUrl).trim();
+              if (!text && !image) return null;
+              return { text, imageUrl: image };
+            }
+            return null;
+          })
+          .filter(Boolean)
+      : [];
+
+    const hasChoices = normalizedChoices.length >= 2;
     const safeCorrectChoice = typeof correctChoice === "number" ? correctChoice : null;
     const safeYear = typeof year === "number" ? year : null;
 
@@ -698,7 +716,7 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
         ${safeYear},
         ${sourceUrl || null},
         ${imageUrl || null},
-        ${hasChoices ? sql.json(choices) : sql`'[]'::jsonb`},
+        ${hasChoices ? sql.json(normalizedChoices) : sql`'[]'::jsonb`},
         ${safeCorrectChoice}
       )
       RETURNING id

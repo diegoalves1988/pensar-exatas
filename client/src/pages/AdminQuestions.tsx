@@ -5,6 +5,7 @@ import { ArrowLeft, Eye, EyeOff, ImageIcon, Save, Upload, X } from "lucide-react
 import { Link } from "wouter";
 
 type Subject = { id: number; name: string };
+type AlternativeChoice = { text: string; imageUrl: string };
 
 const LABELS = ["A", "B", "C", "D", "E"];
 
@@ -28,7 +29,13 @@ export default function AdminQuestions() {
     imageUrl: "",
   });
 
-  const [choices, setChoices] = useState<string[]>(["", "", "", "", ""]);
+  const [choices, setChoices] = useState<AlternativeChoice[]>([
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+  ]);
   const [correctIndex, setCorrectIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -43,63 +50,85 @@ export default function AdminQuestions() {
     setForm((f) => ({ ...f, [field]: value }));
   }
 
-  function updateChoice(i: number, value: string) {
+  function updateChoiceText(i: number, value: string) {
     setChoices((prev) => {
       const next = [...prev];
-      next[i] = value;
+      next[i] = { ...next[i], text: value };
       return next;
     });
+  }
+
+  function updateChoiceImage(i: number, value: string) {
+    setChoices((prev) => {
+      const next = [...prev];
+      next[i] = { ...next[i], imageUrl: value };
+      return next;
+    });
+  }
+
+  async function uploadImageFile(file: File): Promise<string> {
+    if (!file.type.startsWith("image/")) {
+      throw new Error("Selecione um arquivo de imagem (PNG, JPG, etc.)");
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      throw new Error("A imagem deve ter no máximo 5 MB.");
+    }
+
+    const base64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        resolve(result.split(",")[1]);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    const res = await fetch("/api/admin/upload", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ data: base64, filename: file.name, contentType: file.type }),
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(json?.detail || json?.error || "Erro ao fazer upload da imagem");
+    }
+    return json.url;
   }
 
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type and size
-    if (!file.type.startsWith("image/")) {
-      setError("Selecione um arquivo de imagem (PNG, JPG, etc.)");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      setError("A imagem deve ter no máximo 5 MB.");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-
     setUploading(true);
     setError(null);
     try {
-      // Read file as base64
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const result = reader.result as string;
-          resolve(result.split(",")[1]); // Remove data:image/...;base64, prefix
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ data: base64, filename: file.name, contentType: file.type }),
-      });
-      const json = await res.json();
-      if (!res.ok) {
-        setError(json?.detail || json?.error || "Erro ao fazer upload da imagem");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-      updateField("imageUrl", json.url);
-    } catch {
-      setError("Erro inesperado ao fazer upload da imagem");
+      const url = await uploadImageFile(file);
+      updateField("imageUrl", url);
+    } catch (err: any) {
+      setError(err?.message || "Erro inesperado ao fazer upload da imagem");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       setUploading(false);
       // Reset input so same file can be re-selected
+      e.target.value = "";
+    }
+  }
+
+  async function handleChoiceFileUpload(choiceIndex: number, e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setError(null);
+    try {
+      const url = await uploadImageFile(file);
+      updateChoiceImage(choiceIndex, url);
+    } catch (err: any) {
+      setError(err?.message || "Erro inesperado ao fazer upload da imagem da alternativa");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      setUploading(false);
       e.target.value = "";
     }
   }
@@ -115,13 +144,14 @@ export default function AdminQuestions() {
     if (!form.statement.trim()) { setError("Preencha o enunciado da questão."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     if (!form.solution.trim()) { setError("Preencha a resolução da questão."); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
 
-    const filledChoices = choices.filter((c) => c.trim() !== "");
-    if (filledChoices.length > 0 && filledChoices.length < 2) {
-      setError("Preencha pelo menos 2 alternativas ou deixe todas em branco para questão dissertativa.");
+    const hasAnyChoiceData = choices.some((choice) => choice.text.trim() || choice.imageUrl.trim());
+    const filledChoicesCount = choices.filter((choice) => choice.text.trim() || choice.imageUrl.trim()).length;
+    if (hasAnyChoiceData && filledChoicesCount < 5) {
+      setError("Para questões objetivas, preencha as 5 alternativas (texto e/ou imagem).");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    if (filledChoices.length > 0 && correctIndex === null) {
+    if (hasAnyChoiceData && correctIndex === null) {
       setError("Selecione a alternativa correta (clique na letra).");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -139,8 +169,11 @@ export default function AdminQuestions() {
         sourceUrl: form.sourceUrl.trim() || undefined,
         imageUrl: form.imageUrl.trim() || undefined,
       };
-      if (filledChoices.length >= 2) {
-        payload.choices = filledChoices;
+      if (hasAnyChoiceData) {
+        payload.choices = choices.map((choice) => ({
+          text: choice.text.trim() || null,
+          imageUrl: choice.imageUrl.trim() || null,
+        }));
         payload.correctChoice = correctIndex;
       }
       const res = await fetch("/api/admin/questions", {
@@ -157,7 +190,13 @@ export default function AdminQuestions() {
       setSuccess("Questão criada com sucesso!");
       window.scrollTo({ top: 0, behavior: "smooth" });
       setForm({ subjectId: "", title: "", statement: "", solution: "", difficulty: "medium", year: "", sourceUrl: "", imageUrl: "" });
-      setChoices(["", "", "", "", ""]);
+      setChoices([
+        { text: "", imageUrl: "" },
+        { text: "", imageUrl: "" },
+        { text: "", imageUrl: "" },
+        { text: "", imageUrl: "" },
+        { text: "", imageUrl: "" },
+      ]);
       setCorrectIndex(null);
     } catch (err) {
       console.error("[AdminQuestions] submit error", err);
@@ -218,10 +257,10 @@ export default function AdminQuestions() {
               <img src={form.imageUrl} alt="Imagem da questão" className="max-w-full max-h-96 object-contain" />
             </div>
           )}
-          {choices.some((c) => c.trim()) && (
+          {choices.some((choice) => choice.text.trim() || choice.imageUrl.trim()) && (
             <div className="space-y-2">
-              {choices.map((c, i) =>
-                c.trim() ? (
+              {choices.map((choice, i) =>
+                choice.text.trim() || choice.imageUrl.trim() ? (
                   <div
                     key={i}
                     className={`flex items-start gap-3 p-3 rounded-lg border ${
@@ -233,7 +272,12 @@ export default function AdminQuestions() {
                     <span className={`font-bold text-sm mt-0.5 ${correctIndex === i ? "text-green-700" : "text-gray-500"}`}>
                       {LABELS[i]}
                     </span>
-                    <MaybeKaTeX text={c} />
+                    <div className="space-y-2">
+                      {choice.text.trim() && <MaybeKaTeX text={choice.text} />}
+                      {choice.imageUrl.trim() && (
+                        <img src={choice.imageUrl} alt={`Imagem alternativa ${LABELS[i]}`} className="max-h-36 rounded border" />
+                      )}
+                    </div>
                   </div>
                 ) : null
               )}
@@ -410,7 +454,7 @@ export default function AdminQuestions() {
             </div>
 
             <div className="space-y-3">
-              {choices.map((c, i) => (
+              {choices.map((choice, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <button
                     type="button"
@@ -424,16 +468,37 @@ export default function AdminQuestions() {
                   >
                     {LABELS[i]}
                   </button>
-                  <div className="flex-1">
+                  <div className="flex-1 space-y-2">
                     <input
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      value={c}
-                      onChange={(e) => updateChoice(i, e.target.value)}
-                      placeholder={`Alternativa ${LABELS[i]} (suporta LaTeX)`}
+                      value={choice.text}
+                      onChange={(e) => updateChoiceText(i, e.target.value)}
+                      placeholder={`Alternativa ${LABELS[i]} - texto (suporta LaTeX)`}
                     />
-                    {c.trim() && (
+                    <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+                      <input
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        value={choice.imageUrl}
+                        onChange={(e) => updateChoiceImage(i, e.target.value)}
+                        placeholder={`Alternativa ${LABELS[i]} - URL da imagem (opcional)`}
+                      />
+                      <label className="inline-flex items-center justify-center px-3 py-2 border border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-400 hover:bg-gray-50 text-sm text-gray-600">
+                        <Upload className="w-4 h-4 mr-1" /> Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => void handleChoiceFileUpload(i, e)}
+                          disabled={uploading}
+                        />
+                      </label>
+                    </div>
+                    {(choice.text.trim() || choice.imageUrl.trim()) && (
                       <div className="mt-1 px-2 py-1 bg-gray-50 rounded text-sm">
-                        <MaybeKaTeX text={c} />
+                        {choice.text.trim() && <MaybeKaTeX text={choice.text} />}
+                        {choice.imageUrl.trim() && (
+                          <img src={choice.imageUrl} alt={`Preview alternativa ${LABELS[i]}`} className="mt-2 max-h-28 rounded border" />
+                        )}
                       </div>
                     )}
                   </div>

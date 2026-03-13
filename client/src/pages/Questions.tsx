@@ -15,8 +15,17 @@ type ResolutionItem = {
   answeredCorrect: boolean | null;
 };
 
+type ChoiceOption =
+  | string
+  | {
+      text?: string | null;
+      imageUrl?: string | null;
+      file?: string | null;
+    };
+
 const RESOLUTIONS_CACHE_KEY = "questions-resolutions-cache-v1";
 const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/g;
+const URL_REGEX = /(https?:\/\/[^\s]+)/i;
 
 export default function Questions() {
   const [location] = useLocation();
@@ -238,6 +247,27 @@ export default function Questions() {
     }
 
     return chunks;
+  };
+
+  const normalizeChoice = (choice: ChoiceOption) => {
+    if (typeof choice === "string") {
+      const raw = choice.trim();
+      const match = raw.match(URL_REGEX);
+      const imageUrl = match?.[1] || null;
+      let text = raw;
+      if (imageUrl) {
+        text = raw.replace(imageUrl, "").replace("[Alternativa com imagem]", "").trim();
+      }
+      return {
+        text: text || null,
+        imageUrl,
+      };
+    }
+
+    return {
+      text: (choice?.text || null) as string | null,
+      imageUrl: (choice?.imageUrl || choice?.file || null) as string | null,
+    };
   };
 
   useEffect(() => {
@@ -554,7 +584,8 @@ export default function Questions() {
                     {/* multiple-choice interaction */}
                     {question.choices && question.choices.length > 0 && (
                       <div className="space-y-2">
-                        {question.choices.map((opt: string, idx: number) => {
+                        {(question.choices as ChoiceOption[]).map((opt: ChoiceOption, idx: number) => {
+                          const normalizedChoice = normalizeChoice(opt);
                           const selected = answers[question.id] === idx;
                           const correct = question.correctChoice === idx;
                           let bg = "bg-white hover:bg-gray-100";
@@ -601,7 +632,20 @@ export default function Questions() {
                               <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
                                 {label}
                               </span>
-                              <span>{opt}</span>
+                              <span className="space-y-2 block">
+                                {normalizedChoice.text ? (
+                                  <span>{normalizedChoice.text}</span>
+                                ) : (
+                                  <span className="text-gray-500 italic">Alternativa com imagem</span>
+                                )}
+                                {normalizedChoice.imageUrl && (
+                                  <img
+                                    src={normalizedChoice.imageUrl}
+                                    alt={`Imagem alternativa ${label}`}
+                                    className="max-h-36 rounded border border-gray-300"
+                                  />
+                                )}
+                              </span>
                             </button>
                           );
                         })}
