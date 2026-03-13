@@ -87,31 +87,6 @@ export default function Home() {
           <p className="text-lg md:text-xl text-purple-100 mb-8">
             Aprenda através de questões resolvidas, aulas interativas e um sistema de gamificação que torna o aprendizado divertido!
           </p>
-          <div className="flex gap-4 flex-wrap">
-            {isAuthenticated ? (
-              <>
-                <Link href="/questoes">
-                  <Button className="bg-white text-purple-600 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto">
-                    Começar Agora <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Button
-                  onClick={() => (window.location.href = getLoginUrl())}
-                  className="bg-white text-purple-600 hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto"
-                >
-                  Entrar / Cadastrar <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </>
-            )}
-            <Link href="/portfolio">
-              <Button variant="outline" className="border-white text-white hover:bg-white/20 font-bold text-lg px-8 py-6 h-auto">
-                Conhecer a professora Rejane
-              </Button>
-            </Link>
-          </div>
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-48 -mt-48 blur-3xl"></div>
       </section>
