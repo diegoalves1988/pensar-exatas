@@ -459,6 +459,60 @@ app.delete("/api/questions/:id/resolve", async (req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── POST /api/questions/:id/report ──────────────────────────────────────────
+app.post("/api/questions/:id/report", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+
+    const questionId = Number(req.params.id);
+    if (!Number.isFinite(questionId) || questionId <= 0) {
+      return res.status(400).json({ error: "invalid question id" });
+    }
+
+    const allowedCategories = [
+      "formatacao",
+      "erro_na_resposta",
+      "erro_no_enunciado",
+      "erro_nas_alternativas",
+      "nenhuma_resposta_aplicavel",
+      "outro",
+    ];
+
+    const category = String(req.body?.category || "");
+    const description = req.body?.description == null ? null : String(req.body.description).slice(0, 2000);
+
+    if (!allowedCategories.includes(category)) {
+      return res.status(400).json({ error: "invalid category" });
+    }
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS question_reports (
+        id bigserial PRIMARY KEY,
+        "userId" integer NOT NULL,
+        "questionId" integer NOT NULL,
+        category varchar(100) NOT NULL,
+        description text,
+        status varchar(32) NOT NULL DEFAULT 'open',
+        "createdAt" timestamptz NOT NULL DEFAULT NOW(),
+        "updatedAt" timestamptz NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    await sql`
+      INSERT INTO question_reports ("userId", "questionId", category, description)
+      VALUES (${user.id}, ${questionId}, ${category}, ${description})
+    `;
+
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[API] POST /api/questions/:id/report failed", err);
+    return res.status(500).json({ error: "failed to report question issue" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── GET /api/admin/questions ───────────────────────────────────────────────────
 app.get("/api/admin/questions", async (req: any, res: any) => {
   const sql = getDb();

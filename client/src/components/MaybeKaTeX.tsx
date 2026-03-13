@@ -9,13 +9,15 @@ type Props = {
 
 function isLikelyTeX(s: string): boolean {
   if (!s) return false;
-  // Quick heuristics: contains TeX markers or commands or math operators
-  const texMarkers = ["$", "\\\\", "\\frac", "^", "_", "{", "}"];
-  for (const m of texMarkers) if (s.includes(m)) return true;
-  // common TeX commands like \alpha, \sqrt etc
-  if (/\\[a-zA-Z]+/.test(s)) return true;
-  // caret followed by number/letter (e.g., x^2)
-  if (/\^[0-9a-zA-Z]/.test(s)) return true;
+  // Prefer strict signals to avoid false positives in regular Portuguese text.
+  if (s.includes("$") || s.includes("\\(") || s.includes("\\[") || s.includes("\\)") || s.includes("\\]")) {
+    return true;
+  }
+  if (/\\(frac|sqrt|left|right|cdot|times|alpha|beta|gamma|theta|pi|sum|int|mathrm|text)\b/.test(s)) {
+    return true;
+  }
+  if (/[A-Za-z0-9]\s*\^\s*[{(]?[A-Za-z0-9]/.test(s)) return true;
+  if (/[A-Za-z0-9]\s*_\s*[{(]?[A-Za-z0-9]/.test(s)) return true;
   return false;
 }
 

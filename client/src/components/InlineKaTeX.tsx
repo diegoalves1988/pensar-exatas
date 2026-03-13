@@ -8,10 +8,14 @@ type Props = {
 
 function isLikelyTeX(s: string): boolean {
   if (!s) return false;
-  if (s.includes("$") || s.includes("\\")) return true;
-  if (s.includes("^") || s.includes("_")) return true;
-  if (/\\[a-zA-Z]+/.test(s)) return true;
-  if (/\^[0-9a-zA-Z]/.test(s)) return true;
+  if (s.includes("$") || s.includes("\\(") || s.includes("\\[") || s.includes("\\)") || s.includes("\\]")) {
+    return true;
+  }
+  if (/\\(frac|sqrt|left|right|cdot|times|alpha|beta|gamma|theta|pi|sum|int|mathrm|text)\b/.test(s)) {
+    return true;
+  }
+  if (/[A-Za-z0-9]\s*\^\s*[{(]?[A-Za-z0-9]/.test(s)) return true;
+  if (/[A-Za-z0-9]\s*_\s*[{(]?[A-Za-z0-9]/.test(s)) return true;
   return false;
 }
 

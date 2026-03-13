@@ -30,6 +30,11 @@ export default function Questions() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   // track if the user chose to reveal the answer/solution for each question
   const [showSolution, setShowSolution] = useState<Record<number, boolean>>({});
+  const [reportOpen, setReportOpen] = useState<Record<number, boolean>>({});
+  const [reportCategory, setReportCategory] = useState<Record<number, string>>({});
+  const [reportDescription, setReportDescription] = useState<Record<number, string>>({});
+  const [reportLoading, setReportLoading] = useState<Record<number, boolean>>({});
+  const [reportMessage, setReportMessage] = useState<Record<number, string>>({});
 
   // Use tRPC in local dev; in production use /api/questions directly.
   const { data: questions } = trpc.questions.list.useQuery(undefined, {
@@ -219,6 +224,41 @@ export default function Questions() {
     setPublicFavorites((current) =>
       alreadyFavorite ? current.filter((favorite) => favorite.id !== questionId) : [...current, { id: questionId }]
     );
+  };
+
+  const submitQuestionReport = async (questionId: number) => {
+    if (!isAuthenticated) {
+      setReportMessage((prev) => ({ ...prev, [questionId]: "Faça login para reportar um problema." }));
+      return;
+    }
+
+    const category = reportCategory[questionId] || "formatacao";
+    const description = (reportDescription[questionId] || "").trim();
+
+    setReportLoading((prev) => ({ ...prev, [questionId]: true }));
+    setReportMessage((prev) => ({ ...prev, [questionId]: "" }));
+
+    try {
+      const response = await fetch(`/api/questions/${questionId}/report`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ category, description: description || null }),
+      });
+
+      if (!response.ok) {
+        setReportMessage((prev) => ({ ...prev, [questionId]: "Não foi possível enviar o reporte agora." }));
+        return;
+      }
+
+      setReportMessage((prev) => ({ ...prev, [questionId]: "Reporte enviado com sucesso. Obrigado!" }));
+      setReportDescription((prev) => ({ ...prev, [questionId]: "" }));
+      setReportOpen((prev) => ({ ...prev, [questionId]: false }));
+    } catch {
+      setReportMessage((prev) => ({ ...prev, [questionId]: "Não foi possível enviar o reporte agora." }));
+    } finally {
+      setReportLoading((prev) => ({ ...prev, [questionId]: false }));
+    }
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -503,20 +543,83 @@ export default function Questions() {
                       {question.choices && question.choices.length > 0 && answers[question.id] === undefined && (
                         <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
                       )}
-                      <Button
-                        variant="outline"
-                        disabled={Boolean(question.choices && question.choices.length > 0 && answers[question.id] === undefined)}
-                        onClick={() =>
-                          setShowSolution((prev) => ({
-                            ...prev,
-                            [question.id]: !prev[question.id],
-                          }))
-                        }
-                        className="w-full sm:w-auto"
-                      >
-                        {showSolution[question.id] ? "Ocultar resposta" : "Mostrar resposta"}
-                      </Button>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Button
+                          variant="outline"
+                          disabled={Boolean(question.choices && question.choices.length > 0 && answers[question.id] === undefined)}
+                          onClick={() =>
+                            setShowSolution((prev) => ({
+                              ...prev,
+                              [question.id]: !prev[question.id],
+                            }))
+                          }
+                          className="w-full sm:w-auto"
+                        >
+                          {showSolution[question.id] ? "Ocultar resposta" : "Mostrar resposta"}
+                        </Button>
+
+                        <Button
+                          variant="outline"
+                          className="w-full sm:w-auto"
+                          onClick={() =>
+                            setReportOpen((prev) => ({
+                              ...prev,
+                              [question.id]: !prev[question.id],
+                            }))
+                          }
+                        >
+                          Reportar erro
+                        </Button>
+                      </div>
                     </div>
+
+                    {reportOpen[question.id] && (
+                      <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-3">
+                        <h5 className="font-semibold text-gray-900">Reportar problema da questão</h5>
+                        <select
+                          value={reportCategory[question.id] || "formatacao"}
+                          onChange={(e) =>
+                            setReportCategory((prev) => ({
+                              ...prev,
+                              [question.id]: e.target.value,
+                            }))
+                          }
+                          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                        >
+                          <option value="formatacao">Formatação</option>
+                          <option value="erro_na_resposta">Erro na resposta</option>
+                          <option value="erro_no_enunciado">Erro no enunciado</option>
+                          <option value="erro_nas_alternativas">Erro nas alternativas</option>
+                          <option value="nenhuma_resposta_aplicavel">Nenhuma resposta aplicável</option>
+                          <option value="outro">Outro</option>
+                        </select>
+
+                        <textarea
+                          value={reportDescription[question.id] || ""}
+                          onChange={(e) =>
+                            setReportDescription((prev) => ({
+                              ...prev,
+                              [question.id]: e.target.value,
+                            }))
+                          }
+                          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm min-h-[100px]"
+                          placeholder="Descreva rapidamente o problema (opcional)"
+                        />
+
+                        <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+                          <Button
+                            onClick={() => void submitQuestionReport(question.id)}
+                            disabled={Boolean(reportLoading[question.id])}
+                            className="w-full sm:w-auto"
+                          >
+                            {reportLoading[question.id] ? "Enviando..." : "Enviar reporte"}
+                          </Button>
+                          {reportMessage[question.id] && (
+                            <p className="text-sm text-gray-600">{reportMessage[question.id]}</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Resolução: exibida somente quando o usuário clicar no botão */}
                     {showSolution[question.id] && (
