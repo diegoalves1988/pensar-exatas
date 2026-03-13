@@ -38,6 +38,7 @@ export default function AdminPanel() {
   const [subjects, setSubjects] = useState<SubjectItem[]>([]);
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
   const [reports, setReports] = useState<AdminQuestionReport[]>([]);
+  const [updatingReportId, setUpdatingReportId] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -91,6 +92,33 @@ export default function AdminPanel() {
       return;
     }
     setQuestions((current) => current.filter((question) => question.id !== questionId));
+  };
+
+  const markReportResolved = async (reportId: number) => {
+    setUpdatingReportId(reportId);
+    try {
+      const response = await fetch(`/api/admin/question-reports/${reportId}/status`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "resolved" }),
+      });
+
+      if (!response.ok) {
+        window.alert("Nao foi possivel atualizar o status do relato.");
+        return;
+      }
+
+      setReports((current) =>
+        current.map((report) =>
+          report.id === reportId ? { ...report, status: "resolved" } : report,
+        ),
+      );
+    } catch {
+      window.alert("Nao foi possivel atualizar o status do relato.");
+    } finally {
+      setUpdatingReportId(null);
+    }
   };
 
   // Redirect if not admin
@@ -256,6 +284,21 @@ export default function AdminPanel() {
                       Usuário: {report.reporterName || "Sem nome"}
                       {report.reporterEmail ? ` (${report.reporterEmail})` : ""}
                     </p>
+
+                    <div className="pt-1">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={report.status === "resolved" || updatingReportId === report.id}
+                        onClick={() => void markReportResolved(report.id)}
+                      >
+                        {report.status === "resolved"
+                          ? "Relato resolvido"
+                          : updatingReportId === report.id
+                            ? "Atualizando..."
+                            : "Marcar como resolvido"}
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>

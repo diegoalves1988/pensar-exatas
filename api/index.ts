@@ -561,6 +561,44 @@ app.get("/api/admin/question-reports", async (req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── PATCH /api/admin/question-reports/:id/status ───────────────────────────
+app.patch("/api/admin/question-reports/:id/status", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+
+    const reportId = Number(req.params.id);
+    if (!Number.isFinite(reportId) || reportId <= 0) {
+      return res.status(400).json({ error: "invalid report id" });
+    }
+
+    const status = String(req.body?.status || "");
+    const allowedStatuses = ["open", "resolved", "ignored"];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ error: "invalid status" });
+    }
+
+    const rows = await sql`
+      UPDATE question_reports
+      SET status = ${status}, "updatedAt" = NOW()
+      WHERE id = ${reportId}
+      RETURNING id, status, "updatedAt"
+    `;
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "report not found" });
+    }
+
+    return res.json({ ok: true, item: rows[0] });
+  } catch (err) {
+    console.error("[API] PATCH /api/admin/question-reports/:id/status failed", err);
+    return res.status(500).json({ error: "failed to update question report status" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── GET /api/admin/questions ───────────────────────────────────────────────────
 app.get("/api/admin/questions", async (req: any, res: any) => {
   const sql = getDb();
