@@ -25,8 +25,8 @@ function Router() {
   <Route path={"/formulas"} component={PhysicsFormulas} />
       <Route path={"/questoes"} component={Questions} />
       <Route path={"/portfolio"} component={Portfolio} />
-      <Route path={"/admin"} component={AdminPanel} />
   <Route path={"/admin/questions"} component={AdminQuestions} />
+      <Route path={"/admin"} component={AdminPanel} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

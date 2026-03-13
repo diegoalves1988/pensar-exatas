@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
 import { ArrowLeft, Eye, EyeOff, ImageIcon, Save, Upload, X } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 
 type Subject = { id: number; name: string };
 type AlternativeChoice = { text: string; imageUrl: string };
@@ -65,8 +65,10 @@ export default function AdminQuestions() {
       .finally(() => setLoading(false));
   }, []);
 
+  const search = useSearch();
+
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(search);
     const id = Number(params.get("id"));
     if (!Number.isFinite(id) || id <= 0) {
       setEditingId(null);
@@ -104,7 +106,7 @@ export default function AdminQuestions() {
         setError(err?.message || "Falha ao carregar dados da questão");
       })
       .finally(() => setLoadingQuestion(false));
-  }, []);
+  }, [search]);
 
   function updateField(field: string, value: string) {
     setForm((f) => ({ ...f, [field]: value }));
