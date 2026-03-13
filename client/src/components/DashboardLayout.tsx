@@ -48,6 +48,11 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
   const isAdmin = user?.role === 'admin';
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [subjects, setSubjects] = useState<SubjectItem[]>(FALLBACK_SUBJECTS);
+  const [subjectFilter, setSubjectFilter] = useState("");
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
+    "Física": false,
+    "Matemática": false,
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -73,6 +78,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
 
   const physicsItems = orderedSubjects.filter((item) => getSubjectArea(item.name) === "Física");
   const mathItems = orderedSubjects.filter((item) => getSubjectArea(item.name) === "Matemática");
+  const normalizedFilter = subjectFilter.trim().toLowerCase();
 
   const subjectGroups = [
     {
@@ -86,6 +92,25 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
       items: mathItems,
     },
   ];
+
+  const visibleSubjectGroups = subjectGroups.map((group) => {
+    const filteredItems = normalizedFilter
+      ? group.items.filter((item) => item.name.toLowerCase().includes(normalizedFilter))
+      : group.items;
+
+    return {
+      ...group,
+      filteredItems,
+      visibleItems:
+        normalizedFilter || expandedGroups[group.name]
+          ? filteredItems
+          : filteredItems.slice(0, 4),
+      hiddenCount:
+        normalizedFilter || expandedGroups[group.name]
+          ? 0
+          : Math.max(filteredItems.length - 4, 0),
+    };
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col">
@@ -188,17 +213,26 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         <aside className="hidden md:flex md:w-64 bg-white shadow-md flex-col border-r border-gray-200">
           <div className="p-6 border-b border-gray-200">
             <h2 className="font-bold text-lg text-gray-900 mb-4">Matérias</h2>
-            <div className="space-y-3 max-h-[52vh] overflow-y-auto pr-1">
-              {subjectGroups.map((group, idx) => (
+            <div className="mb-4">
+              <input
+                type="text"
+                value={subjectFilter}
+                onChange={(event) => setSubjectFilter(event.target.value)}
+                placeholder="Filtrar matérias"
+                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
+              />
+            </div>
+            <div className="space-y-3">
+              {visibleSubjectGroups.map((group, idx) => (
                 <details key={group.name} open={idx === 0} className="group rounded-lg border border-gray-200 bg-gray-50">
                   <summary className="list-none cursor-pointer select-none px-3 py-2 flex items-center justify-between">
                     <span className={`text-sm font-bold text-white px-2 py-1 rounded bg-gradient-to-r ${group.color}`}>
                       {group.name}
                     </span>
-                    <span className="text-xs text-gray-500">{group.items.length} tópicos</span>
+                    <span className="text-xs text-gray-500">{group.filteredItems.length} tópicos</span>
                   </summary>
                   <div className="px-2 pb-2 space-y-1">
-                    {group.items.map((subject) => (
+                    {group.visibleItems.map((subject) => (
                       <Link
                         key={subject.id}
                         href={`/questoes?subject=${subject.id}`}
@@ -208,6 +242,37 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
                         <span>{subject.name}</span>
                       </Link>
                     ))}
+                    {group.filteredItems.length === 0 && (
+                      <p className="px-3 py-2 text-sm text-gray-400">Nenhuma matéria encontrada.</p>
+                    )}
+                    {group.hiddenCount > 0 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedGroups((current) => ({
+                            ...current,
+                            [group.name]: true,
+                          }))
+                        }
+                        className="w-full rounded-md px-3 py-2 text-left text-sm font-medium text-purple-600 hover:bg-white transition"
+                      >
+                        Ver mais {group.hiddenCount}
+                      </button>
+                    )}
+                    {!normalizedFilter && expandedGroups[group.name] && group.filteredItems.length > 4 && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedGroups((current) => ({
+                            ...current,
+                            [group.name]: false,
+                          }))
+                        }
+                        className="w-full rounded-md px-3 py-2 text-left text-sm font-medium text-gray-500 hover:bg-white transition"
+                      >
+                        Mostrar menos
+                      </button>
+                    )}
                   </div>
                 </details>
               ))}
