@@ -35,26 +35,6 @@ const FALLBACK_SUBJECTS: SubjectItem[] = [
   { id: 107, name: "Estatística", icon: "📊", description: "Leitura de dados", order: 107 },
 ];
 
-function getSubjectArea(name: string): "Física" | "Matemática" {
-  const normalized = name.toLowerCase();
-  const physicsTerms = [
-    "mec", "cinem", "din", "eletro", "onda", "termo", "opt", "ópt", "hidro", "física", "fisica",
-  ];
-  return physicsTerms.some((term) => normalized.includes(term)) ? "Física" : "Matemática";
-}
-
-function getSubjectCode(name: string) {
-  const clean = name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim();
-  const parts = clean.split(/\s+/).filter(Boolean);
-  if (parts.length >= 2) {
-    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-  }
-  return clean.slice(0, 2).toUpperCase();
-}
-
 export default function Questions() {
   const [location] = useLocation();
   const { isAuthenticated } = useAuth();
@@ -199,7 +179,7 @@ export default function Questions() {
 
       {/* Search and Filters */}
       <div className="bg-white rounded-xl shadow-md p-6 space-y-4">
-        <div className="relative">
+        <div className="flex gap-3 flex-col md:flex-row md:items-center">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
@@ -210,6 +190,20 @@ export default function Questions() {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
+          <select
+            value={selectedSubject ?? "all"}
+            onChange={(e) =>
+              setSelectedSubject(e.target.value === "all" ? null : Number(e.target.value))
+            }
+            className="min-w-[220px] rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <option value="all">Todas as matérias</option>
+            {subjectList.map((subject) => (
+              <option key={subject.id} value={subject.id}>
+                {subject.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Difficulty Filter */}
@@ -282,10 +276,7 @@ export default function Questions() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-xs font-bold tracking-wide text-gray-600">
-                        {getSubjectCode(subjectList.find((s) => s.id === Number(question.subjectId))?.name || "QT")}
-                      </span>
+                    <div className="mb-3">
                       <h3 className="text-lg font-bold text-gray-900">
                         <InlineKaTeX text={String(question.title || "")} />
                       </h3>

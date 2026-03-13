@@ -43,18 +43,6 @@ function getSubjectGradient(name: string) {
   return "from-emerald-500 to-teal-600";
 }
 
-function getSubjectCode(name: string) {
-  const clean = name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim();
-  const parts = clean.split(/\s+/).filter(Boolean);
-  if (parts.length >= 2) {
-    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-  }
-  return clean.slice(0, 2).toUpperCase();
-}
-
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { data: subjects } = trpc.subjects.list.useQuery();
@@ -152,10 +140,8 @@ export default function Home() {
           {orderedSubjects.map((subject) => (
             <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
               <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:scale-105 cursor-pointer h-full">
-                <div className={`bg-gradient-to-r ${getSubjectGradient(subject.name)} p-8 text-white text-4xl text-center`}>
-                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/25 bg-white/15 text-lg font-bold tracking-[0.2em] backdrop-blur-sm">
-                    {getSubjectCode(subject.name)}
-                  </div>
+                <div className={`bg-gradient-to-r ${getSubjectGradient(subject.name)} px-6 py-5 text-white`}>
+                  <p className="text-lg font-bold">{subject.name}</p>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{subject.name}</h3>
