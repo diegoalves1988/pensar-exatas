@@ -57,6 +57,75 @@ async function getSessionUser(req: any, sql: any) {
   return user ?? null;
 }
 
+async function ensureResolutionsTable(sql: any) {
+  await sql`
+    CREATE TABLE IF NOT EXISTS user_question_resolutions (
+      id bigserial PRIMARY KEY,
+      "userId" integer NOT NULL,
+      "questionId" integer NOT NULL,
+      "selectedChoice" integer,
+      "answeredCorrect" boolean,
+      "createdAt" timestamptz NOT NULL DEFAULT NOW(),
+      "updatedAt" timestamptz NOT NULL DEFAULT NOW(),
+      UNIQUE ("userId", "questionId")
+    )
+  `;
+
+  await sql`
+    ALTER TABLE user_question_resolutions
+    ADD COLUMN IF NOT EXISTS "selectedChoice" integer
+  `;
+  await sql`
+    ALTER TABLE user_question_resolutions
+    ADD COLUMN IF NOT EXISTS "updatedAt" timestamptz NOT NULL DEFAULT NOW()
+  `;
+}
+
+async function recalculateUserProgress(sql: any, userId: number) {
+  const attempts = await sql`
+    SELECT "answeredCorrect"
+    FROM user_question_resolutions
+    WHERE "userId" = ${userId}
+    ORDER BY "createdAt" ASC, id ASC
+  `;
+
+  const questionsResolved = attempts.length;
+  let totalPoints = 0;
+  let currentStreak = 0;
+  let bestStreak = 0;
+  let runningStreak = 0;
+
+  for (const attempt of attempts) {
+    const correct = Boolean(attempt.answeredCorrect);
+    totalPoints += correct ? 1 : -1;
+    if (correct) {
+      runningStreak += 1;
+      if (runningStreak > bestStreak) bestStreak = runningStreak;
+    } else {
+      runningStreak = 0;
+    }
+  }
+
+  for (let i = attempts.length - 1; i >= 0; i -= 1) {
+    if (attempts[i].answeredCorrect) {
+      currentStreak += 1;
+    } else {
+      break;
+    }
+  }
+
+  await sql`
+    INSERT INTO user_progress ("userId", "questionsResolved", "totalPoints", "currentStreak", "bestStreak", "createdAt", "updatedAt")
+    VALUES (${userId}, ${questionsResolved}, ${totalPoints}, ${currentStreak}, ${bestStreak}, NOW(), NOW())
+    ON CONFLICT ("userId") DO UPDATE SET
+      "questionsResolved" = EXCLUDED."questionsResolved",
+      "totalPoints" = EXCLUDED."totalPoints",
+      "currentStreak" = EXCLUDED."currentStreak",
+      "bestStreak" = EXCLUDED."bestStreak",
+      "updatedAt" = NOW()
+  `;
+}
+
 // ─── Supabase Storage helpers ─────────────────────────────────────────────────
 function getSupabaseConfig() {
   const dbUrl = process.env.DATABASE_URL || "";
@@ -300,6 +369,28 @@ app.get("/api/questions", async (_req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── GET /api/questions/resolutions ───────────────────────────────────────────
+app.get("/api/questions/resolutions", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+
+    await ensureResolutionsTable(sql);
+    const rows = await sql`
+      SELECT "questionId", "selectedChoice", "answeredCorrect"
+      FROM user_question_resolutions
+      WHERE "userId" = ${user.id}
+    `;
+
+    return res.json({ items: rows });
+  } catch (err) {
+    console.error("[API] GET /api/questions/resolutions failed", err);
+    return res.status(500).json({ error: "failed to load saved resolutions" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── POST /api/questions/:id/resolve ──────────────────────────────────────────
 app.post("/api/questions/:id/resolve", async (req: any, res: any) => {
   const sql = getDb();
@@ -313,61 +404,58 @@ app.post("/api/questions/:id/resolve", async (req: any, res: any) => {
       return res.status(400).json({ error: "invalid question id" });
     }
 
-    // Keep this self-contained in serverless: create tracking table if needed.
-    await sql`
-      CREATE TABLE IF NOT EXISTS user_question_resolutions (
-        id bigserial PRIMARY KEY,
-        "userId" integer NOT NULL,
-        "questionId" integer NOT NULL,
-        "answeredCorrect" boolean,
-        "createdAt" timestamptz NOT NULL DEFAULT NOW(),
-        UNIQUE ("userId", "questionId")
-      )
-    `;
-
+    await ensureResolutionsTable(sql);
     if (typeof req.body?.answeredCorrect !== "boolean") {
       return res.status(400).json({ error: "answeredCorrect must be a boolean" });
     }
+    if (typeof req.body?.selectedChoice !== "number" || req.body.selectedChoice < 0) {
+      return res.status(400).json({ error: "selectedChoice must be a non-negative number" });
+    }
 
     const answeredCorrect = req.body.answeredCorrect;
-    const inserted = await sql`
-      INSERT INTO user_question_resolutions ("userId", "questionId", "answeredCorrect")
-      VALUES (${user.id}, ${questionId}, ${answeredCorrect})
-      ON CONFLICT ("userId", "questionId") DO NOTHING
-      RETURNING id
+    const selectedChoice = req.body.selectedChoice;
+    await sql`
+      INSERT INTO user_question_resolutions ("userId", "questionId", "selectedChoice", "answeredCorrect", "updatedAt")
+      VALUES (${user.id}, ${questionId}, ${selectedChoice}, ${answeredCorrect}, NOW())
+      ON CONFLICT ("userId", "questionId") DO UPDATE SET
+        "selectedChoice" = EXCLUDED."selectedChoice",
+        "answeredCorrect" = EXCLUDED."answeredCorrect",
+        "updatedAt" = NOW()
     `;
 
-    if (inserted.length === 0) {
-      return res.json({ ok: true, alreadyResolved: true });
-    }
+    await recalculateUserProgress(sql, Number(user.id));
 
-    if (answeredCorrect) {
-      await sql`
-        INSERT INTO user_progress ("userId", "questionsResolved", "totalPoints", "currentStreak", "bestStreak", "createdAt", "updatedAt")
-        VALUES (${user.id}, 1, 1, 1, 1, NOW(), NOW())
-        ON CONFLICT ("userId") DO UPDATE SET
-          "questionsResolved" = user_progress."questionsResolved" + 1,
-          "totalPoints" = user_progress."totalPoints" + 1,
-          "currentStreak" = user_progress."currentStreak" + 1,
-          "bestStreak" = GREATEST(user_progress."bestStreak", user_progress."currentStreak" + 1),
-          "updatedAt" = NOW()
-      `;
-    } else {
-      await sql`
-        INSERT INTO user_progress ("userId", "questionsResolved", "totalPoints", "currentStreak", "bestStreak", "createdAt", "updatedAt")
-        VALUES (${user.id}, 1, -1, 0, 0, NOW(), NOW())
-        ON CONFLICT ("userId") DO UPDATE SET
-          "questionsResolved" = user_progress."questionsResolved" + 1,
-          "totalPoints" = user_progress."totalPoints" - 1,
-          "currentStreak" = 0,
-          "updatedAt" = NOW()
-      `;
-    }
-
-    return res.json({ ok: true, alreadyResolved: false });
+    return res.json({ ok: true });
   } catch (err) {
     console.error("[API] POST /api/questions/:id/resolve failed", err);
     return res.status(500).json({ error: "failed to save question resolution" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── DELETE /api/questions/:id/resolve ───────────────────────────────────────
+app.delete("/api/questions/:id/resolve", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+
+    const questionId = Number(req.params.id);
+    if (!Number.isFinite(questionId) || questionId <= 0) {
+      return res.status(400).json({ error: "invalid question id" });
+    }
+
+    await ensureResolutionsTable(sql);
+    await sql`
+      DELETE FROM user_question_resolutions
+      WHERE "userId" = ${user.id} AND "questionId" = ${questionId}
+    `;
+
+    await recalculateUserProgress(sql, Number(user.id));
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[API] DELETE /api/questions/:id/resolve failed", err);
+    return res.status(500).json({ error: "failed to remove question resolution" });
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 

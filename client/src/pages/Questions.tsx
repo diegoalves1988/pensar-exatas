@@ -9,6 +9,12 @@ import MaybeKaTeX from "@/components/MaybeKaTeX";
 import InlineKaTeX from "@/components/InlineKaTeX";
 import { FALLBACK_SUBJECTS, sortSubjects, type SubjectItem } from "@/lib/subjects";
 
+type ResolutionItem = {
+  questionId: number;
+  selectedChoice: number | null;
+  answeredCorrect: boolean | null;
+};
+
 export default function Questions() {
   const [location] = useLocation();
   const { isAuthenticated } = useAuth();
@@ -102,6 +108,33 @@ export default function Questions() {
     };
   }, [isAuthenticated, isLocalDev]);
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setAnswers({});
+      return;
+    }
+    let cancelled = false;
+    fetch("/api/questions/resolutions", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (cancelled || !Array.isArray(data?.items)) return;
+        const nextAnswers: Record<number, number> = {};
+        for (const item of data.items as ResolutionItem[]) {
+          if (typeof item.questionId === "number" && typeof item.selectedChoice === "number") {
+            nextAnswers[item.questionId] = item.selectedChoice;
+          }
+        }
+        setAnswers(nextAnswers);
+      })
+      .catch(() => {
+        if (!cancelled) setAnswers({});
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated]);
+
   const subjectList = sortSubjects(publicSubjects.length > 0 ? publicSubjects : FALLBACK_SUBJECTS);
 
   const normalizeQuestionText = (text: string) =>
@@ -144,17 +177,31 @@ export default function Questions() {
     return favoriteItems.some((favorite) => favorite.id === questionId);
   };
 
-  const markQuestionResolved = async (questionId: number, answeredCorrect: boolean) => {
-    if (!isAuthenticated) return;
+  const saveQuestionResolution = async (questionId: number, selectedChoice: number, answeredCorrect: boolean) => {
+    if (!isAuthenticated) return true;
     try {
-      await fetch(`/api/questions/${questionId}/resolve`, {
+      const response = await fetch(`/api/questions/${questionId}/resolve`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answeredCorrect }),
+        body: JSON.stringify({ selectedChoice, answeredCorrect }),
       });
+      return response.ok;
     } catch {
-      // keep UX smooth even if progress tracking fails temporarily
+      return false;
+    }
+  };
+
+  const removeQuestionResolution = async (questionId: number) => {
+    if (!isAuthenticated) return true;
+    try {
+      const response = await fetch(`/api/questions/${questionId}/resolve`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      return response.ok;
+    } catch {
+      return false;
     }
   };
 
@@ -390,9 +437,8 @@ export default function Questions() {
                         {question.choices.map((opt: string, idx: number) => {
                           const selected = answers[question.id] === idx;
                           const correct = question.correctChoice === idx;
-                          const disabled = answers[question.id] !== undefined;
                           let bg = "bg-white hover:bg-gray-100";
-                          if (disabled && selected) {
+                          if (answers[question.id] !== undefined && selected) {
                             bg = correct ? "bg-green-200" : "bg-red-200";
                           }
                           const label = String.fromCharCode(65 + idx); // A, B, C, D, E
@@ -400,12 +446,36 @@ export default function Questions() {
                             <button
                               key={idx}
                               className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300 flex items-start gap-3`}
-                              onClick={() => {
-                                if (disabled) return;
-                                setAnswers(a => ({ ...a, [question.id]: idx }));
-                                void markQuestionResolved(question.id, idx === question.correctChoice);
+                              onClick={async () => {
+                                const prevSelected = answers[question.id];
+                                if (prevSelected === idx) {
+                                  setAnswers((a) => {
+                                    const copy = { ...a };
+                                    delete copy[question.id];
+                                    return copy;
+                                  });
+                                  const ok = await removeQuestionResolution(question.id);
+                                  if (!ok) {
+                                    setAnswers((a) => ({ ...a, [question.id]: idx }));
+                                  }
+                                  return;
+                                }
+
+                                setAnswers((a) => ({ ...a, [question.id]: idx }));
+                                const answeredCorrect = idx === question.correctChoice;
+                                const ok = await saveQuestionResolution(question.id, idx, answeredCorrect);
+                                if (!ok) {
+                                  if (prevSelected === undefined) {
+                                    setAnswers((a) => {
+                                      const copy = { ...a };
+                                      delete copy[question.id];
+                                      return copy;
+                                    });
+                                  } else {
+                                    setAnswers((a) => ({ ...a, [question.id]: prevSelected }));
+                                  }
+                                }
                               }}
-                              disabled={disabled}
                             >
                               <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
                                 {label}
