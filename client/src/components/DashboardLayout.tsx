@@ -4,43 +4,11 @@ import { APP_TITLE } from "@/const";
 import { Menu, X, LogOut, User, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { FALLBACK_SUBJECTS, getSubjectArea, sortSubjects, type SubjectItem } from "@/lib/subjects";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
   title?: string;
-}
-
-type SubjectItem = {
-  id: number;
-  name: string;
-  icon?: string | null;
-  order?: number | null;
-};
-
-const FALLBACK_SUBJECTS: SubjectItem[] = [
-  { id: 1, name: "Mecânica", icon: "⚙️", order: 1 },
-  { id: 2, name: "Eletromagnetismo", icon: "⚡", order: 2 },
-  { id: 3, name: "Ondulatória", icon: "〰️", order: 3 },
-  { id: 4, name: "Termodinâmica", icon: "🔥", order: 4 },
-  { id: 5, name: "Óptica", icon: "💡", order: 5 },
-  { id: 6, name: "Cinemática", icon: "🏃", order: 6 },
-  { id: 7, name: "Dinâmica", icon: "🧲", order: 7 },
-  { id: 8, name: "Hidrostática", icon: "🌊", order: 8 },
-  { id: 101, name: "Aritmética", icon: "➗", order: 101 },
-  { id: 102, name: "Álgebra", icon: "🧮", order: 102 },
-  { id: 103, name: "Funções", icon: "📈", order: 103 },
-  { id: 104, name: "Geometria", icon: "📐", order: 104 },
-  { id: 105, name: "Trigonometria", icon: "📏", order: 105 },
-  { id: 106, name: "Probabilidade", icon: "🎲", order: 106 },
-  { id: 107, name: "Estatística", icon: "📊", order: 107 },
-];
-
-function getSubjectArea(name: string): "Física" | "Matemática" {
-  const normalized = name.toLowerCase();
-  const physicsTerms = [
-    "mec", "cinem", "din", "eletro", "onda", "termo", "opt", "ópt", "hidro", "física", "fisica",
-  ];
-  return physicsTerms.some((term) => normalized.includes(term)) ? "Física" : "Matemática";
 }
 
 export default function DashboardLayout({ children, title }: DashboardLayoutProps) {
@@ -72,9 +40,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
     };
   }, []);
 
-  const orderedSubjects = subjects
-    .slice()
-    .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
+  const orderedSubjects = sortSubjects(subjects);
 
   const physicsItems = orderedSubjects.filter((item) => getSubjectArea(item.name) === "Física");
   const mathItems = orderedSubjects.filter((item) => getSubjectArea(item.name) === "Matemática");
@@ -133,9 +99,6 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             </Link>
             <Link href="/questoes" className="text-gray-700 hover:text-purple-600 font-medium transition">
               Questões
-            </Link>
-            <Link href="/formulas" className="text-gray-700 hover:text-purple-600 font-medium transition">
-              Fórmulas
             </Link>
             <Link href="/portfolio" className="text-gray-700 hover:text-purple-600 font-medium transition">
               Portfólio
@@ -317,33 +280,25 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-8 mt-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="font-bold text-white mb-4">Pensar Exatas</h3>
-              <p className="text-sm">Aprenda exatas de forma gamificada!</p>
+              <p className="text-sm">Questões comentadas para estudar Física e Matemática com foco no ENEM.</p>
             </div>
             <div>
               <h4 className="font-bold text-white mb-4">Recursos</h4>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/questoes" className="hover:text-purple-400 transition">Questões</Link></li>
-                <li><Link href="/aulas" className="hover:text-purple-400 transition">Aulas</Link></li>
+                <li><Link href="/perfil" className="hover:text-purple-400 transition">Meu Perfil</Link></li>
                 <li><Link href="/portfolio" className="hover:text-purple-400 transition">Portfólio</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold text-white mb-4">Sobre</h4>
+              <h4 className="font-bold text-white mb-4">Acesso Rápido</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-purple-400 transition">Sobre Nós</a></li>
-                <li><a href="#" className="hover:text-purple-400 transition">Contato</a></li>
-                <li><a href="#" className="hover:text-purple-400 transition">Política de Privacidade</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-white mb-4">Redes Sociais</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-purple-400 transition">Instagram</a></li>
-                <li><a href="#" className="hover:text-purple-400 transition">YouTube</a></li>
-                <li><a href="#" className="hover:text-purple-400 transition">LinkedIn</a></li>
+                <li><Link href="/" className="hover:text-purple-400 transition">Início</Link></li>
+                <li><Link href="/questoes" className="hover:text-purple-400 transition">Resolver Questões</Link></li>
+                {isAdmin && <li><Link href="/admin" className="hover:text-purple-400 transition">Painel Admin</Link></li>}
               </ul>
             </div>
           </div>

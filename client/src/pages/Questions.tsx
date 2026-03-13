@@ -7,33 +7,7 @@ import { useLocation } from "wouter";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
 import InlineKaTeX from "@/components/InlineKaTeX";
-
-type SubjectItem = {
-  id: number;
-  name: string;
-  description?: string | null;
-  icon?: string | null;
-  color?: string | null;
-  order?: number | null;
-};
-
-const FALLBACK_SUBJECTS: SubjectItem[] = [
-  { id: 1, name: "Mecânica", icon: "⚙️", description: "Movimento, força e energia", order: 1 },
-  { id: 2, name: "Eletromagnetismo", icon: "⚡", description: "Eletricidade e magnetismo", order: 2 },
-  { id: 3, name: "Ondulatória", icon: "〰️", description: "Ondas e fenômenos ondulatórios", order: 3 },
-  { id: 4, name: "Termodinâmica", icon: "🔥", description: "Calor e temperatura", order: 4 },
-  { id: 5, name: "Óptica", icon: "💡", description: "Luz e óptica", order: 5 },
-  { id: 6, name: "Cinemática", icon: "🏃", description: "Descrição do movimento", order: 6 },
-  { id: 7, name: "Dinâmica", icon: "🧲", description: "Forças e leis de Newton", order: 7 },
-  { id: 8, name: "Hidrostática", icon: "🌊", description: "Fluidos em equilíbrio", order: 8 },
-  { id: 101, name: "Aritmética", icon: "➗", description: "Números e operações", order: 101 },
-  { id: 102, name: "Álgebra", icon: "🧮", description: "Expressões e equações", order: 102 },
-  { id: 103, name: "Funções", icon: "📈", description: "Estudo de funções", order: 103 },
-  { id: 104, name: "Geometria", icon: "📐", description: "Plana e espacial", order: 104 },
-  { id: 105, name: "Trigonometria", icon: "📏", description: "Razões trigonométricas", order: 105 },
-  { id: 106, name: "Probabilidade", icon: "🎲", description: "Contagem e chance", order: 106 },
-  { id: 107, name: "Estatística", icon: "📊", description: "Leitura de dados", order: 107 },
-];
+import { FALLBACK_SUBJECTS, sortSubjects, type SubjectItem } from "@/lib/subjects";
 
 export default function Questions() {
   const [location] = useLocation();
@@ -45,6 +19,7 @@ export default function Questions() {
   const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   // track answers for multiple-choice questions: questionId -> selected index
   const [answers, setAnswers] = useState<Record<number, number>>({});
   // track if the user chose to reveal the answer/solution for each question
@@ -87,7 +62,8 @@ export default function Questions() {
       cancelled = true;
     };
   }, []);
-  const { data: favorites } = trpc.favorites.list.useQuery(undefined, { enabled: isAuthenticated });
+  const { data: favorites } = trpc.favorites.list.useQuery(undefined, { enabled: isAuthenticated && isLocalDev });
+  const [publicFavorites, setPublicFavorites] = useState<Array<{ id: number }>>([]);
   const [publicSubjects, setPublicSubjects] = useState<SubjectItem[]>(FALLBACK_SUBJECTS);
 
   useEffect(() => {
@@ -108,9 +84,25 @@ export default function Questions() {
     };
   }, []);
 
-  const subjectList = (publicSubjects.length > 0 ? publicSubjects : FALLBACK_SUBJECTS)
-    .slice()
-    .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
+  useEffect(() => {
+    if (!isAuthenticated || isLocalDev) return;
+    let cancelled = false;
+    fetch("/api/favorites", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items)) {
+          setPublicFavorites(data.items);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setPublicFavorites([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated, isLocalDev]);
+
+  const subjectList = sortSubjects(publicSubjects.length > 0 ? publicSubjects : FALLBACK_SUBJECTS);
 
   const normalizeQuestionText = (text: string) =>
     text
@@ -130,6 +122,10 @@ export default function Questions() {
     setSelectedSubject(null);
   }, [location]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedSubject, selectedDifficulty]);
+
   const allQuestions = questions ?? publicQuestions ?? [];
   const filteredQuestions = allQuestions.filter((q: any) => {
     const matchesSearch = q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -138,9 +134,30 @@ export default function Questions() {
     const matchesDifficulty = !selectedDifficulty || q.difficulty === selectedDifficulty;
     return matchesSearch && matchesSubject && matchesDifficulty;
   });
+  const pageSize = 20;
+  const totalPages = Math.max(1, Math.ceil(filteredQuestions.length / pageSize));
+  const paginatedQuestions = filteredQuestions.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+  const favoriteItems = isLocalDev ? favorites ?? [] : publicFavorites;
 
   const isFavorite = (questionId: number) => {
-    return favorites?.some(f => f.id === questionId) || false;
+    return favoriteItems.some((favorite) => favorite.id === questionId);
+  };
+
+  const toggleFavorite = async (questionId: number) => {
+    if (!isAuthenticated) return;
+    const alreadyFavorite = isFavorite(questionId);
+    if (isLocalDev) return;
+    const response = await fetch(alreadyFavorite ? `/api/favorites/${questionId}` : "/api/favorites", {
+      method: alreadyFavorite ? "DELETE" : "POST",
+      credentials: "include",
+      headers: alreadyFavorite ? undefined : { "Content-Type": "application/json" },
+      body: alreadyFavorite ? undefined : JSON.stringify({ questionId }),
+    });
+    if (!response.ok) return;
+    setPublicFavorites((current) =>
+      alreadyFavorite ? current.filter((favorite) => favorite.id !== questionId) : [...current, { id: questionId }]
+    );
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -261,7 +278,7 @@ export default function Questions() {
             <p className="text-gray-600 text-lg">Nenhuma questão encontrada</p>
           </div>
         ) : (
-          filteredQuestions.map((question) => (
+          paginatedQuestions.map((question) => (
             <div
               key={question.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
@@ -310,7 +327,14 @@ export default function Questions() {
                   </div>
                   <div className="flex gap-2">
                     {isAuthenticated && (
-                      <button className="p-2 hover:bg-red-100 rounded-lg transition">
+                      <button
+                        className="p-2 hover:bg-red-100 rounded-lg transition"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          void toggleFavorite(question.id);
+                        }}
+                        aria-label={isFavorite(question.id) ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                      >
                         <Heart
                           className={`w-5 h-5 ${
                             isFavorite(question.id)
@@ -452,8 +476,19 @@ export default function Questions() {
 
       {/* Pagination Info */}
       <div className="text-center text-gray-600 py-4">
-        Mostrando {filteredQuestions.length} de {(questions?.length ?? publicQuestions?.length ?? 0)} questões
+        Mostrando {paginatedQuestions.length} de {filteredQuestions.length} questões filtradas
       </div>
+      {filteredQuestions.length > pageSize && (
+        <div className="flex items-center justify-center gap-3 pb-4">
+          <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}>
+            Anterior
+          </Button>
+          <span className="text-sm text-gray-600">Página {currentPage} de {totalPages}</span>
+          <Button variant="outline" disabled={currentPage === totalPages} onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}>
+            Próxima
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

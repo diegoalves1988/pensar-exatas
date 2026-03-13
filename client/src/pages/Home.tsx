@@ -7,31 +7,7 @@ import { Link } from "wouter";
 import { useEffect, useState } from "react";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
 import KaTeXRenderer from "@/components/KaTeXRenderer";
-
-type SubjectItem = {
-  id: number;
-  name: string;
-  description?: string | null;
-  icon?: string | null;
-  order?: number | null;
-};
-
-const FALLBACK_SUBJECTS: SubjectItem[] = [
-  { id: 1, name: "Mecânica", icon: "⚙️", description: "Movimento, força e energia", order: 1 },
-  { id: 2, name: "Eletromagnetismo", icon: "⚡", description: "Eletricidade e magnetismo", order: 2 },
-  { id: 3, name: "Ondulatória", icon: "〰️", description: "Ondas e fenômenos ondulatórios", order: 3 },
-  { id: 4, name: "Termodinâmica", icon: "🔥", description: "Calor e temperatura", order: 4 },
-  { id: 5, name: "Óptica", icon: "💡", description: "Luz e fenômenos ópticos", order: 5 },
-  { id: 6, name: "Cinemática", icon: "🏃", description: "Descrição do movimento", order: 6 },
-  { id: 7, name: "Dinâmica", icon: "🧲", description: "Forças e leis de Newton", order: 7 },
-  { id: 8, name: "Hidrostática", icon: "🌊", description: "Fluidos e empuxo", order: 8 },
-  { id: 101, name: "Álgebra", icon: "🧮", description: "Expressões e equações", order: 101 },
-  { id: 102, name: "Funções", icon: "📈", description: "Análise de funções", order: 102 },
-  { id: 103, name: "Geometria", icon: "📐", description: "Plana e espacial", order: 103 },
-  { id: 104, name: "Trigonometria", icon: "📏", description: "Relações e identidades", order: 104 },
-  { id: 105, name: "Probabilidade", icon: "🎲", description: "Contagem e probabilidade", order: 105 },
-  { id: 106, name: "Estatística", icon: "📊", description: "Leitura e análise de dados", order: 106 },
-];
+import { FALLBACK_SUBJECTS, sortSubjects, type SubjectItem } from "@/lib/subjects";
 
 function getSubjectGradient(name: string) {
   const normalized = name.toLowerCase();
@@ -74,9 +50,7 @@ export default function Home() {
     publicSubjects ??
     FALLBACK_SUBJECTS;
 
-  const orderedSubjects = subjectList
-    .slice()
-    .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
+  const orderedSubjects = sortSubjects(subjectList);
 
   return (
     <div className="space-y-12">
@@ -121,8 +95,8 @@ export default function Home() {
         <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Badges para Conquistar</p>
-              <p className="text-4xl font-bold text-gray-900 mt-2">10+</p>
+              <p className="text-gray-600 text-sm font-medium">Foco Atual</p>
+              <p className="text-4xl font-bold text-gray-900 mt-2">ENEM</p>
             </div>
             <Trophy className="w-12 h-12 text-green-500 opacity-20" />
           </div>
@@ -155,9 +129,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* Ad Banner */}
-      <AdBannerPlaceholder className="my-8" />
 
       {/* Features Section */}
       <section className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-2xl p-8 md:p-12">
@@ -233,8 +204,6 @@ export default function Home() {
         )}
       </section>
 
-      {/* Ad Banner */}
-      <AdBannerPlaceholder className="mt-8" />
     </div>
   );
 }

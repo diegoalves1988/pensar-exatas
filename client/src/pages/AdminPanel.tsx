@@ -10,11 +10,20 @@ type SubjectItem = {
   icon?: string | null;
 };
 
+type AdminQuestion = {
+  id: number;
+  title: string;
+  difficulty: string | null;
+  year: number | null;
+  subjectName?: string | null;
+};
+
 export default function AdminPanel() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<"questions" | "lessons" | "subjects" | "portfolio">("questions");
   const [subjects, setSubjects] = useState<SubjectItem[]>([]);
+  const [questions, setQuestions] = useState<AdminQuestion[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -29,10 +38,35 @@ export default function AdminPanel() {
         // Keep empty list on fetch failure.
       });
 
+    fetch("/api/admin/questions", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items)) {
+          setQuestions(data.items);
+        }
+      })
+      .catch(() => {
+        // Keep empty list on fetch failure.
+      });
+
     return () => {
       cancelled = true;
     };
   }, []);
+
+  const deleteQuestion = async (questionId: number) => {
+    const confirmed = window.confirm("Excluir esta questão? Esta ação não pode ser desfeita.");
+    if (!confirmed) return;
+    const response = await fetch(`/api/admin/questions/${questionId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      window.alert("Não foi possível excluir a questão.");
+      return;
+    }
+    setQuestions((current) => current.filter((question) => question.id !== questionId));
+  };
 
   // Redirect if not admin
   if (user?.role !== "admin") {
@@ -113,10 +147,35 @@ export default function AdminPanel() {
                 Nova Questão
               </Button>
             </div>
-            <div className="text-center py-12 text-gray-500">
-              <p>Nenhuma questão cadastrada ainda.</p>
-              <p className="text-sm mt-2">Clique no botão acima para adicionar a primeira questão.</p>
-            </div>
+            {questions.length === 0 ? (
+              <div className="text-center py-12 text-gray-500">
+                <p>Nenhuma questão cadastrada ainda.</p>
+                <p className="text-sm mt-2">Clique no botão acima para adicionar a primeira questão.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {questions.map((question) => (
+                  <div key={question.id} className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 p-4">
+                    <div>
+                      <p className="font-semibold text-gray-900">{question.title}</p>
+                      <p className="text-sm text-gray-500">
+                        {question.subjectName || "Sem matéria"}
+                        {question.year ? ` • ENEM ${question.year}` : ""}
+                        {question.difficulty ? ` • ${question.difficulty}` : ""}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="sm" onClick={() => setLocation("/admin/questions")}>
+                        <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => deleteQuestion(question.id)}>
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -124,14 +183,9 @@ export default function AdminPanel() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-900">Gerenciar Aulas</h2>
-              <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-                <Plus className="w-4 h-4 mr-2" />
-                Nova Aula
-              </Button>
             </div>
-            <div className="text-center py-12 text-gray-500">
-              <p>Nenhuma aula cadastrada ainda.</p>
-              <p className="text-sm mt-2">Clique no botão acima para adicionar a primeira aula.</p>
+            <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-gray-500">
+              Módulo de aulas em desenvolvimento. Quando houver conteúdo real, esta aba volta a ganhar ações.
             </div>
           </div>
         )}
@@ -174,21 +228,9 @@ export default function AdminPanel() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-900">Gerenciar Portfólio</h2>
-              <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white">
-                <Plus className="w-4 h-4 mr-2" />
-                Novo Item
-              </Button>
             </div>
-            <div className="space-y-4">
-              <div className="p-4 border border-gray-200 rounded-lg">
-                <h3 className="font-bold text-gray-900 mb-2">Informações do Perfil</h3>
-                <p className="text-gray-600 text-sm mb-4">Atualize seu nome, título e bio</p>
-                <Button variant="outline">Editar Perfil</Button>
-              </div>
-              <div className="text-center py-12 text-gray-500">
-                <p>Nenhum item de portfólio cadastrado ainda.</p>
-                <p className="text-sm mt-2">Clique no botão acima para adicionar itens (educação, experiência, projetos).</p>
-              </div>
+            <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-8 text-center text-gray-500">
+              O portfólio público já está online, mas o painel de edição ainda precisa ser consolidado.
             </div>
           </div>
         )}

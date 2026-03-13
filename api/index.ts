@@ -50,6 +50,13 @@ function getCookie(req: any) {
   return cookies[COOKIE_NAME];
 }
 
+async function getSessionUser(req: any, sql: any) {
+  const session = await verifyToken(getCookie(req));
+  if (!session) return null;
+  const [user] = await sql`SELECT id, "openId", name, email, role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
+  return user ?? null;
+}
+
 // ─── Supabase Storage helpers ─────────────────────────────────────────────────
 function getSupabaseConfig() {
   const dbUrl = process.env.DATABASE_URL || "";
@@ -96,6 +103,102 @@ app.get("/api/me", async (req: any, res: any) => {
     return res.json(user ?? null);
   } catch { return res.json(null); }
   finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── GET /api/profile/summary ──────────────────────────────────────────────────
+app.get("/api/profile/summary", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+
+    const [progress] = await sql`
+      SELECT COALESCE("questionsResolved", 0) as "questionsResolved",
+             COALESCE("totalPoints", 0) as "totalPoints",
+             COALESCE("currentStreak", 0) as "currentStreak",
+             COALESCE("bestStreak", 0) as "bestStreak"
+      FROM user_progress
+      WHERE "userId" = ${user.id}
+      LIMIT 1
+    `;
+    const [favorites] = await sql`
+      SELECT COUNT(*)::int as count
+      FROM user_favorites
+      WHERE "userId" = ${user.id}
+    `;
+
+    return res.json({
+      favoritesCount: favorites?.count ?? 0,
+      questionsResolved: progress?.questionsResolved ?? 0,
+      totalPoints: progress?.totalPoints ?? 0,
+      currentStreak: progress?.currentStreak ?? 0,
+      bestStreak: progress?.bestStreak ?? 0,
+    });
+  } catch (err) {
+    console.error("[API] GET /api/profile/summary failed", err);
+    return res.status(500).json({ error: "failed to load profile summary" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── GET /api/favorites ────────────────────────────────────────────────────────
+app.get("/api/favorites", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    const rows = await sql`
+      SELECT q.id, q.title, q."subjectId"
+      FROM user_favorites uf
+      JOIN questions q ON q.id = uf."questionId"
+      WHERE uf."userId" = ${user.id}
+      ORDER BY uf.id DESC
+    `;
+    return res.json({ items: rows });
+  } catch (err) {
+    console.error("[API] GET /api/favorites failed", err);
+    return res.status(500).json({ error: "failed to load favorites" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/favorites ───────────────────────────────────────────────────────
+app.post("/api/favorites", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    const { questionId } = req.body || {};
+    if (!questionId) return res.status(400).json({ error: "questionId is required" });
+    await sql`
+      INSERT INTO user_favorites ("userId", "questionId")
+      VALUES (${user.id}, ${Number(questionId)})
+      ON CONFLICT DO NOTHING
+    `;
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[API] POST /api/favorites failed", err);
+    return res.status(500).json({ error: "failed to add favorite" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── DELETE /api/favorites/:questionId ─────────────────────────────────────────
+app.delete("/api/favorites/:questionId", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    await sql`
+      DELETE FROM user_favorites
+      WHERE "userId" = ${user.id} AND "questionId" = ${Number(req.params.questionId)}
+    `;
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[API] DELETE /api/favorites failed", err);
+    return res.status(500).json({ error: "failed to remove favorite" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
 // ── POST /api/auth/register ───────────────────────────────────────────────────
@@ -194,6 +297,44 @@ app.get("/api/questions", async (_req: any, res: any) => {
   } catch (err) {
     console.error("[API] GET /api/questions failed", err);
     return res.json({ items: [] });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── GET /api/admin/questions ───────────────────────────────────────────────────
+app.get("/api/admin/questions", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+    const rows = await sql`
+      SELECT q.id, q.title, q.difficulty, q.year, q."subjectId", q."createdAt", s.name as "subjectName"
+      FROM questions q
+      LEFT JOIN subjects s ON s.id = q."subjectId"
+      ORDER BY q.id DESC
+      LIMIT 200
+    `;
+    return res.json({ items: rows });
+  } catch (err) {
+    console.error("[API] GET /api/admin/questions failed", err);
+    return res.status(500).json({ error: "failed to load questions" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── DELETE /api/admin/questions/:id ───────────────────────────────────────────
+app.delete("/api/admin/questions/:id", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+    await sql`DELETE FROM questions WHERE id = ${Number(req.params.id)}`;
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[API] DELETE /api/admin/questions failed", err);
+    return res.status(500).json({ error: "failed to delete question" });
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 

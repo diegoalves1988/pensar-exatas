@@ -13,6 +13,7 @@ import AdminPanel from "./pages/AdminPanel";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdminQuestions from "./pages/AdminQuestions";
+import Profile from "./pages/Profile";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
   <Route path={"/"} component={Home} />
   <Route path={"/login"} component={Login} />
   <Route path={"/register"} component={Register} />
+  <Route path={"/perfil"} component={Profile} />
   <Route path={"/formulas"} component={PhysicsFormulas} />
       <Route path={"/questoes"} component={Questions} />
       <Route path={"/portfolio"} component={Portfolio} />

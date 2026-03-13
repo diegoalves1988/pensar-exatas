@@ -41,10 +41,7 @@ export default function AdBanner({ slot, format = "auto", className = "" }: AdBa
 
 // Placeholder component for development
 export function AdBannerPlaceholder({ className = "" }: { className?: string }) {
-  return (
-    <div className={`bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-500 text-sm ${className}`}>
-      📢 Espaço para Anúncio
-    </div>
-  );
+  void className;
+  return null;
 }
 

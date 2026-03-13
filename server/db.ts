@@ -1,4 +1,4 @@
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { 
@@ -314,13 +314,13 @@ export async function awardBadge(userId: number, badgeType: string) {
 export async function getUserFavorites(userId: number): Promise<Question[]> {
   const db = await getDb();
   if (!db) return [];
-  
+
   const favorites = await db.select().from(userFavorites).where(eq(userFavorites.userId, userId));
-  const questionIds = favorites.map(f => f.questionId);
-  
+  const questionIds = favorites.map((favorite) => favorite.questionId);
+
   if (questionIds.length === 0) return [];
-  
-  return db.select().from(questions).where(eq(questions.id, questionIds[0]));
+
+  return db.select().from(questions).where(inArray(questions.id, questionIds));
 }
 
 export async function addFavorite(userId: number, questionId: number) {
