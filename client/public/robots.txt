@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Keep private/auth/admin pages out of search results
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+Disallow: /perfil
+
+Sitemap: https://pensarexatas.com.br/sitemap.xml
