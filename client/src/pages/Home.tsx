@@ -122,15 +122,22 @@ export default function Home() {
           </Link>
         )}
 
-        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium">Matérias</p>
-              <p className="text-4xl font-bold text-gray-900 mt-2">{orderedSubjects.length}</p>
+        <Link href="/questoes">
+          <div
+            className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500 cursor-pointer hover:shadow-lg transition"
+            role="button"
+            aria-label="Abrir simulados"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm font-medium">Simulado Rápido</p>
+                <p className="text-lg font-bold text-gray-900 mt-2">Monte seu teste em segundos</p>
+                <p className="text-xs text-gray-500 mt-1">Escolha matérias, ano e quantidade de questões.</p>
+              </div>
+              <Zap className="w-12 h-12 text-orange-500 opacity-25" />
             </div>
-            <Zap className="w-12 h-12 text-orange-500 opacity-20" />
           </div>
-        </div>
+        </Link>
 
         <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500">
           <div className="flex items-center justify-between">
