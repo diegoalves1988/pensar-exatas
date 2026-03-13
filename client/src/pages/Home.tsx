@@ -2,22 +2,19 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
-import { ArrowRight, Zap, Trophy, BookOpen } from "lucide-react";
+import { ArrowRight, Zap, Trophy, BookOpen, Target, Flame } from "lucide-react";
 import { Link } from "wouter";
 import { useEffect, useState } from "react";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
-import KaTeXRenderer from "@/components/KaTeXRenderer";
-import { FALLBACK_SUBJECTS, sortSubjects, type SubjectItem } from "@/lib/subjects";
+import { FALLBACK_SUBJECTS, getSubjectArea, sortSubjects, type SubjectItem } from "@/lib/subjects";
 
-function getSubjectGradient(name: string) {
-  const normalized = name.toLowerCase();
-  if (normalized.includes("mec") || normalized.includes("cinem") || normalized.includes("din")) return "from-blue-500 to-indigo-600";
-  if (normalized.includes("eletro")) return "from-yellow-400 to-amber-600";
-  if (normalized.includes("onda") || normalized.includes("hidro")) return "from-cyan-400 to-blue-600";
-  if (normalized.includes("termo")) return "from-red-400 to-red-600";
-  if (normalized.includes("opt") || normalized.includes("ópt")) return "from-lime-500 to-green-600";
-  return "from-emerald-500 to-teal-600";
-}
+type ProfileSummary = {
+  favoritesCount: number;
+  questionsResolved: number;
+  totalPoints: number;
+  currentStreak: number;
+  bestStreak: number;
+};
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
@@ -26,6 +23,7 @@ export default function Home() {
   const { data: questions } = trpc.questions.list.useQuery();
   const [publicQuestions, setPublicQuestions] = useState<any[] | null>(null);
   const [publicSubjects, setPublicSubjects] = useState<SubjectItem[] | null>(null);
+  const [profileSummary, setProfileSummary] = useState<ProfileSummary | null>(null);
   useEffect(() => {
     let cancelled = false;
     fetch("/api/questions")
@@ -42,8 +40,17 @@ export default function Home() {
       })
       .catch(() => {});
 
+    if (isAuthenticated) {
+      fetch("/api/profile/summary", { credentials: "include" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (!cancelled && data) setProfileSummary(data);
+        })
+        .catch(() => {});
+    }
+
     return () => { cancelled = true; };
-  }, []);
+  }, [isAuthenticated]);
 
   const subjectList: SubjectItem[] =
     (subjects as SubjectItem[] | undefined) ??
@@ -51,6 +58,10 @@ export default function Home() {
     FALLBACK_SUBJECTS;
 
   const orderedSubjects = sortSubjects(subjectList);
+  const physicsTopics = orderedSubjects.filter((subject) => getSubjectArea(subject.name) === "Física");
+  const mathTopics = orderedSubjects.filter((subject) => getSubjectArea(subject.name) === "Matemática");
+  const todayGoal = 10;
+  const todayProgress = Math.min(profileSummary?.currentStreak ?? 0, todayGoal);
 
   return (
     <div className="space-y-12">
@@ -70,17 +81,45 @@ export default function Home() {
 
       {/* Stats Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Link href="/questoes">
-          <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver questões">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
-                <p className="text-4xl font-bold text-gray-900 mt-2">{(questions?.length ?? publicQuestions?.length ?? 0)}+</p>
+        {isAuthenticated ? (
+          <Link href="/perfil">
+            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver progresso">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Seu Progresso</p>
+                  <p className="text-4xl font-bold text-gray-900 mt-2">{profileSummary?.questionsResolved ?? 0}</p>
+                  <p className="text-xs text-gray-500 mt-1">questões resolvidas</p>
+                </div>
+                <Target className="w-12 h-12 text-purple-500 opacity-25" />
               </div>
-              <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
+
+              <div className="mt-4">
+                <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+                  <span>Meta de hoje</span>
+                  <span>{todayProgress}/{todayGoal}</span>
+                </div>
+                <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-purple-500 to-orange-500"
+                    style={{ width: `${(todayProgress / todayGoal) * 100}%` }}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        ) : (
+          <Link href="/questoes">
+            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver questões">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
+                  <p className="text-4xl font-bold text-gray-900 mt-2">{(questions?.length ?? publicQuestions?.length ?? 0)}+</p>
+                </div>
+                <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
+              </div>
+            </div>
+          </Link>
+        )}
 
         <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500">
           <div className="flex items-center justify-between">
@@ -95,10 +134,10 @@ export default function Home() {
         <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Foco Atual</p>
-              <p className="text-4xl font-bold text-gray-900 mt-2">ENEM</p>
+              <p className="text-gray-600 text-sm font-medium">Sequência Atual</p>
+              <p className="text-4xl font-bold text-gray-900 mt-2">{profileSummary?.currentStreak ?? 0}</p>
             </div>
-            <Trophy className="w-12 h-12 text-green-500 opacity-20" />
+            <Flame className="w-12 h-12 text-green-500 opacity-20" />
           </div>
         </div>
       </section>
@@ -106,27 +145,75 @@ export default function Home() {
       {/* Subjects Section */}
       <section>
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Explore as Matérias</h2>
-          <p className="text-gray-600">Escolha uma matéria e comece a resolver questões do ENEM</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Explore por Área</h2>
+          <p className="text-gray-600">Escolha a área principal e foque nos tópicos que mais caem</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {orderedSubjects.map((subject) => (
-            <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
-              <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:scale-105 cursor-pointer h-full">
-                <div className={`bg-gradient-to-r ${getSubjectGradient(subject.name)} px-6 py-5 text-white`}>
-                  <p className="text-lg font-bold">{subject.name}</p>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{subject.name}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{subject.description || "Conteúdo focado em ENEM com questões resolvidas."}</p>
-                  <div className="flex items-center text-purple-600 font-medium text-sm">
-                    Explorar <ArrowRight className="ml-2 w-4 h-4" />
-                  </div>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white rounded-xl overflow-hidden shadow-md border border-blue-100">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-5 text-white">
+              <p className="text-lg font-bold">Física</p>
+              <p className="text-sm text-blue-100">Questões de Ciências da Natureza com foco em Física</p>
+            </div>
+            <div className="p-6">
+              <p className="text-sm text-gray-600 mb-4">Tópicos em destaque:</p>
+              <div className="flex flex-wrap gap-2">
+                {physicsTopics.slice(0, 10).map((subject) => (
+                  <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
+                    <span className="inline-flex rounded-full bg-blue-50 text-blue-700 px-3 py-1 text-sm border border-blue-100 hover:bg-blue-100 transition">
+                      {subject.name}
+                    </span>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
+              <div className="mt-5">
+                <Link href="/questoes">
+                  <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-50">
+                    Ver questões de Física <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl overflow-hidden shadow-md border border-emerald-100">
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-5 text-white">
+              <p className="text-lg font-bold">Matemática</p>
+              <p className="text-sm text-emerald-100">Raciocínio, funções, geometria e interpretação de dados</p>
+            </div>
+            <div className="p-6">
+              <p className="text-sm text-gray-600 mb-4">Tópicos em destaque:</p>
+              <div className="flex flex-wrap gap-2">
+                {mathTopics.slice(0, 10).map((subject) => (
+                  <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
+                    <span className="inline-flex rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-sm border border-emerald-100 hover:bg-emerald-100 transition">
+                      {subject.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-5">
+                <Link href="/questoes">
+                  <Button variant="outline" className="border-emerald-300 text-emerald-700 hover:bg-emerald-50">
+                    Ver questões de Matemática <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 bg-white rounded-xl border border-gray-200 p-4">
+          <p className="text-sm font-medium text-gray-700 mb-3">Tópicos que mais caem no ENEM</p>
+          <div className="flex flex-wrap gap-2">
+            {orderedSubjects.slice(0, 14).map((subject) => (
+              <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
+                <span className="inline-flex rounded-full bg-gray-100 text-gray-700 px-3 py-1 text-sm hover:bg-gray-200 transition">
+                  {subject.name}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
