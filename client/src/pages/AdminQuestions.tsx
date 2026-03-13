@@ -9,14 +9,26 @@ type AlternativeChoice = { text: string; imageUrl: string };
 
 const LABELS = ["A", "B", "C", "D", "E"];
 
+function emptyChoices(): AlternativeChoice[] {
+  return [
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+    { text: "", imageUrl: "" },
+  ];
+}
+
 export default function AdminQuestions() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingQuestion, setLoadingQuestion] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   const [form, setForm] = useState({
     subjectId: "",
@@ -29,14 +41,21 @@ export default function AdminQuestions() {
     imageUrl: "",
   });
 
-  const [choices, setChoices] = useState<AlternativeChoice[]>([
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-    { text: "", imageUrl: "" },
-  ]);
+  const [choices, setChoices] = useState<AlternativeChoice[]>(emptyChoices());
   const [correctIndex, setCorrectIndex] = useState<number | null>(null);
+
+  const normalizeChoiceFromApi = (choice: any): AlternativeChoice => {
+    if (typeof choice === "string") {
+      return { text: choice, imageUrl: "" };
+    }
+    if (choice && typeof choice === "object") {
+      return {
+        text: choice.text ? String(choice.text) : "",
+        imageUrl: choice.imageUrl ? String(choice.imageUrl) : "",
+      };
+    }
+    return { text: "", imageUrl: "" };
+  };
 
   useEffect(() => {
     fetch("/api/subjects", { credentials: "include" })
@@ -44,6 +63,47 @@ export default function AdminQuestions() {
       .then((data) => setSubjects(data.items ?? []))
       .catch(() => setError("Falha ao carregar matérias"))
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get("id"));
+    if (!Number.isFinite(id) || id <= 0) {
+      setEditingId(null);
+      return;
+    }
+
+    setEditingId(id);
+    setLoadingQuestion(true);
+    fetch(`/api/admin/questions/${id}`, { credentials: "include" })
+      .then(async (r) => {
+        const data = await r.json().catch(() => null);
+        if (!r.ok || !data?.item) {
+          throw new Error(data?.error || "Falha ao carregar dados da questão");
+        }
+        const item = data.item;
+        setForm({
+          subjectId: item.subjectId ? String(item.subjectId) : "",
+          title: item.title ?? "",
+          statement: item.statement ?? "",
+          solution: item.solution ?? "",
+          difficulty: item.difficulty ?? "medium",
+          year: item.year ? String(item.year) : "",
+          sourceUrl: item.sourceUrl ?? "",
+          imageUrl: item.imageUrl ?? "",
+        });
+
+        const incomingChoices = Array.isArray(item.choices)
+          ? item.choices.map((choice: any) => normalizeChoiceFromApi(choice))
+          : [];
+        const paddedChoices = [...incomingChoices, ...emptyChoices()].slice(0, 5);
+        setChoices(paddedChoices);
+        setCorrectIndex(typeof item.correctChoice === "number" ? item.correctChoice : null);
+      })
+      .catch((err: any) => {
+        setError(err?.message || "Falha ao carregar dados da questão");
+      })
+      .finally(() => setLoadingQuestion(false));
   }, []);
 
   function updateField(field: string, value: string) {
@@ -176,8 +236,9 @@ export default function AdminQuestions() {
         }));
         payload.correctChoice = correctIndex;
       }
-      const res = await fetch("/api/admin/questions", {
-        method: "POST",
+      const isEditing = editingId !== null;
+      const res = await fetch(isEditing ? `/api/admin/questions/${editingId}` : "/api/admin/questions", {
+        method: isEditing ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(payload),
@@ -187,17 +248,13 @@ export default function AdminQuestions() {
         setError(data?.detail || data?.error || `Erro ao criar questão (status ${res.status})`);
         return;
       }
-      setSuccess("Questão criada com sucesso!");
+      setSuccess(editingId ? "Questão atualizada com sucesso!" : "Questão criada com sucesso!");
       window.scrollTo({ top: 0, behavior: "smooth" });
-      setForm({ subjectId: "", title: "", statement: "", solution: "", difficulty: "medium", year: "", sourceUrl: "", imageUrl: "" });
-      setChoices([
-        { text: "", imageUrl: "" },
-        { text: "", imageUrl: "" },
-        { text: "", imageUrl: "" },
-        { text: "", imageUrl: "" },
-        { text: "", imageUrl: "" },
-      ]);
-      setCorrectIndex(null);
+      if (!editingId) {
+        setForm({ subjectId: "", title: "", statement: "", solution: "", difficulty: "medium", year: "", sourceUrl: "", imageUrl: "" });
+        setChoices(emptyChoices());
+        setCorrectIndex(null);
+      }
     } catch (err) {
       console.error("[AdminQuestions] submit error", err);
       setError("Erro inesperado ao enviar o formulário");
@@ -207,7 +264,7 @@ export default function AdminQuestions() {
     }
   }
 
-  if (loading) {
+  if (loading || loadingQuestion) {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500" />
@@ -223,7 +280,7 @@ export default function AdminQuestions() {
           <Link href="/admin">
             <Button variant="ghost" size="sm"><ArrowLeft className="w-4 h-4 mr-1" /> Voltar</Button>
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900">Nova Questão</h1>
+          <h1 className="text-2xl font-bold text-gray-900">{editingId ? `Editar Questão #${editingId}` : "Nova Questão"}</h1>
         </div>
         <Button
           variant="outline"
@@ -545,7 +602,7 @@ export default function AdminQuestions() {
               className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg"
             >
               <Save className="w-4 h-4 mr-2" />
-              {submitting ? "Salvando..." : "Salvar Questão"}
+              {submitting ? "Salvando..." : editingId ? "Atualizar Questão" : "Salvar Questão"}
             </Button>
           </div>
         </form>

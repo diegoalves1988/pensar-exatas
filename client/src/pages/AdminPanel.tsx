@@ -228,7 +228,7 @@ export default function AdminPanel() {
                       </p>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="ghost" size="sm" onClick={() => setLocation("/admin/questions")}>
+                      <Button variant="ghost" size="sm" onClick={() => setLocation(`/admin/questions?id=${question.id}`)}>
                         <Edit2 className="w-4 h-4" />
                       </Button>
                       <Button variant="ghost" size="sm" onClick={() => deleteQuestion(question.id)}>

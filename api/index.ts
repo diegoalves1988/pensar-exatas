@@ -177,6 +177,37 @@ async function recalculateUserProgress(sql: any, userId: number) {
   }
 }
 
+function sanitizeQuestionText(value: any): string {
+  const input = String(value ?? "");
+  return input
+    // remove common import artifacts
+    .replace(/(^|\s)\\?(undefined|null)(?=\s|$|[.,;:!?])/gi, " ")
+    .replace(/\r\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+}
+
+function normalizeAdminChoicesInput(choices: any): any[] {
+  return Array.isArray(choices)
+    ? choices
+        .map((choice: any) => {
+          if (typeof choice === "string") {
+            const text = choice.trim();
+            return text ? text : null;
+          }
+          if (choice && typeof choice === "object") {
+            const text = choice.text == null ? null : String(choice.text).trim();
+            const image = choice.imageUrl == null ? null : String(choice.imageUrl).trim();
+            if (!text && !image) return null;
+            return { text, imageUrl: image };
+          }
+          return null;
+        })
+        .filter(Boolean)
+    : [];
+}
+
 // ─── Supabase Storage helpers ─────────────────────────────────────────────────
 function getSupabaseConfig() {
   const dbUrl = process.env.DATABASE_URL || "";
@@ -414,7 +445,13 @@ app.get("/api/questions", async (_req: any, res: any) => {
              "sourceUrl", "imageUrl", choices, "correctChoice"
       FROM questions ORDER BY id DESC LIMIT 1000
     `;
-    return res.json({ items: rows });
+    const sanitizedRows = rows.map((row: any) => ({
+      ...row,
+      title: sanitizeQuestionText(row.title),
+      statement: sanitizeQuestionText(row.statement),
+      solution: sanitizeQuestionText(row.solution),
+    }));
+    return res.json({ items: sanitizedRows });
   } catch (err) {
     console.error("[API] GET /api/questions failed", err);
     return res.json({ items: [] });
@@ -651,6 +688,42 @@ app.get("/api/admin/questions", async (req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── GET /api/admin/questions/:id ─────────────────────────────────────────────
+app.get("/api/admin/questions/:id", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+
+    const questionId = Number(req.params.id);
+    if (!Number.isFinite(questionId) || questionId <= 0) {
+      return res.status(400).json({ error: "invalid question id" });
+    }
+
+    const [row] = await sql`
+      SELECT id, "subjectId", title, statement, solution, difficulty, year, "sourceUrl", "imageUrl", choices, "correctChoice"
+      FROM questions
+      WHERE id = ${questionId}
+      LIMIT 1
+    `;
+    if (!row) return res.status(404).json({ error: "question not found" });
+
+    return res.json({
+      item: {
+        ...row,
+        title: sanitizeQuestionText(row.title),
+        statement: sanitizeQuestionText(row.statement),
+        solution: sanitizeQuestionText(row.solution),
+      },
+    });
+  } catch (err) {
+    console.error("[API] GET /api/admin/questions/:id failed", err);
+    return res.status(500).json({ error: "failed to load question" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── DELETE /api/admin/questions/:id ───────────────────────────────────────────
 app.delete("/api/admin/questions/:id", async (req: any, res: any) => {
   const sql = getDb();
@@ -683,23 +756,7 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
       return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
     }
 
-    const normalizedChoices = Array.isArray(choices)
-      ? choices
-          .map((choice: any) => {
-            if (typeof choice === "string") {
-              const text = choice.trim();
-              return text ? text : null;
-            }
-            if (choice && typeof choice === "object") {
-              const text = choice.text == null ? null : String(choice.text).trim();
-              const image = choice.imageUrl == null ? null : String(choice.imageUrl).trim();
-              if (!text && !image) return null;
-              return { text, imageUrl: image };
-            }
-            return null;
-          })
-          .filter(Boolean)
-      : [];
+    const normalizedChoices = normalizeAdminChoicesInput(choices);
 
     const hasChoices = normalizedChoices.length >= 2;
     const safeCorrectChoice = typeof correctChoice === "number" ? correctChoice : null;
@@ -725,6 +782,55 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
   } catch (err: any) {
     console.error("[API] POST /api/admin/questions failed", err);
     return res.status(500).json({ error: "failed to create question", detail: String(err?.message || err) });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── PUT /api/admin/questions/:id ─────────────────────────────────────────────
+app.put("/api/admin/questions/:id", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const session = await verifyToken(getCookie(req));
+    if (!session) return res.status(401).json({ error: "not authenticated" });
+    const [user] = await sql`SELECT role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
+    if (!user || user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+
+    const questionId = Number(req.params.id);
+    if (!Number.isFinite(questionId) || questionId <= 0) {
+      return res.status(400).json({ error: "invalid question id" });
+    }
+
+    const { subjectId, title, statement, solution, difficulty, year, sourceUrl, imageUrl, choices, correctChoice } = req.body || {};
+    if (!subjectId || !title || !statement || !solution) {
+      return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
+    }
+
+    const normalizedChoices = normalizeAdminChoicesInput(choices);
+    const hasChoices = normalizedChoices.length >= 2;
+    const safeCorrectChoice = typeof correctChoice === "number" ? correctChoice : null;
+    const safeYear = typeof year === "number" ? year : null;
+
+    await sql`
+      UPDATE questions
+      SET
+        "subjectId" = ${Number(subjectId)},
+        title = ${String(title).trim()},
+        statement = ${String(statement).trim()},
+        solution = ${String(solution).trim()},
+        difficulty = ${difficulty || 'medium'},
+        year = ${safeYear},
+        "sourceUrl" = ${sourceUrl || null},
+        "imageUrl" = ${imageUrl || null},
+        choices = ${hasChoices ? sql.json(normalizedChoices) : sql`'[]'::jsonb`},
+        "correctChoice" = ${safeCorrectChoice},
+        "updatedAt" = NOW()
+      WHERE id = ${questionId}
+    `;
+
+    return res.json({ ok: true, id: questionId });
+  } catch (err: any) {
+    console.error("[API] PUT /api/admin/questions/:id failed", err);
+    return res.status(500).json({ error: "failed to update question", detail: String(err?.message || err) });
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
