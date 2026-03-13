@@ -205,13 +205,19 @@ export default function Questions() {
 
   const sanitizeStatementArtifacts = (text: string) => {
     // Some imported records contain literal artifact lines like "undefined" or "null".
-    return text
+    const withoutArtifactLines = text
       .split(/\r?\n/)
       .filter((line) => {
         const normalized = line.trim().toLowerCase();
         return normalized !== "undefined" && normalized !== "null";
       })
-      .join("\n")
+      .join("\n");
+
+    // Also remove stray artifact tokens embedded in the same line as other content.
+    return withoutArtifactLines
+      .replace(/(^|\s)(undefined|null)(?=\s|$|[.,;:!?])/gi, " ")
+      .replace(/\n{3,}/g, "\n\n")
+      .replace(/[ \t]{2,}/g, " ")
       .trim();
   };
 
