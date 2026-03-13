@@ -14,6 +14,7 @@ type ProfileSummary = {
   totalPoints: number;
   currentStreak: number;
   bestStreak: number;
+  questionsToday: number;
 };
 
 export default function Home() {
@@ -61,7 +62,7 @@ export default function Home() {
   const physicsTopics = orderedSubjects.filter((subject) => getSubjectArea(subject.name) === "Física");
   const mathTopics = orderedSubjects.filter((subject) => getSubjectArea(subject.name) === "Matemática");
   const todayGoal = 10;
-  const todayProgress = Math.min(profileSummary?.currentStreak ?? 0, todayGoal);
+  const todayProgress = Math.min(profileSummary?.questionsToday ?? 0, todayGoal);
 
   return (
     <div className="space-y-12">

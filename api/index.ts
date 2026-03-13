@@ -279,6 +279,13 @@ app.get("/api/profile/summary", async (req: any, res: any) => {
       FROM user_favorites
       WHERE "userId" = ${user.id}
     `;
+    const [todayRow] = await sql`
+      SELECT COUNT(*)::int as count
+      FROM user_question_resolutions
+      WHERE "userId" = ${user.id}
+        AND "updatedAt" >= NOW() AT TIME ZONE 'America/Sao_Paulo' - INTERVAL '1 day'
+        AND DATE("updatedAt" AT TIME ZONE 'America/Sao_Paulo') = CURRENT_DATE AT TIME ZONE 'America/Sao_Paulo'
+    `;
 
     return res.json({
       favoritesCount: favorites?.count ?? 0,
@@ -286,6 +293,7 @@ app.get("/api/profile/summary", async (req: any, res: any) => {
       totalPoints: progress?.totalPoints ?? 0,
       currentStreak: progress?.currentStreak ?? 0,
       bestStreak: progress?.bestStreak ?? 0,
+      questionsToday: todayRow?.count ?? 0,
     });
   } catch (err) {
     console.error("[API] GET /api/profile/summary failed", err);
