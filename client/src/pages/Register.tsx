@@ -35,6 +35,15 @@ export default function Register() {
         return;
       }
 
+      // Prime local auth cache before route change to avoid header flicker.
+      try {
+        const meRes = await fetch("/api/me", { credentials: "include" });
+        const me = meRes.ok ? await meRes.json() : null;
+        localStorage.setItem("manus-runtime-user-info", JSON.stringify(me));
+      } catch {
+        // ignore prefetch failures; regular auth hydration still runs
+      }
+
       setLocation("/");
     } catch (err) {
       console.error(err);

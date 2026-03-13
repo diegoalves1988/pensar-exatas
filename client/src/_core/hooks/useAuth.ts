@@ -13,24 +13,43 @@ export function useAuth(options?: UseAuthOptions) {
     options ?? {};
   const utils = trpc.useUtils();
 
+  const getCachedUser = () => {
+    if (typeof window === "undefined") return undefined;
+    try {
+      const raw = localStorage.getItem("manus-runtime-user-info");
+      if (!raw) return undefined;
+      return JSON.parse(raw);
+    } catch {
+      return undefined;
+    }
+  };
+
   const meQuery = trpc.auth.me.useQuery(undefined, {
     retry: false,
     refetchOnWindowFocus: false,
   });
 
-  // Fallback: call /api/me directly when tRPC errors (production/serverless)
-  const [meFallback, setMeFallback] = useState<any>(undefined); // undefined = loading, null = no user
+  // Fallback and instant hydration:
+  // 1) use localStorage cached user for immediate header state
+  // 2) call /api/me in parallel (do not wait for tRPC)
+  const [meFallback, setMeFallback] = useState<any>(() => getCachedUser());
+  const [fallbackLoaded, setFallbackLoaded] = useState<boolean>(Boolean(getCachedUser()));
   useEffect(() => {
-    // Only kick in when tRPC errored or returned null with a completed request
-    if (meQuery.isLoading) return;
-    if (meQuery.data) return; // tRPC worked fine
     let cancelled = false;
     fetch("/api/me", { credentials: "include" })
       .then((r) => (r.ok ? r.json() : null))
-      .then((data) => { if (!cancelled) setMeFallback(data ?? null); })
-      .catch(() => { if (!cancelled) setMeFallback(null); });
+      .then((data) => {
+        if (cancelled) return;
+        setMeFallback(data ?? null);
+        setFallbackLoaded(true);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setMeFallback(null);
+        setFallbackLoaded(true);
+      });
     return () => { cancelled = true; };
-  }, [meQuery.isLoading, meQuery.data, meQuery.error]);
+  }, []);
 
   const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => {
@@ -60,13 +79,15 @@ export function useAuth(options?: UseAuthOptions) {
   const resolvedUser = meQuery.data ?? meFallback ?? null;
 
   const state = useMemo(() => {
-    localStorage.setItem(
-      "manus-runtime-user-info",
-      JSON.stringify(resolvedUser)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "manus-runtime-user-info",
+        JSON.stringify(resolvedUser)
+      );
+    }
     return {
       user: resolvedUser,
-      loading: meQuery.isLoading || (meFallback === undefined && !meQuery.data) || logoutMutation.isPending,
+      loading: (!meQuery.data && meQuery.isLoading && !fallbackLoaded) || logoutMutation.isPending,
       error: meQuery.error ?? logoutMutation.error ?? null,
       isAuthenticated: Boolean(resolvedUser),
     };
@@ -75,6 +96,7 @@ export function useAuth(options?: UseAuthOptions) {
     meQuery.error,
     meQuery.isLoading,
     meFallback,
+    fallbackLoaded,
     logoutMutation.error,
     logoutMutation.isPending,
   ]);
