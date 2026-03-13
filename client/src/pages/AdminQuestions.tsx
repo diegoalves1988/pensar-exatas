@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
-import { ArrowLeft, Eye, EyeOff, ImageIcon, Save, Upload, X } from "lucide-react";
+import { ArrowLeft, ImageIcon, Save, Upload, X } from "lucide-react";
 import { Link, useSearch } from "wouter";
 
 type Subject = { id: number; name: string };
@@ -27,7 +27,6 @@ export default function AdminQuestions() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [preview, setPreview] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
 
   const [form, setForm] = useState({
@@ -35,7 +34,6 @@ export default function AdminQuestions() {
     title: "",
     statement: "",
     solution: "",
-    difficulty: "medium",
     year: "",
     sourceUrl: "",
     imageUrl: "",
@@ -89,7 +87,6 @@ export default function AdminQuestions() {
           title: item.title ?? "",
           statement: item.statement ?? "",
           solution: item.solution ?? "",
-          difficulty: item.difficulty ?? "medium",
           year: item.year ? String(item.year) : "",
           sourceUrl: item.sourceUrl ?? "",
           imageUrl: item.imageUrl ?? "",
@@ -226,7 +223,6 @@ export default function AdminQuestions() {
         title: form.title.trim(),
         statement: form.statement.trim(),
         solution: form.solution.trim(),
-        difficulty: form.difficulty,
         year: form.year ? Number(form.year) : undefined,
         sourceUrl: form.sourceUrl.trim() || undefined,
         imageUrl: form.imageUrl.trim() || undefined,
@@ -253,7 +249,7 @@ export default function AdminQuestions() {
       setSuccess(editingId ? "Questão atualizada com sucesso!" : "Questão criada com sucesso!");
       window.scrollTo({ top: 0, behavior: "smooth" });
       if (!editingId) {
-        setForm({ subjectId: "", title: "", statement: "", solution: "", difficulty: "medium", year: "", sourceUrl: "", imageUrl: "" });
+        setForm({ subjectId: "", title: "", statement: "", solution: "", year: "", sourceUrl: "", imageUrl: "" });
         setChoices(emptyChoices());
         setCorrectIndex(null);
       }
@@ -284,15 +280,6 @@ export default function AdminQuestions() {
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">{editingId ? `Editar Questão #${editingId}` : "Nova Questão"}</h1>
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setPreview((p) => !p)}
-          className="gap-1"
-        >
-          {preview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-          {preview ? "Editar" : "Preview"}
-        </Button>
       </div>
 
       {error && (
@@ -302,56 +289,7 @@ export default function AdminQuestions() {
         <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">{success}</div>
       )}
 
-      {/* ── PREVIEW MODE ───────────────────────────────────────────── */}
-      {preview ? (
-        <div className="bg-white rounded-xl shadow-md p-6 space-y-5">
-          <h2 className="text-xl font-bold text-gray-900">
-            <MaybeKaTeX text={form.title || "(sem título)"} />
-          </h2>
-          <div className="text-gray-700 leading-relaxed">
-            <MaybeKaTeX text={form.statement || "(sem enunciado)"} />
-          </div>
-          {form.imageUrl && (
-            <div className="border rounded-lg overflow-hidden inline-block">
-              <img src={form.imageUrl} alt="Imagem da questão" className="max-w-full max-h-96 object-contain" />
-            </div>
-          )}
-          {choices.some((choice) => choice.text.trim() || choice.imageUrl.trim()) && (
-            <div className="space-y-2">
-              {choices.map((choice, i) =>
-                choice.text.trim() || choice.imageUrl.trim() ? (
-                  <div
-                    key={i}
-                    className={`flex items-start gap-3 p-3 rounded-lg border ${
-                      correctIndex === i
-                        ? "border-green-400 bg-green-50"
-                        : "border-gray-200 bg-gray-50"
-                    }`}
-                  >
-                    <span className={`font-bold text-sm mt-0.5 ${correctIndex === i ? "text-green-700" : "text-gray-500"}`}>
-                      {LABELS[i]}
-                    </span>
-                    <div className="space-y-2">
-                      {choice.text.trim() && <MaybeKaTeX text={choice.text} />}
-                      {choice.imageUrl.trim() && (
-                        <img src={choice.imageUrl} alt={`Imagem alternativa ${LABELS[i]}`} className="max-h-36 rounded border" />
-                      )}
-                    </div>
-                  </div>
-                ) : null
-              )}
-            </div>
-          )}
-          <div className="border-t pt-4">
-            <h3 className="font-bold text-gray-900 mb-2">Resolução</h3>
-            <div className="text-gray-700">
-              <MaybeKaTeX text={form.solution || "(sem resolução)"} />
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* ── EDIT MODE ──────────────────────────────────────────────── */
-        <form onSubmit={onSubmit} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6">
           {/* Meta */}
           <div className="bg-white rounded-xl shadow-md p-6 space-y-4">
             <h2 className="font-bold text-gray-900 text-lg">Informações Gerais</h2>
@@ -367,18 +305,6 @@ export default function AdminQuestions() {
                   {subjects.map((s) => (
                     <option key={s.id} value={s.id}>{s.name}</option>
                   ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Dificuldade</label>
-                <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  value={form.difficulty}
-                  onChange={(e) => updateField("difficulty", e.target.value)}
-                >
-                  <option value="easy">Fácil</option>
-                  <option value="medium">Média</option>
-                  <option value="hard">Difícil</option>
                 </select>
               </div>
               <div>
@@ -415,11 +341,6 @@ export default function AdminQuestions() {
                 onChange={(e) => updateField("title", e.target.value)}
                 placeholder="Ex: Cinemática — Velocidade Média"
               />
-              {form.title && (
-                <div className="mt-2 p-2 bg-gray-50 rounded text-sm text-gray-600">
-                  <MaybeKaTeX text={form.title} />
-                </div>
-              )}
             </div>
           </div>
 
@@ -435,12 +356,6 @@ export default function AdminQuestions() {
                 onChange={(e) => updateField("statement", e.target.value)}
                 placeholder={"Um corpo de massa $m = 2\\,\\text{kg}$ é submetido a uma força resultante...\n\nUse $...$ para fórmulas inline e $$...$$ para fórmulas em bloco."}
               />
-              {form.statement && (
-                <div className="mt-2 p-3 bg-gray-50 rounded border text-sm">
-                  <p className="text-xs text-gray-400 mb-1">Preview:</p>
-                  <MaybeKaTeX text={form.statement} />
-                </div>
-              )}
             </div>
           </div>
 
@@ -608,7 +523,6 @@ export default function AdminQuestions() {
             </Button>
           </div>
         </form>
-      )}
 
       {/* LaTeX help */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">

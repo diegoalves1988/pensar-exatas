@@ -35,9 +35,14 @@ export default function Questions() {
     (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [simuladoSubjectIds, setSimuladoSubjectIds] = useState<number[]>([]);
+  const [simuladoYear, setSimuladoYear] = useState<number | null>(null);
+  const [simuladoCount, setSimuladoCount] = useState(10);
+  const [simuladoQuestionIds, setSimuladoQuestionIds] = useState<number[] | null>(null);
+  const [simuladoError, setSimuladoError] = useState<string | null>(null);
   // track answers for multiple-choice questions: questionId -> selected index
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [hydratingResolutions, setHydratingResolutions] = useState(false);
@@ -237,7 +242,7 @@ export default function Questions() {
 
       if (before.trim()) {
         chunks.push(
-          <div key={`text-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+          <div key={`text-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
             <MaybeKaTeX text={normalizeQuestionText(before)} displayMode={false} />
           </div>,
         );
@@ -248,7 +253,7 @@ export default function Questions() {
           key={`img-${matchStart}`}
           src={imageUrl}
           alt="Imagem do enunciado"
-          className="w-full h-auto object-contain rounded-lg border border-gray-300 max-h-96"
+          className="w-4/5 max-w-full h-auto object-contain rounded-lg border border-gray-300 max-h-72 mx-auto"
         />,
       );
 
@@ -258,7 +263,7 @@ export default function Questions() {
     const tail = text.slice(lastIndex);
     if (tail.trim()) {
       chunks.push(
-        <div key={`text-tail-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+        <div key={`text-tail-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
           <MaybeKaTeX text={normalizeQuestionText(tail)} displayMode={false} />
         </div>,
       );
@@ -301,19 +306,64 @@ export default function Questions() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, selectedSubject, selectedDifficulty]);
+  }, [searchTerm, selectedSubject, selectedYear, simuladoQuestionIds]);
 
   const allQuestions = questions ?? publicQuestions ?? [];
+  const availableYears = Array.from(
+    new Set(
+      allQuestions
+        .map((q: any) => Number(q.year))
+        .filter((year: number) => Number.isFinite(year) && year > 0),
+    ),
+  ).sort((a, b) => b - a);
+
   const filteredQuestions = allQuestions.filter((q: any) => {
     const matchesSearch = q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          q.statement.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSubject = !selectedSubject || Number(q.subjectId) === selectedSubject;
-    const matchesDifficulty = !selectedDifficulty || q.difficulty === selectedDifficulty;
-    return matchesSearch && matchesSubject && matchesDifficulty;
+    const matchesYear = !selectedYear || Number(q.year) === selectedYear;
+    return matchesSearch && matchesSubject && matchesYear;
   });
+
+  const generatedQuestions = (() => {
+    if (!simuladoQuestionIds) return filteredQuestions;
+    const order = new Map(simuladoQuestionIds.map((id, index) => [id, index]));
+    return allQuestions
+      .filter((q: any) => order.has(q.id))
+      .sort((a: any, b: any) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0));
+  })();
+
   const pageSize = 20;
-  const totalPages = Math.max(1, Math.ceil(filteredQuestions.length / pageSize));
-  const paginatedQuestions = filteredQuestions.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const totalPages = Math.max(1, Math.ceil(generatedQuestions.length / pageSize));
+  const paginatedQuestions = generatedQuestions.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+  const generateSimulado = () => {
+    const pool = allQuestions.filter((q: any) => {
+      const matchesSubjects = simuladoSubjectIds.length === 0 || simuladoSubjectIds.includes(Number(q.subjectId));
+      const matchesYear = !simuladoYear || Number(q.year) === simuladoYear;
+      return matchesSubjects && matchesYear;
+    });
+
+    if (pool.length === 0) {
+      setSimuladoError("Nenhuma questão encontrada para os critérios selecionados.");
+      setSimuladoQuestionIds(null);
+      return;
+    }
+
+    const targetCount = Math.min(Math.max(1, Number(simuladoCount) || 1), pool.length);
+    const shuffled = [...pool];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = shuffled[i];
+      shuffled[i] = shuffled[j];
+      shuffled[j] = tmp;
+    }
+
+    setSimuladoQuestionIds(shuffled.slice(0, targetCount).map((q: any) => Number(q.id)));
+    setSimuladoError(null);
+    setCurrentPage(1);
+    setExpandedQuestion(null);
+  };
 
   const favoriteItems = isLocalDev ? favorites ?? [] : publicFavorites;
 
@@ -400,32 +450,6 @@ export default function Questions() {
     }
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "easy":
-        return "bg-green-100 text-green-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "hard":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const getDifficultyLabel = (difficulty: string) => {
-    switch (difficulty) {
-      case "easy":
-        return "Fácil";
-      case "medium":
-        return "Médio";
-      case "hard":
-        return "Difícil";
-      default:
-        return difficulty;
-    }
-  };
-
   return (
     <div className="space-y-8 max-w-6xl mx-auto w-full px-2 sm:px-0">
       {/* Header */}
@@ -461,51 +485,108 @@ export default function Questions() {
               </option>
             ))}
           </select>
+          <select
+            value={selectedYear ?? "all"}
+            onChange={(e) => setSelectedYear(e.target.value === "all" ? null : Number(e.target.value))}
+            className="min-w-[150px] rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <option value="all">Todos os anos</option>
+            {availableYears.map((year) => (
+              <option key={year} value={year}>
+                ENEM {year}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-md p-6 space-y-4">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">Gerar Simulado</h2>
+            <p className="text-sm text-gray-600">Escolha matérias e quantidade para montar um teste aleatório.</p>
+          </div>
+          {simuladoQuestionIds && (
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSimuladoQuestionIds(null);
+                setSimuladoError(null);
+              }}
+            >
+              Sair do simulado
+            </Button>
+          )}
         </div>
 
-        {/* Difficulty Filter */}
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => setSelectedDifficulty(null)}
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              selectedDifficulty === null
-                ? "bg-purple-500 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Todas
-          </button>
-          <button
-            onClick={() => setSelectedDifficulty("easy")}
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              selectedDifficulty === "easy"
-                ? "bg-green-500 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Fácil
-          </button>
-          <button
-            onClick={() => setSelectedDifficulty("medium")}
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              selectedDifficulty === "medium"
-                ? "bg-yellow-500 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Médio
-          </button>
-          <button
-            onClick={() => setSelectedDifficulty("hard")}
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              selectedDifficulty === "hard"
-                ? "bg-red-500 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
-          >
-            Difícil
-          </button>
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-gray-700">Matérias do simulado</p>
+          <div className="flex flex-wrap gap-2">
+            {subjectList.map((subject) => {
+              const active = simuladoSubjectIds.includes(subject.id);
+              return (
+                <button
+                  key={subject.id}
+                  type="button"
+                  onClick={() =>
+                    setSimuladoSubjectIds((current) =>
+                      current.includes(subject.id)
+                        ? current.filter((id) => id !== subject.id)
+                        : [...current, subject.id],
+                    )
+                  }
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition ${
+                    active ? "bg-purple-500 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {subject.name}
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-xs text-gray-500">Nenhuma matéria selecionada = usar todas.</p>
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Ano do ENEM</label>
+            <select
+              value={simuladoYear ?? "all"}
+              onChange={(e) => setSimuladoYear(e.target.value === "all" ? null : Number(e.target.value))}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+            >
+              <option value="all">Todos os anos</option>
+              {availableYears.map((year) => (
+                <option key={year} value={year}>
+                  ENEM {year}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Quantidade de questões</label>
+            <input
+              type="number"
+              min={1}
+              max={100}
+              value={simuladoCount}
+              onChange={(e) => setSimuladoCount(Number(e.target.value))}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+            />
+          </div>
+          <div className="flex items-end">
+            <Button className="w-full" onClick={generateSimulado}>
+              Gerar teste aleatório
+            </Button>
+          </div>
+        </div>
+
+        {simuladoError && <p className="text-sm text-red-600">{simuladoError}</p>}
+        {simuladoQuestionIds && (
+          <p className="text-sm text-green-700 font-medium">
+            Simulado ativo com {simuladoQuestionIds.length} questões.
+          </p>
+        )}
       </div>
 
       {/* Ad Banner */}
@@ -513,7 +594,7 @@ export default function Questions() {
 
       {/* Questions List */}
       <div className="space-y-4">
-        {filteredQuestions.length === 0 ? (
+        {generatedQuestions.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-xl">
             <p className="text-gray-600 text-lg">Nenhuma questão encontrada</p>
           </div>
@@ -538,7 +619,7 @@ export default function Questions() {
                         <InlineKaTeX text={String(question.title || "")} />
                       </h3>
                     </div>
-                    <div className="text-gray-600 text-sm line-clamp-2">
+                    <div className="text-gray-600 text-sm line-clamp-2 text-justify">
                       <MaybeKaTeX
                         text={normalizeQuestionText(stripMarkdownImages(sanitizeStatementArtifacts(String(question.statement || ""))))}
                         displayMode={false}
@@ -549,18 +630,11 @@ export default function Questions() {
                         <img
                           src={question.imageUrl}
                           alt="Imagem da questao"
-                          className="h-20 w-auto object-cover rounded-md border border-gray-200"
+                          className="h-16 w-auto object-cover rounded-md border border-gray-200"
                         />
                       </div>
                     )}
                     <div className="flex gap-2 mt-3 flex-wrap">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${getDifficultyColor(
-                          question.difficulty || "medium"
-                        )}`}
-                      >
-                        {getDifficultyLabel(question.difficulty || "medium")}
-                      </span>
                       {question.year && (
                         <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                           ENEM {question.year}
@@ -655,7 +729,7 @@ export default function Questions() {
                               </span>
                               <span className="space-y-2 block">
                                 {normalizedChoice.text ? (
-                                  <span>{normalizedChoice.text}</span>
+                                  <span className="text-sm leading-6 text-justify block">{normalizedChoice.text}</span>
                                 ) : (
                                   <span className="text-gray-500 italic">Alternativa com imagem</span>
                                 )}
@@ -663,7 +737,7 @@ export default function Questions() {
                                   <img
                                     src={normalizedChoice.imageUrl}
                                     alt={`Imagem alternativa ${label}`}
-                                    className="max-h-36 rounded border border-gray-300"
+                                    className="max-h-28 rounded border border-gray-300"
                                   />
                                 )}
                               </span>
@@ -779,7 +853,7 @@ export default function Questions() {
                       <div>
                         <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                         <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
-                          <div className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+                          <div className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
                             <MaybeKaTeX text={normalizeQuestionText(String(question.solution || ""))} displayMode={false} />
                           </div>
                         </div>
@@ -799,9 +873,9 @@ export default function Questions() {
 
       {/* Pagination Info */}
       <div className="text-center text-gray-600 py-4">
-        Mostrando {paginatedQuestions.length} de {filteredQuestions.length} questões filtradas
+        Mostrando {paginatedQuestions.length} de {generatedQuestions.length} questões {simuladoQuestionIds ? "do simulado" : "filtradas"}
       </div>
-      {filteredQuestions.length > pageSize && (
+      {generatedQuestions.length > pageSize && (
         <div className="flex items-center justify-center gap-3 pb-4">
           <Button variant="outline" disabled={currentPage === 1} onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}>
             Anterior

@@ -13,7 +13,6 @@ type SubjectItem = {
 type AdminQuestion = {
   id: number;
   title: string;
-  difficulty: string | null;
   year: number | null;
   subjectName?: string | null;
 };
@@ -224,7 +223,6 @@ export default function AdminPanel() {
                       <p className="text-sm text-gray-500">
                         {question.subjectName || "Sem matéria"}
                         {question.year ? ` • ENEM ${question.year}` : ""}
-                        {question.difficulty ? ` • ${question.difficulty}` : ""}
                       </p>
                     </div>
                     <div className="flex gap-2">

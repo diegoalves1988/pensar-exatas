@@ -449,7 +449,7 @@ app.get("/api/questions", async (_req: any, res: any) => {
   if (!sql) return res.json({ items: [] });
   try {
     const rows = await sql`
-      SELECT id, "subjectId", title, statement, solution, difficulty, year,
+            SELECT id, "subjectId", title, statement, solution, year,
              "sourceUrl", "imageUrl", choices, "correctChoice"
       FROM questions ORDER BY id DESC LIMIT 1000
     `;
@@ -683,7 +683,7 @@ app.get("/api/admin/questions", async (req: any, res: any) => {
     if (!user) return res.status(401).json({ error: "not authenticated" });
     if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
     const rows = await sql`
-      SELECT q.id, q.title, q.difficulty, q.year, q."subjectId", q."createdAt", s.name as "subjectName"
+      SELECT q.id, q.title, q.year, q."subjectId", q."createdAt", s.name as "subjectName"
       FROM questions q
       LEFT JOIN subjects s ON s.id = q."subjectId"
       ORDER BY q.id DESC
@@ -711,7 +711,7 @@ app.get("/api/admin/questions/:id", async (req: any, res: any) => {
     }
 
     const [row] = await sql`
-      SELECT id, "subjectId", title, statement, solution, difficulty, year, "sourceUrl", "imageUrl", choices, "correctChoice"
+      SELECT id, "subjectId", title, statement, solution, year, "sourceUrl", "imageUrl", choices, "correctChoice"
       FROM questions
       WHERE id = ${questionId}
       LIMIT 1
@@ -759,7 +759,7 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
     const [user] = await sql`SELECT role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
     if (!user || user.role !== "admin") return res.status(403).json({ error: "forbidden" });
 
-    const { subjectId, title, statement, solution, difficulty, year, sourceUrl, imageUrl, choices, correctChoice } = req.body || {};
+    const { subjectId, title, statement, solution, year, sourceUrl, imageUrl, choices, correctChoice } = req.body || {};
     if (!subjectId || !title || !statement || !solution) {
       return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
     }
@@ -771,13 +771,12 @@ app.post("/api/admin/questions", async (req: any, res: any) => {
     const safeYear = typeof year === "number" ? year : null;
 
     const [row] = await sql`
-      INSERT INTO questions ("subjectId", title, statement, solution, difficulty, year, "sourceUrl", "imageUrl", choices, "correctChoice")
+      INSERT INTO questions ("subjectId", title, statement, solution, year, "sourceUrl", "imageUrl", choices, "correctChoice")
       VALUES (
         ${Number(subjectId)},
         ${String(title).trim()},
         ${String(statement).trim()},
         ${String(solution).trim()},
-        ${difficulty || 'medium'},
         ${safeYear},
         ${sourceUrl || null},
         ${imageUrl || null},
@@ -808,7 +807,7 @@ app.put("/api/admin/questions/:id", async (req: any, res: any) => {
       return res.status(400).json({ error: "invalid question id" });
     }
 
-    const { subjectId, title, statement, solution, difficulty, year, sourceUrl, imageUrl, choices, correctChoice } = req.body || {};
+    const { subjectId, title, statement, solution, year, sourceUrl, imageUrl, choices, correctChoice } = req.body || {};
     if (!subjectId || !title || !statement || !solution) {
       return res.status(400).json({ error: "subjectId, title, statement and solution are required" });
     }
@@ -825,7 +824,6 @@ app.put("/api/admin/questions/:id", async (req: any, res: any) => {
         title = ${String(title).trim()},
         statement = ${String(statement).trim()},
         solution = ${String(solution).trim()},
-        difficulty = ${difficulty || 'medium'},
         year = ${safeYear},
         "sourceUrl" = ${sourceUrl || null},
         "imageUrl" = ${imageUrl || null},
