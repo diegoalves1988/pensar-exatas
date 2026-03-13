@@ -15,6 +15,8 @@ type ResolutionItem = {
   answeredCorrect: boolean | null;
 };
 
+const RESOLUTIONS_CACHE_KEY = "questions-resolutions-cache-v1";
+
 export default function Questions() {
   const [location] = useLocation();
   const { isAuthenticated } = useAuth();
@@ -28,6 +30,7 @@ export default function Questions() {
   const [currentPage, setCurrentPage] = useState(1);
   // track answers for multiple-choice questions: questionId -> selected index
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [hydratingResolutions, setHydratingResolutions] = useState(false);
   // track if the user chose to reveal the answer/solution for each question
   const [showSolution, setShowSolution] = useState<Record<number, boolean>>({});
   const [reportOpen, setReportOpen] = useState<Record<number, boolean>>({});
@@ -35,6 +38,20 @@ export default function Questions() {
   const [reportDescription, setReportDescription] = useState<Record<number, string>>({});
   const [reportLoading, setReportLoading] = useState<Record<number, boolean>>({});
   const [reportMessage, setReportMessage] = useState<Record<number, string>>({});
+
+  const setAnswersWithCache = (updater: Record<number, number> | ((current: Record<number, number>) => Record<number, number>)) => {
+    setAnswers((current) => {
+      const next = typeof updater === "function" ? updater(current) : updater;
+      if (typeof window !== "undefined") {
+        try {
+          sessionStorage.setItem(RESOLUTIONS_CACHE_KEY, JSON.stringify(next));
+        } catch {
+          // ignore storage errors
+        }
+      }
+      return next;
+    });
+  };
 
   // Use tRPC in local dev; in production use /api/questions directly.
   const { data: questions } = trpc.questions.list.useQuery(undefined, {
@@ -116,8 +133,27 @@ export default function Questions() {
   useEffect(() => {
     if (!isAuthenticated) {
       setAnswers({});
+      setHydratingResolutions(false);
       return;
     }
+
+    let hadLocalCache = false;
+    if (typeof window !== "undefined") {
+      try {
+        const raw = sessionStorage.getItem(RESOLUTIONS_CACHE_KEY);
+        if (raw) {
+          const cached = JSON.parse(raw);
+          if (cached && typeof cached === "object") {
+            setAnswers(cached);
+            hadLocalCache = true;
+          }
+        }
+      } catch {
+        // ignore parsing/storage errors
+      }
+    }
+
+    setHydratingResolutions(!hadLocalCache);
     let cancelled = false;
     fetch("/api/questions/resolutions", { credentials: "include" })
       .then((r) => (r.ok ? r.json() : null))
@@ -129,10 +165,18 @@ export default function Questions() {
             nextAnswers[item.questionId] = item.selectedChoice;
           }
         }
-        setAnswers(nextAnswers);
+        setAnswersWithCache(nextAnswers);
+        setHydratingResolutions(false);
       })
       .catch(() => {
-        if (!cancelled) setAnswers({});
+        if (!cancelled && !hadLocalCache) {
+          setAnswersWithCache({});
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setHydratingResolutions(false);
+        }
       });
 
     return () => {
@@ -489,33 +533,34 @@ export default function Questions() {
                               onClick={async () => {
                                 const prevSelected = answers[question.id];
                                 if (prevSelected === idx) {
-                                  setAnswers((a) => {
+                                  setAnswersWithCache((a) => {
                                     const copy = { ...a };
                                     delete copy[question.id];
                                     return copy;
                                   });
                                   const ok = await removeQuestionResolution(question.id);
                                   if (!ok) {
-                                    setAnswers((a) => ({ ...a, [question.id]: idx }));
+                                    setAnswersWithCache((a) => ({ ...a, [question.id]: idx }));
                                   }
                                   return;
                                 }
 
-                                setAnswers((a) => ({ ...a, [question.id]: idx }));
+                                setAnswersWithCache((a) => ({ ...a, [question.id]: idx }));
                                 const answeredCorrect = idx === question.correctChoice;
                                 const ok = await saveQuestionResolution(question.id, idx, answeredCorrect);
                                 if (!ok) {
                                   if (prevSelected === undefined) {
-                                    setAnswers((a) => {
+                                    setAnswersWithCache((a) => {
                                       const copy = { ...a };
                                       delete copy[question.id];
                                       return copy;
                                     });
                                   } else {
-                                    setAnswers((a) => ({ ...a, [question.id]: prevSelected }));
+                                    setAnswersWithCache((a) => ({ ...a, [question.id]: prevSelected }));
                                   }
                                 }
                               }}
+                              disabled={Boolean(isAuthenticated && hydratingResolutions && answers[question.id] === undefined)}
                             >
                               <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
                                 {label}
@@ -533,20 +578,27 @@ export default function Questions() {
                             )}
                           </div>
                         )}
+                        {isAuthenticated && hydratingResolutions && answers[question.id] === undefined && (
+                          <p className="text-sm text-gray-500 mt-2 italic">Carregando resposta salva...</p>
+                        )}
                         {answers[question.id] === undefined && (
-                          <p className="text-sm text-gray-400 mt-2 italic">Selecione uma alternativa e, se quiser, clique em Mostrar resposta.</p>
+                          <p className="text-sm text-gray-400 mt-2 italic">
+                            {isAuthenticated && hydratingResolutions
+                              ? "Aguarde um instante para sincronizar seu histórico."
+                              : "Selecione uma alternativa e, se quiser, clique em Mostrar resposta."}
+                          </p>
                         )}
                       </div>
                     )}
 
                     <div>
-                      {question.choices && question.choices.length > 0 && answers[question.id] === undefined && (
+                      {question.choices && question.choices.length > 0 && answers[question.id] === undefined && !hydratingResolutions && (
                         <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
                       )}
                       <div className="flex flex-col sm:flex-row gap-2">
                         <Button
                           variant="outline"
-                          disabled={Boolean(question.choices && question.choices.length > 0 && answers[question.id] === undefined)}
+                          disabled={Boolean(question.choices && question.choices.length > 0 && (answers[question.id] === undefined || hydratingResolutions))}
                           onClick={() =>
                             setShowSolution((prev) => ({
                               ...prev,
