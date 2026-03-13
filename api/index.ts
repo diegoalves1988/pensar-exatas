@@ -114,16 +114,39 @@ async function recalculateUserProgress(sql: any, userId: number) {
     }
   }
 
-  await sql`
-    INSERT INTO user_progress ("userId", "questionsResolved", "totalPoints", "currentStreak", "bestStreak", "createdAt", "updatedAt")
-    VALUES (${userId}, ${questionsResolved}, ${totalPoints}, ${currentStreak}, ${bestStreak}, NOW(), NOW())
-    ON CONFLICT ("userId") DO UPDATE SET
-      "questionsResolved" = EXCLUDED."questionsResolved",
-      "totalPoints" = EXCLUDED."totalPoints",
-      "currentStreak" = EXCLUDED."currentStreak",
-      "bestStreak" = EXCLUDED."bestStreak",
-      "updatedAt" = NOW()
+  const existing = await sql`
+    SELECT id
+    FROM user_progress
+    WHERE "userId" = ${userId}
+    ORDER BY id ASC
   `;
+
+  if (existing.length === 0) {
+    await sql`
+      INSERT INTO user_progress ("userId", "questionsResolved", "totalPoints", "currentStreak", "bestStreak", "createdAt", "updatedAt")
+      VALUES (${userId}, ${questionsResolved}, ${totalPoints}, ${currentStreak}, ${bestStreak}, NOW(), NOW())
+    `;
+    return;
+  }
+
+  const keepId = Number(existing[0].id);
+  await sql`
+    UPDATE user_progress
+    SET
+      "questionsResolved" = ${questionsResolved},
+      "totalPoints" = ${totalPoints},
+      "currentStreak" = ${currentStreak},
+      "bestStreak" = ${bestStreak},
+      "updatedAt" = NOW()
+    WHERE id = ${keepId}
+  `;
+
+  if (existing.length > 1) {
+    await sql`
+      DELETE FROM user_progress
+      WHERE "userId" = ${userId} AND id <> ${keepId}
+    `;
+  }
 }
 
 // ─── Supabase Storage helpers ─────────────────────────────────────────────────
@@ -189,6 +212,7 @@ app.get("/api/profile/summary", async (req: any, res: any) => {
              COALESCE("bestStreak", 0) as "bestStreak"
       FROM user_progress
       WHERE "userId" = ${user.id}
+      ORDER BY "updatedAt" DESC, id DESC
       LIMIT 1
     `;
     const [favorites] = await sql`
