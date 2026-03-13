@@ -1,6 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import { useEffect, useState } from "react";
-import { Search, Filter, Heart, BookOpen } from "lucide-react";
+import { Search, Heart, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
@@ -131,8 +131,6 @@ export default function Questions() {
   const subjectList = (publicSubjects.length > 0 ? publicSubjects : FALLBACK_SUBJECTS)
     .slice()
     .sort((a, b) => Number(a.order ?? 9999) - Number(b.order ?? 9999) || a.id - b.id);
-  const physicsSubjects = subjectList.filter((s) => getSubjectArea(s.name) === "Física");
-  const mathSubjects = subjectList.filter((s) => getSubjectArea(s.name) === "Matemática");
 
   const normalizeQuestionText = (text: string) =>
     text
@@ -201,7 +199,7 @@ export default function Questions() {
 
       {/* Search and Filters */}
       <div className="bg-white rounded-xl shadow-md p-6 space-y-4">
-        <div className="flex gap-4 flex-col md:flex-row">
+        <div className="relative">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
             <input
@@ -212,10 +210,6 @@ export default function Questions() {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Filter className="w-4 h-4" />
-            Filtros
-          </Button>
         </div>
 
         {/* Difficulty Filter */}
@@ -260,62 +254,6 @@ export default function Questions() {
           >
             Difícil
           </button>
-        </div>
-
-        {/* Subject Filter */}
-        <div className="space-y-3">
-          <p className="text-sm font-semibold text-gray-700">Matéria</p>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setSelectedSubject(null)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition ${
-                selectedSubject === null
-                  ? "bg-purple-500 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              Todas
-            </button>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Física</p>
-              <div className="flex flex-wrap gap-2">
-                {physicsSubjects.map((subject) => (
-                  <button
-                    key={subject.id}
-                    onClick={() => setSelectedSubject(subject.id)}
-                    className={`px-3 py-1 rounded-full text-sm font-medium transition ${
-                      selectedSubject === subject.id
-                        ? "bg-blue-600 text-white"
-                        : "bg-blue-50 text-blue-700 hover:bg-blue-100"
-                    }`}
-                  >
-                    {subject.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Matemática</p>
-              <div className="flex flex-wrap gap-2">
-                {mathSubjects.map((subject) => (
-                  <button
-                    key={subject.id}
-                    onClick={() => setSelectedSubject(subject.id)}
-                    className={`px-3 py-1 rounded-full text-sm font-medium transition ${
-                      selectedSubject === subject.id
-                        ? "bg-emerald-600 text-white"
-                        : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-                    }`}
-                  >
-                    {subject.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
