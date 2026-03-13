@@ -10,6 +10,18 @@ type SubjectItem = {
   icon?: string | null;
 };
 
+function getSubjectCode(name: string) {
+  const clean = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+  return clean.slice(0, 2).toUpperCase();
+}
+
 export default function AdminPanel() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
@@ -149,7 +161,9 @@ export default function AdminPanel() {
               {subjects.map((subject) => (
                 <div key={subject.name} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{subject.icon || "📘"}</span>
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-gray-50 text-sm font-bold tracking-wide text-gray-600">
+                      {getSubjectCode(subject.name)}
+                    </span>
                     <span className="font-medium text-gray-900">{subject.name}</span>
                   </div>
                   <div className="flex gap-2">

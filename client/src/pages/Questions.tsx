@@ -43,6 +43,18 @@ function getSubjectArea(name: string): "Física" | "Matemática" {
   return physicsTerms.some((term) => normalized.includes(term)) ? "Física" : "Matemática";
 }
 
+function getSubjectCode(name: string) {
+  const clean = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+  return clean.slice(0, 2).toUpperCase();
+}
+
 export default function Questions() {
   const [location] = useLocation();
   const { isAuthenticated } = useAuth();
@@ -279,7 +291,7 @@ export default function Questions() {
                         : "bg-blue-50 text-blue-700 hover:bg-blue-100"
                     }`}
                   >
-                    {subject.icon || "📘"} {subject.name}
+                    {subject.name}
                   </button>
                 ))}
               </div>
@@ -298,7 +310,7 @@ export default function Questions() {
                         : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
                     }`}
                   >
-                    {subject.icon || "📘"} {subject.name}
+                    {subject.name}
                   </button>
                 ))}
               </div>
@@ -333,8 +345,8 @@ export default function Questions() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="text-2xl">
-                        {subjectList.find((s) => s.id === Number(question.subjectId))?.icon || "📘"}
+                      <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-xs font-bold tracking-wide text-gray-600">
+                        {getSubjectCode(subjectList.find((s) => s.id === Number(question.subjectId))?.name || "QT")}
                       </span>
                       <h3 className="text-lg font-bold text-gray-900">
                         <InlineKaTeX text={String(question.title || "")} />

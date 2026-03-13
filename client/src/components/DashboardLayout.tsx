@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_TITLE } from "@/const";
-import { Menu, X, LogOut, User, Settings } from "lucide-react";
+import { Menu, X, LogOut, User, Settings, Atom, Calculator } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
@@ -41,6 +41,18 @@ function getSubjectArea(name: string): "Física" | "Matemática" {
     "mec", "cinem", "din", "eletro", "onda", "termo", "opt", "ópt", "hidro", "física", "fisica",
   ];
   return physicsTerms.some((term) => normalized.includes(term)) ? "Física" : "Matemática";
+}
+
+function getSubjectCode(name: string) {
+  const clean = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+  return clean.slice(0, 2).toUpperCase();
 }
 
 export default function DashboardLayout({ children, title }: DashboardLayoutProps) {
@@ -226,7 +238,8 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
               {visibleSubjectGroups.map((group, idx) => (
                 <details key={group.name} open={idx === 0} className="group rounded-lg border border-gray-200 bg-gray-50">
                   <summary className="list-none cursor-pointer select-none px-3 py-2 flex items-center justify-between">
-                    <span className={`text-sm font-bold text-white px-2 py-1 rounded bg-gradient-to-r ${group.color}`}>
+                    <span className={`text-sm font-bold text-white px-2 py-1 rounded bg-gradient-to-r ${group.color} inline-flex items-center gap-2`}>
+                      {group.name === "Física" ? <Atom className="w-4 h-4" /> : <Calculator className="w-4 h-4" />}
                       {group.name}
                     </span>
                     <span className="text-xs text-gray-500">{group.filteredItems.length} tópicos</span>
@@ -238,7 +251,9 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
                         href={`/questoes?subject=${subject.id}`}
                         className="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-white hover:shadow-sm transition"
                       >
-                        <span>{subject.icon || "📘"}</span>
+                        <span className="inline-flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md border border-gray-200 bg-white text-[11px] font-bold tracking-wide text-gray-600">
+                          {getSubjectCode(subject.name)}
+                        </span>
                         <span>{subject.name}</span>
                       </Link>
                     ))}
