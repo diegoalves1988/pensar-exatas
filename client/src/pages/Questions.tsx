@@ -16,6 +16,7 @@ type ResolutionItem = {
 };
 
 const RESOLUTIONS_CACHE_KEY = "questions-resolutions-cache-v1";
+const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/g;
 
 export default function Questions() {
   const [location] = useLocation();
@@ -192,6 +193,52 @@ export default function Questions() {
       .replace(/\n{3,}/g, "\n\n")
       // single line breaks from copied PDFs become spaces; paragraph breaks are kept
       .replace(/([^\n])\n([^\n])/g, "$1 $2");
+
+  const stripMarkdownImages = (text: string) => text.replace(MARKDOWN_IMAGE_REGEX, " ");
+
+  const renderStatementWithInlineImages = (text: string) => {
+    const chunks: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    MARKDOWN_IMAGE_REGEX.lastIndex = 0;
+
+    while ((match = MARKDOWN_IMAGE_REGEX.exec(text)) !== null) {
+      const matchStart = match.index;
+      const matchEnd = MARKDOWN_IMAGE_REGEX.lastIndex;
+      const imageUrl = match[1];
+      const before = text.slice(lastIndex, matchStart);
+
+      if (before.trim()) {
+        chunks.push(
+          <div key={`text-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+            <MaybeKaTeX text={normalizeQuestionText(before)} displayMode={false} />
+          </div>,
+        );
+      }
+
+      chunks.push(
+        <img
+          key={`img-${matchStart}`}
+          src={imageUrl}
+          alt="Imagem do enunciado"
+          className="w-full h-auto object-contain rounded-lg border border-gray-300 max-h-96"
+        />,
+      );
+
+      lastIndex = matchEnd;
+    }
+
+    const tail = text.slice(lastIndex);
+    if (tail.trim()) {
+      chunks.push(
+        <div key={`text-tail-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
+          <MaybeKaTeX text={normalizeQuestionText(tail)} displayMode={false} />
+        </div>,
+      );
+    }
+
+    return chunks;
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -444,7 +491,7 @@ export default function Questions() {
                       </h3>
                     </div>
                     <div className="text-gray-600 text-sm line-clamp-2">
-                      <MaybeKaTeX text={normalizeQuestionText(String(question.statement || ""))} displayMode={false} />
+                      <MaybeKaTeX text={normalizeQuestionText(stripMarkdownImages(String(question.statement || "")))} displayMode={false} />
                     </div>
                     {question.imageUrl && (
                       <div className="mt-3 mb-3">
@@ -497,21 +544,10 @@ export default function Questions() {
               {expandedQuestion === question.id && (
                 <div className="border-t border-gray-200 p-6 bg-gray-50">
                   <div className="max-w-4xl mx-auto space-y-4">
-                    {question.imageUrl && (
-                      <div>
-                        <h4 className="font-bold text-gray-900 mb-2">Imagem</h4>
-                        <img
-                          src={question.imageUrl}
-                          alt="Imagem da questão"
-                          className="w-full h-auto object-cover rounded-lg border border-gray-300 max-h-96"
-                        />
-                      </div>
-                    )}
-
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
-                      <div className="text-gray-700 whitespace-pre-wrap text-[17px] leading-8">
-                        <MaybeKaTeX text={normalizeQuestionText(String(question.statement || ""))} displayMode={false} />
+                      <div className="space-y-4">
+                        {renderStatementWithInlineImages(String(question.statement || ""))}
                       </div>
                     </div>
 
