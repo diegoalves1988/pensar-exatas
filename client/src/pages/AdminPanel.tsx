@@ -18,12 +18,26 @@ type AdminQuestion = {
   subjectName?: string | null;
 };
 
+type AdminQuestionReport = {
+  id: number;
+  category: string;
+  description: string | null;
+  status: string;
+  createdAt: string;
+  questionId: number;
+  questionTitle: string | null;
+  reporterUserId: number | null;
+  reporterName: string | null;
+  reporterEmail: string | null;
+};
+
 export default function AdminPanel() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<"questions" | "lessons" | "subjects" | "portfolio">("questions");
+  const [activeTab, setActiveTab] = useState<"questions" | "reports" | "lessons" | "subjects" | "portfolio">("questions");
   const [subjects, setSubjects] = useState<SubjectItem[]>([]);
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
+  const [reports, setReports] = useState<AdminQuestionReport[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,6 +57,17 @@ export default function AdminPanel() {
       .then((data) => {
         if (!cancelled && Array.isArray(data?.items)) {
           setQuestions(data.items);
+        }
+      })
+      .catch(() => {
+        // Keep empty list on fetch failure.
+      });
+
+    fetch("/api/admin/question-reports", { credentials: "include" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.items)) {
+          setReports(data.items);
         }
       })
       .catch(() => {
@@ -100,6 +125,16 @@ export default function AdminPanel() {
           }`}
         >
           Questões
+        </button>
+        <button
+          onClick={() => setActiveTab("reports")}
+          className={`px-4 py-2 rounded-lg font-medium transition ${
+            activeTab === "reports"
+              ? "bg-purple-500 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          Relatos
         </button>
         <button
           onClick={() => setActiveTab("lessons")}
@@ -172,6 +207,55 @@ export default function AdminPanel() {
                         <Trash2 className="w-4 h-4 text-red-500" />
                       </Button>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === "reports" && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">Relatos de Problemas</h2>
+              <span className="text-sm text-gray-500">Total: {reports.length}</span>
+            </div>
+
+            {reports.length === 0 ? (
+              <div className="text-center py-12 text-gray-500">
+                <p>Nenhum relato recebido até agora.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {reports.map((report) => (
+                  <div key={report.id} className="rounded-lg border border-gray-200 p-4 space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="inline-flex rounded-full bg-purple-100 text-purple-700 px-2 py-0.5 text-xs font-medium">
+                        {report.category}
+                      </span>
+                      <span className="inline-flex rounded-full bg-gray-100 text-gray-700 px-2 py-0.5 text-xs font-medium">
+                        {report.status}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {new Date(report.createdAt).toLocaleString("pt-BR")}
+                      </span>
+                    </div>
+
+                    <p className="text-sm text-gray-800 font-medium">
+                      Questão #{report.questionId}
+                      {report.questionTitle ? ` • ${report.questionTitle}` : ""}
+                    </p>
+
+                    {report.description ? (
+                      <p className="text-sm text-gray-700 whitespace-pre-wrap">{report.description}</p>
+                    ) : (
+                      <p className="text-sm text-gray-500 italic">Sem descrição adicional.</p>
+                    )}
+
+                    <p className="text-xs text-gray-500">
+                      Usuário: {report.reporterName || "Sem nome"}
+                      {report.reporterEmail ? ` (${report.reporterEmail})` : ""}
+                    </p>
                   </div>
                 ))}
               </div>

@@ -513,6 +513,54 @@ app.post("/api/questions/:id/report", async (req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── GET /api/admin/question-reports ─────────────────────────────────────────
+app.get("/api/admin/question-reports", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+    if (user.role !== "admin") return res.status(403).json({ error: "forbidden" });
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS question_reports (
+        id bigserial PRIMARY KEY,
+        "userId" integer NOT NULL,
+        "questionId" integer NOT NULL,
+        category varchar(100) NOT NULL,
+        description text,
+        status varchar(32) NOT NULL DEFAULT 'open',
+        "createdAt" timestamptz NOT NULL DEFAULT NOW(),
+        "updatedAt" timestamptz NOT NULL DEFAULT NOW()
+      )
+    `;
+
+    const rows = await sql`
+      SELECT
+        qr.id,
+        qr.category,
+        qr.description,
+        qr.status,
+        qr."createdAt",
+        qr."questionId",
+        q.title as "questionTitle",
+        u.id as "reporterUserId",
+        u.name as "reporterName",
+        u.email as "reporterEmail"
+      FROM question_reports qr
+      LEFT JOIN questions q ON q.id = qr."questionId"
+      LEFT JOIN users u ON u.id = qr."userId"
+      ORDER BY qr."createdAt" DESC
+      LIMIT 500
+    `;
+
+    return res.json({ items: rows });
+  } catch (err) {
+    console.error("[API] GET /api/admin/question-reports failed", err);
+    return res.status(500).json({ error: "failed to load question reports" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── GET /api/admin/questions ───────────────────────────────────────────────────
 app.get("/api/admin/questions", async (req: any, res: any) => {
   const sql = getDb();
