@@ -300,6 +300,62 @@ app.get("/api/questions", async (_req: any, res: any) => {
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
+// ── POST /api/questions/:id/resolve ──────────────────────────────────────────
+app.post("/api/questions/:id/resolve", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const user = await getSessionUser(req, sql);
+    if (!user) return res.status(401).json({ error: "not authenticated" });
+
+    const questionId = Number(req.params.id);
+    if (!Number.isFinite(questionId) || questionId <= 0) {
+      return res.status(400).json({ error: "invalid question id" });
+    }
+
+    // Keep this self-contained in serverless: create tracking table if needed.
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_question_resolutions (
+        id bigserial PRIMARY KEY,
+        "userId" integer NOT NULL,
+        "questionId" integer NOT NULL,
+        "answeredCorrect" boolean,
+        "createdAt" timestamptz NOT NULL DEFAULT NOW(),
+        UNIQUE ("userId", "questionId")
+      )
+    `;
+
+    const answeredCorrect = typeof req.body?.answeredCorrect === "boolean" ? req.body.answeredCorrect : null;
+    const inserted = await sql`
+      INSERT INTO user_question_resolutions ("userId", "questionId", "answeredCorrect")
+      VALUES (${user.id}, ${questionId}, ${answeredCorrect})
+      ON CONFLICT ("userId", "questionId") DO NOTHING
+      RETURNING id
+    `;
+
+    if (inserted.length === 0) {
+      return res.json({ ok: true, alreadyResolved: true });
+    }
+
+    const pointsToAdd = answeredCorrect === true ? 12 : 10;
+    await sql`
+      INSERT INTO user_progress ("userId", "questionsResolved", "totalPoints", "currentStreak", "bestStreak", "createdAt", "updatedAt")
+      VALUES (${user.id}, 1, ${pointsToAdd}, 1, 1, NOW(), NOW())
+      ON CONFLICT ("userId") DO UPDATE SET
+        "questionsResolved" = user_progress."questionsResolved" + 1,
+        "totalPoints" = user_progress."totalPoints" + ${pointsToAdd},
+        "currentStreak" = user_progress."currentStreak" + 1,
+        "bestStreak" = GREATEST(user_progress."bestStreak", user_progress."currentStreak" + 1),
+        "updatedAt" = NOW()
+    `;
+
+    return res.json({ ok: true, alreadyResolved: false });
+  } catch (err) {
+    console.error("[API] POST /api/questions/:id/resolve failed", err);
+    return res.status(500).json({ error: "failed to save question resolution" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // ── GET /api/admin/questions ───────────────────────────────────────────────────
 app.get("/api/admin/questions", async (req: any, res: any) => {
   const sql = getDb();

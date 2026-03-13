@@ -144,6 +144,20 @@ export default function Questions() {
     return favoriteItems.some((favorite) => favorite.id === questionId);
   };
 
+  const markQuestionResolved = async (questionId: number, answeredCorrect: boolean) => {
+    if (!isAuthenticated) return;
+    try {
+      await fetch(`/api/questions/${questionId}/resolve`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answeredCorrect }),
+      });
+    } catch {
+      // keep UX smooth even if progress tracking fails temporarily
+    }
+  };
+
   const toggleFavorite = async (questionId: number) => {
     if (!isAuthenticated) return;
     const alreadyFavorite = isFavorite(questionId);
@@ -389,6 +403,7 @@ export default function Questions() {
                               onClick={() => {
                                 if (disabled) return;
                                 setAnswers(a => ({ ...a, [question.id]: idx }));
+                                void markQuestionResolved(question.id, idx === question.correctChoice);
                               }}
                               disabled={disabled}
                             >
