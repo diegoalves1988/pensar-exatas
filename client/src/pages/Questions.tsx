@@ -203,6 +203,18 @@ export default function Questions() {
       // single line breaks from copied PDFs become spaces; paragraph breaks are kept
       .replace(/([^\n])\n([^\n])/g, "$1 $2");
 
+  const sanitizeStatementArtifacts = (text: string) => {
+    // Some imported records contain literal artifact lines like "undefined" or "null".
+    return text
+      .split(/\r?\n/)
+      .filter((line) => {
+        const normalized = line.trim().toLowerCase();
+        return normalized !== "undefined" && normalized !== "null";
+      })
+      .join("\n")
+      .trim();
+  };
+
   const stripMarkdownImages = (text: string) => text.replace(MARKDOWN_IMAGE_REGEX, " ");
 
   const renderStatementWithInlineImages = (text: string) => {
@@ -521,7 +533,10 @@ export default function Questions() {
                       </h3>
                     </div>
                     <div className="text-gray-600 text-sm line-clamp-2">
-                      <MaybeKaTeX text={normalizeQuestionText(stripMarkdownImages(String(question.statement || "")))} displayMode={false} />
+                      <MaybeKaTeX
+                        text={normalizeQuestionText(stripMarkdownImages(sanitizeStatementArtifacts(String(question.statement || ""))))}
+                        displayMode={false}
+                      />
                     </div>
                     {question.imageUrl && (
                       <div className="mt-3 mb-3">
@@ -577,7 +592,7 @@ export default function Questions() {
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                       <div className="space-y-4">
-                        {renderStatementWithInlineImages(String(question.statement || ""))}
+                        {renderStatementWithInlineImages(sanitizeStatementArtifacts(String(question.statement || "")))}
                       </div>
                     </div>
 
