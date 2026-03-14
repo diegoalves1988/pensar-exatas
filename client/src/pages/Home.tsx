@@ -17,23 +17,15 @@ type ProfileSummary = {
   questionsToday: number;
 };
 
+const FIXED_QUESTIONS_COUNT = 1000;
+
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { data: subjects } = trpc.subjects.list.useQuery();
-  // Keep tRPC for dev; add public API fallback for production (Vercel)
-  const { data: questions } = trpc.questions.list.useQuery();
-  const [publicQuestions, setPublicQuestions] = useState<any[] | null>(null);
   const [publicSubjects, setPublicSubjects] = useState<SubjectItem[] | null>(null);
   const [profileSummary, setProfileSummary] = useState<ProfileSummary | null>(null);
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/questions")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (!cancelled && data?.items) setPublicQuestions(data.items);
-      })
-      .catch(() => {});
-
     fetch("/api/subjects")
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
@@ -114,7 +106,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
-                  <p className="text-4xl font-bold text-gray-900 mt-2">{(questions?.length ?? publicQuestions?.length ?? 0)}+</p>
+                  <p className="text-4xl font-bold text-gray-900 mt-2">{FIXED_QUESTIONS_COUNT}+</p>
                 </div>
                 <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
               </div>
