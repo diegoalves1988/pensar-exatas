@@ -24,8 +24,8 @@ type ChoiceOption =
     };
 
 const RESOLUTIONS_CACHE_KEY = "questions-resolutions-cache-v1";
-const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/g;
-const URL_REGEX = /(https?:\/\/[^\s]+)/i;
+const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\(([^\s)]+)\)/g;
+const URL_REGEX = /(https?:\/\/[^\s)]+|\/[\w\-./%]+(?:\?[^\s)]*)?)/i;
 
 export default function Questions() {
   const [location] = useLocation();
@@ -208,22 +208,53 @@ export default function Questions() {
       // single line breaks from copied PDFs become spaces; paragraph breaks are kept
       .replace(/([^\n])\n([^\n])/g, "$1 $2");
 
-  const sanitizeStatementArtifacts = (text: string) => {
-    // Some imported records contain literal artifact lines like "undefined" or "null".
-    const withoutArtifactLines = text
-      .split(/\r?\n/)
-      .filter((line) => {
-        const normalized = line.trim().toLowerCase();
-        return normalized !== "undefined" && normalized !== "null";
-      })
-      .join("\n");
+  const resolveImageUrl = (url: string | null | undefined): string | null => {
+    if (!url) return null;
+    const raw = String(url).trim();
+    if (!raw) return null;
 
-    // Also remove stray artifact tokens embedded in the same line as other content.
-    return withoutArtifactLines
-      .replace(/(^|\s)(undefined|null)(?=\s|$|[.,;:!?])/gi, " ")
-      .replace(/\n{3,}/g, "\n\n")
+    if (/^https?:\/\//i.test(raw)) return raw;
+    if (/^\/\//.test(raw) && typeof window !== "undefined") {
+      return `${window.location.protocol}${raw}`;
+    }
+
+    if (raw.startsWith("/")) {
+      const base = (import.meta as any).env?.BASE_URL || "/";
+      if (!base || base === "/") return raw;
+      return `${base}${raw.replace(/^\//, "")}`;
+    }
+
+    return raw;
+  };
+
+  const sanitizePdfArtifacts = (text: string) => {
+    const cleanedLines = text
+      .replace(/\r\n/g, "\n")
+      .split(/\n/)
+      .map((line) => line.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim())
+      .filter((line) => {
+        if (!line) return false;
+        if (/^(undefined|null)$/i.test(line)) return false;
+        if (/^\*?\d{6}AM\d+\*?$/i.test(line)) return false;
+        if (/^(?:ENE[MN]2025\s*)+$/i.test(line)) return false;
+        if (/^(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*$/i.test(line)) return false;
+        if (/^\d{1,2}$/.test(line)) return false;
+        return true;
+      });
+
+    return cleanedLines
+      .join("\n")
+      .replace(/\b(?:undefined|null)\b/gi, " ")
+      .replace(/\bENE[MN]2025\b/gi, " ")
+      .replace(/\*\d{6}AM\d+\*/gi, " ")
+      .replace(/(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*/gi, " ")
       .replace(/[ \t]{2,}/g, " ")
+      .replace(/\n{3,}/g, "\n\n")
       .trim();
+  };
+
+  const sanitizeStatementArtifacts = (text: string) => {
+    return sanitizePdfArtifacts(text);
   };
 
   const stripMarkdownImages = (text: string) => text.replace(MARKDOWN_IMAGE_REGEX, " ");
@@ -237,7 +268,7 @@ export default function Questions() {
     while ((match = MARKDOWN_IMAGE_REGEX.exec(text)) !== null) {
       const matchStart = match.index;
       const matchEnd = MARKDOWN_IMAGE_REGEX.lastIndex;
-      const imageUrl = match[1];
+      const imageUrl = resolveImageUrl(match[1]);
       const before = text.slice(lastIndex, matchStart);
 
       if (before.trim()) {
@@ -248,14 +279,16 @@ export default function Questions() {
         );
       }
 
-      chunks.push(
-        <img
-          key={`img-${matchStart}`}
-          src={imageUrl}
-          alt="Imagem do enunciado"
-          className="w-4/5 max-w-full h-auto object-contain rounded-lg border border-gray-300 max-h-72 mx-auto"
-        />,
-      );
+      if (imageUrl) {
+        chunks.push(
+          <img
+            key={`img-${matchStart}`}
+            src={imageUrl}
+            alt="Imagem do enunciado"
+            className="w-4/5 max-w-full h-auto object-contain rounded-lg border border-gray-300 max-h-72 mx-auto"
+          />,
+        );
+      }
 
       lastIndex = matchEnd;
     }
@@ -276,20 +309,21 @@ export default function Questions() {
     if (typeof choice === "string") {
       const raw = choice.trim();
       const match = raw.match(URL_REGEX);
-      const imageUrl = match?.[1] || null;
+      const rawImageUrl = match?.[1] || null;
+      const imageUrl = resolveImageUrl(rawImageUrl);
       let text = raw;
-      if (imageUrl) {
-        text = raw.replace(imageUrl, "").replace("[Alternativa com imagem]", "").trim();
+      if (rawImageUrl) {
+        text = raw.replace(rawImageUrl, "").replace("[Alternativa com imagem]", "").trim();
       }
       return {
-        text: text || null,
+        text: sanitizePdfArtifacts(text || "") || null,
         imageUrl,
       };
     }
 
     return {
-      text: (choice?.text || null) as string | null,
-      imageUrl: (choice?.imageUrl || choice?.file || null) as string | null,
+      text: sanitizePdfArtifacts((choice?.text || "") as string) || null,
+      imageUrl: resolveImageUrl((choice?.imageUrl || choice?.file || null) as string | null),
     };
   };
 
@@ -625,10 +659,10 @@ export default function Questions() {
                         displayMode={false}
                       />
                     </div>
-                    {question.imageUrl && (
+                    {resolveImageUrl(question.imageUrl) && (
                       <div className="mt-3 mb-3">
                         <img
-                          src={question.imageUrl}
+                          src={resolveImageUrl(question.imageUrl) as string}
                           alt="Imagem da questao"
                           className="h-16 w-auto object-cover rounded-md border border-gray-200"
                         />
@@ -672,6 +706,13 @@ export default function Questions() {
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                       <div className="space-y-4">
+                        {resolveImageUrl(question.imageUrl) && (
+                          <img
+                            src={resolveImageUrl(question.imageUrl) as string}
+                            alt="Imagem principal da questão"
+                            className="w-full max-w-2xl h-auto object-contain rounded-lg border border-gray-300 mx-auto"
+                          />
+                        )}
                         {renderStatementWithInlineImages(sanitizeStatementArtifacts(String(question.statement || "")))}
                       </div>
                     </div>

@@ -12,7 +12,11 @@
     "test": "vitest run",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "import:questions": "tsx scripts/importQuestionsJson.ts",
-    "classify:questions": "tsx scripts/classifyQuestions.ts"
+    "classify:questions": "tsx scripts/classifyQuestions.ts",
+    "export:pending-solutions": "tsx scripts/exportPendingSolutions.ts",
+    "import:solutions-patch": "tsx scripts/importSolutionsPatch.ts",
+    "extract:2025-images": "py scripts/extract2025ImagesFromPdf.py",
+    "apply:2025-image-manifest": "tsx scripts/apply2025ImageManifest.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",
