@@ -84,6 +84,57 @@ BUILT_IN_FORGE_API_KEY=sua_chave_api
 
 ---
 
+## 📧 Verificação de E-mail (SMTP)
+
+Para habilitar o envio de códigos de verificação por e-mail após o cadastro, configure as variáveis SMTP abaixo.
+
+> **Nota:** se não configuradas, o código de verificação será impresso no log do servidor (útil para desenvolvimento).
+
+### SMTP_HOST
+```
+SMTP_HOST=smtp.gmail.com
+```
+- Servidor SMTP do seu provedor de e-mail
+
+### SMTP_PORT
+```
+SMTP_PORT=587
+```
+- Porta SMTP (587 para TLS/STARTTLS, 465 para SSL)
+
+### SMTP_USER
+```
+SMTP_USER=seu-email@gmail.com
+```
+- Usuário/e-mail de autenticação SMTP
+
+### SMTP_PASS
+```
+SMTP_PASS=senha-de-app-ou-senha-smtp
+```
+- Senha de autenticação SMTP
+- Para Gmail, gere uma **Senha de app** em: https://myaccount.google.com/apppasswords
+
+### SMTP_FROM
+```
+SMTP_FROM="Pensar Exatas" <noreply@seudominio.com.br>
+```
+- Endereço do remetente dos e-mails de verificação (opcional)
+
+#### Exemplo com Gmail
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=seu-email@gmail.com
+SMTP_PASS=xxxx xxxx xxxx xxxx  # Senha de app do Google
+SMTP_FROM="Pensar Exatas" <seu-email@gmail.com>
+```
+
+#### Exemplo com Resend / SendGrid / Mailgun
+Consulte a documentação do seu provedor para obter as credenciais SMTP.
+
+---
+
 ## 🚀 Passo a Passo Rápido
 
 1. **Banco de Dados (PostgreSQL)** (escolha um):

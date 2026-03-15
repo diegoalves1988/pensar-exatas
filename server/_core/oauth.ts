@@ -1,16 +1,30 @@
 import { COOKIE_NAME, ONE_YEAR_MS } from "../../shared/const";
 // use relaxed types to avoid build-time TypeScript mismatches in hosted CI
 import type { Request, Response } from "express";
+import { timingSafeEqual } from "crypto";
 import { ENV } from "./env";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
+import { sendVerificationEmail } from "./email";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
 function getQueryParam(req: any, key: string): string | undefined {
   const value = req?.query?.[key];
   return typeof value === "string" ? value : undefined;
+}
+
+/** Generate a cryptographically random 6-digit numeric code without modulo bias. */
+function generateVerificationCode(): string {
+  const MAX = 1_000_000;
+  // Reject values above the largest multiple of MAX that fits in uint32 to avoid bias.
+  const limit = Math.floor(0x1_0000_0000 / MAX) * MAX;
+  const array = new Uint32Array(1);
+  do {
+    crypto.getRandomValues(array);
+  } while (array[0] >= limit);
+  return String(array[0] % MAX).padStart(6, "0");
 }
 
 export function registerOAuthRoutes(app: any) {
@@ -20,6 +34,13 @@ export function registerOAuthRoutes(app: any) {
       const { name, email, password } = req.body || {};
       if (!email || !password) {
         res.status(400).json({ error: "email and password are required" });
+        return;
+      }
+
+      // Basic email format validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        res.status(400).json({ error: "invalid email format" });
         return;
       }
 
@@ -41,17 +62,116 @@ export function registerOAuthRoutes(app: any) {
         loginMethod: "email",
         passwordHash,
         lastSignedIn: new Date(),
-      } as any);
+      });
 
-      // create session token and set cookie
-      const sessionToken = await sdk.createSessionToken(openId, { name: name ?? "", expiresInMs: ONE_YEAR_MS });
+      // Generate and store verification code (expires in 24 hours)
+      const code = generateVerificationCode();
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      await db.setVerificationToken(openId, code, expiresAt);
+
+      // Send verification email (logs to console when SMTP is not configured)
+      await sendVerificationEmail(email, code);
+
+      res.json({ ok: true, requiresEmailVerification: true });
+    } catch (err) {
+      console.error("[Auth] register failed", err);
+      res.status(500).json({ error: "register failed" });
+    }
+  });
+
+  // Email verification endpoint
+  app.post("/api/auth/verify-email", async (req: any, res: any) => {
+    try {
+      const { email, code } = req.body || {};
+      if (!email || !code) {
+        res.status(400).json({ error: "email and code are required" });
+        return;
+      }
+
+      const user = await db.getUserByEmail(email);
+      if (!user) {
+        res.status(400).json({ error: "invalid verification code" });
+        return;
+      }
+
+      if (user.emailVerified) {
+        // Already verified – just create a session
+        const sessionToken = await sdk.createSessionToken(user.openId, {
+          name: user.name || "",
+          expiresInMs: ONE_YEAR_MS,
+        });
+        const cookieOptions = getSessionCookieOptions(req);
+        res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
+        res.json({ ok: true });
+        return;
+      }
+
+      if (
+        !user.verificationToken ||
+        !user.verificationTokenExpiresAt ||
+        user.verificationTokenExpiresAt < new Date()
+      ) {
+        res.status(400).json({ error: "invalid or expired verification code" });
+        return;
+      }
+
+      // Constant-time comparison to prevent timing attacks
+      const expected = Buffer.from(user.verificationToken);
+      const actual = Buffer.from(String(code).padStart(6, "0").slice(0, 6));
+      const codesMatch =
+        expected.length === actual.length && timingSafeEqual(expected, actual);
+
+      if (!codesMatch) {
+        res.status(400).json({ error: "invalid or expired verification code" });
+        return;
+      }
+
+      await db.markEmailVerified(user.openId);
+
+      const sessionToken = await sdk.createSessionToken(user.openId, {
+        name: user.name || "",
+        expiresInMs: ONE_YEAR_MS,
+      });
       const cookieOptions = getSessionCookieOptions(req);
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
 
       res.json({ ok: true });
     } catch (err) {
-      console.error("[Auth] register failed", err);
-      res.status(500).json({ error: "register failed" });
+      console.error("[Auth] verify-email failed", err);
+      res.status(500).json({ error: "verification failed" });
+    }
+  });
+
+  // Resend verification code endpoint
+  app.post("/api/auth/resend-verification", async (req: any, res: any) => {
+    try {
+      const { email } = req.body || {};
+      if (!email) {
+        res.status(400).json({ error: "email is required" });
+        return;
+      }
+
+      const user = await db.getUserByEmail(email);
+      if (!user) {
+        // Return success to avoid leaking user existence
+        res.json({ ok: true });
+        return;
+      }
+
+      if (user.emailVerified) {
+        res.json({ ok: true });
+        return;
+      }
+
+      const code = generateVerificationCode();
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      await db.setVerificationToken(user.openId, code, expiresAt);
+      await sendVerificationEmail(email, code);
+
+      res.json({ ok: true });
+    } catch (err) {
+      console.error("[Auth] resend-verification failed", err);
+      res.status(500).json({ error: "resend failed" });
     }
   });
 
@@ -73,6 +193,12 @@ export function registerOAuthRoutes(app: any) {
       const ok = await bcrypt.compare(password, String(user.passwordHash));
       if (!ok) {
         res.status(400).json({ error: "invalid credentials" });
+        return;
+      }
+
+      // Block login until email is verified
+      if (!user.emailVerified) {
+        res.status(403).json({ error: "email_not_verified" });
         return;
       }
 
@@ -169,6 +295,8 @@ export function registerOAuthRoutes(app: any) {
         email: userInfo.email ?? null,
         loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
         lastSignedIn: new Date(),
+        // OAuth users have their email verified by the OAuth provider
+        emailVerified: true,
       });
 
       const sessionToken = await sdk.createSessionToken(userInfo.openId, {
@@ -186,3 +314,4 @@ export function registerOAuthRoutes(app: any) {
     }
   });
 }
+

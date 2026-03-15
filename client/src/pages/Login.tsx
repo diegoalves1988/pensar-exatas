@@ -23,6 +23,10 @@ export default function Login() {
 
       const data = await res.json();
       if (!res.ok) {
+        if (data?.error === "email_not_verified") {
+          setLocation(`/verificar-email?email=${encodeURIComponent(email)}`);
+          return;
+        }
         setError(data?.error || "Erro no login");
         setLoading(false);
         return;
