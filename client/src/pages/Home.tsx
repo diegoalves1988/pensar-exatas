@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { getLoginUrl } from "@/const";
+import { getLoginUrl, PROFILE_SUMMARY_CACHE_KEY } from "@/const";
 import { ArrowRight, Zap, Trophy, BookOpen, Target, Flame } from "lucide-react";
 import { Link } from "wouter";
 import { useEffect, useState } from "react";
@@ -17,13 +17,21 @@ type ProfileSummary = {
   questionsToday: number;
 };
 
+import { PROFILE_SUMMARY_CACHE_KEY } from "@/const";
+
 const FIXED_QUESTIONS_COUNT = 1000;
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const { data: subjects } = trpc.subjects.list.useQuery();
   const [publicSubjects, setPublicSubjects] = useState<SubjectItem[] | null>(null);
-  const [profileSummary, setProfileSummary] = useState<ProfileSummary | null>(null);
+  const [profileSummary, setProfileSummary] = useState<ProfileSummary | null>(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const raw = sessionStorage.getItem(PROFILE_SUMMARY_CACHE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  });
   useEffect(() => {
     let cancelled = false;
     fetch("/api/subjects")
@@ -37,7 +45,10 @@ export default function Home() {
       fetch("/api/profile/summary", { credentials: "include" })
         .then((r) => (r.ok ? r.json() : null))
         .then((data) => {
-          if (!cancelled && data) setProfileSummary(data);
+          if (!cancelled && data) {
+            setProfileSummary(data);
+            try { sessionStorage.setItem(PROFILE_SUMMARY_CACHE_KEY, JSON.stringify(data)); } catch { /* ignore */ }
+          }
         })
         .catch(() => {});
     }

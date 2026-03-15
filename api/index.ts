@@ -251,6 +251,10 @@ app.get("/api/me", async (req: any, res: any) => {
     const session = await verifyToken(getCookie(req));
     if (!session) return res.json(null);
     const [user] = await sql`SELECT id, "openId", name, email, role FROM users WHERE "openId" = ${session.openId} LIMIT 1`;
+    // Short private cache so repeated navigations within the same browser session
+    // don't always hit the database. stale-while-revalidate lets the browser
+    // return the cached value instantly and refresh in the background.
+    res.setHeader("Cache-Control", "private, max-age=10, stale-while-revalidate=60");
     return res.json(user ?? null);
   } catch { return res.json(null); }
   finally { await sql.end({ timeout: 1 }).catch(() => {}); }
@@ -264,29 +268,35 @@ app.get("/api/profile/summary", async (req: any, res: any) => {
     const user = await getSessionUser(req, sql);
     if (!user) return res.status(401).json({ error: "not authenticated" });
 
-    const [progress] = await sql`
-      SELECT COALESCE("questionsResolved", 0) as "questionsResolved",
-             COALESCE("totalPoints", 0) as "totalPoints",
-             COALESCE("currentStreak", 0) as "currentStreak",
-             COALESCE("bestStreak", 0) as "bestStreak"
-      FROM user_progress
-      WHERE "userId" = ${user.id}
-      ORDER BY "updatedAt" DESC, id DESC
-      LIMIT 1
-    `;
-    const [favorites] = await sql`
-      SELECT COUNT(*)::int as count
-      FROM user_favorites
-      WHERE "userId" = ${user.id}
-    `;
-    const [todayRow] = await sql`
-      SELECT COUNT(*)::int as count
-      FROM user_question_resolutions
-      WHERE "userId" = ${user.id}
-        AND "updatedAt" >= NOW() AT TIME ZONE 'America/Sao_Paulo' - INTERVAL '1 day'
-        AND DATE("updatedAt" AT TIME ZONE 'America/Sao_Paulo') = CURRENT_DATE AT TIME ZONE 'America/Sao_Paulo'
-    `;
+    // Run all three queries in parallel instead of sequentially to minimize latency.
+    const [[progress], [favorites], [todayRow]] = await Promise.all([
+      sql`
+        SELECT COALESCE("questionsResolved", 0) as "questionsResolved",
+               COALESCE("totalPoints", 0) as "totalPoints",
+               COALESCE("currentStreak", 0) as "currentStreak",
+               COALESCE("bestStreak", 0) as "bestStreak"
+        FROM user_progress
+        WHERE "userId" = ${user.id}
+        ORDER BY "updatedAt" DESC, id DESC
+        LIMIT 1
+      `,
+      sql`
+        SELECT COUNT(*)::int as count
+        FROM user_favorites
+        WHERE "userId" = ${user.id}
+      `,
+      sql`
+        SELECT COUNT(*)::int as count
+        FROM user_question_resolutions
+        WHERE "userId" = ${user.id}
+          AND "updatedAt" >= NOW() AT TIME ZONE 'America/Sao_Paulo' - INTERVAL '1 day'
+          AND DATE("updatedAt" AT TIME ZONE 'America/Sao_Paulo') = CURRENT_DATE AT TIME ZONE 'America/Sao_Paulo'
+      `,
+    ]);
 
+    // Short private cache: serve the cached value instantly on repeated visits
+    // and revalidate in the background.
+    res.setHeader("Cache-Control", "private, max-age=10, stale-while-revalidate=60");
     return res.json({
       favoritesCount: favorites?.count ?? 0,
       questionsResolved: progress?.questionsResolved ?? 0,

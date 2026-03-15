@@ -1,5 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { PROFILE_SUMMARY_CACHE_KEY } from "@/const";
 import { useEffect, useState } from "react";
 import { Heart, Target, Trophy, Flame } from "lucide-react";
 import { Link } from "wouter";
@@ -20,7 +21,13 @@ type FavoriteQuestion = {
 
 export default function Profile() {
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true, redirectPath: "/login" });
-  const [summary, setSummary] = useState<ProfileSummary | null>(null);
+  const [summary, setSummary] = useState<ProfileSummary | null>(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const raw = sessionStorage.getItem(PROFILE_SUMMARY_CACHE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  });
   const [showFavorites, setShowFavorites] = useState(false);
   const [favoritesLoading, setFavoritesLoading] = useState(false);
   const [favoritesError, setFavoritesError] = useState<string | null>(null);
@@ -31,7 +38,10 @@ export default function Profile() {
     fetch("/api/profile/summary", { credentials: "include" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (!cancelled && data) setSummary(data);
+        if (!cancelled && data) {
+          setSummary(data);
+          try { sessionStorage.setItem(PROFILE_SUMMARY_CACHE_KEY, JSON.stringify(data)); } catch { /* ignore */ }
+        }
       })
       .catch(() => {
         if (!cancelled) {
