@@ -59,10 +59,10 @@ export default function Home() {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600 via-purple-500 to-orange-500 p-8 md:p-16 text-white shadow-xl">
+      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1C3550] via-[#1C3550] to-[#C4605A] p-8 md:p-16 text-white shadow-xl">
         <div className="relative z-10 max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Domine as Exatas no Enem e Vestibulares</h1>
-          <p className="text-lg md:text-xl text-purple-100 mb-8">
+          <p className="text-lg md:text-xl text-[#A8B4C8] mb-8">
             Aprenda através de questões resolvidas, aulas interativas e um sistema de gamificação que torna o aprendizado divertido!
           </p>
         </div>
@@ -76,14 +76,14 @@ export default function Home() {
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {isAuthenticated ? (
           <Link href="/perfil">
-            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver progresso">
+            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-[#1C3550] cursor-pointer" role="button" aria-label="Ver progresso">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Seu Progresso</p>
                   <p className="text-4xl font-bold text-gray-900 mt-2">{profileSummary?.questionsResolved ?? 0}</p>
                   <p className="text-xs text-gray-500 mt-1">questões resolvidas</p>
                 </div>
-                <Target className="w-12 h-12 text-purple-500 opacity-25" />
+                <Target className="w-12 h-12 text-[#1C3550] opacity-25" />
               </div>
 
               <div className="mt-4">
@@ -93,7 +93,7 @@ export default function Home() {
                 </div>
                 <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-orange-500"
+                    className="h-full bg-gradient-to-r from-[#1C3550] to-[#C4605A]"
                     style={{ width: `${(todayProgress / todayGoal) * 100}%` }}
                   />
                 </div>
@@ -102,13 +102,13 @@ export default function Home() {
           </Link>
         ) : (
           <Link href="/questoes">
-            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver questões">
+            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-[#1C3550] cursor-pointer" role="button" aria-label="Ver questões">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
                   <p className="text-4xl font-bold text-gray-900 mt-2">{FIXED_QUESTIONS_COUNT}+</p>
                 </div>
-                <BookOpen className="w-12 h-12 text-purple-500 opacity-20" />
+                <BookOpen className="w-12 h-12 text-[#1C3550] opacity-20" />
               </div>
             </div>
           </Link>
@@ -116,7 +116,7 @@ export default function Home() {
 
         <Link href="/questoes">
           <div
-            className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500 cursor-pointer hover:shadow-lg transition"
+            className="bg-white rounded-xl p-6 shadow-md border-l-4 border-[#C4605A] cursor-pointer hover:shadow-lg transition"
             role="button"
             aria-label="Abrir simulados"
           >
@@ -126,18 +126,18 @@ export default function Home() {
                 <p className="text-lg font-bold text-gray-900 mt-2">Monte seu teste em segundos</p>
                 <p className="text-xs text-gray-500 mt-1">Escolha matérias, ano e quantidade de questões.</p>
               </div>
-              <Zap className="w-12 h-12 text-orange-500 opacity-25" />
+              <Zap className="w-12 h-12 text-[#C4605A] opacity-25" />
             </div>
           </div>
         </Link>
 
-        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500">
+        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-[#A8B4C8]">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Sequência Atual</p>
               <p className="text-4xl font-bold text-gray-900 mt-2">{profileSummary?.currentStreak ?? 0}</p>
             </div>
-            <Flame className="w-12 h-12 text-green-500 opacity-20" />
+            <Flame className="w-12 h-12 text-[#A8B4C8] opacity-25" />
           </div>
         </div>
       </section>
@@ -150,17 +150,17 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl overflow-hidden shadow-md border border-blue-100">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-5 text-white">
+          <div className="bg-white rounded-xl overflow-hidden shadow-md border border-[#1C3550]/20">
+            <div className="bg-gradient-to-r from-[#1C3550] to-[#264d75] px-6 py-5 text-white">
               <p className="text-lg font-bold">Física</p>
-              <p className="text-sm text-blue-100">Questões de Ciências da Natureza com foco em Física</p>
+              <p className="text-sm text-[#A8B4C8]">Questões de Ciências da Natureza com foco em Física</p>
             </div>
             <div className="p-6">
               <p className="text-sm text-gray-600 mb-4">Tópicos em destaque:</p>
               <div className="flex flex-wrap gap-2">
                 {physicsTopics.slice(0, 10).map((subject) => (
                   <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
-                    <span className="inline-flex rounded-full bg-blue-50 text-blue-700 px-3 py-1 text-sm border border-blue-100 hover:bg-blue-100 transition">
+                    <span className="inline-flex rounded-full bg-[#EDE8D0] text-[#1C3550] px-3 py-1 text-sm border border-[#A8B4C8] hover:bg-[#A8B4C8] hover:text-white transition">
                       {subject.name}
                     </span>
                   </Link>
@@ -168,7 +168,7 @@ export default function Home() {
               </div>
               <div className="mt-5">
                 <Link href="/questoes">
-                  <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-50">
+                  <Button variant="outline" className="border-[#1C3550] text-[#1C3550] hover:bg-[#EDE8D0]">
                     Ver questões de Física <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
@@ -176,17 +176,17 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden shadow-md border border-emerald-100">
-            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-5 text-white">
+          <div className="bg-white rounded-xl overflow-hidden shadow-md border border-[#C4605A]/20">
+            <div className="bg-gradient-to-r from-[#C4605A] to-[#a34a45] px-6 py-5 text-white">
               <p className="text-lg font-bold">Matemática</p>
-              <p className="text-sm text-emerald-100">Raciocínio, funções, geometria e interpretação de dados</p>
+              <p className="text-sm text-[#EDE8D0]">Raciocínio, funções, geometria e interpretação de dados</p>
             </div>
             <div className="p-6">
               <p className="text-sm text-gray-600 mb-4">Tópicos em destaque:</p>
               <div className="flex flex-wrap gap-2">
                 {mathTopics.slice(0, 10).map((subject) => (
                   <Link key={subject.id} href={`/questoes?subject=${subject.id}`}>
-                    <span className="inline-flex rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-sm border border-emerald-100 hover:bg-emerald-100 transition">
+                    <span className="inline-flex rounded-full bg-[#EDE8D0] text-[#C4605A] px-3 py-1 text-sm border border-[#C4605A]/20 hover:bg-[#C4605A] hover:text-white transition">
                       {subject.name}
                     </span>
                   </Link>
@@ -194,7 +194,7 @@ export default function Home() {
               </div>
               <div className="mt-5">
                 <Link href="/questoes">
-                  <Button variant="outline" className="border-emerald-300 text-emerald-700 hover:bg-emerald-50">
+                  <Button variant="outline" className="border-[#C4605A] text-[#C4605A] hover:bg-[#EDE8D0]">
                     Ver questões de Matemática <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
@@ -224,7 +224,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex gap-4">
             <div className="flex-shrink-0">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#1C3550] text-white">
                 <BookOpen className="h-6 w-6" />
               </div>
             </div>
@@ -236,7 +236,7 @@ export default function Home() {
 
           <div className="flex gap-4">
             <div className="flex-shrink-0">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#C4605A] text-white">
                 <Zap className="h-6 w-6" />
               </div>
             </div>
@@ -248,7 +248,7 @@ export default function Home() {
 
           <div className="flex gap-4">
             <div className="flex-shrink-0">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-green-500 text-white">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#A8B4C8] text-white">
                 <Trophy className="h-6 w-6" />
               </div>
             </div>
@@ -260,7 +260,7 @@ export default function Home() {
 
           <div className="flex gap-4">
             <div className="flex-shrink-0">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-cyan-500 text-white">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-[#EDE8D0] text-[#1C3550]">
                 <BookOpen className="h-6 w-6" />
               </div>
             </div>
@@ -284,7 +284,7 @@ export default function Home() {
         {!isAuthenticated && (
           <Button
             onClick={() => (window.location.href = getLoginUrl())}
-            className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg transition font-bold text-lg px-8 py-6 h-auto"
+            className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white hover:shadow-lg transition font-bold text-lg px-8 py-6 h-auto"
           >
             Começar Agora <ArrowRight className="ml-2 w-5 h-5" />
           </Button>

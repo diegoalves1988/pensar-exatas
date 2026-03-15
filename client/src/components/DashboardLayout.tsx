@@ -21,7 +21,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
       <header className="bg-white shadow-md sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#1C3550] to-[#C4605A] rounded-lg flex items-center justify-center text-white font-bold text-lg">
               PE
             </div>
             <div className="hidden sm:block">
@@ -31,22 +31,22 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
+            <Link href="/" className="text-gray-700 hover:text-[#1C3550] font-medium transition">
               Início
             </Link>
-            <Link href="/questoes" className="text-gray-700 hover:text-purple-600 font-medium transition">
+            <Link href="/questoes" className="text-gray-700 hover:text-[#1C3550] font-medium transition">
               Questões
             </Link>
             {isAuthenticated && (
-              <Link href="/perfil" className="text-gray-700 hover:text-purple-600 font-medium transition">
+              <Link href="/perfil" className="text-gray-700 hover:text-[#1C3550] font-medium transition">
                 Meu Perfil
               </Link>
             )}
-            <Link href="/portfolio" className="text-gray-700 hover:text-purple-600 font-medium transition">
+            <Link href="/portfolio" className="text-gray-700 hover:text-[#1C3550] font-medium transition">
               Portfólio
             </Link>
             {isAdmin && (
-              <Link href="/admin" className="text-gray-700 hover:text-purple-600 font-medium transition">
+              <Link href="/admin" className="text-gray-700 hover:text-[#1C3550] font-medium transition">
                 Admin
               </Link>
             )}
@@ -63,7 +63,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
                   onClick={() => logout()}
                   variant="ghost"
                   size="sm"
-                  className="text-gray-700 hover:text-purple-600"
+                  className="text-gray-700 hover:text-[#1C3550]"
                 >
                   <LogOut className="w-4 h-4" />
                 </Button>
@@ -71,12 +71,12 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             ) : (
               <div className="flex items-center gap-3">
                 <Link href="/login">
-                  <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg transition">
+                  <Button className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white hover:shadow-lg transition">
                     Entrar
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button variant="outline" size="sm" className="border-purple-500 text-purple-600 hover:bg-purple-50">
+                  <Button variant="outline" size="sm" className="border-[#1C3550] text-[#1C3550] hover:bg-[#EDE8D0]">
                     Cadastrar
                   </Button>
                 </Link>
@@ -85,7 +85,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
 
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden text-gray-700 hover:text-purple-600"
+              className="md:hidden text-gray-700 hover:text-[#1C3550]"
             >
               {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -95,22 +95,22 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         {/* Mobile Navigation */}
         {sidebarOpen && (
           <div className="md:hidden bg-gray-50 border-t border-gray-200 p-4 space-y-2">
-            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
+            <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-[#EDE8D0] rounded transition">
               Início
             </Link>
-            <Link href="/questoes" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
+            <Link href="/questoes" className="block px-4 py-2 text-gray-700 hover:bg-[#EDE8D0] rounded transition">
               Questões
             </Link>
             {isAuthenticated && (
-              <Link href="/perfil" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
+              <Link href="/perfil" className="block px-4 py-2 text-gray-700 hover:bg-[#EDE8D0] rounded transition">
                 Meu Perfil
               </Link>
             )}
-            <Link href="/portfolio" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
+            <Link href="/portfolio" className="block px-4 py-2 text-gray-700 hover:bg-[#EDE8D0] rounded transition">
               Portfólio
             </Link>
             {isAuthenticated && user?.role === "admin" && (
-              <Link href="/admin" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
+              <Link href="/admin" className="block px-4 py-2 text-gray-700 hover:bg-[#EDE8D0] rounded transition">
                 Admin
               </Link>
             )}
@@ -124,7 +124,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
           {title && (
             <div className="mb-8">
               <h1 className="text-4xl font-bold text-gray-900 mb-2">{title}</h1>
-              <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-orange-500 rounded"></div>
+              <div className="h-1 w-20 bg-gradient-to-r from-[#1C3550] to-[#C4605A] rounded"></div>
             </div>
           )}
           {children}
@@ -142,17 +142,17 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             <div>
               <h4 className="font-bold text-white mb-4">Recursos</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/questoes" className="hover:text-purple-400 transition">Questões</Link></li>
-                <li><Link href="/perfil" className="hover:text-purple-400 transition">Meu Perfil</Link></li>
-                <li><Link href="/portfolio" className="hover:text-purple-400 transition">Portfólio</Link></li>
+                <li><Link href="/questoes" className="hover:text-[#A8B4C8] transition">Questões</Link></li>
+                <li><Link href="/perfil" className="hover:text-[#A8B4C8] transition">Meu Perfil</Link></li>
+                <li><Link href="/portfolio" className="hover:text-[#A8B4C8] transition">Portfólio</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold text-white mb-4">Acesso Rápido</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/" className="hover:text-purple-400 transition">Início</Link></li>
-                <li><Link href="/questoes" className="hover:text-purple-400 transition">Resolver Questões</Link></li>
-                {isAdmin && <li><Link href="/admin" className="hover:text-purple-400 transition">Painel Admin</Link></li>}
+                <li><Link href="/" className="hover:text-[#A8B4C8] transition">Início</Link></li>
+                <li><Link href="/questoes" className="hover:text-[#A8B4C8] transition">Resolver Questões</Link></li>
+                {isAdmin && <li><Link href="/admin" className="hover:text-[#A8B4C8] transition">Painel Admin</Link></li>}
               </ul>
             </div>
           </div>

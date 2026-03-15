@@ -55,7 +55,7 @@ export default function Register() {
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg shadow p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="hidden md:flex items-center justify-center bg-gradient-to-br from-orange-500 to-purple-600 text-white rounded-lg p-6">
+      <div className="hidden md:flex items-center justify-center bg-gradient-to-br from-[#1C3550] to-[#C4605A] text-white rounded-lg p-6">
         <div>
           <h3 className="text-2xl font-bold mb-2">Participe da comunidade</h3>
           <p className="text-sm">Crie sua conta para acessar questões, aulas e recursos exclusivos.</p>
@@ -98,7 +98,7 @@ export default function Register() {
             <Button type="submit" className="flex-1" disabled={loading}>
               {loading ? "Cadastrando..." : "Criar sua conta"}
             </Button>
-            <Link href="/login" className="text-sm text-purple-600 hover:underline">
+            <Link href="/login" className="text-sm text-[#1C3550] hover:underline">
               Já tem conta? Entrar
             </Link>
           </div>

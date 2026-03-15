@@ -126,7 +126,7 @@ export default function AdminPanel() {
       <div className="text-center py-12">
         <h1 className="text-2xl font-bold text-gray-900 mb-4">Acesso Negado</h1>
         <p className="text-gray-600 mb-6">Você não tem permissão para acessar o painel admin.</p>
-        <Button onClick={() => setLocation("/")} className="bg-purple-500 text-white">
+        <Button onClick={() => setLocation("/")} className="bg-[#1C3550] text-white">
           Voltar para Início
         </Button>
       </div>
@@ -147,7 +147,7 @@ export default function AdminPanel() {
           onClick={() => setActiveTab("questions")}
           className={`px-4 py-2 rounded-lg font-medium transition ${
             activeTab === "questions"
-              ? "bg-purple-500 text-white"
+              ? "bg-[#1C3550] text-white"
               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
@@ -157,7 +157,7 @@ export default function AdminPanel() {
           onClick={() => setActiveTab("reports")}
           className={`px-4 py-2 rounded-lg font-medium transition ${
             activeTab === "reports"
-              ? "bg-purple-500 text-white"
+              ? "bg-[#1C3550] text-white"
               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
@@ -167,7 +167,7 @@ export default function AdminPanel() {
           onClick={() => setActiveTab("lessons")}
           className={`px-4 py-2 rounded-lg font-medium transition ${
             activeTab === "lessons"
-              ? "bg-purple-500 text-white"
+              ? "bg-[#1C3550] text-white"
               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
@@ -177,7 +177,7 @@ export default function AdminPanel() {
           onClick={() => setActiveTab("subjects")}
           className={`px-4 py-2 rounded-lg font-medium transition ${
             activeTab === "subjects"
-              ? "bg-purple-500 text-white"
+              ? "bg-[#1C3550] text-white"
               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
@@ -187,7 +187,7 @@ export default function AdminPanel() {
           onClick={() => setActiveTab("portfolio")}
           className={`px-4 py-2 rounded-lg font-medium transition ${
             activeTab === "portfolio"
-              ? "bg-purple-500 text-white"
+              ? "bg-[#1C3550] text-white"
               : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
@@ -203,7 +203,7 @@ export default function AdminPanel() {
               <h2 className="text-2xl font-bold text-gray-900">Gerenciar Questões</h2>
               <Button
                 onClick={() => setLocation("/admin/questions")}
-                className="bg-gradient-to-r from-purple-500 to-orange-500 text-white"
+                className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Nova Questão
@@ -256,7 +256,7 @@ export default function AdminPanel() {
                 {reports.map((report) => (
                   <div key={report.id} className="rounded-lg border border-gray-200 p-4 space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex rounded-full bg-purple-100 text-purple-700 px-2 py-0.5 text-xs font-medium">
+                      <span className="inline-flex rounded-full bg-[#EDE8D0] text-[#1C3550] px-2 py-0.5 text-xs font-medium">
                         {report.category}
                       </span>
                       <span className="inline-flex rounded-full bg-gray-100 text-gray-700 px-2 py-0.5 text-xs font-medium">
@@ -319,7 +319,7 @@ export default function AdminPanel() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-900">Gerenciar Matérias</h2>
-              <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white">
+              <Button className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white">
                 <Plus className="w-4 h-4 mr-2" />
                 Nova Matéria
               </Button>
@@ -362,7 +362,7 @@ export default function AdminPanel() {
       </div>
 
       {/* Help Section */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+      <div className="bg-gradient-to-r from-[#EDE8D0] to-[#EDE8D0] rounded-xl p-6 border border-[#A8B4C8]">
         <h3 className="font-bold text-gray-900 mb-2">💡 Dica</h3>
         <p className="text-gray-700 text-sm">
           Use este painel para gerenciar todo o conteúdo do seu site. Adicione questões com resoluções detalhadas,
