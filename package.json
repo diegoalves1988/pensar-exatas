@@ -15,6 +15,7 @@
     "classify:questions": "tsx scripts/classifyQuestions.ts",
     "export:pending-solutions": "tsx scripts/exportPendingSolutions.ts",
     "import:solutions-patch": "tsx scripts/importSolutionsPatch.ts",
+  "generate:solutions-ai": "tsx scripts/generateSolutionsWithAI.ts",
     "extract:2025-images": "py scripts/extract2025ImagesFromPdf.py",
     "apply:2025-image-manifest": "tsx scripts/apply2025ImageManifest.ts"
   },
