@@ -15,6 +15,14 @@ type ResolutionItem = {
   answeredCorrect: boolean | null;
 };
 
+type SimuladoHistoryEntry = {
+  id: string;
+  date: string;
+  score: number;
+  correct: number;
+  total: number;
+};
+
 type ChoiceOption =
   | string
   | {
@@ -24,6 +32,9 @@ type ChoiceOption =
     };
 
 const RESOLUTIONS_CACHE_KEY = "questions-resolutions-cache-v1";
+const SIMULADO_HISTORY_KEY = "simulado-history-v1";
+const SIMULADO_LOCALE = "pt-BR";
+const SIMULADO_TIME_FORMAT: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit" };
 const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\(([^\s)]+)\)/g;
 const URL_REGEX = /(https?:\/\/[^\s)]+|\/[\w\-./%]+(?:\?[^\s)]*)?)/i;
 
@@ -43,6 +54,18 @@ export default function Questions() {
   const [simuladoCount, setSimuladoCount] = useState(10);
   const [simuladoQuestionIds, setSimuladoQuestionIds] = useState<number[] | null>(null);
   const [simuladoError, setSimuladoError] = useState<string | null>(null);
+  const [simuladoFinished, setSimuladoFinished] = useState(false);
+  const [simuladoResult, setSimuladoResult] = useState<{ score: number; correct: number; total: number } | null>(null);
+  const [simuladoHistory, setSimuladoHistory] = useState<SimuladoHistoryEntry[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const raw = localStorage.getItem(SIMULADO_HISTORY_KEY);
+      return raw ? (JSON.parse(raw) as SimuladoHistoryEntry[]) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [showHistory, setShowHistory] = useState(false);
   // track answers for multiple-choice questions: questionId -> selected index
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [hydratingResolutions, setHydratingResolutions] = useState(false);
@@ -395,8 +418,42 @@ export default function Questions() {
 
     setSimuladoQuestionIds(shuffled.slice(0, targetCount).map((q: any) => Number(q.id)));
     setSimuladoError(null);
+    setSimuladoFinished(false);
+    setSimuladoResult(null);
     setCurrentPage(1);
     setExpandedQuestion(null);
+  };
+
+  const concludeSimulado = () => {
+    if (!simuladoQuestionIds) return;
+    const simuladoQs = allQuestions.filter((q: any) => simuladoQuestionIds.includes(Number(q.id)));
+    const answerable = simuladoQs.filter(
+      (q: any) =>
+        Array.isArray(q.choices) &&
+        q.choices.length > 0 &&
+        q.correctChoice !== null &&
+        q.correctChoice !== undefined,
+    );
+    const total = answerable.length;
+    const correct = answerable.filter((q: any) => answers[Number(q.id)] === Number(q.correctChoice)).length;
+    // Score on a 0–10 scale, rounded to 1 decimal place
+    const score = total > 0 ? Math.round((correct / total) * 10 * 10) / 10 : 0;
+    const entry: SimuladoHistoryEntry = {
+      id: typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
+      date: new Date().toISOString(),
+      score,
+      correct,
+      total,
+    };
+    const newHistory = [entry, ...simuladoHistory];
+    setSimuladoHistory(newHistory);
+    try {
+      localStorage.setItem(SIMULADO_HISTORY_KEY, JSON.stringify(newHistory));
+    } catch {
+      // ignore storage errors
+    }
+    setSimuladoResult({ score, correct, total });
+    setSimuladoFinished(true);
   };
 
   const favoriteItems = isLocalDev ? favorites ?? [] : publicFavorites;
@@ -541,15 +598,27 @@ export default function Questions() {
             <p className="text-sm text-gray-600">Escolha matérias e quantidade para montar um teste aleatório.</p>
           </div>
           {simuladoQuestionIds && (
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSimuladoQuestionIds(null);
-                setSimuladoError(null);
-              }}
-            >
-              Sair do simulado
-            </Button>
+            <div className="flex gap-2 flex-wrap">
+              {!simuladoFinished && (
+                <Button
+                  onClick={concludeSimulado}
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  Concluir simulado
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setSimuladoQuestionIds(null);
+                  setSimuladoError(null);
+                  setSimuladoFinished(false);
+                  setSimuladoResult(null);
+                }}
+              >
+                {simuladoFinished ? "Novo simulado" : "Sair do simulado"}
+              </Button>
+            </div>
           )}
         </div>
 
@@ -616,10 +685,60 @@ export default function Questions() {
         </div>
 
         {simuladoError && <p className="text-sm text-red-600">{simuladoError}</p>}
-        {simuladoQuestionIds && (
+        {simuladoQuestionIds && !simuladoFinished && (
           <p className="text-sm text-green-700 font-medium">
             Simulado ativo com {simuladoQuestionIds.length} questões.
           </p>
+        )}
+        {simuladoResult && simuladoFinished && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <h3 className="font-bold text-lg text-gray-900 mb-1">Resultado do Simulado</h3>
+            {simuladoResult.total > 0 ? (
+              <>
+                <p className="text-3xl font-bold text-green-700">{simuladoResult.score.toFixed(1)} <span className="text-lg font-medium text-gray-500">/ 10</span></p>
+                <p className="text-sm text-gray-600 mt-1">
+                  {simuladoResult.correct} de {simuladoResult.total} {simuladoResult.total === 1 ? "questão correta" : "questões corretas"}
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-gray-600">Nenhuma questão de múltipla escolha no simulado.</p>
+            )}
+          </div>
+        )}
+        {simuladoHistory.length > 0 && (
+          <div className="border-t border-gray-200 pt-4">
+            <button
+              type="button"
+              onClick={() => setShowHistory((v) => !v)}
+              className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-gray-900"
+            >
+              Histórico de simulados ({simuladoHistory.length})
+              <span className="text-xs">{showHistory ? "▲" : "▼"}</span>
+            </button>
+            {showHistory && (
+              <div className="mt-3 space-y-2 max-h-64 overflow-y-auto">
+                {simuladoHistory.map((entry) => {
+                  const d = new Date(entry.date);
+                  const dateStr = d.toLocaleDateString(SIMULADO_LOCALE);
+                  const timeStr = d.toLocaleTimeString(SIMULADO_LOCALE, SIMULADO_TIME_FORMAT);
+                  const scoreColor =
+                    entry.score >= 7 ? "text-green-600" : entry.score >= 5 ? "text-yellow-600" : "text-red-600";
+                  return (
+                    <div
+                      key={entry.id}
+                      className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2 border border-gray-200"
+                    >
+                      <div>
+                        <span className="text-sm text-gray-700">{dateStr} às {timeStr}</span>
+                        <span className="text-xs text-gray-500 ml-2">{entry.correct}/{entry.total} questões</span>
+                      </div>
+                      <span className={`font-bold text-lg ${scoreColor}`}>{entry.score.toFixed(1)}<span className="text-xs font-medium text-gray-400">/10</span></span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         )}
       </div>
 
