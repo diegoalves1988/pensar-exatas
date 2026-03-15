@@ -43,51 +43,51 @@
 }
 
 :root {
-  --primary: #a855f7; /* Vibrant purple */
+  --primary: #1C3550; /* Dark navy */
   --primary-foreground: #ffffff;
-  --sidebar-primary: #9333ea;
+  --sidebar-primary: #1C3550;
   --sidebar-primary-foreground: #ffffff;
-  --secondary: #f97316; /* Vibrant orange */
+  --secondary: #C4605A; /* Dusty red */
   --secondary-foreground: #ffffff;
-  --chart-1: #a855f7;
-  --chart-2: #f97316;
-  --chart-3: #06b6d4;
-  --chart-4: #10b981;
-  --chart-5: #f59e0b;
+  --chart-1: #1C3550;
+  --chart-2: #C4605A;
+  --chart-3: #A8B4C8;
+  --chart-4: #EDE8D0;
+  --chart-5: #264d75;
   --radius: 0.65rem;
   --success: #10b981; /* Green for achievements */
-  --warning: #f59e0b; /* Orange for warnings */
-  --info: #0ea5e9; /* Blue for info */
+  --warning: #C4605A; /* Dusty red for warnings */
+  --info: #A8B4C8; /* Periwinkle for info */
   --background: oklch(1 0 0);
   --foreground: oklch(0.235 0.015 65);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.235 0.015 65);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
+  --secondary: #C4605A;
+  --secondary-foreground: #ffffff;
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: #a855f7; /* Vibrant purple */
-  --accent-foreground: #ffffff;
+  --accent: #A8B4C8; /* Periwinkle */
+  --accent-foreground: #1C3550;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
+  --ring: #1C3550;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-accent: #EDE8D0;
+  --sidebar-accent-foreground: #1C3550;
   --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --sidebar-ring: #1C3550;
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
+  --primary: #264d75;
+  --primary-foreground: #EDE8D0;
+  --sidebar-primary: #A8B4C8;
+  --sidebar-primary-foreground: #1C3550;
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.85 0.005 65);
   --card: oklch(0.21 0.006 285.885);
@@ -134,11 +134,11 @@
   @keyframes pulse-glow {
     0%, 100% {
       opacity: 1;
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 20px rgba(28, 53, 80, 0.5);
     }
     50% {
       opacity: 0.8;
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.8);
+      box-shadow: 0 0 30px rgba(28, 53, 80, 0.8);
     }
   }
   @keyframes bounce-scale {
@@ -170,7 +170,7 @@
   }
   /* Badge styling */
   .badge-achievement {
-    @apply inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 text-white font-bold text-sm shadow-lg;
+    @apply inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-[#A8B4C8] to-[#1C3550] text-white font-bold text-sm shadow-lg;
   }
   .badge-gold {
     @apply bg-gradient-to-br from-yellow-300 to-yellow-500;
@@ -179,7 +179,7 @@
     @apply bg-gradient-to-br from-gray-300 to-gray-500;
   }
   .badge-bronze {
-    @apply bg-gradient-to-br from-orange-300 to-orange-500;
+    @apply bg-gradient-to-br from-[#C4605A] to-[#a34a45];
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),

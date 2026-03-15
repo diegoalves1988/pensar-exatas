@@ -502,7 +502,7 @@ export default function Questions() {
               placeholder="Buscar questão..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1C3550]"
             />
           </div>
           <select
@@ -510,7 +510,7 @@ export default function Questions() {
             onChange={(e) =>
               setSelectedSubject(e.target.value === "all" ? null : Number(e.target.value))
             }
-            className="min-w-[220px] rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="min-w-[220px] rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1C3550]"
           >
             <option value="all">Todas as matérias</option>
             {subjectList.map((subject) => (
@@ -522,7 +522,7 @@ export default function Questions() {
           <select
             value={selectedYear ?? "all"}
             onChange={(e) => setSelectedYear(e.target.value === "all" ? null : Number(e.target.value))}
-            className="min-w-[150px] rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="min-w-[150px] rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1C3550]"
           >
             <option value="all">Todos os anos</option>
             {availableYears.map((year) => (
@@ -570,7 +570,7 @@ export default function Questions() {
                     )
                   }
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition ${
-                    active ? "bg-purple-500 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    active ? "bg-[#1C3550] text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   {subject.name}
@@ -893,7 +893,7 @@ export default function Questions() {
                     {showSolution[question.id] && (
                       <div>
                         <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
-                        <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                        <div className="bg-white p-4 rounded-lg border-l-4 border-[#1C3550]">
                           <div className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
                             <MaybeKaTeX text={normalizeQuestionText(String(question.solution || ""))} displayMode={false} />
                           </div>
