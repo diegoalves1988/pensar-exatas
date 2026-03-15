@@ -14,7 +14,7 @@ export default function Portfolio() {
   return (
     <div className="space-y-12">
       {/* Profile Header */}
-      <section className="bg-gradient-to-r from-purple-600 to-orange-500 rounded-2xl p-8 md:p-12 text-white">
+      <section className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] rounded-2xl p-8 md:p-12 text-white">
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
           <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-white/30 shadow-lg">
             <img src="/profile-photo.jpg" alt="Rejane Dorn" className="w-full h-full object-cover" />
@@ -29,7 +29,7 @@ export default function Portfolio() {
             </p>
             <div className="flex gap-3 justify-center md:justify-start flex-wrap">
               <a href="mailto:rejane.dorn@gmail.com">
-                <Button className="bg-white text-purple-600 hover:bg-gray-100">
+                <Button className="bg-white text-[#1C3550] hover:bg-[#EDE8D0]">
                   <Mail className="w-4 h-4 mr-2" />
                   Email
                 </Button>
@@ -56,7 +56,7 @@ export default function Portfolio() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-                    <p className="text-purple-600 font-medium">{item.institution}</p>
+                    <p className="text-[#1C3550] font-medium">{item.institution}</p>
                     <p className="text-gray-600 text-sm mt-2">{item.description}</p>
                     {(item.startDate || item.endDate) && (
                       <div className="flex items-center gap-2 text-gray-500 text-sm mt-3">
@@ -89,7 +89,7 @@ export default function Portfolio() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-                    <p className="text-orange-600 font-medium">{item.institution}</p>
+                    <p className="text-[#C4605A] font-medium">{item.institution}</p>
                     <p className="text-gray-600 text-sm mt-2">{item.description}</p>
                     {(item.startDate || item.endDate) && (
                       <div className="flex items-center gap-2 text-gray-500 text-sm mt-3">
@@ -143,7 +143,7 @@ export default function Portfolio() {
           <div className="flex gap-4 justify-center flex-wrap">
             {social.map((item) => (
               <a key={item.id} href={item.url || "#"} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg transition">
+                <Button className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white hover:shadow-lg transition">
                   {item.icon} {item.title}
                 </Button>
               </a>
@@ -159,7 +159,7 @@ export default function Portfolio() {
           Volte para as questões e continue aprendendo física de forma gamificada!
         </p>
         <a href="/questoes">
-          <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg transition">
+          <Button className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white hover:shadow-lg transition">
             Voltar para Questões
           </Button>
         </a>

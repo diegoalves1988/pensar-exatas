@@ -40,7 +40,7 @@ export default function NotFound() {
           >
             <Button
               onClick={() => (window.location.href = getLoginUrl())}
-              className="bg-gradient-to-r from-purple-500 to-orange-500 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+              className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Entrar
             </Button>
@@ -48,14 +48,14 @@ export default function NotFound() {
             <Button
               onClick={() => (window.location.href = getRegisterUrl())}
               variant="outline"
-              className="border-purple-500 text-purple-600 px-6 py-2.5 rounded-lg"
+              className="border-[#1C3550] text-[#1C3550] px-6 py-2.5 rounded-lg"
             >
               Cadastrar
             </Button>
 
             <Button
               onClick={handleGoHome}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+              className="bg-[#1C3550] hover:bg-[#264d75] text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
             >
               <Home className="w-4 h-4 mr-2" />
               Go Home
