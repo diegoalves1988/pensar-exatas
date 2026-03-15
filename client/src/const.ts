@@ -1,6 +1,6 @@
 export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 
-export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "Pensar Exatas";
+export const APP_TITLE = import.meta.env.VITE_APP_TITLE || "Domine as Exatas no Enem";
 
 export const APP_LOGO =
   import.meta.env.VITE_APP_LOGO ||

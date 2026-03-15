@@ -137,7 +137,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
-              <h3 className="font-bold text-white mb-4">Pensar Exatas</h3>
+              <h3 className="font-bold text-white mb-4">Domine as Exatas no Enem</h3>
               <p className="text-sm">Questões comentadas para estudar Física e Matemática com foco no ENEM.</p>
             </div>
             <div>
@@ -158,7 +158,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             </div>
           </div>
           <div className="border-t border-gray-700 pt-8 text-center text-sm">
-            <p>&copy; 2026 Pensar Exatas. Todos os direitos reservados.</p>
+            <p>&copy; 2026 Domine as Exatas no Enem. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>
