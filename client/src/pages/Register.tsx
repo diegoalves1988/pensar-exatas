@@ -35,6 +35,12 @@ export default function Register() {
         return;
       }
 
+      // If the server requires email verification, redirect to the verification page.
+      if (data?.requiresEmailVerification) {
+        setLocation(`/verificar-email?email=${encodeURIComponent(email)}`);
+        return;
+      }
+
       // Prime local auth cache before route change to avoid header flicker.
       try {
         const meRes = await fetch("/api/me", { credentials: "include" });
