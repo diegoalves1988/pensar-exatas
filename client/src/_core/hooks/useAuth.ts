@@ -27,6 +27,9 @@ export function useAuth(options?: UseAuthOptions) {
   const meQuery = trpc.auth.me.useQuery(undefined, {
     retry: false,
     refetchOnWindowFocus: false,
+    // Avoid re-fetching on every component mount; the localStorage fallback
+    // provides instant hydration while the background refresh keeps data fresh.
+    staleTime: 60_000,
   });
 
   // Fallback and instant hydration:
