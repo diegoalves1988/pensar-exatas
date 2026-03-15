@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { APP_TITLE } from "@/const";
 import { Menu, X, LogOut } from "lucide-react";
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -13,6 +13,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const { user, logout, isAuthenticated } = useAuth();
   const isAdmin = user?.role === 'admin';
+  const [, setLocation] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -60,7 +61,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
                   <p className="text-xs text-gray-500">{user?.role === "admin" ? "Admin" : "Aluno"}</p>
                 </div>
                 <Button
-                  onClick={() => logout()}
+                  onClick={async () => { try { await logout(); } finally { setLocation("/"); } }}
                   variant="ghost"
                   size="sm"
                   className="text-gray-700 hover:text-[#1C3550]"
