@@ -21,14 +21,24 @@ function isLikelyTeX(s: string): boolean {
   return false;
 }
 
+function renderWithBold(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[\s\S]*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**") && part.length > 4) {
+      return <strong key={`bold-${i}`}>{part.slice(2, -2)}</strong>;
+    }
+    return <React.Fragment key={`text-${i}`}>{part}</React.Fragment>;
+  });
+}
+
 export default function MaybeKaTeX({ text, displayMode = false, className }: Props) {
   if (isLikelyTeX(text)) {
     return <KaTeXRenderer formula={text} displayMode={displayMode} className={className} />;
   }
-  // Plain text: preserve whitespace and line breaks
+  // Plain text: preserve whitespace and line breaks, render **bold** markdown
   return (
     <div className={className} style={{ whiteSpace: "pre-wrap" }}>
-      {text}
+      {renderWithBold(text)}
     </div>
   );
 }
