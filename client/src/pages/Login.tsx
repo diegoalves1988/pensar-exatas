@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
+import { trpc } from "@/lib/trpc";
 
 export default function Login() {
   const [, setLocation] = useLocation();
+  const utils = trpc.useUtils();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,6 +35,8 @@ export default function Login() {
         const meRes = await fetch("/api/me", { credentials: "include" });
         const me = meRes.ok ? await meRes.json() : null;
         localStorage.setItem("manus-runtime-user-info", JSON.stringify(me));
+        // Update the tRPC cache so the already-mounted header re-renders immediately.
+        if (me) utils.auth.me.setData(undefined, me);
       } catch {
         // ignore prefetch failures; regular auth hydration still runs
       }
