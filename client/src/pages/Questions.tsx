@@ -602,14 +602,6 @@ export default function Questions() {
           </div>
           {simuladoQuestionIds && (
             <div className="flex gap-2 flex-wrap">
-              {!simuladoFinished && (
-                <Button
-                  onClick={concludeSimulado}
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                  Concluir simulado
-                </Button>
-              )}
               <Button
                 variant="outline"
                 onClick={() => {
@@ -1068,6 +1060,17 @@ export default function Questions() {
           <span className="text-sm text-gray-600">Página {currentPage} de {totalPages}</span>
           <Button variant="outline" disabled={currentPage === totalPages} onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}>
             Próxima
+          </Button>
+        </div>
+      )}
+
+      {simuladoQuestionIds && !simuladoFinished && (
+        <div className="flex justify-center pb-6">
+          <Button
+            onClick={concludeSimulado}
+            className="bg-green-600 hover:bg-green-700 text-white"
+          >
+            Concluir simulado
           </Button>
         </div>
       )}
