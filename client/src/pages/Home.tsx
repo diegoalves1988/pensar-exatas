@@ -64,8 +64,6 @@ export default function Home() {
   const orderedSubjects = sortSubjects(subjectList);
   const physicsTopics = orderedSubjects.filter((subject) => getSubjectArea(subject) === "Física");
   const mathTopics = orderedSubjects.filter((subject) => getSubjectArea(subject) === "Matemática");
-  const todayGoal = 10;
-  const todayProgress = Math.min(profileSummary?.questionsToday ?? 0, todayGoal);
 
   return (
     <div className="space-y-12">
@@ -95,19 +93,6 @@ export default function Home() {
                   <p className="text-xs text-gray-500 mt-1">questões resolvidas</p>
                 </div>
                 <Target className="w-12 h-12 text-[#1C3550] opacity-25" />
-              </div>
-
-              <div className="mt-4">
-                <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                  <span>Meta de hoje</span>
-                  <span>{todayProgress}/{todayGoal}</span>
-                </div>
-                <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#1C3550] to-[#C4605A]"
-                    style={{ width: `${(todayProgress / todayGoal) * 100}%` }}
-                  />
-                </div>
               </div>
             </div>
           </Link>
