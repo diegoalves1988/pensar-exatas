@@ -1,9 +1,21 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { PROFILE_SUMMARY_CACHE_KEY } from "@/const";
-import { useEffect, useState } from "react";
-import { Heart, Target, Trophy, Flame } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Heart, Target, Trophy, Flame, ClipboardList } from "lucide-react";
 import { Link } from "wouter";
+
+const SIMULADO_HISTORY_KEY = "simulado-history-v1";
+const SIMULADO_LOCALE = "pt-BR";
+const SIMULADO_TIME_FORMAT: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit" };
+
+type SimuladoHistoryEntry = {
+  id: string;
+  date: string;
+  score: number;
+  correct: number;
+  total: number;
+};
 
 type ProfileSummary = {
   favoritesCount: number;
@@ -32,6 +44,13 @@ export default function Profile() {
   const [favoritesLoading, setFavoritesLoading] = useState(false);
   const [favoritesError, setFavoritesError] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<FavoriteQuestion[]>([]);
+  const simuladoHistory = useMemo<SimuladoHistoryEntry[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const raw = localStorage.getItem(SIMULADO_HISTORY_KEY);
+      return raw ? (JSON.parse(raw) as SimuladoHistoryEntry[]) : [];
+    } catch { return []; }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -176,6 +195,41 @@ export default function Profile() {
           )}
         </section>
       )}
+
+      <section className="bg-white rounded-2xl shadow-md p-8">
+        <div className="flex items-center gap-3 mb-4">
+          <ClipboardList className="w-6 h-6 text-[#1C3550]" />
+          <h2 className="text-2xl font-bold text-gray-900">Histórico de Simulados</h2>
+        </div>
+        {simuladoHistory.length === 0 ? (
+          <p className="text-gray-600">Nenhum simulado realizado ainda. <Link href="/questoes" className="text-[#1C3550] font-medium hover:underline">Gerar um simulado</Link></p>
+        ) : (
+          <ul className="space-y-2 max-h-72 overflow-y-auto">
+            {simuladoHistory.map((entry) => {
+              const d = new Date(entry.date);
+              const dateStr = d.toLocaleDateString(SIMULADO_LOCALE);
+              const timeStr = d.toLocaleTimeString(SIMULADO_LOCALE, SIMULADO_TIME_FORMAT);
+              const scoreColor =
+                entry.score >= 7 ? "text-green-600" : entry.score >= 5 ? "text-yellow-600" : "text-red-600";
+              return (
+                <li
+                  key={entry.id}
+                  className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3 border border-gray-200"
+                >
+                  <div>
+                    <span className="text-sm font-medium text-gray-700">{dateStr} às {timeStr}</span>
+                    <span className="text-xs text-gray-500 ml-2">{entry.correct}/{entry.total} questões</span>
+                  </div>
+                  <span className={`font-bold text-xl ${scoreColor}`}>
+                    {entry.score.toFixed(1)}
+                    <span className="text-xs font-medium text-gray-400">/10</span>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
 
       <section className="bg-white rounded-2xl shadow-md p-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-3">Próximo passo</h2>
