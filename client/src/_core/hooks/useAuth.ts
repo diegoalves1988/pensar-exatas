@@ -79,7 +79,11 @@ export function useAuth(options?: UseAuthOptions) {
     }
   }, [logoutMutation, utils]);
 
-  const resolvedUser = meQuery.data ?? meFallback ?? null;
+  // Prefer the tRPC query value when it has been explicitly set or fetched
+  // (data !== undefined), so that utils.auth.me.setData(undefined, null) on
+  // logout propagates null to ALL hook instances rather than falling back to
+  // each instance's stale meFallback.
+  const resolvedUser = meQuery.data !== undefined ? meQuery.data : (meFallback ?? null);
 
   const state = useMemo(() => {
     if (typeof window !== "undefined") {
