@@ -265,7 +265,7 @@ export default function AdminQuestions() {
   if (loading || loadingQuestion) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1C3550]" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500" />
       </div>
     );
   }
@@ -297,7 +297,7 @@ export default function AdminQuestions() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Matéria *</label>
                 <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   value={form.subjectId}
                   onChange={(e) => updateField("subjectId", e.target.value)}
                 >
@@ -311,7 +311,7 @@ export default function AdminQuestions() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Ano (ENEM)</label>
                 <input
                   type="number"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   value={form.year}
                   onChange={(e) => updateField("year", e.target.value)}
                   placeholder="ex: 2024"
@@ -320,7 +320,7 @@ export default function AdminQuestions() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Fonte (URL)</label>
                 <input
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   value={form.sourceUrl}
                   onChange={(e) => updateField("sourceUrl", e.target.value)}
                   placeholder="https://..."
@@ -336,7 +336,7 @@ export default function AdminQuestions() {
                 Título * <span className="text-xs text-gray-400">(suporta LaTeX: $x^2$, \frac&#123;a&#125;&#123;b&#125;)</span>
               </label>
               <input
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 value={form.title}
                 onChange={(e) => updateField("title", e.target.value)}
                 placeholder="Ex: Cinemática — Velocidade Média"
@@ -351,7 +351,7 @@ export default function AdminQuestions() {
                 Enunciado * <span className="text-xs text-gray-400">(suporta LaTeX)</span>
               </label>
               <textarea
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 h-40 resize-y font-mono text-sm focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 h-40 resize-y font-mono text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 value={form.statement}
                 onChange={(e) => updateField("statement", e.target.value)}
                 placeholder={"Um corpo de massa $m = 2\\,\\text{kg}$ é submetido a uma força resultante...\n\nUse $...$ para fórmulas inline e $$...$$ para fórmulas em bloco."}
@@ -391,14 +391,14 @@ export default function AdminQuestions() {
                   <label
                     className={`flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer transition ${
                       uploading
-                        ? "border-[#1C3550]/40 bg-[#EDE8D0]"
-                        : "border-gray-300 hover:border-[#1C3550] hover:bg-[#EDE8D0]"
+                        ? "border-purple-400 bg-purple-50"
+                        : "border-gray-300 hover:border-purple-400 hover:bg-gray-50"
                     }`}
                   >
                     {uploading ? (
                       <div className="flex flex-col items-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1C3550] mb-2" />
-                        <span className="text-sm text-[#1C3550]">Enviando...</span>
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mb-2" />
+                        <span className="text-sm text-purple-600">Enviando...</span>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center">
@@ -436,7 +436,7 @@ export default function AdminQuestions() {
                     className={`mt-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition shrink-0 ${
                       correctIndex === i
                         ? "bg-green-500 border-green-500 text-white"
-                        : "border-gray-300 text-gray-500 hover:border-[#1C3550] hover:text-[#1C3550]"
+                        : "border-gray-300 text-gray-500 hover:border-purple-400 hover:text-purple-500"
                     }`}
                     title={correctIndex === i ? "Alternativa correta" : "Marcar como correta"}
                   >
@@ -444,19 +444,19 @@ export default function AdminQuestions() {
                   </button>
                   <div className="flex-1 space-y-2">
                     <input
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       value={choice.text}
                       onChange={(e) => updateChoiceText(i, e.target.value)}
                       placeholder={`Alternativa ${LABELS[i]} - texto (suporta LaTeX)`}
                     />
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
                       <input
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         value={choice.imageUrl}
                         onChange={(e) => updateChoiceImage(i, e.target.value)}
                         placeholder={`Alternativa ${LABELS[i]} - URL da imagem (opcional)`}
                       />
-                      <label className="inline-flex items-center justify-center px-3 py-2 border border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-[#1C3550] hover:bg-[#EDE8D0] text-sm text-gray-600">
+                      <label className="inline-flex items-center justify-center px-3 py-2 border border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-400 hover:bg-gray-50 text-sm text-gray-600">
                         <Upload className="w-4 h-4 mr-1" /> Upload
                         <input
                           type="file"
@@ -494,7 +494,7 @@ export default function AdminQuestions() {
                 Resolução * <span className="text-xs text-gray-400">(suporta LaTeX)</span>
               </label>
               <textarea
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 h-40 resize-y font-mono text-sm focus:ring-2 focus:ring-[#1C3550] focus:border-transparent"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 h-40 resize-y font-mono text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 value={form.solution}
                 onChange={(e) => updateField("solution", e.target.value)}
                 placeholder={"Resolução detalhada da questão.\n\nUse $v = \\frac{\\Delta s}{\\Delta t}$ para fórmulas."}
@@ -516,7 +516,7 @@ export default function AdminQuestions() {
             <Button
               type="submit"
               disabled={submitting}
-              className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white hover:shadow-lg"
+              className="bg-gradient-to-r from-purple-500 to-orange-500 text-white hover:shadow-lg"
             >
               <Save className="w-4 h-4 mr-2" />
               {submitting ? "Salvando..." : editingId ? "Atualizar Questão" : "Salvar Questão"}
@@ -525,7 +525,7 @@ export default function AdminQuestions() {
         </form>
 
       {/* LaTeX help */}
-      <div className="bg-gradient-to-r from-[#EDE8D0] to-[#EDE8D0] rounded-xl p-5 border border-[#A8B4C8]">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-200">
         <h3 className="font-bold text-gray-900 mb-2">Dicas de LaTeX</h3>
         <div className="text-sm text-gray-700 space-y-1">
           <p><code className="bg-white px-1 rounded">$x^2$</code> para inline: <MaybeKaTeX text="$x^2$" /></p>
