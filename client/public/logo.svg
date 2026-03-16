@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Main gradient purple -> magenta -> orange -->
+    <linearGradient id="gradMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#9333EA"/>
+      <stop offset="40%"  stop-color="#EC4899"/>
+      <stop offset="70%"  stop-color="#EF4444"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+    <!-- Gradient for second orbit (shifted hue) -->
+    <linearGradient id="gradOrbit2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#A855F7"/>
+      <stop offset="50%"  stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <!-- Gradient for third orbit -->
+    <linearGradient id="gradOrbit3" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#C026D3"/>
+      <stop offset="50%"  stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <!-- Purple dot gradient -->
+    <radialGradient id="dotPurple" cx="40%" cy="35%">
+      <stop offset="0%"  stop-color="#C084FC"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </radialGradient>
+    <!-- Orange dot gradient -->
+    <radialGradient id="dotOrange" cx="40%" cy="35%">
+      <stop offset="0%"  stop-color="#FDBA74"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </radialGradient>
+    <!-- Pink dot gradient -->
+    <radialGradient id="dotPink" cx="40%" cy="35%">
+      <stop offset="0%"  stop-color="#F9A8D4"/>
+      <stop offset="100%" stop-color="#DB2777"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Orbit ring 1: slightly tilted horizontal ellipse -->
+  <ellipse cx="100" cy="100" rx="80" ry="30"
+           fill="none" stroke="url(#gradMain)" stroke-width="9"
+           stroke-linecap="round"
+           transform="rotate(-15 100 100)"/>
+
+  <!-- Orbit ring 2: rotated 60 degrees -->
+  <ellipse cx="100" cy="100" rx="80" ry="30"
+           fill="none" stroke="url(#gradOrbit2)" stroke-width="9"
+           stroke-linecap="round"
+           transform="rotate(45 100 100)"/>
+
+  <!-- Orbit ring 3: rotated -60 degrees -->
+  <ellipse cx="100" cy="100" rx="80" ry="30"
+           fill="none" stroke="url(#gradOrbit3)" stroke-width="9"
+           stroke-linecap="round"
+           transform="rotate(-75 100 100)"/>
+
+  <!-- Electron dots -->
+  <!-- Purple dot (left) -->
+  <circle cx="22" cy="88" r="11" fill="url(#dotPurple)"/>
+  <!-- Orange dot (upper-right) -->
+  <circle cx="152" cy="52" r="11" fill="url(#dotOrange)"/>
+  <!-- Pink dot (bottom-center) -->
+  <circle cx="100" cy="162" r="11" fill="url(#dotPink)"/>
+
+  <!-- Pi symbol in center -->
+  <text x="90" y="112" font-family="Georgia, serif" font-size="42" font-weight="bold"
+        fill="#1E1B4B" text-anchor="middle">&#x3C0;</text>
+
+  <!-- Plus symbol (left side) -->
+  <text x="42" y="128" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="#9333EA" text-anchor="middle">+</text>
+
+  <!-- Multiply symbol (right side) -->
+  <text x="158" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold"
+        fill="#F97316" text-anchor="middle">&#xD7;</text>
+
+  <!-- Square root symbol (upper right): radical sign + overline drawn as a path -->
+  <text x="140" y="89" font-family="Arial, sans-serif" font-size="16" font-weight="bold"
+        fill="#F97316">&#x221A;</text>
+  <line x1="153" y1="74" x2="164" y2="74" stroke="#F97316" stroke-width="2.5"/>
+</svg>
