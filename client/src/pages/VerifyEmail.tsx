@@ -135,7 +135,7 @@ export default function VerifyEmail() {
           type="button"
           onClick={resendCode}
           disabled={resending}
-          className="text-sm text-[#1C3550] hover:underline disabled:opacity-50"
+          className="text-sm text-purple-600 hover:underline disabled:opacity-50"
         >
           {resending ? "Reenviando..." : "Reenviar código"}
         </button>

@@ -140,32 +140,32 @@ export default function Profile() {
             <Heart className="w-9 h-9 text-pink-500 opacity-70" />
           </div>
         </button>
-        <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#1C3550]">
+        <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Resolvidas</p>
               <p className="text-3xl font-bold text-gray-900 mt-2">{summary?.questionsResolved ?? 0}</p>
             </div>
-            <Target className="w-9 h-9 text-[#1C3550] opacity-70" />
+            <Target className="w-9 h-9 text-blue-500 opacity-70" />
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#C4605A]">
+        <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-orange-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Melhor sequência</p>
               <p className="text-3xl font-bold text-gray-900 mt-2">{summary?.bestStreak ?? 0}</p>
               <p className="text-xs text-gray-500 mt-2">Atual: {summary?.currentStreak ?? 0}</p>
             </div>
-            <Flame className="w-9 h-9 text-[#C4605A] opacity-70" />
+            <Flame className="w-9 h-9 text-orange-500 opacity-70" />
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-[#A8B4C8]">
+        <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Pontos</p>
               <p className="text-3xl font-bold text-gray-900 mt-2">{summary?.totalPoints ?? 0}</p>
             </div>
-            <Trophy className="w-9 h-9 text-[#A8B4C8] opacity-70" />
+            <Trophy className="w-9 h-9 text-emerald-500 opacity-70" />
           </div>
         </div>
       </section>
@@ -198,11 +198,11 @@ export default function Profile() {
 
       <section className="bg-white rounded-2xl shadow-md p-8">
         <div className="flex items-center gap-3 mb-4">
-          <ClipboardList className="w-6 h-6 text-[#1C3550]" />
+          <ClipboardList className="w-6 h-6 text-purple-500" />
           <h2 className="text-2xl font-bold text-gray-900">Histórico de Simulados</h2>
         </div>
         {simuladoHistory.length === 0 ? (
-          <p className="text-gray-600">Nenhum simulado realizado ainda. <Link href="/questoes" className="text-[#1C3550] font-medium hover:underline">Gerar um simulado</Link></p>
+          <p className="text-gray-600">Nenhum simulado realizado ainda. <Link href="/questoes" className="text-purple-600 font-medium hover:underline">Gerar um simulado</Link></p>
         ) : (
           <ul className="space-y-2 max-h-72 overflow-y-auto">
             {simuladoHistory.map((entry) => {
@@ -235,7 +235,7 @@ export default function Profile() {
         <h2 className="text-2xl font-bold text-gray-900 mb-3">Próximo passo</h2>
         <p className="text-gray-600 mb-6">Continue resolvendo questões para aumentar sua sequência e consolidar o aprendizado.</p>
         <Link href="/questoes">
-          <Button className="bg-gradient-to-r from-[#1C3550] to-[#C4605A] text-white">Voltar para Questões</Button>
+          <Button className="bg-gradient-to-r from-purple-500 to-orange-500 text-white">Voltar para Questões</Button>
         </Link>
       </section>
     </div>

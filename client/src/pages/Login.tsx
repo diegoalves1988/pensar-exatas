@@ -77,7 +77,7 @@ export default function Login() {
           <Button type="submit" className="flex-1" disabled={loading}>
             {loading ? "Entrando..." : "Entrar"}
           </Button>
-          <Link href="/register" className="text-sm text-[#1C3550] hover:underline">
+          <Link href="/register" className="text-sm text-purple-600 hover:underline">
             Criar conta
           </Link>
         </div>
