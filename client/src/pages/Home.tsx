@@ -17,8 +17,6 @@ type ProfileSummary = {
   questionsToday: number;
 };
 
-import { PROFILE_SUMMARY_CACHE_KEY } from "@/const";
-
 const FIXED_QUESTIONS_COUNT = 1000;
 
 export default function Home() {
@@ -51,6 +49,10 @@ export default function Home() {
           }
         })
         .catch(() => {});
+    } else {
+      // User logged out – clear the cached summary so the card switches immediately.
+      setProfileSummary(null);
+      try { sessionStorage.removeItem(PROFILE_SUMMARY_CACHE_KEY); } catch { /* ignore */ }
     }
 
     return () => { cancelled = true; };
