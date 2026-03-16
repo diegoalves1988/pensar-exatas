@@ -68,6 +68,8 @@ export default function Questions() {
   const [showHistory, setShowHistory] = useState(false);
   // track answers for multiple-choice questions: questionId -> selected index
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  // track answers made specifically within the current simulado (separate from avulso resolutions)
+  const [simuladoAnswers, setSimuladoAnswers] = useState<Record<number, number>>({});
   const [hydratingResolutions, setHydratingResolutions] = useState(false);
   // track if the user chose to reveal the answer/solution for each question
   const [showSolution, setShowSolution] = useState<Record<number, boolean>>({});
@@ -420,6 +422,7 @@ export default function Questions() {
     setSimuladoError(null);
     setSimuladoFinished(false);
     setSimuladoResult(null);
+    setSimuladoAnswers({});
     setCurrentPage(1);
     setExpandedQuestion(null);
   };
@@ -435,7 +438,7 @@ export default function Questions() {
         q.correctChoice !== undefined,
     );
     const total = answerable.length;
-    const correct = answerable.filter((q: any) => answers[Number(q.id)] === Number(q.correctChoice)).length;
+    const correct = answerable.filter((q: any) => simuladoAnswers[Number(q.id)] === Number(q.correctChoice)).length;
     // Score on a 0–10 scale, rounded to 1 decimal place
     const score = total > 0 ? Math.round((correct / total) * 10 * 10) / 10 : 0;
     const entry: SimuladoHistoryEntry = {
@@ -614,6 +617,7 @@ export default function Questions() {
                   setSimuladoError(null);
                   setSimuladoFinished(false);
                   setSimuladoResult(null);
+                  setSimuladoAnswers({});
                 }}
               >
                 {simuladoFinished ? "Novo simulado" : "Sair do simulado"}
@@ -752,7 +756,12 @@ export default function Questions() {
             <p className="text-gray-600 text-lg">Nenhuma questão encontrada</p>
           </div>
         ) : (
-          paginatedQuestions.map((question) => (
+          paginatedQuestions.map((question) => {
+            const effectiveAns = simuladoQuestionIds !== null ? simuladoAnswers[question.id] : answers[question.id];
+            const isLoadingAvulsoAnswer = !simuladoQuestionIds && isAuthenticated && hydratingResolutions && effectiveAns === undefined;
+            const hasMultipleChoices = Boolean(question.choices && question.choices.length > 0);
+            const cannotRevealAnswer = hasMultipleChoices && (effectiveAns === undefined || (!simuladoQuestionIds && hydratingResolutions));
+            return (
             <div
               key={question.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
@@ -841,10 +850,10 @@ export default function Questions() {
                       <div className="space-y-2">
                         {(question.choices as ChoiceOption[]).map((opt: ChoiceOption, idx: number) => {
                           const normalizedChoice = normalizeChoice(opt);
-                          const selected = answers[question.id] === idx;
+                          const selected = effectiveAns === idx;
                           const correct = question.correctChoice === idx;
                           let bg = "bg-white hover:bg-gray-100";
-                          if (answers[question.id] !== undefined && selected) {
+                          if (effectiveAns !== undefined && selected) {
                             bg = correct ? "bg-green-200" : "bg-red-200";
                           }
                           const label = String.fromCharCode(65 + idx); // A, B, C, D, E
@@ -853,6 +862,21 @@ export default function Questions() {
                               key={idx}
                               className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300 flex items-start gap-3`}
                               onClick={async () => {
+                                if (simuladoQuestionIds !== null) {
+                                  // Simulado mode: track answers separately, no DB persistence
+                                  const prevSim = simuladoAnswers[question.id];
+                                  if (prevSim === idx) {
+                                    setSimuladoAnswers((a) => {
+                                      const copy = { ...a };
+                                      delete copy[question.id];
+                                      return copy;
+                                    });
+                                  } else {
+                                    setSimuladoAnswers((a) => ({ ...a, [question.id]: idx }));
+                                  }
+                                  return;
+                                }
+                                // Avulso mode: persist to DB
                                 const prevSelected = answers[question.id];
                                 if (prevSelected === idx) {
                                   setAnswersWithCache((a) => {
@@ -882,7 +906,7 @@ export default function Questions() {
                                   }
                                 }
                               }}
-                              disabled={Boolean(isAuthenticated && hydratingResolutions && answers[question.id] === undefined)}
+                              disabled={isLoadingAvulsoAnswer}
                             >
                               <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
                                 {label}
@@ -904,21 +928,21 @@ export default function Questions() {
                             </button>
                           );
                         })}
-                        {answers[question.id] !== undefined && (
+                        {effectiveAns !== undefined && (
                           <div className="mt-2">
-                            {answers[question.id] === question.correctChoice ? (
+                            {effectiveAns === question.correctChoice ? (
                               <span className="text-green-600 font-semibold">Você acertou!</span>
                             ) : (
                               <span className="text-red-600 font-semibold">Você errou.</span>
                             )}
                           </div>
                         )}
-                        {isAuthenticated && hydratingResolutions && answers[question.id] === undefined && (
+                        {isAuthenticated && isLoadingAvulsoAnswer && (
                           <p className="text-sm text-gray-500 mt-2 italic">Carregando resposta salva...</p>
                         )}
-                        {answers[question.id] === undefined && (
+                        {effectiveAns === undefined && (
                           <p className="text-sm text-gray-400 mt-2 italic">
-                            {isAuthenticated && hydratingResolutions
+                            {isLoadingAvulsoAnswer
                               ? "Aguarde um instante para sincronizar seu histórico."
                               : "Selecione uma alternativa e, se quiser, clique em Mostrar resposta."}
                           </p>
@@ -927,13 +951,13 @@ export default function Questions() {
                     )}
 
                     <div>
-                      {question.choices && question.choices.length > 0 && answers[question.id] === undefined && !hydratingResolutions && (
+                      {hasMultipleChoices && effectiveAns === undefined && (simuladoQuestionIds !== null || !hydratingResolutions) && (
                         <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
                       )}
                       <div className="flex flex-col sm:flex-row gap-2">
                         <Button
                           variant="outline"
-                          disabled={Boolean(question.choices && question.choices.length > 0 && (answers[question.id] === undefined || hydratingResolutions))}
+                          disabled={cannotRevealAnswer}
                           onClick={() =>
                             setShowSolution((prev) => ({
                               ...prev,
@@ -1024,7 +1048,8 @@ export default function Questions() {
                 </div>
               )}
             </div>
-          ))
+            );
+          })
         )}
       </div>
 
