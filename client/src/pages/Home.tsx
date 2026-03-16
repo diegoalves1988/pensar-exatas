@@ -86,8 +86,8 @@ export default function Home() {
       {/* Stats Section */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {isAuthenticated ? (
-          <Link href="/perfil">
-            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver progresso">
+          <Link href="/perfil" className="block h-full">
+            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer h-full" role="button" aria-label="Ver progresso">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Seu Progresso</p>
@@ -99,8 +99,8 @@ export default function Home() {
             </div>
           </Link>
         ) : (
-          <Link href="/questoes">
-            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer" role="button" aria-label="Ver questões">
+          <Link href="/questoes" className="block h-full">
+            <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500 cursor-pointer h-full" role="button" aria-label="Ver questões">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Questões Disponíveis</p>
@@ -112,9 +112,9 @@ export default function Home() {
           </Link>
         )}
 
-        <Link href="/questoes">
+        <Link href="/questoes" className="block h-full">
           <div
-            className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500 cursor-pointer hover:shadow-lg transition"
+            className="bg-white rounded-xl p-6 shadow-md border-l-4 border-orange-500 cursor-pointer hover:shadow-lg transition h-full"
             role="button"
             aria-label="Abrir simulados"
           >
@@ -129,7 +129,7 @@ export default function Home() {
           </div>
         </Link>
 
-        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500">
+        <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500 h-full">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm font-medium">Sequência Atual</p>
