@@ -22,7 +22,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
       <header className="bg-white shadow-md sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
-            <img src="/logo.svg" alt="Pensar Exatas" className="w-10 h-10 object-contain" />
+            <img src="/logo.svg" alt="Pensar Exatas" className="w-14 h-14 object-contain" />
             <div className="hidden sm:block">
               <h1 className="font-bold text-xl text-gray-900">{APP_TITLE}</h1>
               <p className="text-xs text-gray-500">Domine as exatas!</p>
