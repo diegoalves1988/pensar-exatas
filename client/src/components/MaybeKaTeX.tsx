@@ -31,7 +31,117 @@ function renderWithBold(text: string): React.ReactNode[] {
   });
 }
 
+type Token =
+  | { type: "text"; value: string }
+  | { type: "inline-math"; value: string }
+  | { type: "display-math"; value: string };
+
+function hasExplicitMathDelimiters(text: string): boolean {
+  return text.includes("$$") || text.includes("\\(") || text.includes("\\[") || /(^|[^\\])\$(?!\$)/.test(text);
+}
+
+function tokenizeMixedContent(text: string): Token[] {
+  const tokens: Token[] = [];
+  let index = 0;
+
+  const pushText = (value: string) => {
+    if (!value) return;
+    tokens.push({ type: "text", value });
+  };
+
+  while (index < text.length) {
+    const rest = text.slice(index);
+
+    if (rest.startsWith("$$")) {
+      const end = rest.indexOf("$$", 2);
+      if (end !== -1) {
+        tokens.push({ type: "display-math", value: rest.slice(2, end) });
+        index += end + 2;
+        continue;
+      }
+    }
+
+    if (rest.startsWith("\\[")) {
+      const end = rest.indexOf("\\]", 2);
+      if (end !== -1) {
+        tokens.push({ type: "display-math", value: rest.slice(2, end) });
+        index += end + 2;
+        continue;
+      }
+    }
+
+    if (rest.startsWith("\\(")) {
+      const end = rest.indexOf("\\)", 2);
+      if (end !== -1) {
+        tokens.push({ type: "inline-math", value: rest.slice(2, end) });
+        index += end + 2;
+        continue;
+      }
+    }
+
+    if (rest[0] === "$" && rest[1] !== "$") {
+      let end = 1;
+      while (end < rest.length) {
+        if (rest[end] === "$" && rest[end - 1] !== "\\") break;
+        end += 1;
+      }
+      if (end < rest.length) {
+        tokens.push({ type: "inline-math", value: rest.slice(1, end) });
+        index += end + 1;
+        continue;
+      }
+    }
+
+    let nextIndex = rest.length;
+    const candidates = [
+      rest.indexOf("$$"),
+      rest.indexOf("\\["),
+      rest.indexOf("\\("),
+      rest.search(/(^|[^\\])\$(?!\$)/),
+    ].filter((value) => value >= 0);
+
+    if (candidates.length > 0) {
+      nextIndex = Math.min(...candidates.map((value) => {
+        if (value < 0) return rest.length;
+        const match = rest.slice(value).match(/(^|[^\\])\$(?!\$)/);
+        if (value === rest.search(/(^|[^\\])\$(?!\$)/) && match) {
+          return value + match[0].length - 1;
+        }
+        return value;
+      }));
+    }
+
+    pushText(rest.slice(0, nextIndex || 1));
+    index += nextIndex || 1;
+  }
+
+  return tokens;
+}
+
 export default function MaybeKaTeX({ text, displayMode = false, className }: Props) {
+  if (hasExplicitMathDelimiters(text)) {
+    const tokens = tokenizeMixedContent(text);
+    return (
+      <div className={className} style={{ whiteSpace: "pre-wrap" }}>
+        {tokens.map((token, index) => {
+          if (token.type === "text") {
+            return <React.Fragment key={`text-${index}`}>{renderWithBold(token.value)}</React.Fragment>;
+          }
+
+          if (token.type === "display-math") {
+            return (
+              <div key={`display-${index}`} className="my-2">
+                <KaTeXRenderer formula={token.value} displayMode />
+              </div>
+            );
+          }
+
+          return <KaTeXRenderer key={`inline-${index}`} formula={token.value} displayMode={false} />;
+        })}
+      </div>
+    );
+  }
+
   if (isLikelyTeX(text)) {
     return <KaTeXRenderer formula={text} displayMode={displayMode} className={className} />;
   }
