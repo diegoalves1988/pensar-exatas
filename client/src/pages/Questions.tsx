@@ -961,10 +961,8 @@ export default function Questions() {
                                 {label}
                               </span>
                               <span className="space-y-2 block">
-                                {normalizedChoice.text ? (
+                                {normalizedChoice.text && (
                                   <span className="text-sm leading-6 text-justify block">{normalizedChoice.text}</span>
-                                ) : (
-                                  <span className="text-gray-500 italic">Alternativa com imagem</span>
                                 )}
                                 {normalizedChoice.imageUrl && (
                                   <img
