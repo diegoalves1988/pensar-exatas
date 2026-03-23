@@ -19,6 +19,39 @@ function emptyChoices(): AlternativeChoice[] {
   ];
 }
 
+function sanitizePreviewArtifacts(text: string): string {
+  const cleanedLines = text
+    .replace(/\r\n/g, "\n")
+    .split(/\n/)
+    .map((line) => line.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim())
+    .filter((line) => {
+      if (!line) return false;
+      if (/^(undefined|null)$/i.test(line)) return false;
+      if (/^\*?\d{6}AM\d+\*?$/i.test(line)) return false;
+      if (/^(?:ENE[MN]2025\s*)+$/i.test(line)) return false;
+      if (/^(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*$/i.test(line)) return false;
+      if (/^\d{1,2}$/.test(line)) return false;
+      return true;
+    });
+
+  return cleanedLines
+    .join("\n")
+    .replace(/\b(?:undefined|null)\b/gi, " ")
+    .replace(/\bENE[MN]2025\b/gi, " ")
+    .replace(/\*\d{6}AM\d+\*/gi, " ")
+    .replace(/(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*/gi, " ")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function normalizePreviewText(text: string): string {
+  return sanitizePreviewArtifacts(text)
+    .replace(/\r\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/([^\n])\n([^\n])/g, "$1 $2");
+}
+
 export default function AdminQuestions() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
@@ -502,7 +535,7 @@ export default function AdminQuestions() {
               {form.solution && (
                 <div className="mt-2 p-3 bg-gray-50 rounded border text-sm">
                   <p className="text-xs text-gray-400 mb-1">Preview:</p>
-                  <MaybeKaTeX text={form.solution} />
+                  <MaybeKaTeX text={normalizePreviewText(form.solution)} />
                 </div>
               )}
             </div>
