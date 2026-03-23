@@ -31,6 +31,25 @@ function renderWithBold(text: string): React.ReactNode[] {
   });
 }
 
+function renderTextWithBreaksAndBold(text: string, keyPrefix: string): React.ReactNode[] {
+  const lines = text.split("\n");
+  const nodes: React.ReactNode[] = [];
+
+  lines.forEach((line, lineIndex) => {
+    nodes.push(
+      <React.Fragment key={`${keyPrefix}-line-${lineIndex}`}>
+        {renderWithBold(line)}
+      </React.Fragment>
+    );
+
+    if (lineIndex < lines.length - 1) {
+      nodes.push(<br key={`${keyPrefix}-br-${lineIndex}`} />);
+    }
+  });
+
+  return nodes;
+}
+
 type Token =
   | { type: "text"; value: string }
   | { type: "inline-math"; value: string }
@@ -144,7 +163,7 @@ export default function MaybeKaTeX({ text, displayMode = false, className }: Pro
       <div className={className} style={{ whiteSpace: "pre-wrap" }}>
         {tokens.map((token, index) => {
           if (token.type === "text") {
-            return <React.Fragment key={`text-${index}`}>{renderWithBold(token.value)}</React.Fragment>;
+            return <React.Fragment key={`text-${index}`}>{renderTextWithBreaksAndBold(token.value, `text-${index}`)}</React.Fragment>;
           }
 
           if (token.type === "display-math") {
@@ -167,7 +186,7 @@ export default function MaybeKaTeX({ text, displayMode = false, className }: Pro
   // Plain text: preserve whitespace and line breaks, render **bold** markdown
   return (
     <div className={className} style={{ whiteSpace: "pre-wrap" }}>
-      {renderWithBold(text)}
+      {renderTextWithBreaksAndBold(text, "plain")}
     </div>
   );
 }
