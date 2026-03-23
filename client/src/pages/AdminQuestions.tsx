@@ -48,8 +48,7 @@ function sanitizePreviewArtifacts(text: string): string {
 function normalizePreviewText(text: string): string {
   return sanitizePreviewArtifacts(text)
     .replace(/\r\n/g, "\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .replace(/([^\n])\n([^\n])/g, "$1 $2");
+    .replace(/\n{3,}/g, "\n\n");
 }
 
 export default function AdminQuestions() {
