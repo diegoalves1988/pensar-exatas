@@ -274,7 +274,8 @@ export default function Questions() {
     return raw;
   };
 
-  const sanitizePdfArtifacts = (text: string) => {
+  const sanitizePdfArtifacts = (text: string, options?: { stripShortNumericLines?: boolean }) => {
+    const stripShortNumericLines = options?.stripShortNumericLines ?? true;
     const cleanedLines = text
       .replace(/\r\n/g, "\n")
       .split(/\n/)
@@ -286,7 +287,7 @@ export default function Questions() {
         if (/^\*?\d{6}AM\d+\*?$/i.test(line)) return false;
         if (/^(?:ENE[MN]2025\s*)+$/i.test(line)) return false;
         if (/^(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*$/i.test(line)) return false;
-        if (/^\d{1,2}$/.test(line)) return false;
+        if (stripShortNumericLines && /^\d{1,2}$/.test(line)) return false;
         return true;
       });
 
@@ -398,13 +399,13 @@ export default function Questions() {
         text = raw.replace(rawImageUrl, "").replace("[Alternativa com imagem]", "").trim();
       }
       return {
-        text: sanitizePdfArtifacts(text || "") || null,
+        text: sanitizePdfArtifacts(text || "", { stripShortNumericLines: false }) || null,
         imageUrl,
       };
     }
 
     return {
-      text: sanitizePdfArtifacts((choice?.text || "") as string) || null,
+      text: sanitizePdfArtifacts((choice?.text || "") as string, { stripShortNumericLines: false }) || null,
       imageUrl: resolveImageUrl((choice?.imageUrl || choice?.file || null) as string | null),
     };
   };
