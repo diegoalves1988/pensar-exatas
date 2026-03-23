@@ -46,10 +46,36 @@ function sanitizePreviewArtifacts(text: string): string {
     .trim();
 }
 
+const MARKDOWN_BLOCK_LINE_REGEX = /^\s*(?:[*-]\s+|#{1,6}\s+|\d+\.\s+)/;
+const STANDALONE_MATH_LINE_REGEX = /^\s*(?:\$\$?.+\$\$?|\\\(.+\\\)|\\\[.+\\\])\s*$/;
+
+function normalizeParagraphFlow(text: string): string {
+  return text
+    .split(/\n{2,}/)
+    .map((paragraph) => {
+      const lines = paragraph
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0);
+
+      if (lines.length <= 1) return lines.join("");
+
+      const keepLineBreaks = lines.some(
+        (line) => MARKDOWN_BLOCK_LINE_REGEX.test(line) || STANDALONE_MATH_LINE_REGEX.test(line),
+      );
+
+      return keepLineBreaks ? lines.join("\n") : lines.join(" ");
+    })
+    .filter((paragraph) => paragraph.length > 0)
+    .join("\n\n");
+}
+
 function normalizePreviewText(text: string): string {
-  return sanitizePreviewArtifacts(text)
-    .replace(/\r\n/g, "\n")
-    .replace(/\n{3,}/g, "\n\n");
+  return normalizeParagraphFlow(
+    sanitizePreviewArtifacts(text)
+      .replace(/\r\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n"),
+  );
 }
 
 export default function AdminQuestions() {
@@ -535,7 +561,7 @@ export default function AdminQuestions() {
               {form.solution && (
                 <div className="mt-2 p-3 bg-gray-50 rounded border text-sm">
                   <p className="text-xs text-gray-400 mb-1">Preview:</p>
-                  <MaybeKaTeX text={normalizePreviewText(form.solution)} />
+                  <MaybeKaTeX text={normalizePreviewText(form.solution)} className="text-justify leading-7" />
                 </div>
               )}
             </div>

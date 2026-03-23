@@ -37,6 +37,8 @@ const SIMULADO_LOCALE = "pt-BR";
 const SIMULADO_TIME_FORMAT: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit" };
 const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\(([^\s)]+)\)/g;
 const URL_REGEX = /(https?:\/\/[^\s)]+|\/[\w\-./%]+(?:\?[^\s)]*)?)/i;
+const MARKDOWN_BLOCK_LINE_REGEX = /^\s*(?:[*-]\s+|#{1,6}\s+|\d+\.\s+)/;
+const STANDALONE_MATH_LINE_REGEX = /^\s*(?:\$\$?.+\$\$?|\\\(.+\\\)|\\\[.+\\\])\s*$/;
 
 export default function Questions() {
   const [location] = useLocation();
@@ -227,9 +229,31 @@ export default function Questions() {
   const subjectList = sortSubjects(publicSubjects.length > 0 ? publicSubjects : FALLBACK_SUBJECTS);
 
   const normalizeQuestionText = (text: string) =>
-    text
+    normalizeParagraphFlow(
+      text
       .replace(/\r\n/g, "\n")
-      .replace(/\n{3,}/g, "\n\n");
+      .replace(/\n{3,}/g, "\n\n"),
+    );
+
+  const normalizeParagraphFlow = (text: string) =>
+    text
+      .split(/\n{2,}/)
+      .map((paragraph) => {
+        const lines = paragraph
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0);
+
+        if (lines.length <= 1) return lines.join("");
+
+        const keepLineBreaks = lines.some(
+          (line) => MARKDOWN_BLOCK_LINE_REGEX.test(line) || STANDALONE_MATH_LINE_REGEX.test(line),
+        );
+
+        return keepLineBreaks ? lines.join("\n") : lines.join(" ");
+      })
+      .filter((paragraph) => paragraph.length > 0)
+      .join("\n\n");
 
   const resolveImageUrl = (url: string | null | undefined): string | null => {
     if (!url) return null;
