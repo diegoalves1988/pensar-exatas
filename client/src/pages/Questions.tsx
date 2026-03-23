@@ -963,7 +963,9 @@ export default function Questions() {
                               </span>
                               <span className="space-y-2 block">
                                 {normalizedChoice.text && (
-                                  <span className="text-sm leading-6 text-justify block">{normalizedChoice.text}</span>
+                                  <div className="text-sm leading-6 text-justify">
+                                    <MaybeKaTeX text={normalizedChoice.text} displayMode={false} />
+                                  </div>
                                 )}
                                 {normalizedChoice.imageUrl && (
                                   <img
