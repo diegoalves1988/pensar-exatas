@@ -256,7 +256,8 @@ export default function Questions() {
       .split(/\n/)
       .map((line) => line.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim())
       .filter((line) => {
-        if (!line) return false;
+        // Preserve intentional blank lines; collapse is handled later.
+        if (!line) return true;
         if (/^(undefined|null)$/i.test(line)) return false;
         if (/^\*?\d{6}AM\d+\*?$/i.test(line)) return false;
         if (/^(?:ENE[MN]2025\s*)+$/i.test(line)) return false;
