@@ -859,6 +859,7 @@ export default function Questions() {
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                       <div className="space-y-4">
+                        {renderStatementWithInlineImages(sanitizeStatementArtifacts(String(question.statement || "")))}
                         {resolveImageUrl(question.imageUrl) && (
                           <img
                             src={resolveImageUrl(question.imageUrl) as string}
@@ -866,7 +867,6 @@ export default function Questions() {
                             className="w-full max-w-2xl h-auto object-contain rounded-lg border border-gray-300 mx-auto"
                           />
                         )}
-                        {renderStatementWithInlineImages(sanitizeStatementArtifacts(String(question.statement || "")))}
                       </div>
                     </div>
 
