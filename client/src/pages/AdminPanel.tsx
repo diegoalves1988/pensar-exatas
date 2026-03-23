@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { Plus, Edit2, Trash2 } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, X } from "lucide-react";
 import { useLocation } from "wouter";
 
 type SubjectItem = {
@@ -38,6 +38,9 @@ export default function AdminPanel() {
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
   const [reports, setReports] = useState<AdminQuestionReport[]>([]);
   const [updatingReportId, setUpdatingReportId] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -199,6 +202,65 @@ export default function AdminPanel() {
       <div className="bg-white rounded-xl shadow-md p-8">
         {activeTab === "questions" && (
           <div className="space-y-6">
+            {/* Filters */}
+            <div className="bg-gray-50 rounded-lg p-4 space-y-3 border border-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="flex items-center gap-2 bg-white rounded-lg border border-gray-300 px-3 py-2">
+                  <Search className="w-4 h-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Buscar questão por título..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="flex-1 outline-none bg-transparent text-sm"
+                  />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm("")}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                <select
+                  value={selectedSubject ?? ""}
+                  onChange={(e) => setSelectedSubject(e.target.value ? Number(e.target.value) : null)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm outline-none"
+                >
+                  <option value="">Todas as matérias</option>
+                  {subjects.map((subj) => (
+                    <option key={subj.id} value={subj.id}>
+                      {subj.name}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedYear ?? ""}
+                  onChange={(e) => setSelectedYear(e.target.value ? Number(e.target.value) : null)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm outline-none"
+                >
+                  <option value="">Todos os anos</option>
+                  {Array.from(
+                    new Set(
+                      questions
+                        .map((q) => q.year)
+                        .filter((year): year is number => typeof year === "number" && year > 0),
+                    ),
+                  )
+                    .sort((a, b) => b - a)
+                    .map((year) => (
+                      <option key={year} value={year}>
+                        ENEM {year}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Questions List */}
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-900">Gerenciar Questões</h2>
               <Button
@@ -216,7 +278,16 @@ export default function AdminPanel() {
               </div>
             ) : (
               <div className="space-y-3">
-                {questions.map((question) => (
+                {questions
+                  .filter((q) => {
+                    const matchesSearch =
+                      q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      (q.subjectName?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
+                    const matchesSubject = !selectedSubject || (q as any).subjectId === selectedSubject;
+                    const matchesYear = !selectedYear || q.year === selectedYear;
+                    return matchesSearch && matchesSubject && matchesYear;
+                  })
+                  .map((question) => (
                   <div key={question.id} className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 p-4">
                     <div>
                       <p className="font-semibold text-gray-900">{question.title}</p>
