@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { Plus, Edit2, Trash2 } from "lucide-react";
+import { Plus, Edit2, Trash2, Search } from "lucide-react";
 import { useLocation } from "wouter";
 
 type SubjectItem = {
@@ -14,6 +14,7 @@ type AdminQuestion = {
   id: number;
   title: string;
   year: number | null;
+  subjectId?: number | null;
   subjectName?: string | null;
 };
 
@@ -38,6 +39,9 @@ export default function AdminPanel() {
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
   const [reports, setReports] = useState<AdminQuestionReport[]>([]);
   const [updatingReportId, setUpdatingReportId] = useState<number | null>(null);
+  const [questionsSearch, setQuestionsSearch] = useState("");
+  const [questionsSubject, setQuestionsSubject] = useState<number | null>(null);
+  const [questionsYear, setQuestionsYear] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -119,6 +123,26 @@ export default function AdminPanel() {
       setUpdatingReportId(null);
     }
   };
+
+  const availableYears = Array.from(
+    new Set(
+      questions
+        .map((q) => q.year)
+        .filter((year): year is number => year !== null && Number.isFinite(year) && year > 0),
+    ),
+  ).sort((a, b) => b - a);
+
+  const filteredQuestions = questions.filter((q) => {
+    const matchesSearch =
+      !questionsSearch ||
+      q.title.toLowerCase().includes(questionsSearch.toLowerCase());
+    const matchesSubject =
+      questionsSubject === null ||
+      q.subjectId === questionsSubject;
+    const matchesYear =
+      questionsYear === null || q.year === questionsYear;
+    return matchesSearch && matchesSubject && matchesYear;
+  });
 
   // Redirect if not admin
   if (user?.role !== "admin") {
@@ -209,14 +233,63 @@ export default function AdminPanel() {
                 Nova Questão
               </Button>
             </div>
-            {questions.length === 0 ? (
+
+            {/* Filters */}
+            <div className="flex flex-wrap gap-3">
+              <div className="relative flex-1 min-w-[200px]">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Buscar questão..."
+                  value={questionsSearch}
+                  onChange={(e) => setQuestionsSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <select
+                value={questionsSubject ?? "all"}
+                onChange={(e) =>
+                  setQuestionsSubject(e.target.value === "all" ? null : Number(e.target.value))
+                }
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="all">Todas as matérias</option>
+                {subjects.map((subject) => (
+                  <option key={subject.id} value={subject.id}>
+                    {subject.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={questionsYear ?? "all"}
+                onChange={(e) =>
+                  setQuestionsYear(e.target.value === "all" ? null : Number(e.target.value))
+                }
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="all">Todos os anos</option>
+                {availableYears.map((year) => (
+                  <option key={year} value={year}>
+                    ENEM {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {filteredQuestions.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
-                <p>Nenhuma questão cadastrada ainda.</p>
-                <p className="text-sm mt-2">Clique no botão acima para adicionar a primeira questão.</p>
+                {questions.length === 0 ? (
+                  <>
+                    <p>Nenhuma questão cadastrada ainda.</p>
+                    <p className="text-sm mt-2">Clique no botão acima para adicionar a primeira questão.</p>
+                  </>
+                ) : (
+                  <p>Nenhuma questão encontrada para os filtros selecionados.</p>
+                )}
               </div>
             ) : (
               <div className="space-y-3">
-                {questions.map((question) => (
+                {filteredQuestions.map((question) => (
                   <div key={question.id} className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 p-4">
                     <div>
                       <p className="font-semibold text-gray-900">{question.title}</p>
