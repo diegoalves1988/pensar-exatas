@@ -229,9 +229,7 @@ export default function Questions() {
   const normalizeQuestionText = (text: string) =>
     text
       .replace(/\r\n/g, "\n")
-      .replace(/\n{3,}/g, "\n\n")
-      // single line breaks from copied PDFs become spaces; paragraph breaks are kept
-      .replace(/([^\n])\n([^\n])/g, "$1 $2");
+      .replace(/\n{3,}/g, "\n\n");
 
   const resolveImageUrl = (url: string | null | undefined): string | null => {
     if (!url) return null;
@@ -269,7 +267,7 @@ export default function Questions() {
 
     return cleanedLines
       .join("\n")
-      .replace(/\b(?:undefined|null)\b/gi, " ")
+      .replace(/\\?(?:undefined|null)(?=\\|[^A-Za-zÀ-ÿ]|$)/gi, " ")
       .replace(/\bENE[MN]2025\b/gi, " ")
       .replace(/\*\d{6}AM\d+\*/gi, " ")
       .replace(/(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*/gi, " ")
@@ -279,6 +277,10 @@ export default function Questions() {
   };
 
   const sanitizeStatementArtifacts = (text: string) => {
+    return sanitizePdfArtifacts(text);
+  };
+
+  const sanitizeSolutionArtifacts = (text: string) => {
     return sanitizePdfArtifacts(text);
   };
 
@@ -1030,7 +1032,7 @@ export default function Questions() {
                         <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                         <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
                           <div className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
-                            <MaybeKaTeX text={normalizeQuestionText(String(question.solution || ""))} displayMode={false} />
+                            <MaybeKaTeX text={normalizeQuestionText(sanitizeSolutionArtifacts(String(question.solution || "")))} displayMode={false} />
                           </div>
                         </div>
                       </div>

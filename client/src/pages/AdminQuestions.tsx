@@ -36,7 +36,7 @@ function sanitizePreviewArtifacts(text: string): string {
 
   return cleanedLines
     .join("\n")
-    .replace(/\b(?:undefined|null)\b/gi, " ")
+    .replace(/\\?(?:undefined|null)(?=\\|[^A-Za-zÀ-ÿ]|$)/gi, " ")
     .replace(/\bENE[MN]2025\b/gi, " ")
     .replace(/\*\d{6}AM\d+\*/gi, " ")
     .replace(/(?:CIÊNCIAS|MATEMÁTICA)\s+E\s+SUAS\s+TECNOLOGIAS\s*\|\s*2[ºo]\s*DIA\s*\|\s*CADERNO\s*5\s*\|\s*AMARELO\s*\d*/gi, " ")

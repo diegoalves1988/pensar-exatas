@@ -40,6 +40,22 @@ function hasExplicitMathDelimiters(text: string): boolean {
   return text.includes("$$") || text.includes("\\(") || text.includes("\\[") || /(^|[^\\])\$(?!\$)/.test(text);
 }
 
+function isReasonableInlineMath(value: string): boolean {
+  const candidate = value.trim();
+  if (!candidate) return false;
+  if (candidate.includes("\n")) return false;
+
+  const texCommands = candidate.match(/\\[A-Za-z]+/g) ?? [];
+  const words = candidate.match(/[A-Za-zÀ-ÖØ-öø-ÿ]{3,}/g) ?? [];
+  const operators = candidate.match(/[=+\-*/^_{}()[\]<>]/g) ?? [];
+
+  if (candidate.length > 120 && texCommands.length < 2) return false;
+  if (words.length > 6 && texCommands.length < 2) return false;
+  if (operators.length === 0 && texCommands.length === 0 && !/\d/.test(candidate)) return false;
+
+  return true;
+}
+
 function tokenizeMixedContent(text: string): Token[] {
   const tokens: Token[] = [];
   let index = 0;
@@ -86,9 +102,12 @@ function tokenizeMixedContent(text: string): Token[] {
         end += 1;
       }
       if (end < rest.length) {
-        tokens.push({ type: "inline-math", value: rest.slice(1, end) });
-        index += end + 1;
-        continue;
+        const inlineContent = rest.slice(1, end);
+        if (isReasonableInlineMath(inlineContent)) {
+          tokens.push({ type: "inline-math", value: inlineContent });
+          index += end + 1;
+          continue;
+        }
       }
     }
 
