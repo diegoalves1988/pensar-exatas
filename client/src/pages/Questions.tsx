@@ -287,17 +287,34 @@ export default function Questions() {
 
   const stripMarkdownImages = (text: string) => text.replace(MARKDOWN_IMAGE_REGEX, " ");
 
+  const extractLeadingStatementImages = (text: string) => {
+    const urls: string[] = [];
+    let rest = text;
+
+    // Move one or more markdown images that appear at the very beginning.
+    while (true) {
+      const match = rest.match(/^\s*!\[[^\]]*\]\(([^\s)]+)\)\s*/);
+      if (!match) break;
+      const resolved = resolveImageUrl(match[1]);
+      if (resolved) urls.push(resolved);
+      rest = rest.slice(match[0].length);
+    }
+
+    return { rest, leadingImageUrls: urls };
+  };
+
   const renderStatementWithInlineImages = (text: string) => {
+    const { rest: normalizedText, leadingImageUrls } = extractLeadingStatementImages(text);
     const chunks: React.ReactNode[] = [];
     let lastIndex = 0;
     let match: RegExpExecArray | null;
     MARKDOWN_IMAGE_REGEX.lastIndex = 0;
 
-    while ((match = MARKDOWN_IMAGE_REGEX.exec(text)) !== null) {
+    while ((match = MARKDOWN_IMAGE_REGEX.exec(normalizedText)) !== null) {
       const matchStart = match.index;
       const matchEnd = MARKDOWN_IMAGE_REGEX.lastIndex;
       const imageUrl = resolveImageUrl(match[1]);
-      const before = text.slice(lastIndex, matchStart);
+      const before = normalizedText.slice(lastIndex, matchStart);
 
       if (before.trim()) {
         chunks.push(
@@ -321,13 +338,26 @@ export default function Questions() {
       lastIndex = matchEnd;
     }
 
-    const tail = text.slice(lastIndex);
+    const tail = normalizedText.slice(lastIndex);
     if (tail.trim()) {
       chunks.push(
         <div key={`text-tail-${lastIndex}`} className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
           <MaybeKaTeX text={normalizeQuestionText(tail)} displayMode={false} />
         </div>,
       );
+    }
+
+    if (leadingImageUrls.length > 0) {
+      leadingImageUrls.forEach((url, index) => {
+        chunks.push(
+          <img
+            key={`leading-img-${index}-${url}`}
+            src={url}
+            alt="Imagem do enunciado"
+            className="w-4/5 max-w-full h-auto object-contain rounded-lg border border-gray-300 max-h-72 mx-auto"
+          />,
+        );
+      });
     }
 
     return chunks;
