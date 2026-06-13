@@ -240,6 +240,9 @@ let passwordResetSchemaEnsured = false;
 
 async function ensurePasswordResetColumns(sql: any) {
   if (passwordResetSchemaEnsured) return;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "emailVerified" boolean NOT NULL DEFAULT false`;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "verificationToken" varchar(64)`;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "verificationTokenExpiresAt" timestamptz`;
   await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "passwordResetToken" varchar(64)`;
   await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "passwordResetTokenExpiresAt" timestamptz`;
   passwordResetSchemaEnsured = true;
@@ -472,8 +475,8 @@ app.post("/api/auth/forgot-password", async (req: any, res: any) => {
 
     await ensurePasswordResetColumns(sql);
 
-    const [user] = await sql`SELECT "openId", "emailVerified" FROM users WHERE email = ${email} LIMIT 1`;
-    if (!user || !user.emailVerified) {
+    const [user] = await sql`SELECT "openId" FROM users WHERE email = ${email} LIMIT 1`;
+    if (!user) {
       // Return success to avoid leaking user existence
       return res.json({ ok: true });
     }
