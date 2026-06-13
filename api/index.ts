@@ -7,6 +7,7 @@ import express from "express";
 import postgres from "postgres";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
+import nodemailer from "nodemailer";
 import { SignJWT, jwtVerify } from "jose";
 import { parse as parseCookieHeader } from "cookie";
 
@@ -235,6 +236,15 @@ async function ensureBucket(supabaseUrl: string, serviceKey: string) {
   }
 }
 
+let passwordResetSchemaEnsured = false;
+
+async function ensurePasswordResetColumns(sql: any) {
+  if (passwordResetSchemaEnsured) return;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "passwordResetToken" varchar(64)`;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS "passwordResetTokenExpiresAt" timestamptz`;
+  passwordResetSchemaEnsured = true;
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -434,6 +444,100 @@ app.post("/api/auth/login", async (req: any, res: any) => {
 app.post("/api/auth/logout", (_req: any, res: any) => {
   res.clearCookie(COOKIE_NAME, { path: "/" });
   res.json({ ok: true });
+});
+
+// ── POST /api/auth/forgot-password ───────────────────────────────────────────
+app.post("/api/auth/forgot-password", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const { email } = req.body || {};
+    if (!email) return res.status(400).json({ error: "email is required" });
+
+    await ensurePasswordResetColumns(sql);
+
+    const [user] = await sql`SELECT "openId", "emailVerified" FROM users WHERE email = ${email} LIMIT 1`;
+    if (!user || !user.emailVerified) {
+      // Return success to avoid leaking user existence
+      return res.json({ ok: true });
+    }
+
+    const token = nanoid(32);
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    await sql`
+      UPDATE users
+      SET "passwordResetToken" = ${token}, "passwordResetTokenExpiresAt" = ${expiresAt}
+      WHERE "openId" = ${user.openId}
+    `;
+
+    const protocol = req.headers["x-forwarded-proto"] || req.protocol || "https";
+    const host = req.headers["x-forwarded-host"] || req.headers.host || "";
+    const resetUrl = `${protocol}://${host}/redefinir-senha?token=${encodeURIComponent(token)}`;
+
+    // Send email if SMTP is configured, otherwise log to console
+    if (process.env.SMTP_HOST) {
+      const transport = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT ?? "587", 10),
+        secure: parseInt(process.env.SMTP_PORT ?? "587", 10) === 465,
+        auth: process.env.SMTP_USER
+          ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+          : undefined,
+      });
+      const from = process.env.SMTP_FROM || '"Pensar Exatas" <noreply@pensarexatas.com.br>';
+      await transport.sendMail({
+        from,
+        to: email,
+        subject: "Pensar Exatas – redefinição de senha",
+        text: `Olá!\n\nClique no link abaixo para redefinir sua senha (válido por 1 hora):\n\n${resetUrl}\n\nSe você não solicitou isso, ignore este e-mail.`,
+        html: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto"><h2 style="color:#1C3550">Redefinição de senha – Pensar Exatas</h2><p>Clique no botão abaixo para criar uma nova senha. Válido por <strong>1 hora</strong>.</p><div style="margin:24px 0"><a href="${resetUrl}" style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:bold;display:inline-block">Redefinir senha</a></div><p style="color:#6b7280;font-size:.875rem">Se você não solicitou isso, ignore este e-mail.</p></div>`,
+      });
+    } else {
+      console.info(`[Email] Password reset link for ${email}: ${resetUrl}`);
+    }
+
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[Auth] forgot-password failed", err);
+    return res.status(500).json({ error: "forgot password failed" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/auth/reset-password ────────────────────────────────────────────
+app.post("/api/auth/reset-password", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const { token, password } = req.body || {};
+    if (!token || !password) return res.status(400).json({ error: "token and password are required" });
+    if (password.length < 6) return res.status(400).json({ error: "password must be at least 6 characters" });
+
+    await ensurePasswordResetColumns(sql);
+
+    const [user] = await sql`
+      SELECT "openId", "passwordResetToken", "passwordResetTokenExpiresAt"
+      FROM users
+      WHERE "passwordResetToken" = ${token}
+      LIMIT 1
+    `;
+
+    if (!user || !user.passwordResetTokenExpiresAt || new Date(user.passwordResetTokenExpiresAt) < new Date()) {
+      return res.status(400).json({ error: "invalid or expired reset token" });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    await sql`
+      UPDATE users
+      SET "passwordHash" = ${passwordHash}, "passwordResetToken" = NULL, "passwordResetTokenExpiresAt" = NULL
+      WHERE "openId" = ${user.openId}
+    `;
+
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[Auth] reset-password failed", err);
+    return res.status(500).json({ error: "reset password failed" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
 // ── GET /api/subjects ─────────────────────────────────────────────────────────

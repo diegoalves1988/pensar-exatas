@@ -192,6 +192,47 @@ export async function markEmailVerified(openId: string): Promise<void> {
     .where(eq(users.openId, openId));
 }
 
+// ============= PASSWORD RESET FUNCTIONS =============
+
+export async function setPasswordResetToken(
+  openId: string,
+  token: string,
+  expiresAt: Date
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot set password reset token: database not available");
+    return;
+  }
+  await db
+    .update(users)
+    .set({ passwordResetToken: token, passwordResetTokenExpiresAt: expiresAt })
+    .where(eq(users.openId, openId));
+}
+
+export async function getUserByPasswordResetToken(token: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.passwordResetToken, token))
+    .limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function resetUserPassword(openId: string, passwordHash: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot reset password: database not available");
+    return;
+  }
+  await db
+    .update(users)
+    .set({ passwordHash, passwordResetToken: null, passwordResetTokenExpiresAt: null })
+    .where(eq(users.openId, openId));
+}
+
 // ============= SUBJECT FUNCTIONS =============
 
 export async function getAllSubjects(): Promise<Subject[]> {

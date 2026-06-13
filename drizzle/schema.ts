@@ -21,6 +21,8 @@ export const users = pgTable("users", {
   emailVerified: boolean("emailVerified").default(false).notNull(),
   verificationToken: varchar("verificationToken", { length: 64 }),
   verificationTokenExpiresAt: timestamp("verificationTokenExpiresAt"),
+  passwordResetToken: varchar("passwordResetToken", { length: 64 }),
+  passwordResetTokenExpiresAt: timestamp("passwordResetTokenExpiresAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

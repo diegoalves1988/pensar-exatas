@@ -15,6 +15,8 @@ import Register from "./pages/Register";
 import AdminQuestions from "./pages/AdminQuestions";
 import Profile from "./pages/Profile";
 import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function Router() {
   return (
@@ -23,6 +25,8 @@ function Router() {
   <Route path={"/login"} component={Login} />
   <Route path={"/register"} component={Register} />
   <Route path={"/verificar-email"} component={VerifyEmail} />
+  <Route path={"/esqueci-senha"} component={ForgotPassword} />
+  <Route path={"/redefinir-senha"} component={ResetPassword} />
   <Route path={"/perfil"} component={Profile} />
   <Route path={"/formulas"} component={PhysicsFormulas} />
       <Route path={"/questoes"} component={Questions} />
