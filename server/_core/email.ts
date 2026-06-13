@@ -78,6 +78,7 @@ export async function sendPasswordResetEmail(
   });
 }
 
+export async function sendVerificationEmail(
   to: string,
   code: string,
   appName = "Pensar Exatas"
