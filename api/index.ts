@@ -254,12 +254,11 @@ function htmlEscape(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function getAppBaseUrl(req: any): string {
-  // Prefer an explicitly configured URL to avoid host-header forgery
+function getAppBaseUrl(): string {
+  // Use only env vars to prevent host-header forgery
   if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, "");
-  const protocol = "https";
-  const host = process.env.VERCEL_URL || req.headers["x-forwarded-host"] || req.headers.host || "localhost";
-  return `${protocol}://${host}`;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:5173";
 }
 
 // ─── App ──────────────────────────────────────────────────────────────────────
@@ -488,7 +487,7 @@ app.post("/api/auth/forgot-password", async (req: any, res: any) => {
       WHERE "openId" = ${user.openId}
     `;
 
-    const baseUrl = getAppBaseUrl(req);
+    const baseUrl = getAppBaseUrl();
     const resetUrl = `${baseUrl}/redefinir-senha?token=${encodeURIComponent(token)}`;
     const safeResetUrl = htmlEscape(resetUrl);
 

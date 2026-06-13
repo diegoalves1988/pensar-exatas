@@ -233,10 +233,12 @@ export function registerOAuthRoutes(app: any) {
       const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
       await db.setPasswordResetToken(user.openId, token, expiresAt);
 
-      // Use APP_URL env var to prevent host-header forgery
+      // Use APP_URL env var to prevent host-header forgery; fall back to VERCEL_URL
       const baseUrl = ENV.appUrl
         ? ENV.appUrl.replace(/\/$/, "")
-        : `https://${process.env.VERCEL_URL || req.get("host") || "localhost"}`;
+        : process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : "http://localhost:5173";
       const resetUrl = `${baseUrl}/redefinir-senha?token=${encodeURIComponent(token)}`;
 
       await sendPasswordResetEmail(email, resetUrl);
