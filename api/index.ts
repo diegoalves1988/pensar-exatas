@@ -502,13 +502,18 @@ app.post("/api/auth/forgot-password", async (req: any, res: any) => {
           : undefined,
       });
       const from = process.env.SMTP_FROM || '"Pensar Exatas" <noreply@pensarexatas.com.br>';
-      await transport.sendMail({
-        from,
-        to: email,
-        subject: "Pensar Exatas – redefinição de senha",
-        text: `Olá!\n\nClique no link abaixo para redefinir sua senha (válido por 1 hora):\n\n${resetUrl}\n\nSe você não solicitou isso, ignore este e-mail.`,
-        html: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto"><h2 style="color:#1C3550">Redefinição de senha – Pensar Exatas</h2><p>Clique no botão abaixo para criar uma nova senha. Válido por <strong>1 hora</strong>.</p><div style="margin:24px 0"><a href="${safeResetUrl}" style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:bold;display:inline-block">Redefinir senha</a></div><p style="color:#6b7280;font-size:.875rem">Se você não solicitou isso, ignore este e-mail.</p></div>`,
-      });
+      try {
+        await transport.sendMail({
+          from,
+          to: email,
+          subject: "Pensar Exatas – redefinição de senha",
+          text: `Olá!\n\nClique no link abaixo para redefinir sua senha (válido por 1 hora):\n\n${resetUrl}\n\nSe você não solicitou isso, ignore este e-mail.`,
+          html: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto"><h2 style="color:#1C3550">Redefinição de senha – Pensar Exatas</h2><p>Clique no botão abaixo para criar uma nova senha. Válido por <strong>1 hora</strong>.</p><div style="margin:24px 0"><a href="${safeResetUrl}" style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:bold;display:inline-block">Redefinir senha</a></div><p style="color:#6b7280;font-size:.875rem">Se você não solicitou isso, ignore este e-mail.</p></div>`,
+        });
+      } catch (err) {
+        console.error("[Email] Failed to send password reset email", err);
+        console.info(`[Email] Password reset link for ${email}: ${resetUrl}`);
+      }
     } else {
       console.info(`[Email] Password reset link for ${email}: ${resetUrl}`);
     }
@@ -1031,4 +1036,3 @@ app.post("/api/admin/upload", async (req: any, res: any) => {
 app.use("/api/trpc", (_req: any, res: any) => res.status(503).json({ error: "tRPC not available" }));
 
 export default app;
-

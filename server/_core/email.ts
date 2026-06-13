@@ -38,44 +38,49 @@ export async function sendPasswordResetEmail(
 
   const safeResetUrl = htmlEscape(resetUrl);
 
-  await transport.sendMail({
-    from,
-    to,
-    subject: `${appName} – redefinição de senha`,
-    text: [
-      `Olá!`,
-      ``,
-      `Recebemos uma solicitação para redefinir a senha da sua conta em ${appName}.`,
-      ``,
-      `Clique no link abaixo para criar uma nova senha (válido por 1 hora):`,
-      ``,
-      resetUrl,
-      ``,
-      `Se você não solicitou a redefinição de senha, pode ignorar este e-mail.`,
-    ].join("\n"),
-    html: `
-      <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
-        <h2 style="color:#1C3550">Redefinição de senha – ${appName}</h2>
-        <p>Olá!</p>
-        <p>Recebemos uma solicitação para redefinir a senha da sua conta.</p>
-        <p>Clique no botão abaixo para criar uma nova senha. Este link é válido por <strong>1 hora</strong>.</p>
-        <div style="margin:24px 0">
-          <a href="${safeResetUrl}"
-             style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;
-                    border-radius:8px;font-weight:bold;display:inline-block">
-            Redefinir senha
-          </a>
+  try {
+    await transport.sendMail({
+      from,
+      to,
+      subject: `${appName} – redefinição de senha`,
+      text: [
+        `Olá!`,
+        ``,
+        `Recebemos uma solicitação para redefinir a senha da sua conta em ${appName}.`,
+        ``,
+        `Clique no link abaixo para criar uma nova senha (válido por 1 hora):`,
+        ``,
+        resetUrl,
+        ``,
+        `Se você não solicitou a redefinição de senha, pode ignorar este e-mail.`,
+      ].join("\n"),
+      html: `
+        <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
+          <h2 style="color:#1C3550">Redefinição de senha – ${appName}</h2>
+          <p>Olá!</p>
+          <p>Recebemos uma solicitação para redefinir a senha da sua conta.</p>
+          <p>Clique no botão abaixo para criar uma nova senha. Este link é válido por <strong>1 hora</strong>.</p>
+          <div style="margin:24px 0">
+            <a href="${safeResetUrl}"
+               style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;
+                      border-radius:8px;font-weight:bold;display:inline-block">
+              Redefinir senha
+            </a>
+          </div>
+          <p style="color:#6b7280;font-size:.875rem">
+            Se o botão não funcionar, copie e cole este link no navegador:<br>
+            <a href="${safeResetUrl}" style="color:#7c3aed">${safeResetUrl}</a>
+          </p>
+          <p style="color:#6b7280;font-size:.875rem">
+            Se você não solicitou a redefinição de senha, pode ignorar este e-mail.
+          </p>
         </div>
-        <p style="color:#6b7280;font-size:.875rem">
-          Se o botão não funcionar, copie e cole este link no navegador:<br>
-          <a href="${safeResetUrl}" style="color:#7c3aed">${safeResetUrl}</a>
-        </p>
-        <p style="color:#6b7280;font-size:.875rem">
-          Se você não solicitou a redefinição de senha, pode ignorar este e-mail.
-        </p>
-      </div>
-    `,
-  });
+      `,
+    });
+  } catch (err) {
+    console.error("[Email] Failed to send password reset email", err);
+    console.info(`[Email] Password reset link for ${to}: ${resetUrl}`);
+  }
 }
 
 export async function sendVerificationEmail(
