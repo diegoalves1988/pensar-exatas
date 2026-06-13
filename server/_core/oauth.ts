@@ -6,7 +6,7 @@ import { ENV } from "./env";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
-import { sendVerificationEmail } from "./email";
+import { sendVerificationEmail, sendPasswordResetEmail } from "./email";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
@@ -210,6 +210,76 @@ export function registerOAuthRoutes(app: any) {
     } catch (err) {
       console.error("[Auth] login failed", err);
       res.status(500).json({ error: "login failed" });
+    }
+  });
+
+  // Forgot password endpoint
+  app.post("/api/auth/forgot-password", async (req: any, res: any) => {
+    try {
+      const { email } = req.body || {};
+      if (!email) {
+        res.status(400).json({ error: "email is required" });
+        return;
+      }
+
+      const user = await db.getUserByEmail(email);
+      if (!user || !user.emailVerified) {
+        // Return success to avoid leaking user existence
+        res.json({ ok: true });
+        return;
+      }
+
+      const token = `${nanoid(32)}`;
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+      await db.setPasswordResetToken(user.openId, token, expiresAt);
+
+      // Use APP_URL env var to prevent host-header forgery; fall back to VERCEL_URL
+      const baseUrl = ENV.appUrl
+        ? ENV.appUrl.replace(/\/$/, "")
+        : process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : "http://localhost:5173";
+      const resetUrl = `${baseUrl}/redefinir-senha?token=${encodeURIComponent(token)}`;
+
+      await sendPasswordResetEmail(email, resetUrl);
+
+      res.json({ ok: true });
+    } catch (err) {
+      console.error("[Auth] forgot-password failed", err);
+      res.status(500).json({ error: "forgot password failed" });
+    }
+  });
+
+  // Reset password endpoint
+  app.post("/api/auth/reset-password", async (req: any, res: any) => {
+    try {
+      const { token, password } = req.body || {};
+      if (!token || !password) {
+        res.status(400).json({ error: "token and password are required" });
+        return;
+      }
+      if (password.length < 6) {
+        res.status(400).json({ error: "password must be at least 6 characters" });
+        return;
+      }
+
+      const user = await db.getUserByPasswordResetToken(token);
+      if (
+        !user ||
+        !user.passwordResetTokenExpiresAt ||
+        user.passwordResetTokenExpiresAt < new Date()
+      ) {
+        res.status(400).json({ error: "invalid or expired reset token" });
+        return;
+      }
+
+      const passwordHash = await bcrypt.hash(password, 10);
+      await db.resetUserPassword(user.openId, passwordHash);
+
+      res.json({ ok: true });
+    } catch (err) {
+      console.error("[Auth] reset-password failed", err);
+      res.status(500).json({ error: "reset password failed" });
     }
   });
 
