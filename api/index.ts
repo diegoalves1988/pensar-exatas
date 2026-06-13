@@ -245,6 +245,23 @@ async function ensurePasswordResetColumns(sql: any) {
   passwordResetSchemaEnsured = true;
 }
 
+function htmlEscape(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function getAppBaseUrl(req: any): string {
+  // Prefer an explicitly configured URL to avoid host-header forgery
+  if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, "");
+  const protocol = "https";
+  const host = process.env.VERCEL_URL || req.headers["x-forwarded-host"] || req.headers.host || "localhost";
+  return `${protocol}://${host}`;
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -471,9 +488,9 @@ app.post("/api/auth/forgot-password", async (req: any, res: any) => {
       WHERE "openId" = ${user.openId}
     `;
 
-    const protocol = req.headers["x-forwarded-proto"] || req.protocol || "https";
-    const host = req.headers["x-forwarded-host"] || req.headers.host || "";
-    const resetUrl = `${protocol}://${host}/redefinir-senha?token=${encodeURIComponent(token)}`;
+    const baseUrl = getAppBaseUrl(req);
+    const resetUrl = `${baseUrl}/redefinir-senha?token=${encodeURIComponent(token)}`;
+    const safeResetUrl = htmlEscape(resetUrl);
 
     // Send email if SMTP is configured, otherwise log to console
     if (process.env.SMTP_HOST) {
@@ -491,7 +508,7 @@ app.post("/api/auth/forgot-password", async (req: any, res: any) => {
         to: email,
         subject: "Pensar Exatas – redefinição de senha",
         text: `Olá!\n\nClique no link abaixo para redefinir sua senha (válido por 1 hora):\n\n${resetUrl}\n\nSe você não solicitou isso, ignore este e-mail.`,
-        html: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto"><h2 style="color:#1C3550">Redefinição de senha – Pensar Exatas</h2><p>Clique no botão abaixo para criar uma nova senha. Válido por <strong>1 hora</strong>.</p><div style="margin:24px 0"><a href="${resetUrl}" style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:bold;display:inline-block">Redefinir senha</a></div><p style="color:#6b7280;font-size:.875rem">Se você não solicitou isso, ignore este e-mail.</p></div>`,
+        html: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto"><h2 style="color:#1C3550">Redefinição de senha – Pensar Exatas</h2><p>Clique no botão abaixo para criar uma nova senha. Válido por <strong>1 hora</strong>.</p><div style="margin:24px 0"><a href="${safeResetUrl}" style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:bold;display:inline-block">Redefinir senha</a></div><p style="color:#6b7280;font-size:.875rem">Se você não solicitou isso, ignore este e-mail.</p></div>`,
       });
     } else {
       console.info(`[Email] Password reset link for ${email}: ${resetUrl}`);

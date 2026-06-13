@@ -14,6 +14,15 @@ function createTransport() {
   });
 }
 
+function htmlEscape(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function sendPasswordResetEmail(
   to: string,
   resetUrl: string,
@@ -26,6 +35,8 @@ export async function sendPasswordResetEmail(
   }
 
   const from = ENV.smtpFrom || `"${appName}" <noreply@pensarexatas.com.br>`;
+
+  const safeResetUrl = htmlEscape(resetUrl);
 
   await transport.sendMail({
     from,
@@ -49,7 +60,7 @@ export async function sendPasswordResetEmail(
         <p>Recebemos uma solicitação para redefinir a senha da sua conta.</p>
         <p>Clique no botão abaixo para criar uma nova senha. Este link é válido por <strong>1 hora</strong>.</p>
         <div style="margin:24px 0">
-          <a href="${resetUrl}"
+          <a href="${safeResetUrl}"
              style="background:#7c3aed;color:#fff;text-decoration:none;padding:12px 24px;
                     border-radius:8px;font-weight:bold;display:inline-block">
             Redefinir senha
@@ -57,7 +68,7 @@ export async function sendPasswordResetEmail(
         </div>
         <p style="color:#6b7280;font-size:.875rem">
           Se o botão não funcionar, copie e cole este link no navegador:<br>
-          <a href="${resetUrl}" style="color:#7c3aed">${resetUrl}</a>
+          <a href="${safeResetUrl}" style="color:#7c3aed">${safeResetUrl}</a>
         </p>
         <p style="color:#6b7280;font-size:.875rem">
           Se você não solicitou a redefinição de senha, pode ignorar este e-mail.

@@ -233,9 +233,11 @@ export function registerOAuthRoutes(app: any) {
       const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
       await db.setPasswordResetToken(user.openId, token, expiresAt);
 
-      const protocol = req.headers["x-forwarded-proto"] || req.protocol || "https";
-      const host = req.headers["x-forwarded-host"] || req.get("host") || "";
-      const resetUrl = `${protocol}://${host}/redefinir-senha?token=${encodeURIComponent(token)}`;
+      // Use APP_URL env var to prevent host-header forgery
+      const baseUrl = ENV.appUrl
+        ? ENV.appUrl.replace(/\/$/, "")
+        : `https://${process.env.VERCEL_URL || req.get("host") || "localhost"}`;
+      const resetUrl = `${baseUrl}/redefinir-senha?token=${encodeURIComponent(token)}`;
 
       await sendPasswordResetEmail(email, resetUrl);
 
