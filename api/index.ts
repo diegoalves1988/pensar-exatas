@@ -7,7 +7,7 @@ import express from "express";
 import postgres from "postgres";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { SignJWT, jwtVerify } from "jose";
 import { parse as parseCookieHeader } from "cookie";
 
@@ -494,19 +494,12 @@ app.post("/api/auth/forgot-password", async (req: any, res: any) => {
     const resetUrl = `${baseUrl}/redefinir-senha?token=${encodeURIComponent(token)}`;
     const safeResetUrl = htmlEscape(resetUrl);
 
-    // Send email if SMTP is configured, otherwise log to console
-    if (process.env.SMTP_HOST) {
-      const transport = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT ?? "587", 10),
-        secure: parseInt(process.env.SMTP_PORT ?? "587", 10) === 465,
-        auth: process.env.SMTP_USER
-          ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-          : undefined,
-      });
-      const from = process.env.SMTP_FROM || '"Pensar Exatas" <noreply@pensarexatas.com.br>';
+    // Send email via Resend if configured, otherwise log to console
+    if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const from = process.env.RESEND_FROM || "Pensar Exatas <noreply@pensarexatas.com.br>";
       try {
-        await transport.sendMail({
+        await resend.emails.send({
           from,
           to: email,
           subject: "Pensar Exatas – redefinição de senha",
