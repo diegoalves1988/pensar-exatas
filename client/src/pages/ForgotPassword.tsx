@@ -20,8 +20,17 @@ export default function ForgotPassword() {
         body: JSON.stringify({ email }),
       });
       if (!res.ok) {
-        const data = await res.json();
-        setError(data?.error || "Erro ao enviar e-mail");
+        const raw = await res.text();
+        let message = "Erro ao enviar e-mail";
+        if (raw) {
+          try {
+            const data = JSON.parse(raw) as { error?: string };
+            if (data?.error) message = data.error;
+          } catch {
+            message = raw;
+          }
+        }
+        setError(message);
         setLoading(false);
         return;
       }
