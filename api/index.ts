@@ -441,9 +441,11 @@ app.post("/api/auth/register", async (req: any, res: any) => {
     const { name, email, password } = req.body || {};
     if (!email || !password) return res.status(400).json({ error: "email and password are required" });
 
-    // Basic email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return res.status(400).json({ error: "invalid email format" });
+    // Basic email format validation (no regex to avoid ReDoS)
+    const atIdx = email.indexOf("@");
+    if (atIdx <= 0 || atIdx === email.length - 1 || !email.slice(atIdx + 1).includes(".")) {
+      return res.status(400).json({ error: "invalid email format" });
+    }
 
     await ensurePasswordResetColumns(sql);
 
@@ -504,7 +506,7 @@ app.post("/api/auth/verify-email", async (req: any, res: any) => {
     if (user.emailVerified) {
       // Already verified – just create a session
       const token = await signToken(user.openId, user.name ?? "");
-      res.cookie(COOKIE_NAME, token, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
+      res.cookie(COOKIE_NAME, token, { httpOnly: true, path: "/", sameSite: "none" as const, secure: true, maxAge: ONE_YEAR_MS });
       return res.json({ ok: true });
     }
 
@@ -526,7 +528,7 @@ app.post("/api/auth/verify-email", async (req: any, res: any) => {
     `;
 
     const token = await signToken(user.openId, user.name ?? "");
-    res.cookie(COOKIE_NAME, token, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
+    res.cookie(COOKIE_NAME, token, { httpOnly: true, path: "/", sameSite: "none" as const, secure: true, maxAge: ONE_YEAR_MS });
     return res.json({ ok: true });
   } catch (err) {
     console.error("[Auth] verify-email failed", err);
