@@ -84,54 +84,24 @@ BUILT_IN_FORGE_API_KEY=sua_chave_api
 
 ---
 
-## 📧 Verificação de E-mail (SMTP)
+## 📧 Envio de E-mails com Resend
 
-Para habilitar o envio de códigos de verificação por e-mail após o cadastro, configure as variáveis SMTP abaixo.
+O projeto usa o [Resend](https://resend.com) para enviar e-mails transacionais (verificação de conta e redefinição de senha).
 
-> **Nota:** se não configuradas, o código de verificação será impresso no log do servidor (útil para desenvolvimento).
+> **Nota:** se `RESEND_API_KEY` não estiver configurado, os códigos/links serão impressos no log do servidor (útil para desenvolvimento local).
 
-### SMTP_HOST
+### RESEND_API_KEY (OBRIGATÓRIO para e-mails)
 ```
-SMTP_HOST=smtp.gmail.com
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
 ```
-- Servidor SMTP do seu provedor de e-mail
+- Obtenha sua chave em: https://resend.com/api-keys
+- Certifique-se de que o domínio `pensarexatas.com.br` está verificado no Resend
 
-### SMTP_PORT
+### RESEND_FROM (opcional)
 ```
-SMTP_PORT=587
+RESEND_FROM=Pensar Exatas <noreply@pensarexatas.com.br>
 ```
-- Porta SMTP (587 para TLS/STARTTLS, 465 para SSL)
-
-### SMTP_USER
-```
-SMTP_USER=seu-email@gmail.com
-```
-- Usuário/e-mail de autenticação SMTP
-
-### SMTP_PASS
-```
-SMTP_PASS=senha-de-app-ou-senha-smtp
-```
-- Senha de autenticação SMTP
-- Para Gmail, gere uma **Senha de app** em: https://myaccount.google.com/apppasswords
-
-### SMTP_FROM
-```
-SMTP_FROM="Pensar Exatas" <noreply@seudominio.com.br>
-```
-- Endereço do remetente dos e-mails de verificação (opcional)
-
-#### Exemplo com Gmail
-```
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=seu-email@gmail.com
-SMTP_PASS=xxxx xxxx xxxx xxxx  # Senha de app do Google
-SMTP_FROM="Pensar Exatas" <seu-email@gmail.com>
-```
-
-#### Exemplo com Resend / SendGrid / Mailgun
-Consulte a documentação do seu provedor para obter as credenciais SMTP.
+- Remetente dos e-mails. Se não configurado, usa `Pensar Exatas <noreply@pensarexatas.com.br>` por padrão.
 
 ---
 

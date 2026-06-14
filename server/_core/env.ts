@@ -8,10 +8,7 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
-  // SMTP email settings (optional – verification codes are logged to console when unset)
-  smtpHost: process.env.SMTP_HOST ?? "",
-  smtpPort: parseInt(process.env.SMTP_PORT ?? "587", 10),
-  smtpUser: process.env.SMTP_USER ?? "",
-  smtpPass: process.env.SMTP_PASS ?? "",
-  smtpFrom: process.env.SMTP_FROM ?? "",
+  // Resend API key for transactional email (optional – codes are logged to console when unset)
+  resendApiKey: process.env.RESEND_API_KEY ?? "",
+  resendFrom: process.env.RESEND_FROM ?? "Pensar Exatas <noreply@pensarexatas.com.br>",
 };
