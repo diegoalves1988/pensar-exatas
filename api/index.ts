@@ -10,6 +10,7 @@ import { nanoid } from "nanoid";
 import { Resend } from "resend";
 import { SignJWT, jwtVerify } from "jose";
 import { parse as parseCookieHeader } from "cookie";
+import { timingSafeEqual } from "crypto";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const COOKIE_NAME = "app_session_id";
@@ -264,6 +265,38 @@ function getAppBaseUrl(): string {
   return "http://localhost:5173";
 }
 
+/** Generate a cryptographically random 6-digit numeric code without modulo bias. */
+function generateVerificationCode(): string {
+  const MAX = 1_000_000;
+  const limit = Math.floor(0x1_0000_0000 / MAX) * MAX;
+  const buf = new Uint32Array(1);
+  do {
+    crypto.getRandomValues(buf);
+  } while (buf[0] >= limit);
+  return String(buf[0] % MAX).padStart(6, "0");
+}
+
+async function sendVerificationEmail(to: string, code: string): Promise<void> {
+  if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const from = process.env.RESEND_FROM || "Pensar Exatas <noreply@pensarexatas.com.br>";
+    try {
+      await resend.emails.send({
+        from,
+        to,
+        subject: "Pensar Exatas – código de verificação",
+        text: `Olá!\n\nSeu código de verificação é: ${code}\n\nEsse código expira em 24 horas.\n\nSe você não criou uma conta em Pensar Exatas, pode ignorar este e-mail.`,
+        html: `<div style="font-family:sans-serif;max-width:480px;margin:0 auto"><h2 style="color:#1C3550">Verificação de e-mail – Pensar Exatas</h2><p>Olá!</p><p>Use o código abaixo para verificar seu e-mail:</p><div style="font-size:2rem;font-weight:bold;letter-spacing:.4rem;background:#f3f4f6;border-radius:8px;padding:16px 24px;display:inline-block;color:#1C3550;margin:16px 0">${code}</div><p style="color:#6b7280;font-size:.875rem">Esse código expira em 24 horas.<br>Se você não criou uma conta em Pensar Exatas, pode ignorar este e-mail.</p></div>`,
+      });
+    } catch (err) {
+      console.error("[Email] Failed to send verification email", err);
+      console.info(`[Email] Verification code for ${to}: ${code}`);
+    }
+  } else {
+    console.info(`[Email] Verification code for ${to}: ${code}`);
+  }
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -408,6 +441,14 @@ app.post("/api/auth/register", async (req: any, res: any) => {
     const { name, email, password } = req.body || {};
     if (!email || !password) return res.status(400).json({ error: "email and password are required" });
 
+    // Basic email format validation (no regex to avoid ReDoS)
+    const atIdx = email.indexOf("@");
+    if (atIdx <= 0 || atIdx === email.length - 1 || !email.slice(atIdx + 1).includes(".")) {
+      return res.status(400).json({ error: "invalid email format" });
+    }
+
+    await ensurePasswordResetColumns(sql);
+
     const [existing] = await sql`SELECT id, "openId", "passwordHash" FROM users WHERE email = ${email} LIMIT 1`;
     if (existing?.passwordHash) return res.status(400).json({ error: "User already exists" });
 
@@ -417,8 +458,8 @@ app.post("/api/auth/register", async (req: any, res: any) => {
     const role = openId === ownerOpenId ? "admin" : "user";
 
     await sql`
-      INSERT INTO users ("openId", name, email, "loginMethod", "passwordHash", role, "lastSignedIn")
-      VALUES (${openId}, ${name ?? null}, ${email}, 'email', ${passwordHash}, ${role}, NOW())
+      INSERT INTO users ("openId", name, email, "loginMethod", "passwordHash", role, "lastSignedIn", "emailVerified")
+      VALUES (${openId}, ${name ?? null}, ${email}, 'email', ${passwordHash}, ${role}, NOW(), false)
       ON CONFLICT ("openId") DO UPDATE SET
         name = EXCLUDED.name,
         email = EXCLUDED.email,
@@ -427,12 +468,105 @@ app.post("/api/auth/register", async (req: any, res: any) => {
         "lastSignedIn" = NOW()
     `;
 
-    const token = await signToken(openId, name ?? "");
-    res.cookie(COOKIE_NAME, token, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
-    return res.json({ ok: true });
+    // Generate and store a 6-digit verification code (expires in 24 hours)
+    const code = generateVerificationCode();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await sql`
+      UPDATE users
+      SET "verificationToken" = ${code}, "verificationTokenExpiresAt" = ${expiresAt}
+      WHERE "openId" = ${openId}
+    `;
+
+    await sendVerificationEmail(email, code);
+
+    return res.json({ ok: true, requiresEmailVerification: true });
   } catch (err) {
     console.error("[Auth] register failed", err);
     return res.status(500).json({ error: "register failed" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/auth/verify-email ───────────────────────────────────────────────
+app.post("/api/auth/verify-email", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const { email, code } = req.body || {};
+    if (!email || !code) return res.status(400).json({ error: "email and code are required" });
+
+    await ensurePasswordResetColumns(sql);
+
+    const [user] = await sql`
+      SELECT id, "openId", name, "emailVerified", "verificationToken", "verificationTokenExpiresAt"
+      FROM users WHERE email = ${email} LIMIT 1
+    `;
+
+    if (!user) return res.status(400).json({ error: "invalid verification code" });
+
+    if (user.emailVerified) {
+      // Already verified – just create a session
+      const token = await signToken(user.openId, user.name ?? "");
+      res.cookie(COOKIE_NAME, token, { httpOnly: true, path: "/", sameSite: "none" as const, secure: true, maxAge: ONE_YEAR_MS });
+      return res.json({ ok: true });
+    }
+
+    if (!user.verificationToken || !user.verificationTokenExpiresAt || new Date(user.verificationTokenExpiresAt) < new Date()) {
+      return res.status(400).json({ error: "invalid or expired verification code" });
+    }
+
+    // Constant-time comparison to prevent timing attacks
+    const expected = Buffer.from(user.verificationToken);
+    const actual = Buffer.from(String(code).padStart(6, "0").slice(0, 6));
+    const codesMatch = expected.length === actual.length && timingSafeEqual(expected, actual);
+
+    if (!codesMatch) return res.status(400).json({ error: "invalid or expired verification code" });
+
+    await sql`
+      UPDATE users
+      SET "emailVerified" = true, "verificationToken" = NULL, "verificationTokenExpiresAt" = NULL
+      WHERE "openId" = ${user.openId}
+    `;
+
+    const token = await signToken(user.openId, user.name ?? "");
+    res.cookie(COOKIE_NAME, token, { httpOnly: true, path: "/", sameSite: "none" as const, secure: true, maxAge: ONE_YEAR_MS });
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[Auth] verify-email failed", err);
+    return res.status(500).json({ error: "verification failed" });
+  } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
+// ── POST /api/auth/resend-verification ───────────────────────────────────────
+app.post("/api/auth/resend-verification", async (req: any, res: any) => {
+  const sql = getDb();
+  if (!sql) return res.status(500).json({ error: "database not configured" });
+  try {
+    const { email } = req.body || {};
+    if (!email) return res.status(400).json({ error: "email is required" });
+
+    await ensurePasswordResetColumns(sql);
+
+    const [user] = await sql`
+      SELECT "openId", "emailVerified" FROM users WHERE email = ${email} LIMIT 1
+    `;
+
+    // Return success regardless to avoid leaking user existence
+    if (!user || user.emailVerified) return res.json({ ok: true });
+
+    const code = generateVerificationCode();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await sql`
+      UPDATE users
+      SET "verificationToken" = ${code}, "verificationTokenExpiresAt" = ${expiresAt}
+      WHERE "openId" = ${user.openId}
+    `;
+
+    await sendVerificationEmail(email, code);
+
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error("[Auth] resend-verification failed", err);
+    return res.status(500).json({ error: "resend failed" });
   } finally { await sql.end({ timeout: 1 }).catch(() => {}); }
 });
 
@@ -444,11 +578,16 @@ app.post("/api/auth/login", async (req: any, res: any) => {
     const { email, password } = req.body || {};
     if (!email || !password) return res.status(400).json({ error: "email and password are required" });
 
-    const [user] = await sql`SELECT id, "openId", name, "passwordHash", role FROM users WHERE email = ${email} LIMIT 1`;
+    await ensurePasswordResetColumns(sql);
+
+    const [user] = await sql`SELECT id, "openId", name, "passwordHash", role, "emailVerified" FROM users WHERE email = ${email} LIMIT 1`;
     if (!user?.passwordHash) return res.status(400).json({ error: "invalid credentials" });
 
     const ok = await bcrypt.compare(password, String(user.passwordHash));
     if (!ok) return res.status(400).json({ error: "invalid credentials" });
+
+    // Block login until email is verified
+    if (!user.emailVerified) return res.status(403).json({ error: "email_not_verified" });
 
     const token = await signToken(user.openId, user.name ?? "");
     res.cookie(COOKIE_NAME, token, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
