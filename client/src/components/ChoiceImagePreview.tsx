@@ -35,7 +35,7 @@ export default function ChoiceImagePreview({ src, label }: Props) {
           <DialogClose asChild><Button type="button" variant="outline" size="sm" className="ml-auto">Fechar</Button></DialogClose>
         </div>
         <div className="max-h-[65dvh] overflow-auto rounded border bg-white" tabIndex={0} aria-label={`Imagem ampliada da alternativa ${label}; área com rolagem`}>
-          <img src={src} alt={`Imagem ampliada da alternativa ${label}`} style={{ width: `${zoom * 100}%` }} className="block h-auto max-w-none" />
+          <img src={src} alt={`Imagem ampliada da alternativa ${label}`} style={{ width: `${zoom * 100}%`, height: `${zoom * 60}dvh` }} className="block max-w-none object-contain" />
         </div>
       </DialogContent>
     </Dialog>
