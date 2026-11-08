@@ -1,0 +1,47 @@
+name: Supabase Keepalive
+
+on:
+  schedule:
+    # A cada 8 horas, em UTC
+    - cron: '17 1,9,17 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Consultar a tabela keepalive_ping
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$SUPABASE_URL" || -z "$SUPABASE_ANON_KEY" ]]; then
+            echo "::error::Configure SUPABASE_URL e SUPABASE_ANON_KEY nos Actions secrets do repositorio."
+            exit 1
+          fi
+
+          response=$(curl --fail-with-body --silent --show-error \
+            --retry 2 --retry-delay 4 --max-time 30 \
+            --get "${SUPABASE_URL%/}/rest/v1/keepalive_ping" \
+            --data-urlencode "select=id" \
+            --data-urlencode "id=eq.1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Accept: application/json")
+
+          RESPONSE="$response" python3 - <<'PY'
+          import json
+          import os
+          rows = json.loads(os.environ['RESPONSE'])
+          if not isinstance(rows, list) or not any(row.get('id') == 1 for row in rows):
+              raise SystemExit('Erro: registro keepalive_ping (id=1) nao retornado.')
+          print('Consulta ao Supabase concluida: registro id=1 encontrado.')
+          PY
