@@ -6,6 +6,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
 import { AdBannerPlaceholder } from "@/components/AdBanner";
 import MaybeKaTeX from "@/components/MaybeKaTeX";
+import ChoiceImagePreview from "@/components/ChoiceImagePreview";
 import InlineKaTeX from "@/components/InlineKaTeX";
 import { FALLBACK_SUBJECTS, sortSubjects, type SubjectItem } from "@/lib/subjects";
 
@@ -908,9 +909,12 @@ export default function Questions() {
                           }
                           const label = String.fromCharCode(65 + idx); // A, B, C, D, E
                           return (
+                            <div key={idx} className={`${bg} rounded border border-gray-300`}>
                             <button
-                              key={idx}
-                              className={`${bg} w-full text-left px-4 py-2 rounded border border-gray-300 flex items-start gap-3`}
+                              type="button"
+                              aria-label={`Selecionar alternativa ${label}`}
+                              aria-pressed={selected}
+                              className="w-full text-left px-4 py-2 flex items-start gap-3 rounded focus-visible:ring-2 focus-visible:ring-purple-500"
                               onClick={async () => {
                                 if (simuladoQuestionIds !== null) {
                                   // Simulado mode: track answers separately, no DB persistence
@@ -967,15 +971,13 @@ export default function Questions() {
                                     <MaybeKaTeX text={normalizedChoice.text} displayMode={false} />
                                   </div>
                                 )}
-                                {normalizedChoice.imageUrl && (
-                                  <img
-                                    src={normalizedChoice.imageUrl}
-                                    alt={`Imagem alternativa ${label}`}
-                                    className="max-h-28 rounded border border-gray-300"
-                                  />
+                                {!normalizedChoice.text && normalizedChoice.imageUrl && (
+                                  <span className="text-sm">Selecionar alternativa {label}</span>
                                 )}
                               </span>
                             </button>
+                            {normalizedChoice.imageUrl && <ChoiceImagePreview src={normalizedChoice.imageUrl} label={label} />}
+                            </div>
                           );
                         })}
                         {effectiveAns !== undefined && (
