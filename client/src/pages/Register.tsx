@@ -1,3 +1,4 @@
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -101,6 +102,8 @@ export default function Register() {
             <input id="agree" type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
             <label htmlFor="agree" className="text-sm">Estou de acordo com os Termos de Uso</label>
           </div>
+
+          <GoogleSignInButton disabled={loading || !agree} />
 
           {error && <div className="text-sm text-red-600">{error}</div>}
 

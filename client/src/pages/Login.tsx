@@ -1,3 +1,4 @@
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -59,6 +60,8 @@ export default function Login() {
     <div className="max-w-3xl mx-auto bg-white rounded-lg shadow p-8">
       <h2 className="text-2xl font-bold mb-2">Entrar</h2>
       <p className="text-sm text-gray-500 mb-6">Faça login com seu e-mail e senha</p>
+
+      <GoogleSignInButton disabled={loading} />
 
       <form onSubmit={submit} className="space-y-4">
         <div>

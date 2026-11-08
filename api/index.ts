@@ -4,6 +4,7 @@
  */
 
 import express from "express";
+import { googleConfig, createGoogleAttempt, verifyGoogleAttempt, exchangeGoogleCode, verifyGoogleIdentity, GOOGLE_COOKIE, GOOGLE_COOKIE_OPTIONS } from "../shared/googleAuth";
 import postgres from "postgres";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
@@ -302,6 +303,71 @@ const app = express();
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
+
+app.get("/api/auth/providers", (_req: any, res: any) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.json({ google: Boolean(googleConfig(process.env)) });
+});
+
+app.get("/api/auth/google", async (req: any, res: any) => {
+  res.setHeader("Cache-Control", "no-store");
+  const config = googleConfig(process.env);
+  if (!config) return res.redirect(303, "/login?google_error=unavailable");
+  // Always start and finish on the configured canonical host.
+  if (req.headers.host !== new URL(config.origin).host) return res.redirect(303, config.origin + "/api/auth/google");
+  try {
+    const attempt = await createGoogleAttempt(config);
+    res.cookie(GOOGLE_COOKIE, attempt.cookie, { ...GOOGLE_COOKIE_OPTIONS, maxAge: 10 * 60 * 1000 });
+    return res.redirect(303, attempt.url);
+  } catch {
+    return res.redirect(303, "/login?google_error=failed");
+  }
+});
+
+app.get("/api/auth/google/callback", async (req: any, res: any) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  const config = googleConfig(process.env);
+  const cookie = parseCookieHeader(req.headers.cookie || "")[GOOGLE_COOKIE];
+  res.clearCookie(GOOGLE_COOKIE, GOOGLE_COOKIE_OPTIONS);
+  if (!config) return res.redirect(303, "/login?google_error=unavailable");
+  let sql: any;
+  try {
+    const attempt = await verifyGoogleAttempt(cookie, req.query.state, config);
+    if (req.query.error) return res.redirect(303, "/login?google_error=cancelled");
+    if (typeof req.query.code !== "string" || !req.query.code || req.query.code.length > 4096) throw new Error("invalid_code");
+    const idToken = await exchangeGoogleCode(req.query.code, attempt.verifier, config);
+    const identity = await verifyGoogleIdentity(idToken, attempt.nonce, config);
+    sql = getDb();
+    if (!sql) throw new Error("unavailable");
+    const user = await sql.begin(async (tx: any) => {
+      // Serialize identity creation; the stable Google subject is the account identifier.
+      await tx`SELECT pg_advisory_xact_lock(hashtext(${identity.openId}))`;
+      const [known] = await tx`SELECT id, "openId", name FROM users WHERE "openId" = ${identity.openId} LIMIT 1`;
+      if (known) {
+        await tx`UPDATE users SET "lastSignedIn"=NOW() WHERE id=${known.id}`;
+        return known;
+      }
+      const [existing] = await tx`SELECT id FROM users WHERE lower(email)=${identity.email} LIMIT 1`;
+      // Do not merge by email or grant access to an existing password account.
+      if (existing) return null;
+      const [created] = await tx`
+        INSERT INTO users ("openId",name,email,"loginMethod",role,"emailVerified","lastSignedIn")
+        VALUES (${identity.openId},${identity.name},${identity.email},'google','user',true,NOW())
+        RETURNING id,"openId",name
+      `;
+      return created;
+    });
+    if (!user) return res.redirect(303, "/login?google_error=existing_account");
+    const session = await signToken(user.openId, user.name || "");
+    res.cookie(COOKIE_NAME, session, { ...COOKIE_OPTIONS, maxAge: ONE_YEAR_MS });
+    return res.redirect(303, "/");
+  } catch {
+    // Never log authorization codes, ID tokens or credentials.
+    return res.redirect(303, "/login?google_error=failed");
+  } finally { if (sql) await sql.end({ timeout: 1 }).catch(() => {}); }
+});
+
 // Health check
 app.get("/api/health", (_req: any, res: any) => res.json({ ok: true }));
 
@@ -449,8 +515,8 @@ app.post("/api/auth/register", async (req: any, res: any) => {
 
     await ensurePasswordResetColumns(sql);
 
-    const [existing] = await sql`SELECT id, "openId", "passwordHash" FROM users WHERE email = ${email} LIMIT 1`;
-    if (existing?.passwordHash) return res.status(400).json({ error: "User already exists" });
+    const [existing] = await sql`SELECT id, "openId", "passwordHash" FROM users WHERE lower(email) = ${String(email).toLowerCase()} LIMIT 1`;
+    if (existing) return res.status(400).json({ error: "Já existe uma conta com esse e-mail. Entre na conta ou use a recuperação de senha." });
 
     const openId = existing?.openId ?? `local:${nanoid()}`;
     const passwordHash = await bcrypt.hash(password, 10);
@@ -504,10 +570,7 @@ app.post("/api/auth/verify-email", async (req: any, res: any) => {
     if (!user) return res.status(400).json({ error: "invalid verification code" });
 
     if (user.emailVerified) {
-      // Already verified – just create a session
-      const token = await signToken(user.openId, user.name ?? "");
-      res.cookie(COOKIE_NAME, token, { httpOnly: true, path: "/", sameSite: "none" as const, secure: true, maxAge: ONE_YEAR_MS });
-      return res.json({ ok: true });
+      return res.status(400).json({ error: "E-mail já verificado. Entre com sua senha ou com Google." });
     }
 
     if (!user.verificationToken || !user.verificationTokenExpiresAt || new Date(user.verificationTokenExpiresAt) < new Date()) {
