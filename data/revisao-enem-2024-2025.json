@@ -1,0 +1,2022 @@
+{
+  "excluded": [
+    171,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    180
+  ],
+  "questions": [
+    {
+      "id": 924,
+      "year": 2024,
+      "title": "Questão 103 - ENEM 2024",
+      "statement": "O diagrama P-V a seguir representa o ciclo de Otto para um motor de combustão interna, como os motores a gasolina ou a etanol, utilizados nos automóveis. As etapas representadas no diagrama estão descritas no quadro. Etapa → Processo → Descrição\nI → 0 a 1 → Admissão isobárica da mistura ar-combustível no cilindro do motor.\nII → 1 a 2 → Compressão adiabática da mistura.\nIII → 2 a 3 → Introdução de energia na forma de calor da combustão.\nIV → 3 a 4 → Expansão adiabática.\nV → 4 a 1 → Liberação de energia na forma de calor.\nVI → 1 a 0 → Liberação dos gases resultantes da combustão.\n\nDisponível em: www.mspc.eng.br. Acesso em: 24 fev. 2013 (adaptado). A transformação da energia térmica em energia útil ocorre na etapa",
+      "solution": "**Ciclo de Otto — conversão de energia térmica em energia útil.**\n\nNo ciclo de Otto:\n- **Etapa I (0→1)**: Admissão — mistura entra no cilindro (sem conversão)\n- **Etapa II (1→2)**: Compressão adiabática — trabalho é feito **sobre** o gás\n- **Etapa III (2→3)**: Combustão — energia **térmica** é introduzida (aquecimento isocórico)\n- **Etapa IV (3→4)**: **Expansão adiabática** — o gás realiza **trabalho útil** empurrando o pistão ✓\n- **Etapa V (4→1)**: Liberação de calor residual\n- **Etapa VI (1→0)**: Exaustão dos gases\n\nA transformação de **energia térmica em energia mecânica (útil)** ocorre na expansão adiabática, etapa **IV**, quando os gases quentes expandem-se e empurram o pistão.\n\n**Gabarito: C) IV.**",
+      "choices": [
+        "II.",
+        "III.",
+        "IV.",
+        "V.",
+        "VI."
+      ],
+      "imageUrl": "/questions/2024/q103.png",
+      "correctChoice": 2,
+      "subject_name": "Termodinâmica"
+    },
+    {
+      "id": 926,
+      "year": 2024,
+      "title": "Questão 106 - ENEM 2024",
+      "statement": "Na tirinha, Calvin se divertia em um balanço antes de soltar-se dele e cair ao chão. Em sua fala, ele demonstra ter imaginado que permaneceria em movimento circular. Porém, a força gravitacional, que permanece atuando no garoto, modifica a direção de sua velocidade, fazendo com que ele chegue ao chão da maneira ilustrada no último quadrinho. WATTERSON, B. Disponível em: https://tiras-do-calvin.tumblr.com. Acesso em: 19 nov. 2021 (adaptado). Qual vetor representa a força resultante exercida pelo chão sobre Calvin no exato momento em que ele toca o chão?",
+      "solution": "Ao tocar o chão, Calvin se desloca para baixo e para a esquerda. O chão exerce força normal para cima e força de atrito para a direita, contrária à componente horizontal do movimento. A resultante dessas duas forças aponta para cima e para a direita, como na alternativa A. O peso é exercido pela Terra e não faz parte da força exercida pelo chão.\n\n**Gabarito: A.**",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q106-a.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q106-b.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q106-c.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q106-d.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q106-e.png"
+        }
+      ],
+      "imageUrl": "/questions/2024/q106.png",
+      "correctChoice": 0,
+      "subject_name": "Dinâmica"
+    },
+    {
+      "id": 925,
+      "year": 2024,
+      "title": "Questão 104 - ENEM 2024",
+      "statement": "Para os circuitos de maratonas aquáticas realizadas em mares calmos e próximos à praia, é montado um sistema de boias que determinam o trajeto a ser seguido pelos nadadores. Uma das dificuldades desse tipo de circuito é compensar os efeitos da corrente marinha. O diagrama contém o circuito em que deve ser realizada uma volta no sentido anti-horário. As quatro boias estão numeradas de → 1 a 4. Existe uma corrente marinha de velocidade υc, cujo módulo é 30 metros por minuto, paralela à praia em toda a área do circuito. Nas arestas mais longas, o nadador → precisará nadar na direção apontada pelos vetores υn dos pontos 1 até 2 e de 3 até 4. Considere que a velocidade do nadador é de 50 metros por minuto, em relação à água, durante todo o circuito. Nessa situação, em quantos minutos o nadador completará a prova?",
+      "solution": "Nos trechos de 800 m, a componente da velocidade do nadador contrária à corrente deve compensar os 30 m/min da água. Como sua velocidade em relação à água é 50 m/min, a componente ao longo do trecho é √(50²−30²)=40 m/min. Cada um desses trechos leva 800/40=20 min.\n\nNos trechos de 400 m, a favor da corrente a velocidade é 50+30=80 m/min; contra a corrente, 50−30=20 m/min. Os tempos são 400/80=5 min e 400/20=20 min.\n\nTempo total: 20+20+5+20=65 min.\n\n**Gabarito: B) 65.**",
+      "choices": [
+        "42",
+        "65",
+        "72",
+        "105",
+        "120"
+      ],
+      "imageUrl": "/questions/2024/q104.png",
+      "correctChoice": 1,
+      "subject_name": "Cinemática"
+    },
+    {
+      "id": 929,
+      "year": 2024,
+      "title": "Questão 114 - ENEM 2024",
+      "statement": "Nos automóveis, é importante garantir que o centro de massa (CM) de cada conjunto roda/pneu coincida com o seu centro geométrico. Esse processo é realizado em uma máquina de balanceamento, na qual o conjunto roda e pneu é colocado para girar a uma velocidade de valor constante. Com base nas oscilações medidas, a máquina indica a posição do centro de massa do conjunto, e pequenas peças de chumbo são fixadas em lugares específicos da roda até que as vibrações diminuam. Durante o treinamento de sua equipe, a fim de corrigir a posição do centro de massa indicada pela máquina, um mecânico apresenta o esquema a seguir, com cinco possíveis pontos da roda para posicionar uma peça de chumbo. Em qual ponto deve ser fixada a peça de chumbo para corrigir a posição do centro de massa desse conjunto roda/pneu?",
+      "solution": "**Balanceamento de roda — posição da peça de chumbo.**\n\nO centro de massa (CM) do conjunto roda/pneu deve coincidir com o centro geométrico. Se a máquina indica que o CM está deslocado para um lado, a peça de chumbo deve ser fixada no **lado diametralmente oposto** ao deslocamento do CM.\n\nIsso porque colocar massa adicional do lado oposto **puxa o CM de volta** em direção ao centro geométrico, equilibrando o conjunto.\n\nAnalisando o esquema da figura, o ponto diametralmente oposto à posição indicada do CM é o **ponto 3**.\n\n**Gabarito: C) 3.**",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "imageUrl": "/questions/2024/q114.png",
+      "correctChoice": 2,
+      "subject_name": "Mecânica"
+    },
+    {
+      "id": 933,
+      "year": 2024,
+      "title": "Questão 124 - ENEM 2024",
+      "statement": "A saúde do professor: acústica arquitetônica Dentre os parâmetros acústicos que afetam a inteligibilidade dos sons emitidos em ambientes fechados, destacam-se o ruído de fundo do ambiente e o decréscimo do nível sonoro com a distância da fonte emissora. Assim, sentar-se no fundo da sala de aula pode prejudicar a aprendizagem dos estudantes, por impedir que eles distingam, com precisão, os sons emitidos, diminuindo a inteligibilidade da fala de seus professores. Considere a situação exemplificada pelo infográfico: à distância de 1 metro, o nível sonoro da fala de um professor é de 60 dB e diminui com a distância. Considere, ainda, que o ruído de fundo nessa sala de aula pode chegar a 45 dB e que, para ser compreendida, o nível sonoro da fala do professor deve estar 5 dB acima desse ruído. Disponível em: www.ufrrj.br. Acesso em: 2 dez. 2021 (adaptado). Para um valor máximo do ruído de fundo, a maior distância que um estudante pode estar do professor para que ainda consiga compreender sua fala é mais próxima de",
+      "solution": "O ruído de fundo máximo é 45 dB. Para compreender a fala, ela deve chegar com nível pelo menos 5 dB maior: 45+5=50 dB.\n\nNo gráfico, o nível de 50 dB corresponde a uma distância próxima de 3 m. Esse é o maior afastamento compatível com a condição indicada.\n\n**Gabarito: A) 3,0 m.**",
+      "choices": [
+        "3,0 m.",
+        "4,5 m.",
+        "6,5 m.",
+        "8,0 m.",
+        "9,5 m."
+      ],
+      "imageUrl": "/questions/2024/q124.png",
+      "correctChoice": 0,
+      "subject_name": "Ondulatória"
+    },
+    {
+      "id": 920,
+      "year": 2024,
+      "title": "Questão 95 - ENEM 2024",
+      "statement": "A tirinha ilustra esquimós dentro de um iglu, habitação de formato hemisférico construída durante o inverno a partir de neve ou blocos de gelo. Essa estrutura de construção se justifica pelo fato de esse povo habitar as regiões mais setentrionais da Groenlândia, Canadá e Alasca. LAERTE. Disponível em: https://artedafisicapibid.blogspot.com. Acesso em: 4 dez. 2021 (adaptado). Na tirinha, a geladeira é necessária para fazer gelo porque",
+      "solution": "O gelo e a neve do iglu dificultam a troca de calor com o exterior. Com o calor liberado pelos ocupantes, seu interior pode permanecer acima de 0 °C, temperatura de solidificação da água em condições usuais. Nesse caso, é necessário retirar calor da água com uma geladeira para produzir gelo.\n\n**Gabarito: A.**",
+      "choices": [
+        "a temperatura interna do iglu é maior que a de solidificação da água.",
+        "a umidade dentro do iglu dificulta o processo de mudança de fase da água.",
+        "o ar dentro do iglu é isolante térmico, dificultando a perda de calor pela água.",
+        "a temperatura uniforme no interior do iglu impede as correntes de convecção.",
+        "a pressão do ar no interior do iglu é baixa, dificultando a solidificação da água."
+      ],
+      "imageUrl": "/questions/2024/q95.png",
+      "correctChoice": 0,
+      "subject_name": "Termodinâmica"
+    },
+    {
+      "id": 932,
+      "year": 2024,
+      "title": "Questão 119 - ENEM 2024",
+      "statement": "Muitas pessoas ainda se espantam com o fato de um passageiro sair ileso de um acidente de carro enquanto o veículo onde estava teve perda total. Essas pessoas talvez considerem, equivocadamente, que os carros mais seguros são os que têm as estruturas mais rígidas, ou seja, estruturas, que durante uma colisão, apresentam menor deformação. Na verdade, o que ocorre é o contrário. Por isso, a partir de 1958, passaram a ser produzidos carros com partes que se deformam facilmente. DAY, C. Crumple Zones. Disponível em: https://pubs.aip.org. Acesso em: 2 jul. 2024 (adaptado). Assim, além dos cintos de segurança e dos airbags, os carros modernos passaram a contar com o dispositivo de segurança conhecido como crumple zone (região deformável, em inglês), conforme a figura. Momentum and Car safety. GCSE Physics Revision. Disponível em: www.shalom-education.com. Acesso em: 5 jul. 2024 (adaptado). Considerando o carro, seus ocupantes e o muro da figura como um sistema isolado, o crumple zone aumenta a segurança dos passageiros porque, durante uma colisão, a deformação da estrutura do carro",
+      "solution": "**Crumple zone — absorção de energia cinética.**\n\nDurante uma colisão, a **quantidade de movimento** do sistema (carro + muro) se conserva (sistema isolado). Portanto, nenhum dispositivo consegue \"consumir\" quantidade de movimento — isso eliminaria as alternativas C e E.\n\nO crumple zone funciona porque:\n- A **deformação plástica** da estrutura do carro consome **energia cinética**, transformando-a em energia de deformação.\n- Com menos energia cinética sendo transferida aos ocupantes, as **forças sobre eles são menores**.\n- A deformação **aumenta o tempo de colisão**, reduzindo a **força média** (impulso = F × Δt).\n\nA resposta correta é que a deformação **absorve a energia cinética do sistema**.\n\n**Gabarito: B) Absorve a energia cinética do sistema.**",
+      "choices": [
+        "aciona os airbags do veículo.",
+        "absorve a energia cinética do sistema.",
+        "consome a quantidade de movimento do sistema.",
+        "cria uma barreira de proteção para seus ocupantes.",
+        "diminui a velocidade do centro de massa do sistema."
+      ],
+      "imageUrl": "/questions/2024/q119.png",
+      "correctChoice": 1,
+      "subject_name": "Dinâmica"
+    },
+    {
+      "id": 936,
+      "year": 2024,
+      "title": "Questão 136 - ENEM 2024",
+      "statement": "Uma empresa produz mochilas escolares sob encomenda. Essa empresa tem um custo total de produção, composto por um custo fixo, que não depende do número de mochilas, mais um custo variável, que é proporcional ao número de mochilas produzidas. O custo total cresce de forma linear, e a tabela apresenta esse custo para três quantidades de mochilas produzidas. Quantidade de mochilas → Custo total (R$)\n30 → 1 050,00\n50 → 1 650,00\n100 → 3 150,00\n\nO custo total, em real, para a produção de 80 mochilas será",
+      "solution": "**Custo total de produção linear — 80 mochilas.**\n\nDa tabela:\n- 30 mochilas: R$ 1 050\n- 50 mochilas: R$ 1 650\n- 100 mochilas: R$ 3 150\n\nCusto é linear: C(n) = F + v·n, onde F = custo fixo e v = custo variável por mochila.\n\nDos pares (30, 1050) e (50, 1650):\nv = (1 650 − 1 050) / (50 − 30) = 600 / 20 = **R$ 30/mochila**\n\nF = 1 050 − 30 × 30 = 1 050 − 900 = **R$ 150**\n\nVerificação: C(100) = 150 + 30×100 = 3 150 ✓\n\nC(80) = 150 + 30 × 80 = 150 + 2 400 = **R$ 2 550,00**\n\n**Gabarito: C) 2 550,00.**",
+      "choices": [
+        "2 400,00.",
+        "2 520,00.",
+        "2 550,00.",
+        "2 700,00.",
+        "2 800,00."
+      ],
+      "imageUrl": "/questions/2024/q136.png",
+      "correctChoice": 2,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 921,
+      "year": 2024,
+      "title": "Questão 98 - ENEM 2024",
+      "statement": "As placas que indicam saída de emergência brilham no escuro, pois apresentam substâncias que fosforecem na cor amarelo-esverdeada após exposição à luz ambiente, conforme a figura. Esse fenômeno ocorre pela presença do sulfeto de zinco (ZnS), dopado com prata ou cobre, na superfície da placa. Zinc Sulphide Phosphorescence. Disponível em: https://physicsopenlab.org. Acesso em: 8 nov. 2023 (adaptado). O aparecimento do brilho nessas condições ocorre como consequência de",
+      "solution": "**Fosforescência — transições eletrônicas.**\n\nA fosforescência é um fenômeno óptico no qual:\n1. Elétrons do material (ZnS dopado) **absorvem energia luminosa** e são **excitados** para níveis de energia mais altos.\n2. Após a remoção da fonte de luz, esses elétrons retornam lentamente aos níveis de menor energia, **emitindo fótons** (luz visível amarelo-esverdeada) no processo.\n\nEsse processo de absorção e emissão de energia decorre de **transições eletrônicas** — mudanças de níveis de energia dos elétrons nos átomos do material.\n\nNão se trata de reações nucleares, reflexão, colisões interatômicas nem da cor intrínseca dos átomos.\n\n**Gabarito: C) Transições eletrônicas.**",
+      "choices": [
+        "colisões interatômicas.",
+        "coloração dos átomos.",
+        "transições eletrônicas.",
+        "reações nucleares.",
+        "reflexão da luz."
+      ],
+      "imageUrl": "/questions/2024/q98.png",
+      "correctChoice": 2,
+      "subject_name": "Física moderna"
+    },
+    {
+      "id": 937,
+      "year": 2024,
+      "title": "Questão 137 - ENEM 2024",
+      "statement": "A umidade relativa do ar é um dos indicadores utilizados na meteorologia para fazer previsões sobre o clima. O quadro apresenta as médias mensais, em porcentagem, da umidade relativa do ar em um período de seis meses consecutivos em uma cidade. Mês → Média mensal da umidade relativa (%)\nMaio → 66\nJunho → 64\nJulho → 54\nAgosto → 46\nSetembro → 60\nOutubro → 64\n\nNessa cidade, a mediana desses dados, em porcentagem, da umidade relativa do ar no período considerado foi",
+      "solution": "**Mediana de 6 valores.**\n\nDados (umidade relativa mensal): 66, 64, 54, 46, 60, 64\n\nOrdenando em ordem crescente: **46, 54, 60, 64, 64, 66**\n\nComo são 6 valores (par), a mediana é a **média dos dois valores centrais** (3º e 4º):\nMediana = (60 + 64) / 2 = 124 / 2 = **62%**\n\n**Gabarito: E) 62.**",
+      "choices": [
+        "56.",
+        "58.",
+        "59.",
+        "60.",
+        "62."
+      ],
+      "imageUrl": "/questions/2024/q137.png",
+      "correctChoice": 4,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 939,
+      "year": 2024,
+      "title": "Questão 139 - ENEM 2024",
+      "statement": "Um hospital tem 7 médicos cardiologistas e 6 médicos neurologistas em seu quadro de funcionários. Para executar determinada atividade, a direção desse hospital formará uma equipe com 5 médicos, sendo, pelo menos, 3 cardiologistas. A expressão numérica que representa o número máximo de maneiras distintas de formar essa equipe é",
+      "solution": "**Combinação de médicos — pelo menos 3 cardiologistas.**\n\nTemos 7 cardiologistas (C) e 6 neurologistas (N). Equipe de 5 com pelo menos 3 C.\n\nCasos possíveis:\n- **3C e 2N**: C(7,3) × C(6,2)\n- **4C e 1N**: C(7,4) × C(6,1)\n- **5C e 0N**: C(7,5) × C(6,0)\n\nExpressão:\n$$\\frac{7!}{3!\\,4!} \\times \\frac{6!}{2!\\,4!} + \\frac{7!}{4!\\,3!} \\times \\frac{6!}{1!\\,5!} + \\frac{7!}{5!\\,2!} \\times \\frac{6!}{0!\\,6!}$$\n\nIsso corresponde à alternativa E.\n\n**Gabarito: E).**",
+      "choices": [
+        "\\(\\frac{7!}{4!}\\times\\frac{6!}{4!}\\)",
+        "\\(\\frac{7!}{3!\\times4!}\\times\\frac{6!}{2!\\times4!}\\)",
+        "\\(\\frac{7!}{3!\\times4!}+\\frac{6!}{2!\\times4!}+\\frac{5!}{1!\\times4!}\\)",
+        "\\(\\left(\\frac{7!}{3!\\times4!}+\\frac{6!}{2!\\times4!}\\right)\\times\\left(\\frac{7!}{4!\\times3!}+\\frac{6!}{1!\\times5!}\\right)\\times\\left(\\frac{7!}{5!\\times2!}+\\frac{6!}{0!\\times6!}\\right)\\)",
+        "\\(\\left(\\frac{7!}{3!\\times4!}\\times\\frac{6!}{2!\\times4!}\\right)+\\left(\\frac{7!}{4!\\times3!}\\times\\frac{6!}{1!\\times5!}\\right)+\\left(\\frac{7!}{5!\\times2!}\\times\\frac{6!}{0!\\times6!}\\right)\\)"
+      ],
+      "imageUrl": null,
+      "correctChoice": 4,
+      "subject_name": "Análise combinatória"
+    },
+    {
+      "id": 922,
+      "year": 2024,
+      "title": "Questão 100 - ENEM 2024",
+      "statement": "Em um experimento de laboratório, duas barras metálicas, A e B, são carregadas com cargas opostas e imersas em óleo. Farelo de milho é jogado sobre o óleo e, após um certo tempo, o farelo assume o formato das linhas de campo elétrico entre as barras. A figura representa a vista superior desse experimento. ALMEIDA, M. A. T. Introdução às ciências físicas 2 — volume 4: módulo 4. Rio de Janeiro: Fundação CECIERJ, 2007 (adaptado). Ao repetir o experimento colocando um cilindro metálico oco entre as placas, o esquema que representa o formato das linhas de campo assumido pelo farelo é: A D B E C",
+      "solution": "Em equilíbrio eletrostático, o campo elétrico no material condutor é nulo. A cavidade do cilindro, sem cargas em seu interior, também fica protegida do campo externo. As cargas induzidas na superfície deformam as linhas de campo, que chegam ou saem perpendicularmente à superfície condutora. Entre as barras, o sentido é da positiva A para a negativa B. A única figura que atende a essas condições é a E.\n\n**Gabarito: E.**",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q100-a.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q100-b.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q100-c.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q100-d.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q100-e.png"
+        }
+      ],
+      "imageUrl": "/questions/2024/q100.png",
+      "correctChoice": 4,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 942,
+      "year": 2024,
+      "title": "Questão 142 - ENEM 2024",
+      "statement": "Atualmente, há telefones celulares com telas de diversos tamanhos e em formatos retangulares. Alguns deles apresentam telas medindo 3½ polegadas, com determinadas especificações técnicas. Além disso, em muitos modelos, com a inclusão de novas funções no celular, suas telas ficaram maiores, sendo muito comum encontrarmos atualmente telas medindo 4⅚ polegadas, conforme a figura. Disponível em: www.tecmundo.com.br. Acesso em: 5 nov. 2014 (adaptado). A diferença de tamanho, em valor absoluto, entre as medidas, em polegada, das telas do celular 2 e do celular 1, representada apenas com uma casa decimal, é",
+      "solution": "**Diferença entre diagonais de telas de celular.**\n\nDados:\n- Celular 1: tela de 3½ polegadas → **3,5 polegadas**\n- Celular 2: tela de 4⅚ polegadas → **4 + 5/6 = 29/6 ≈ 4,833... polegadas**\n\nDiferença:\n|4,833... − 3,5| = **1,333...** ≈ **1,3 polegada** (com uma casa decimal)\n\n**Gabarito: D) 1,3.**",
+      "choices": [
+        "0,1.",
+        "0,5.",
+        "1,0.",
+        "1,3.",
+        "1,8."
+      ],
+      "imageUrl": "/questions/2024/q142.png",
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 923,
+      "year": 2024,
+      "title": "Questão 101 - ENEM 2024",
+      "statement": "Placas solares comuns dependem de dias ensolarados para gerar energia. Mas podemos gerar eletricidade com a ajuda de gotas de chuva, revestindo placas solares com uma fina camada de grafeno. Os íons dissociados a partir da água da chuva (Aᵐ⁺ e Bⁿ⁻) tornam a combinação grafeno e água da chuva um par perfeito para geração de energia. O processo requer apenas uma camada de grafeno para que grande quantidade de elétrons (e −) se movimente ao longo da superfície. TANG, Q. et al. A Solar Cell that is Triggered by Sun and Rain. Angewandte Chemie International Edition, n. 55, 2016 (adaptado). Ao produzir eletricidade em dias chuvosos, o grafeno",
+      "solution": "**Grafeno e geração de energia com chuva — diferença de potencial.**\n\nSegundo o texto, os íons dissociados da água da chuva (Am⁺ e Bn⁻) interagem com a camada de grafeno:\n\n1. Os **cátions** (Am⁺) se adsorvem na superfície do grafeno.\n2. Os **elétrons** do grafeno interagem com esses cátions, criando uma **separação de cargas**.\n3. Essa separação de cargas gera uma **diferença de potencial** (d.d.p.) na superfície do grafeno.\n4. Essa d.d.p. é capaz de produzir **corrente elétrica**, gerando energia.\n\nO princípio é similar ao de um **pseudocapacitor**: a interação elétron–cátion gera a diferença de potencial necessária.\n\n**Gabarito: E) Gera uma diferença de potencial pela interação dos elétrons com os cátions.**",
+      "choices": [
+        "oxida os cátions dissolvidos na água da chuva.",
+        "impede a difusão da água através das placas solares.",
+        "diminui a energia de ativação da reação no pseudocapacitor.",
+        "forma um compósito não metálico com os íons na água da chuva.",
+        "gera uma diferença de potencial pela interação dos elétrons com os cátions."
+      ],
+      "imageUrl": "/questions/2024/q101.png",
+      "correctChoice": 4,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 945,
+      "year": 2024,
+      "title": "Questão 145 - ENEM 2024",
+      "statement": "A prefeitura de uma cidade planeja construir três postos de saúde. Esses postos devem ser construídos em locais equidistantes entre si e de forma que as distâncias desses três postos ao hospital dessa cidade sejam iguais. Foram conseguidos três locais para a construção dos postos de saúde que apresentam as características desejadas, e que distam 10 km entre si, conforme o esquema, no qual o ponto H representa o local onde está construído o hospital; os pontos P1, P2 e P3, os postos de saúde; e esses quatro pontos estão em um mesmo plano. A distância, em quilômetro, entre o hospital e cada um dos postos de saúde, é um valor entre",
+      "solution": "**Distância do hospital aos postos de saúde — triângulo equilátero.**\n\nOs 3 postos P₁, P₂, P₃ formam um **triângulo equilátero** de lado 10 km. O hospital H é **equidistante** dos três postos → H está no **circuncentro** do triângulo.\n\nPara um triângulo equilátero de lado L, o raio da circunferência circunscrita é:\n\n$$R = \\frac{L}{\\sqrt{3}} = \\frac{L\\sqrt{3}}{3}$$\n\n$$R = \\frac{10\\sqrt{3}}{3} = \\frac{10 \\times 1{,}732}{3} \\approx \\frac{17{,}32}{3} \\approx 5{,}77 \\text{ km}$$\n\n5,77 está **entre 5 e 6** km.\n\n**Gabarito: C) 5 e 6.**",
+      "choices": [
+        "2 e 3.",
+        "4 e 5.",
+        "5 e 6.",
+        "7 e 8.",
+        "8 e 9."
+      ],
+      "imageUrl": "/questions/2024/q145.png",
+      "correctChoice": 2,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 927,
+      "year": 2024,
+      "title": "Questão 109 - ENEM 2024",
+      "statement": "O LED é um dispositivo eletrônico que conduz corrente elétrica em um único sentido, sendo caracterizado por uma tensão e uma corrente máxima de funcionamento, Imáx. Um LED acende apenas se a corrente que o percorre está no sentido permitido e se a diferença de potencial à qual está submetido é igual ou superior à sua tensão de funcionamento. A figura ilustra o símbolo do LED usado na representação de circuitos. Um estudante de física analisa as propriedades do LED em um circuito simples de corrente contínua. Ele dispõe dos seguintes materiais: uma bateria ideal de 4,5 V; dois LEDs de tensão 3,0 V e Imáx = 1,0 mA cada; e dois resistores de 1,5 kΩ cada. O circuito que o estudante pode montar, para que ambos os LEDs fiquem acesos e cada um seja percorrido por Imáx, é",
+      "solution": "Cada LED precisa de 3,0 V e corrente de 1,0 mA. Como a bateria fornece 4,5 V, o resistor em série com cada LED deve receber 4,5−3,0=1,5 V.\n\nPela lei de Ohm, R=1,5/0,001=1500 Ω=1,5 kΩ.\n\nDevem existir dois ramos em paralelo com a bateria. Em cada ramo, um resistor de 1,5 kΩ fica em série com um LED polarizado no sentido de condução. Essa montagem é a alternativa B.\n\n**Gabarito: B.**",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q109-a.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q109-b.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q109-c.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q109-d.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q109-e.png"
+        }
+      ],
+      "imageUrl": "/questions/2024/q109.png",
+      "correctChoice": 1,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 950,
+      "year": 2024,
+      "title": "Questão 150 - ENEM 2024",
+      "statement": "Em uma região com grande incidência de terremotos, observou-se que dois terremotos ocorridos apresentaram magnitudes M1 e M2, medidos segundo a escala Richter, e liberaram energias iguais a E1 e E2, respectivamente. Entre os estudiosos do assunto, é conhecida uma expressão algébrica relacionando esses valores dada por \\(M_2-M_1=\\frac{2}{3}\\log\\left(\\frac{E_2}{E_1}\\right)\\).\n\nEstudos mais abrangentes observaram que o primeiro terremoto apresentou a magnitude M1 = 6,9 e a energia liberada foi um décimo da observada no segundo terremoto. O valor aproximado da magnitude M2 do segundo terremoto, expresso com uma casa decimal, é igual a",
+      "solution": "**Magnitude de terremoto — escala Richter e energia.**\n\nFórmula: M₂ − M₁ = (2/3) × log(E₂/E₁)\n\nDados:\n- M₁ = 6,9\n- E₁ = E₂/10 → E₂/E₁ = **10**\n\nSubstituindo:\nM₂ − 6,9 = (2/3) × log(10)\nM₂ − 6,9 = (2/3) × 1\nM₂ = 6,9 + 0,666...\nM₂ ≈ **7,6**\n\n**Gabarito: C) 7,6.**",
+      "choices": [
+        "5,4.",
+        "6,2.",
+        "7,6.",
+        "8,2.",
+        "8,4."
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 952,
+      "year": 2024,
+      "title": "Questão 152 - ENEM 2024",
+      "statement": "As receitas anuais obtidas por uma indústria no período de 2014 a 2021, em milhão de reais, foram registradas, por pontos, em um gráfico. Nele, também está representada a reta que descreve a tendência de evolução das receitas. Essa reta pode ser utilizada para estimar as receitas dos anos seguintes. A estimativa da receita, em milhão de reais, dessa indústria, para o ano de 2026, obtida a partir dessa reta de tendência, é",
+      "solution": "Deve-se usar a reta de tendência, não os pontos isolados das receitas observadas. A reta passa aproximadamente por (2014,4), (2017,5) e (2020,6), com receita em milhões de reais.\n\nO aumento é de 1 milhão a cada 3 anos. De 2020 a 2026 decorrem 6 anos, correspondentes a 2 milhões de aumento. A estimativa é 6+2=8 milhões de reais.\n\n**Gabarito: B) 8.**",
+      "choices": [
+        "7.",
+        "8.",
+        "9.",
+        "10.",
+        "11."
+      ],
+      "imageUrl": "/questions/2024/q152.png",
+      "correctChoice": 1,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 951,
+      "year": 2024,
+      "title": "Questão 151 - ENEM 2024",
+      "statement": "Uma indústria faz uma parceria com uma distribuidora de sucos para lançar no mercado dois tipos de embalagens. Para a fabricação dessas embalagens, a indústria dispõe de folhas de alumínio retangulares, de dimensões 10 cm por 20 cm. Cada uma dessas folhas é utilizada para formar a superfície lateral da embalagem, em formato de cilindro circular reto, que posteriormente recebe fundo e tampa circulares. A figura ilustra, dependendo de qual das duas extensões será utilizada como altura, as duas opções para formar a possível embalagem. Dentre essas duas embalagens, a de maior capacidade apresentará volume, em centímetro cúbico, igual a",
+      "solution": "**Cilindro com folha retangular — maior volume.**\n\nFolha: 10 cm × 20 cm\n\n**Opção 1**: altura = 10 cm, circunferência = 20 cm\n2πr = 20 → r = 20/(2π) = 10/π\nV₁ = π r² h = π × (10/π)² × 10 = π × 100/π² × 10 = **1000/π**\n\n**Opção 2**: altura = 20 cm, circunferência = 10 cm\n2πr = 10 → r = 10/(2π) = 5/π\nV₂ = π r² h = π × (5/π)² × 20 = π × 25/π² × 20 = **500/π**\n\nComparando: V₁ = 1000/π > V₂ = 500/π\n\nO maior volume é **1000/π cm³**.\n\n**Gabarito: D) 1000/π.**",
+      "choices": [
+        "\\(4000\\pi\\)",
+        "\\(2000\\pi\\)",
+        "\\(\\frac{4000}{\\pi}\\)",
+        "\\(\\frac{1000}{\\pi}\\)",
+        "\\(\\frac{500}{\\pi}\\)"
+      ],
+      "imageUrl": "/questions/2024/q151.png",
+      "correctChoice": 3,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 953,
+      "year": 2024,
+      "title": "Questão 153 - ENEM 2024",
+      "statement": "Um tanque, em formato de paralelepípedo reto retângulo, tem em seu interior dois anteparos verticais, fixados na sua base e em duas paredes opostas, sendo perpendiculares a elas, conforme a figura. Esses anteparos, de espessuras desprezíveis, estão instalados de maneira a dividir a base do tanque em três retângulos congruentes, tendo suas alturas iguais à metade e a um quarto da altura do tanque. O tanque é abastecido por uma entrada situada no teto, através de um duto que despeja água a uma vazão constante, sendo necessárias 12 horas para finalizar o seu enchimento. O gráfico que descreve, em cada instante, a maior altura de coluna de água, dentre aquelas que vão sendo formadas ao longo do enchimento do tanque, é A D B E C",
+      "solution": "A água entra no compartimento da direita, separado dos demais pelo anteparo de altura H/2. Como a base é dividida em três partes iguais, preencher esse compartimento até H/2 consome 1/6 do volume total. Com o tanque cheio em 12 h, isso acontece em 2 h.\n\nDe 2 a 6 h, a água transborda para os outros compartimentos. A maior coluna de água continua com altura H/2 enquanto eles enchem, produzindo um patamar no gráfico.\n\nEm 6 h, metade do volume total foi preenchida e o nível passa a ser comum aos três compartimentos. De 6 a 12 h, cresce linearmente de H/2 até H.\n\nO gráfico com subida inicial, patamar de 2 a 6 h e nova subida até 12 h é o da alternativa B.\n\n**Gabarito: B.**",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q153-a.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q153-b.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q153-c.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q153-d.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q153-e.png"
+        }
+      ],
+      "imageUrl": "/questions/2024/q153.png",
+      "correctChoice": 1,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 955,
+      "year": 2024,
+      "title": "Questão 155 - ENEM 2024",
+      "statement": "Um proprietário pretende instalar um sensor de presença para a proteção de seu imóvel. O sensor deverá detectar movimentos de objetos e pessoas numa determinada região plana. A figura ilustra a vista superior da área de cobertura (setor circular em azul) de um sensor colocado no ponto S. Essa área depende da medida do ângulo α, em grau, e do raio R, em metro. Ao aumentar o ângulo α ou o raio R aumenta-se a área de cobertura do sensor. Entretanto, quanto maior essa área, maior o preço do sensor. Para esse fim, há cinco tipos de sensores disponíveis no mercado, cada um com as seguintes características: • tipo I: α = 15° e R = 20 m; • tipo II: α = 30° e R = 22 m; • tipo III: α = 40° e R = 12 m; • tipo IV: α = 60° e R = 16 m; • tipo V: α = 90° e R = 10 m. Esse proprietário pretende adquirir um desses sensores que seja capaz de cobrir, no mínimo, uma área de medida 70 m2, com o menor preço possível. Use 3 como valor aproximado para π. O proprietário do imóvel deverá adquirir o sensor do tipo",
+      "solution": "A área de cobertura é a de um setor circular: A=(α/360)×πR². Usando π≈3:\n\n• I: (15/360)× 3× 20²=50 m².\n• II: (30/360)× 3× 22²=121 m².\n• III: (40/360)× 3× 12²=48 m².\n• IV: (60/360)× 3× 16²=128 m².\n• V: (90/360)× 3× 10²=75 m².\n\nO sensor precisa cobrir ao menos 70 m². Entre os que atendem, o tipo V tem a menor área e, portanto, o menor preço.\n\n**Gabarito: E) V.**",
+      "choices": [
+        "I.",
+        "II.",
+        "III.",
+        "IV.",
+        "V."
+      ],
+      "imageUrl": "/questions/2024/q155.png",
+      "correctChoice": 4,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 954,
+      "year": 2024,
+      "title": "Questão 154 - ENEM 2024",
+      "statement": "Contratos de vários serviços disponíveis na internet apresentam uma quantidade excessiva de informações. Isso faz com que o tempo necessário para a leitura desses contratos possa ser longo. O quadro apresenta uma amostra do tempo considerado necessário para a leitura completa do contrato de alguns serviços digitais. Serviço → Tempo de leitura (minuto)\nA → 36\nB → 17\nC → 27\nD → 13\nE → 13\nF → 13\n\nROMERO, L. Não li e concordo. Superinteressante, n. 307, ago. 2012 (adaptado). O tempo médio, em minuto, necessário para a leitura completa de um contrato de serviço dentre os listados no quadro é, com uma casa decimal, aproximadamente,",
+      "solution": "**Tempo médio de leitura de contrato.**\n\nValores: 36, 17, 27, 13, 13, 13\n\nSoma = 36 + 17 + 27 + 13 + 13 + 13 = **119 minutos**\n\nMédia = 119 / 6 = **19,833... ≈ 19,8 minutos**\n\n**Gabarito: C) 19,8.**",
+      "choices": [
+        "13,0.",
+        "15,0.",
+        "19,8.",
+        "20,0.",
+        "23,3."
+      ],
+      "imageUrl": "/questions/2024/q154.png",
+      "correctChoice": 2,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 956,
+      "year": 2024,
+      "title": "Questão 156 - ENEM 2024",
+      "statement": "O uso de aplicativos de transporte tem sido uma alternativa à população que busca preços mais competitivos para se locomover, principalmente nas grandes cidades. As formas usadas para determinar o valor cobrado por cada viagem variam de um aplicativo para outro, mas, em geral, o valor V a ser pago, em real, varia em função de: • tarifa base F: valor fixo, em real, cobrado no início da viagem; • tempo T: tempo, em minuto, de duração da viagem; • distância D: distância percorrida, em quilômetro. Um desses aplicativos cobra R$ 2,00 de valor fixo, acrescido de R$ 0,26 por minuto de viagem e de R$ 1,40 por quilômetro rodado. Nessas condições, a expressão que fornece o valor V a ser pago por uma viagem desse aplicativo é",
+      "solution": "**Expressão do valor da viagem de aplicativo.**\n\nDados:\n- Tarifa base (valor fixo): R$ 2,00\n- Custo por minuto: R$ 0,26\n- Custo por quilômetro: R$ 1,40\n\nO valor total V é composto por:\nV = (valor fixo) + (custo por minuto × tempo) + (custo por km × distância)\nV = **2,00 + 0,26T + 1,40D**\n\n**Gabarito: B) 2,00 + 0,26T + 1,40D.**",
+      "choices": [
+        "2,00F + 0,26T + 1,40D",
+        "2,00 + 0,26T + 1,40D",
+        "2,00 + 0,26T + D",
+        "0,26T + 1,40D",
+        "F + T + D"
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 958,
+      "year": 2024,
+      "title": "Questão 158 - ENEM 2024",
+      "statement": "Uma tubulação despeja sempre o mesmo volume de água por unidade de tempo em uma caixa-d’água, o que significa dizer que a vazão de água nessa tubulação é constante. Na junção dessa tubulação com a caixa-d’água, está instalada uma membrana de filtragem cujo objetivo é filtrar eventuais impurezas presentes na água, combinado a um bom fluxo de água. O fluxo (φ) de água através da superfície da membrana é diretamente proporcional à vazão de água na tubulação, medida em mililitro por segundo, e inversamente proporcional à área da superfície da membrana, medida em centímetro quadrado. A unidade de medida adequada para descrever o fluxo (φ) de água que atravessa a superfície da membrana é",
+      "solution": "**Unidade de medida do fluxo φ.**\n\nO fluxo φ é:\n- **Diretamente proporcional** à vazão (mL/s)\n- **Inversamente proporcional** à área (cm²)\n\nφ = vazão / área = (mL/s) / cm² = **mL / (cm² · s)**\n\n**Gabarito: C) mL / (cm² · s).**",
+      "choices": [
+        "\\(\\mathrm{mL}\\cdot\\mathrm{s}\\cdot\\mathrm{cm}^2\\)",
+        "\\(\\frac{\\mathrm{mL}}{\\mathrm{s}}\\cdot\\mathrm{cm}^2\\)",
+        "\\(\\frac{\\mathrm{mL}}{\\mathrm{cm}^2\\cdot\\mathrm{s}}\\)",
+        "\\(\\frac{\\mathrm{cm}^2\\cdot\\mathrm{s}}{\\mathrm{mL}}\\)",
+        "\\(\\frac{\\mathrm{cm}^2}{\\mathrm{mL}\\cdot\\mathrm{s}}\\)"
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 960,
+      "year": 2024,
+      "title": "Questão 160 - ENEM 2024",
+      "statement": "Uma doceira vende e entrega, em seu bairro, porções de 100 g de docinhos de aniversário. Atualmente, a taxa única de entrega é R$ 10,00, e o valor cobrado por uma porção é R$ 25,00. Por uma estratégia de vendas, a partir da próxima semana, a taxa única de entrega será R$ 15,00, e um novo valor será cobrado por uma porção, de maneira que o valor total a ser pago por um cliente na compra de 5 porções permaneça o mesmo. A partir da próxima semana, qual será o novo valor cobrado, em real, por uma porção?",
+      "solution": "**Novo preço da porção de docinhos.**\n\n**Atualmente** (5 porções):\nTotal = 10 (entrega) + 5 × 25 = 10 + 125 = **R$ 135,00**\n\n**Nova semana** (mesmo total para 5 porções):\n135 = 15 (nova entrega) + 5 × P_novo\n5 × P_novo = 135 − 15 = 120\nP_novo = 120 / 5 = **R$ 24,00**\n\n**Gabarito: C) 24,00.**",
+      "choices": [
+        "12,50",
+        "20,00",
+        "24,00",
+        "30,00",
+        "37,"
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Álgebra"
+    },
+    {
+      "id": 959,
+      "year": 2024,
+      "title": "Questão 159 - ENEM 2024",
+      "statement": "Em uma loja de defensivos agrícolas, os preços de alguns produtos foram divulgados em um cartaz. Sabe-se que 1 litro de defensivo do Tipo A é suficiente para aplicação em 0,5 hectare (ha), enquanto que 1 litro de defensivo do Tipo B é suficiente para aplicação em 0,4 ha. Um agricultor precisa comprar, nessa loja, uma quantidade de litros de defensivo suficiente para aplicar em uma área de 20 ha, além de levar uma máscara para aplicação. O valor mínimo, em real, a ser gasto pelo agricultor é",
+      "solution": "Para cobrir 20 ha apenas com A, são necessários 20/0,5=40 L. O custo é 40× 4,20=R$168,00, com máscara grátis.\n\nApenas com B, são necessários 20/0,4=50 L. O custo com a máscara é 50× 3+12,50=R$162,50.\n\nO tipo B custa R$7,50 por hectare, enquanto A custa R$8,40 por hectare. Sem a promoção, substituir B por A aumenta o custo. Para obter a máscara grátis, a mistura mais barata usa o mínimo de 35 L de A, cobrindo 17,5 ha. Faltam 2,5 ha, que exigem 6,25 L de B. Total:35× 4,20+6,25× 3=R$165,75.\n\nO menor valor é R$162,50.\n\n**Gabarito: C.**",
+      "choices": [
+        "147,00.",
+        "150,00.",
+        "162,50.",
+        "165,75.",
+        "168,00."
+      ],
+      "imageUrl": "/questions/2024/q159.png",
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 963,
+      "year": 2024,
+      "title": "Questão 163 - ENEM 2024",
+      "statement": "O tamanho mínimo que a visão humana é capaz de visualizar sem o uso de equipamento auxiliar é equivalente a 100 micrômetros (1 micrômetro = 10⁻³ milímetros). Uma estudante pretende visualizar e analisar hemácias do sangue humano, que medem 0,007 mm de diâmetro. Ela adquiriu um microscópio óptico que tem uma lente ocular que amplia em 10 vezes a imagem do objeto em observação, e um conjunto de lentes objetivas com estas capacidades de ampliação: • lente I: 2 vezes; • lente II: 10 vezes; • lente III: 15 vezes; • lente IV: 1,1 vez; • lente V: 1,4 vez. O funcionamento desse microscópio permite o uso da lente ocular sozinha ou a combinação dela com uma de suas lentes objetivas, proporcionando, nesse caso, um aumento de sua capacidade de ampliação final, que é dada pelo produto entre as capacidades de ampliação da ocular e da objetiva. Essa estudante pretende selecionar a lente objetiva de menor capacidade de ampliação que permita, na combinação com a ocular, visualizar hemácias do sangue humano. A lente objetiva a ser selecionada pela estudante é a",
+      "solution": "**Microscópio — lente objetiva de menor ampliação para ver hemácias.**\n\nDados:\n- Tamanho mínimo visível a olho nu: 100 μm = 0,1 mm\n- Diâmetro da hemácia: 0,007 mm\n- Lente ocular: amplia 10×\n\nAmpliação mínima necessária:\n\\(\\mathrm{A}_{\\mathrm{total}}\\) = tamanho mínimo visível / tamanho da hemácia = 0,1 / 0,007 ≈ **14,3×**\n\n\\(\\mathrm{A}_{\\mathrm{total}}\\) = \\(\\mathrm{A}_{\\mathrm{ocular}}\\) × \\(\\mathrm{A}_{\\mathrm{objetiva}}\\)\n14,3 = 10 × \\(\\mathrm{A}_{\\mathrm{objetiva}}\\)\n\\(\\mathrm{A}_{\\mathrm{objetiva}}\\) ≥ **1,43×**\n\nLentes objetivas disponíveis:\n- IV: 1,1× → 10 × 1,1 = **11×** < 14,3 ✗\n- V: 1,4× → 10 × 1,4 = **14×** < 14,3 ✗\n- **I: 2×** → 10 × 2 = **20×** ≥ 14,3 ✓ (menor que funciona)\n- II: 10× → 100× ✓ (mas não é a menor)\n- III: 15× → 150× ✓ (mas não é a menor)\n\nA lente de **menor ampliação** que atende é a **lente I** (2×).\n\n**Gabarito: A) I.**",
+      "choices": [
+        "I.",
+        "II.",
+        "III.",
+        "IV.",
+        "V."
+      ],
+      "imageUrl": "/questions/2024/q163.png",
+      "correctChoice": 0,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 965,
+      "year": 2024,
+      "title": "Questão 165 - ENEM 2024",
+      "statement": "Para abrir a porta de uma empresa, cada funcionário deve cadastrar uma senha utilizando um teclado alfanumérico como o representado na figura. Por exemplo: a tecla que contém o número 2 traz as letras correlacionadas A, B e C. Cada toque nessa tecla mostra, sequencialmente, os seguintes caracteres: 2, A, B e C. Para os próximos toques, essa sequência se repete. As demais teclas funcionam da mesma maneira. As senhas a serem cadastradas pelos funcionários devem conter 5 caracteres, sendo 2 algarismos distintos seguidos de 3 letras diferentes, nessa ordem. Um funcionário irá cadastrar a sua primeira senha, podendo escolher entre as teclas que apresentam os números 1, 2, 5, 7 e 0 e as respectivas letras correlacionadas, quando houver. O número de possibilidades diferentes que esse funcionário tem para cadastrar sua senha é",
+      "solution": "**Senhas com teclado alfanumérico.**\n\nTeclas disponíveis: 1, 2, 5, 7, 0\n\nLetras correlacionadas:\n- 1: (sem letras)\n- 2: A, B, C (3 letras)\n- 5: J, K, L (3 letras)\n- 7: P, Q, R, S (4 letras)\n- 0: (sem letras)\n\nTotal de letras: 3 + 3 + 4 = **10 letras**\n\n**Senha**: 2 algarismos distintos + 3 letras diferentes\n\n**Algarismos** (2 distintos entre {1, 2, 5, 7, 0}, ordem importa):\nA(5, 2) = 5 × 4 = **20**\n\n**Letras** (3 diferentes entre 10, ordem importa):\nA(10, 3) = 10 × 9 × 8 = **720**\n\nTotal = 20 × 720 = **14 400**\n\n**Gabarito: B) 14 400.**",
+      "choices": [
+        "11 520.",
+        "14 400.",
+        "18 000.",
+        "312 000.",
+        "390 000."
+      ],
+      "imageUrl": "/questions/2024/q165.png",
+      "correctChoice": 1,
+      "subject_name": "Análise combinatória"
+    },
+    {
+      "id": 967,
+      "year": 2024,
+      "title": "Questão 167 - ENEM 2024",
+      "statement": "João e Felipe participaram, na escola, de uma maratona de matemática na qual, durante uma semana, resolveram 200 questões cada. Nessa maratona, a porcentagem P de acertos de cada participante é convertida em um conceito: • insatisfatório: se 0 ≤ P < 50; • regular: se 50 ≤ P < 60; • bom: se 60 ≤ P < 75; • muito bom: se 75 ≤ P < 90; • excelente: se 90 ≤ P ≤ 100. João acertou 75% das questões da maratona e Felipe acertou 30% a menos que a quantidade de questões que João acertou. Os conceitos de João e Felipe foram, respectivamente,",
+      "solution": "**Conceitos de João e Felipe na maratona.**\n\n**João**: acertou 75% de 200 = **150 questões**\nConceito: 75 ≤ 75 < 90 → **muito bom**\n\n**Felipe**: acertou 30% a menos que João = 150 − 0,30 × 150 = 150 − 45 = **105 questões**\nPorcentagem de Felipe: 105/200 = **52,5%**\nConceito: 50 ≤ 52,5 < 60 → **regular**\n\nConceitos: João = **muito bom**, Felipe = **regular**\n\n**Gabarito: B) Muito bom e regular.**",
+      "choices": [
+        "muito bom e bom.",
+        "muito bom e regular.",
+        "muito bom e insatisfatório.",
+        "bom e regular.",
+        "bom e insatisfatório."
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 964,
+      "year": 2024,
+      "title": "Questão 164 - ENEM 2024",
+      "statement": "Ao calcular a média de suas notas em 4 provas, um estudante dividiu, por engano, a soma das notas por 5. Com isso, a média obtida foi 1 unidade menor do que deveria ser, caso fosse calculada corretamente. O valor correto da média das notas desse estudante é",
+      "solution": "**Média de notas — erro de divisão.**\n\nSeja S a soma das 4 notas.\n\nMédia correta: S/4\nMédia errada (dividiu por 5): S/5\n\nCondição: S/4 − S/5 = 1\n\n$$\\frac{S}{4} - \\frac{S}{5} = 1$$\n$$\\frac{5S - 4S}{20} = 1$$\n$$\\frac{S}{20} = 1$$\n$$S = 20$$\n\nMédia correta = S/4 = 20/4 = **5**\n\n**Gabarito: B) 5.**",
+      "choices": [
+        "4.",
+        "5.",
+        "6.",
+        "19.",
+        "21."
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 966,
+      "year": 2024,
+      "title": "Questão 166 - ENEM 2024",
+      "statement": "Um artesão utiliza dois tipos de componentes, X e Y, nos enfeites que produz. Ele sempre compra todos os componentes em uma mesma loja. O quadro apresenta os preços dos dois tipos de componentes nas lojas I e II. Loja → Preço de X; Preço de Y (R$)\nI → 3,00; 1,00\nII → 2,00; 4,00\n\nEle confeccionará enfeites formados por duas unidades do componente X e uma unidade do componente Y e efetuará a compra na loja que oferecer o menor valor total para a confecção de um enfeite. O artesão efetuará a compra na loja",
+      "solution": "**Menor custo para enfeites — loja I ou II.**\n\nCada enfeite: 2 unidades de X + 1 unidade de Y\n\n**Loja I**: 2 × R$3,00 + 1 × R$1,00 = **R$ 7,00**\n**Loja II**: 2 × R$2,00 + 1 × R$4,00 = **R$ 8,00**\n\nLoja I é mais barata: **R$ 7,00**\n\n**Gabarito: A) I, pois o valor é R$ 7,00.**",
+      "choices": [
+        "I, pois o valor é R$ 7,00.",
+        "I, pois o valor é R$ 4,00.",
+        "II, pois o valor é R$ 6,00.",
+        "I, pois anuncia o componente com o menor preço.",
+        "II, pois o componente X, que é o mais utilizado, tem menor preço."
+      ],
+      "imageUrl": "/questions/2024/q166.png",
+      "correctChoice": 0,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 968,
+      "year": 2024,
+      "title": "Questão 168 - ENEM 2024",
+      "statement": "Três grandezas (I, II e III) se relacionam entre si. Os gráficos a seguir, formados por segmentos de reta, descrevem as relações de dependência existentes entre as grandezas I e II, e entre as grandezas II e III. O valor máximo assumido pela grandeza III, quando a grandeza I varia de 1 a 3, é",
+      "solution": "Pelo primeiro gráfico, quando a grandeza I vai de 1 a 3, a grandeza II vai de 1,5 a 3,5.\n\nNo segundo gráfico, III diminui de 2,5 a 1 quando II vai de 1,5 a 3. Depois cresce de 1 a 2 quando II vai de 3 a 3,5.\n\nLogo, o maior valor de III nesse intervalo é 2,5, atingido quando II=1,5.\n\n**Gabarito: B) 2,5.**",
+      "choices": [
+        "1,0.",
+        "2,5.",
+        "3,0.",
+        "3,5.",
+        "4,0."
+      ],
+      "imageUrl": "/questions/2024/q168.png",
+      "correctChoice": 1,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 928,
+      "year": 2024,
+      "title": "Questão 110 - ENEM 2024",
+      "statement": "Uma caixa decorativa utiliza duas pequenas lâmpadas, L1 (6 V - 9 W) e L2 (12 V - 18 W), ligadas em série a uma bateria de tensão VQR. Um fio resistivo QR, de 48 centímetros, está ligado em paralelo à bateria. Cinco pontos, A, B, C, D e E, dividem o fio QR em seis segmentos de comprimentos iguais. O circuito também tem um amperímetro com dois terminais. Um dos terminais (P) está ligado ao fio entre as duas lâmpadas. O outro terminal (S) está livre e será ligado ao fio QR. Dependendo do ponto em que esse terminal livre for conectado, ocorrerá a mudança na tensão à qual as lâmpadas são submetidas. Os demais fios do circuito têm resistências elétricas desprezíveis. A figura ilustra esse circuito. Em qual desses pontos o amperímetro deve ser conectado para que as lâmpadas acendam exatamente segundo as especificações de tensão e potência elétricas fornecidas?",
+      "solution": "**Lâmpadas em série com fio resistivo — ponto de conexão.**\n\nDados:\n- L₁: 6 V — 9 W → R₁ = V²/P = 36/9 = **4 Ω**\n- L₂: 12 V — 18 W → R₂ = 144/18 = **8 Ω**\n- Fio QR: 48 cm, dividido em 6 segmentos de 8 cm cada (pontos A, B, C, D, E)\n\nAs lâmpadas L₁ e L₂ estão em série. Para funcionarem segundo suas especificações:\n- L₁ precisa de 6 V\n- L₂ precisa de 12 V\n- Tensão total: 18 V = \\(\\mathrm{V}_{\\mathrm{QR}}\\) (bateria)\n\nO fio QR em paralelo com a bateria tem resistência proporcional ao comprimento. Ao conectar o ponto S (entre as lâmpadas) a um ponto do fio, redistribui-se a tensão.\n\nO ponto P está entre L₁ e L₂. Para L₁ receber 6 V (= 1/3 de 18 V) e L₂ receber 12 V (= 2/3 de 18 V), o ponto S deve ser conectado a **1/3 do comprimento** a partir de Q.\n\n1/3 de 48 cm = 16 cm = 2 segmentos → ponto **B**.\n\n**Gabarito: B) B.**",
+      "choices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "imageUrl": "/questions/2024/q110.png",
+      "correctChoice": 1,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 930,
+      "year": 2024,
+      "title": "Questão 117 - ENEM 2024",
+      "statement": "Uma ambulância em alta velocidade com a sirene ligada desloca-se em direção a um radar operado por uma pessoa. O radar emite ondas de rádio com frequência f0 que são refletidas pela dianteira da ambulância, retornando para o detector com frequência fr. A percepção do operador do radar, em relação ao som emitido pela sirene, é de que este se altera à medida que a ambulância se aproxima ou se afasta. Durante a aproximação, como o operador percebe o som da sirene e qual é a relação entre as frequências fr e f0 medidas pelo radar?",
+      "solution": "**Efeito Doppler — ambulância se aproximando.**\n\n**Som da sirene (efeito Doppler sonoro):**\nQuando a ambulância **se aproxima**, as ondas sonoras são **comprimidas** (comprimento de onda diminui, frequência aumenta). O operador percebe o som como **mais agudo** do que o emitido.\n\n**Radar (efeito Doppler para ondas de rádio):**\nO radar emite ondas com frequência f₀. Ao atingir a ambulância que se **aproxima**, as ondas são refletidas com frequência **maior** (\\(\\mathrm{f}_{\\mathrm{r}}\\) > f₀), pois a fonte refletora (ambulância) está se movendo em direção ao radar.\n\nPortanto: som **mais agudo** e **\\(\\mathrm{f}_{\\mathrm{r}}\\) > f₀**.\n\n**Gabarito: D) Mais agudo do que o som emitido e \\(\\mathrm{f}_{\\mathrm{r}}\\) > f₀.**",
+      "choices": [
+        "Mais grave do que o som emitido e fr < f0.",
+        "Mais agudo do que o som emitido e fr < f0.",
+        "Mais agudo do que o som emitido e fr = f0.",
+        "Mais agudo do que o som emitido e fr > f0.",
+        "Mais grave do que o som emitido e fr > f0."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Ondulatória"
+    },
+    {
+      "id": 990,
+      "year": 2025,
+      "title": "Questão 120 - ENEM 2025",
+      "statement": "O aquecimento em fogões por indução utiliza bobinas\npara produzir um campo magnético variável. Essa bobina se\nlocaliza abaixo do vidro cerâmico sobre o qual a panela se apoia.\nO mecanismo aquece apenas a panela que se encontra na zona\nde cozimento, o que é uma das principais vantagens em relação\nao uso do fogão a gás ou de resistência elétrica.\nPEREIRA, A. B. et al. Fogões de indução: montagem e testes de um circuito\ndisponível. Disponível em: https://publicacoes.fatecsertaozinho.edu.br.\nAcesso em: 21 maio 2025 (adaptado).\nO uso do campo magnético variável tem a finalidade de",
+      "solution": "A corrente alternada na bobina do fogão cria um campo magnético variável. Esse campo induz correntes elétricas no material condutor da panela, que se aquece por efeito Joule. O calor é então transferido da panela para o alimento.\n\nO fenômeno que permite produzir as correntes na panela é a indução eletromagnética.\n\n**Gabarito: D.**",
+      "choices": [
+        "imantar o material da panela por indução.",
+        "movimentar os átomos de ferro concentrados no fundo da panela.",
+        "emitir radiação eletromagnética, aquecendo a panela através do vidro cerâmico.",
+        "induzir corrente elétrica na parte inferior da panela, aquecendo-a por efeito Joule.",
+        "gerar um fluxo de corrente de convecção no ar contido entre a região da bobina e o vidro cerâmico."
+      ],
+      "imageUrl": "/questions/2025/q120-review.png",
+      "correctChoice": 3,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 991,
+      "year": 2025,
+      "title": "Questão 124 - ENEM 2025",
+      "statement": "A laje de um depósito de bebidas tem 50 m² de área útil de\narmazenamento e foi projetada para suportar pressões de até\n10⁴ Pa. O gerente do estabelecimento pretende armazenar um\nproduto cuja densidade é 1 250 kg/m³. Considere a aceleração\nda gravidade igual a 10 m/s².\nA altura máxima, em metro, de empilhamento do produto que\nessa laje é capaz de suportar é",
+      "solution": "A pressão máxima suportada pela laje é P = 10⁴ Pa.\n\nA pressão exercida por uma coluna de produto de densidade ρ e altura h é:\nP = ρ · g · h\n\nIsolando a altura:\nh = P / (ρ · g) = 10⁴ / (1 250 × 10)\n\nh = 10 000 / 12 500 = **0,80 m**\n\n**Gabarito: C) 0,80 m.**",
+      "choices": [
+        "0,16 m.",
+        "0,50 m.",
+        "0,80 m.",
+        "1,60 m.",
+        "8,00 m."
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Hidrostática"
+    },
+    {
+      "id": 997,
+      "year": 2025,
+      "title": "Questão 137 - ENEM 2025",
+      "statement": "Em um laboratório, um recipiente contém 10 litros de\numa solução composta apenas pelas substâncias S₁ e S₂.\nDessa solução, 99,95% é de S₁. Uma quantidade de S₁ será\nretirada dessa solução, mantendo a quantidade inicial de S₂,\nde modo que 99,90% da nova solução seja de S₁.\nQual é a quantidade de S₁, em litro, que será retirada?",
+      "solution": "Dados iniciais:\n• Volume total = 10 L, sendo 99,95% de S₁.\n• S₁ = 0,9995 × 10 = 9,995 L\n• S₂ = 10 − 9,995 = 0,005 L\n\nApós retirar x litros de S₁ (mantendo S₂):\n• S₁ restante = 9,995 − x\n• Volume total = 10 − x\n\nNova composição: 99,90% de S₁:\n(9,995 − x) / (10 − x) = 0,9990\n\n9,995 − x = 0,999 × (10 − x)\n9,995 − x = 9,990 − 0,999x\n9,995 − 9,990 = x − 0,999x\n0,005 = 0,001x\n**x = 5,0000 L**\n\n**Gabarito: E) 5,0000.**",
+      "choices": [
+        "0,0050",
+        "0,0100",
+        "0,5000",
+        "4,9775",
+        "5,0000"
+      ],
+      "imageUrl": null,
+      "correctChoice": 4,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 999,
+      "year": 2025,
+      "title": "Questão 139 - ENEM 2025",
+      "statement": "Uma empresa de tecnologia vai padronizar a velocidade de\nconexão de internet que oferece a seus clientes em dez cidades.\nA direção da empresa decide que seu novo padrão de velocidade de\nreferência será a mediana dos valores das velocidades de referência\nde conexões nessas dez cidades. Esses valores, em megabyte\npor segundo (MB/s), são apresentados no quadro.\nCidade → Velocidade de referência (MB/s)\nC₁ → 390\nC₂ → 380\nC₃ → 320\nC₄ → 390\nC₅ → 340\nC₆ → 380\nC₇ → 390\nC₈ → 400\nC₉ → 350\nC₁₀ → 360\n\nA velocidade de referência, em megabyte por segundo, a ser\nadotada por essa empresa é",
+      "solution": "Valores das velocidades (MB/s):\nC1=390, C2=380, C3=320, C4=390, C5=340, C6=380, C7=390, C8=400, C9=350, C10=360\n\nOrdenando em ordem crescente:\n320, 340, 350, 360, **380, 380**, 390, 390, 390, 400\n\nCom 10 valores, a mediana é a média dos 5º e 6º termos:\nMediana = (380 + 380) / 2 = **380 MB/s**\n\n**Gabarito: C) 380.**",
+      "choices": [
+        {
+          "text": "360"
+        },
+        {
+          "text": "370"
+        },
+        {
+          "text": "380"
+        },
+        {
+          "text": "390"
+        },
+        {
+          "text": "400"
+        }
+      ],
+      "imageUrl": "/questions/2025/q139-review.png",
+      "correctChoice": 2,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 996,
+      "year": 2025,
+      "title": "Questão 136 - ENEM 2025",
+      "statement": "No entorno de uma lagoa circular, cujo raio mede 1 km,\nhá uma ciclovia. Devido aos frequentes roubos de bicicleta,\na prefeitura planeja alocar policiais em posições estratégicas\npara patrulhar essa ciclovia, de forma a torná-la totalmente\nprotegida. Um ponto da ciclovia é considerado protegido se\nhouver pelo menos um policial a, no máximo, 200 m de distância\ndaquele ponto, posicionado sobre a ciclovia. A figura ilustra\num ponto P sobre a ciclovia, que estará protegido se houver\npelo menos um policial posicionado sobre a região de cor\ncinza escuro.\nDesconsidere a largura da pista da ciclovia e utilize 3 como\naproximação para π.\nNessas condições, a quantidade mínima necessária de policiais a\nserem alocados ao longo dessa ciclovia para torná-la protegida é",
+      "solution": "A ciclovia é circular com raio 1 km.\n\nPerímetro = 2πr ≈ 2 × 3 × 1 = **6 km = 6 000 m**\n\nCada policial protege 200 m para cada lado, cobrindo um trecho de 2 × 200 = **400 m** da ciclovia.\n\nQuantidade mínima de policiais:\nn = 6 000 / 400 = **15 policiais**\n\n**Gabarito: C) 15.**",
+      "choices": [
+        "4.",
+        "8.",
+        "15.",
+        "30.",
+        "60."
+      ],
+      "imageUrl": "/questions/2025/q136-review.png",
+      "correctChoice": 2,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 998,
+      "year": 2025,
+      "title": "Questão 138 - ENEM 2025",
+      "statement": "Uma distribuidora de combustível possui caminhões-tanque\ncom capacidade de 30 000 litros cada. Em qualquer transporte\nrealizado por esses caminhões, um mesmo volume de combustível\né descartado, pois fica com muitas impurezas. Esse volume\ndescartado independe da quantidade transportada.\nUm posto de combustível encomendou 10 000 litros de\ngasolina dessa distribuidora, que enviou 10 200 litros, considerando\no volume descartado no transporte. Mesmo assim, a quantidade\nde gasolina entregue ao posto foi de 9 900 litros.\nEm um novo pedido, esse posto solicitou que fosse entregue\nexatamente o dobro do volume de gasolina encomendado no\npedido anterior.\nUtilizando o mesmo caminhão da entrega anterior, qual é o volume\nmínimo de gasolina, em litro, que a distribuidora deverá enviar para\ngarantir a entrega da quantidade encomendada nesse novo pedido?",
+      "solution": "No primeiro pedido:\n• Enviados: 10 200 L\n• Entregues: 9 900 L (encomenda era 10 000 L)\n• Volume descartado por viagem: 10 200 − 9 900 = **300 L** (fixo por transporte)\n\nNovo pedido: entregar exatamente 2 × 10 000 = **20 000 L**.\n\nO caminhão tem capacidade de 30 000 L, então dá para enviar em **1 viagem** (descarte de 300 L):\nVolume a enviar = 20 000 + 300 = **20 300 L**\n\n**Gabarito: C) 20 300.**",
+      "choices": [
+        "20 100",
+        "20 200",
+        "20 300",
+        "20 400",
+        "20 600"
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 994,
+      "year": 2025,
+      "title": "Questão 130 - ENEM 2025",
+      "statement": "A resistência de um fio de platina pode ser usada para\nmedir temperaturas entre 0 °C e 100 °C e já foi utilizada como\nreferência para a escala internacional de temperatura. Para\num sensor feito de platina, a relação entre a resistência e\na temperatura pode ser descrita por uma equação do tipo\nR(T) = A + BT, em que T é a temperatura e A e B são constantes.\nO gráfico apresenta a dependência da resistência em função\nda temperatura para cinco diferentes sensores.\nOs sensores que apresentam maior sensibilidade são",
+      "solution": "A relação entre resistência e temperatura é R(T) = A + BT, uma função linear.\n\nA **sensibilidade** do sensor é a variação da resistência por unidade de variação de temperatura, ou seja, a constante **B** (a inclinação da reta no gráfico R × T).\n\nQuanto **maior a inclinação** da reta, maior a sensibilidade.\n\nAnalisando o gráfico, os sensores com as retas de maior inclinação são os sensores **2 e 5**.\n\n**Gabarito: E) 2 e 5.**",
+      "choices": [
+        "1 e 2.",
+        "1 e 3.",
+        "2 e 3.",
+        "2 e 4.",
+        "2 e 5."
+      ],
+      "imageUrl": "/questions/2025/q130-review.png",
+      "correctChoice": 4,
+      "subject_name": "Termodinâmica"
+    },
+    {
+      "id": 1006,
+      "year": 2025,
+      "title": "Questão 146 - ENEM 2025",
+      "statement": "Uma pessoa pretende instalar um kit de gás natural veicular (GNV) em seu carro. Na loja que escolheu para realizar a compra\ne instalação desse kit, havia cinco modelos de cilindro para armazenamento do gás, cujas capacidades, em metro cúbico, eram,\nrespectivamente: 10, 14, 17, 21 e 25. O preço do cilindro é proporcional à sua capacidade. Esse carro rodará 30 km diariamente,\n7 dias por semana, e o consumo do GNV é de 1 m³ a cada 13 km rodados. A pessoa escolherá o modelo de cilindro de menor\npreço e que garanta apenas um abastecimento semanal.\nNessas condições, qual será a capacidade, em metro cúbico, do cilindro escolhido por essa pessoa?",
+      "solution": "Consumo semanal:\n• Distância semanal: 30 km/dia × 7 dias = 210 km\n• Consumo de GNV: 1 m³ a cada 13 km\n• Volume semanal: 210 / 13 ≈ 16,15 m³\n\nA capacidade do cilindro deve ser ≥ 16,15 m³.\n\nDentre as opções (10, 14, 17, 21, 25 m³), o menor cilindro suficiente é o de **17 m³** (o de 14 não basta, pois 14 < 16,15).\n\nComo o preço é proporcional à capacidade, o cilindro de menor preço que garante um abastecimento semanal é o de 17 m³.\n\n**Gabarito: C) 17.**",
+      "choices": [
+        {
+          "text": "10"
+        },
+        {
+          "text": "14"
+        },
+        {
+          "text": "17"
+        },
+        {
+          "text": "21"
+        },
+        {
+          "text": "25"
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1004,
+      "year": 2025,
+      "title": "Questão 144 - ENEM 2025",
+      "statement": "Em um jogo de computador, um cubo se encontra inicialmente posicionado conforme indicado na figura.\nCada deslocamento efetuado por esse cubo se dá sempre em uma das direções definidas pelos três eixos coordenados.\nAo se movimentar a partir da posição inicial, esse cubo se aproximou 3 unidades do plano yz, se afastou 5 unidades do plano xz\ne se aproximou 4 unidades do plano xy.\nA figura que apresenta as projeções ortogonais desse cubo sobre os três planos coordenados, após efetuar as movimentações\ndescritas, é",
+      "solution": "O cubo parte de uma posição inicial e realiza os seguintes deslocamentos:\n• **Aproximou-se 3 unidades do plano yz** → deslocou-se −3 no eixo x (reduziu x)\n• **Afastou-se 5 unidades do plano xz** → deslocou-se +5 no eixo y (aumentou y)\n• **Aproximou-se 4 unidades do plano xy** → deslocou-se −4 no eixo z (reduziu z)\n\nAs projeções ortogonais sobre os planos xy, xz e yz devem refletir a nova posição do cubo após esses deslocamentos. A alternativa E é a que apresenta corretamente as três projeções com o cubo deslocado conforme descrito.\n\n**Gabarito: E.**",
+      "choices": [
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q144-a-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q144-b-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q144-c-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q144-d-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q144-e-review.png"
+        }
+      ],
+      "imageUrl": "/questions/2025/q144-review.png",
+      "correctChoice": 4,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 931,
+      "year": 2024,
+      "title": "Questão 118 - ENEM 2024",
+      "statement": "Mirascópio 3D: produtor de ilusão instantânea O equipamento ilustrado na figura, de dimensões apresentadas no esquema, é composto por dois espelhos côncavos E1 e E2, apoiados um sobre o outro por suas bordas, de tal forma que o vértice de E1 coincide com o foco de E 2 e vice-versa. Na abertura circular de E2, é formada uma imagem tridimensional de um objeto posicionado sobre o vértice de E 1. Essa imagem é formada a partir dos raios procedentes do objeto, refletidos por E 2 e E1, respectivamente, conforme o esquema. Os observadores julgam visualizar o objeto quando estão, de fato, visualizando sua imagem. O efeito só é possível porque as superfícies de ambos os espelhos são de extrema qualidade. SALZMANN, W. Disponível em: https://wissenstexte.de. Acesso em: 27 jun. 2024 (adaptado). A natureza da imagem formada e a distância vertical entre cada ponto objeto e seu correspondente ponto imagem são",
+      "solution": "Os raios refletidos pelos dois espelhos convergem efetivamente acima da abertura, formando uma imagem real. Pela figura, o objeto está no vértice do espelho inferior e a imagem está na abertura superior. A distância vertical entre eles é 3,8+3,8=7,6 cm. O diâmetro de 23 cm não é necessário para essa soma.\n\n**Gabarito: C) real e 7,6 cm.**",
+      "choices": [
+        "real e 5 cm.",
+        "real e 3,8 cm.",
+        "real e 7,6 cm.",
+        "virtual e 7,6 cm.",
+        "virtual e 3,8 cm."
+      ],
+      "imageUrl": "/questions/2024/q118.png",
+      "correctChoice": 2,
+      "subject_name": "Óptica"
+    },
+    {
+      "id": 1011,
+      "year": 2025,
+      "title": "Questão 151 - ENEM 2025",
+      "statement": "A cúpula pentagonal giralongada é um poliedro de Johnson,\ncujas faces são polígonos regulares, mas que não é um poliedro\nde Platão, de Arquimedes, prisma ou antiprisma.\nAs figuras apresentam esse poliedro em duas posições e\numa de suas planificações.\nQuantos vértices tem esse poliedro?",
+      "solution": "O sólido pode ser decomposto em uma cúpula pentagonal e um antiprisma de base decagonal, unidos por uma face decagonal.\n\nContando os vértices por níveis, temos 10 na base inferior,10 na junção e 5 no pentágono superior:\nV=10+10+5=25.\n\nTambém podemos usar Euler. Há 25 faces triangulares,5 quadradas,1 pentagonal e 1 decagonal: F=32. Contando as incidências de arestas e dividindo por 2, A=(25× 3+5× 4+5+10)/2=55. Logo V=A−F+2=25.\n\n**Gabarito: B) 25.**",
+      "choices": [
+        {
+          "text": "21"
+        },
+        {
+          "text": "25"
+        },
+        {
+          "text": "55"
+        },
+        {
+          "text": "80"
+        },
+        {
+          "text": "110"
+        }
+      ],
+      "imageUrl": "/questions/2025/q151-review.png",
+      "correctChoice": 1,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 1005,
+      "year": 2025,
+      "title": "Questão 145 - ENEM 2025",
+      "statement": "A reportagem de uma revista abordou o uso de redes sociais pelos internautas brasileiros. Alguns dos dados apurados pela\nreportagem estão apresentados no infográfico.\nPerfil dos brasileiros nas redes sociais\nDisponível em: http://revistagalileu.globo.com. Acesso em: 22 out. 2015 (adaptado).\nSegundo os dados do infográfico, ao se escolher aleatoriamente um internauta brasileiro no período ao qual se refere a reportagem,\na probabilidade de ele ser um homem que acessa alguma rede social é",
+      "solution": "O infográfico informa que 90% dos internautas acessam redes sociais. Entre quem acessa,60% são mulheres, portanto 40% são homens.\n\nA probabilidade conjunta é:\nP(acessa rede e é homem)=P(acessa rede)×P(é homem dado que acessa rede)=0,90× 0,40=0,36=36/100.\n\nO percentual 40% pertence ao grupo que acessa redes; não é necessário supor independência entre sexo e acesso.\n\n**Gabarito: B) 36/100.**",
+      "choices": [
+        "\\(\\frac{30}{90}\\)",
+        "\\(\\frac{36}{100}\\)",
+        "\\(\\frac{40}{100}\\)",
+        "\\(\\frac{40}{90}\\)",
+        "\\(\\frac{46}{90}\\)"
+      ],
+      "imageUrl": "/questions/2025/q145-review.png",
+      "correctChoice": 1,
+      "subject_name": "Probabilidade"
+    },
+    {
+      "id": 1009,
+      "year": 2025,
+      "title": "Questão 149 - ENEM 2025",
+      "statement": "Uma escola de idiomas oferece cursos de inglês, espanhol, francês e alemão. Os gráficos apresentam a distribuição percentual\ndas matrículas, por idioma, em 2023, e a distribuição da quantidade de matrículas, por idioma, em 2024.\nPara planejar as atividades de 2025, o gerente da escola estimou que o total de matrículas será o mesmo de 2024, e a distribuição\npercentual das matrículas, por idioma, será igual à registrada em 2023.\nSegundo essa estimativa, o número de matrículas no curso de francês para o ano de 2025 será",
+      "solution": "Em 2024, o total de matrículas é 280+80+20+20=400.\n\nA previsão para 2025 mantém esse total e aplica os percentuais de 2023. O francês corresponde a 10%:\n0,10× 400=40 matrículas.\n\n**Gabarito: E) 40.**",
+      "choices": [
+        "2.",
+        "12.",
+        "20.",
+        "22.",
+        "40."
+      ],
+      "imageUrl": "/questions/2025/q149-review.png",
+      "correctChoice": 4,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 934,
+      "year": 2024,
+      "title": "Questão 126 - ENEM 2024",
+      "statement": "Aquecedores solares são equipamentos utilizados para o aquecimento de água pelo calor do Sol. São compostos por coletores solares, nos quais ocorre o aquecimento da água, e por um reservatório térmico, em que é armazenada a água quente para ser utilizada posteriormente. A figura ilustra esquematicamente como funciona esse equipamento. 5 dicas de instalação de aquecedor solar. Disponível em: https://instaline.com.br. Acesso em: 3 nov. 2023 (adaptado). O processo pelo qual ocorre transferência de calor dos coletores solares para o reservatório térmico é a",
+      "solution": "**Aquecedor solar — convecção.**\n\nNo aquecedor solar:\n1. A água nos **coletores solares** (parte inferior) é aquecida pelo Sol.\n2. A água aquecida se torna **menos densa** e **sobe** naturalmente até o **reservatório térmico** (parte superior).\n3. A água mais fria (mais densa) do reservatório **desce** para os coletores, formando um ciclo.\n\nEsse movimento espontâneo do fluido, causado pela **diferença de densidade** (que por sua vez é causada pela diferença de temperatura), é chamado de **convecção** (convecção natural ou termossifão).\n\nNão é condução (que ocorre sem movimento do fluido), nem irradiação (que é transferência por ondas eletromagnéticas), nem difusão nem absorção.\n\n**Gabarito: E) Convecção.**",
+      "choices": [
+        "difusão.",
+        "absorção.",
+        "condução.",
+        "irradiação.",
+        "convecção."
+      ],
+      "imageUrl": "/questions/2024/q126.png",
+      "correctChoice": 4,
+      "subject_name": "Termodinâmica"
+    },
+    {
+      "id": 1012,
+      "year": 2025,
+      "title": "Questão 152 - ENEM 2025",
+      "statement": "Uma fábrica de tijolos ecológicos com 3 funcionários,\ncada um trabalhando 6 horas diárias, produz 720 unidades\npor dia. Para atender ao crescimento da demanda por esse\ntipo de tijolo, essa fábrica passou a ter 5 funcionários, cada um\ntrabalhando 9 horas por dia, aumentando, assim, sua capacidade\nde produção. Todos os funcionários produzem igual quantidade\nde tijolos a cada hora, independentemente de trabalharem\n6 ou 9 horas diárias.\nO número de tijolos fabricados diariamente após o aumento da\ncapacidade de produção é",
+      "solution": "Produção inicial:\n• 3 funcionários × 6 h/dia = 18 homens-hora → 720 tijolos\n• Produtividade: 720 / 18 = **40 tijolos por homem-hora**\n\nNova configuração:\n• 5 funcionários × 9 h/dia = 45 homens-hora\n\nNova produção diária:\n45 × 40 = **1 800 tijolos**\n\n**Gabarito: D) 1 800.**",
+      "choices": [
+        "800.",
+        "1 080.",
+        "1 200.",
+        "1 800.",
+        "2 520."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1014,
+      "year": 2025,
+      "title": "Questão 154 - ENEM 2025",
+      "statement": "Quatro candidatos se apresentaram para realizar a prova de\num concurso. Antes de iniciar a prova, os celulares dos quatro\ncandidatos foram recolhidos pelo aplicador, que os guardou,\ncada um, dentro de um envelope preto. Ao término da prova,\no aplicador devolveu os quatro envelopes com os celulares aos\nquatro candidatos, de maneira aleatória, já que não havia feito\na identificação dos envelopes.\nA probabilidade de que todos os candidatos tenham recebido\nde volta os envelopes com os seus respectivos celulares é",
+      "solution": "São 4 candidatos e 4 envelopes distribuídos aleatoriamente.\n\nO número total de maneiras de distribuir 4 envelopes para 4 pessoas é 4! = **24**.\n\nHá **apenas 1** configuração em que todos recebem o envelope correto (cada um pega exatamente o seu).\n\nProbabilidade = 1/4! = **1/24**\n\n**Gabarito: D) 1/24.**",
+      "choices": [
+        {
+          "text": "1/2"
+        },
+        {
+          "text": "1/10"
+        },
+        {
+          "text": "1/16"
+        },
+        {
+          "text": "1/24"
+        },
+        {
+          "text": "1/256"
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Probabilidade"
+    },
+    {
+      "id": 935,
+      "year": 2024,
+      "title": "Questão 129 - ENEM 2024",
+      "statement": "Em aeroportos, por razões de segurança, os passageiros devem ter suas bagagens de mão examinadas antes do embarque, passando-as em esteiras para sua inspeção por aparelhos de raios X. Nessas inspeções, os passageiros são orientados a retirar seus computadores portáteis (notebooks ou laptops) de malas, mochilas ou bolsas para passá-los isoladamente pela esteira. Que explicação física justifica esse procedimento?",
+      "solution": "**Raios X no aeroporto — componentes densos impedem visualização.**\n\nOs **raios X** são radiação eletromagnética de alta energia que consegue **atravessar** a maioria dos materiais de bagagens comuns (tecidos, plásticos, etc.), formando imagens por contraste.\n\nPorém, os **componentes densos do computador** (placa-mãe, bateria, dissipadores metálicos, etc.) são **opacos aos raios X** — eles **não conseguem atravessá-los**.\n\nConsequência: os objetos posicionados **à frente ou atrás** do notebook na bagagem ficam **\"escondidos\"** pela sombra dos componentes densos, impedindo sua visualização na imagem.\n\nPor isso o notebook deve ser passado **isoladamente**, para que os demais itens da bagagem possam ser inspecionados sem obstrução.\n\n**Gabarito: D) Os raios X não atravessam os componentes densos do computador, o que impede a visualização de objetos que estão à frente ou atrás deles.**",
+      "choices": [
+        "Os raios X não interagem com os componentes metálicos do computador, o que impede a formação de imagens.",
+        "Os raios X desmagnetizam o disco rígido do computador, quando refratados pelos componentes metálicos das bagagens de mão.",
+        "Os raios X aquecem os materiais metálicos encontrados em bagagens de mão, quando refletidos pelos componentes do computador.",
+        "Os raios X não atravessam os componentes densos do computador, o que impede a visualização de objetos que estão à frente ou atrás deles.",
+        "Os raios X ionizam os materiais metálicos normalmente encontrados em bagagens de mão, quando difratados pelos componentes do computador."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Física moderna"
+    },
+    {
+      "id": 1015,
+      "year": 2025,
+      "title": "Questão 155 - ENEM 2025",
+      "statement": "Em uma escola, todos os estudantes do ensino médio\npraticam uma das três modalidades esportivas oferecidas\ncomo atividade física, e cada um deles pratica somente uma\ndessas atividades. Os gráficos trazem alguns dados relativos aos\nquantitativos de estudantes que praticam essas modalidades\nesportivas nessa escola, apesar de algumas quantidades não\nterem sido informadas.\nQual é a quantidade de estudantes no ensino médio dessa escola?",
+      "solution": "Os gráficos usam a mesma unidade de contagem. As quantidades representadas somam 18 unidades no futebol,10 no voleibol e 8 no basquetebol.\n\nComo o basquetebol corresponde a 80 estudantes, cada unidade representa 80/8=10 estudantes.\n\nTotal: (18+10+8)× 10=360 estudantes.\n\n**Gabarito: B) 360.**",
+      "choices": [
+        "720",
+        "360",
+        "320",
+        "288",
+        "240"
+      ],
+      "imageUrl": "/questions/2025/q155-review.png",
+      "correctChoice": 1,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 1018,
+      "year": 2025,
+      "title": "Questão 158 - ENEM 2025",
+      "statement": "Pace é um termo usado por um corredor para denominar o seu ritmo médio em uma corrida. Representa o tempo médio,\nem segundo, que esse corredor leva para percorrer 1 km.\nO esquema apresenta o tempo, em segundo, que um corredor levou para cruzar as marcas que definem os quatro primeiros\ntrechos de 1 km, em uma corrida de 5 km, e o tempo gasto para percorrer cada trecho de 1 km.\nO melhor pace que esse corredor alcançou em corridas de 5 km foi 281 s/km.\nPara que consiga repetir nessa corrida seu melhor pace em corridas de 5 km, seu tempo, no 5º trecho, deve ser quantos segundos\nmenor do que o que ele gastou para percorrer o 4º trecho?",
+      "solution": "Para completar 5 km com pace médio 281 s/km, o tempo total deve ser 5× 281=1405 s.\n\nAo final do quarto trecho, o tempo acumulado é 1132 s. Restam 1405−1132=273 s para o quinto trecho.\n\nO quarto trecho levou 288 s. Assim, o quinto deve ser 288−273=15 s mais rápido.\n\n**Gabarito: E) 15.**",
+      "choices": [
+        {
+          "text": "1"
+        },
+        {
+          "text": "2"
+        },
+        {
+          "text": "8"
+        },
+        {
+          "text": "9"
+        },
+        {
+          "text": "15"
+        }
+      ],
+      "imageUrl": "/questions/2025/q158-review.png",
+      "correctChoice": 4,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1022,
+      "year": 2025,
+      "title": "Questão 162 - ENEM 2025",
+      "statement": "Dez casais fundaram um grupo de dança e decidiram\nconstituir uma diretoria com três cargos: presidente, secretário\ne tesoureiro. Para maior representatividade, decidiu-se que no\nmáximo uma pessoa por casal poderá ocupar um cargo nessa\ndiretoria.\nQuantas diretorias diferentes podem ser constituídas por esses\n10 casais?",
+      "solution": "São 10 casais (20 pessoas), com no máximo 1 pessoa por casal na diretoria de 3 cargos distintos.\n\n• **Presidente**: 20 opções (qualquer pessoa).\n• **Secretário**: exclui-se o presidente e o parceiro(a) dele → 20 − 2 = **18 opções**.\n• **Tesoureiro**: exclui-se os 2 já escolhidos e seus 2 parceiros → 20 − 4 = **16 opções**.\n\nTotal = 20 × 18 × 16\n\n**Gabarito: B) 20 × 18 × 16.**",
+      "choices": [
+        "10 × 9 × 8",
+        "20 × 18 × 16",
+        "20 × 19 × 18",
+        "10 × 9 × 8 × 2",
+        "20 × 18 × 16 × 2"
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Análise combinatória"
+    },
+    {
+      "id": 938,
+      "year": 2024,
+      "title": "Questão 138 - ENEM 2024",
+      "statement": "Uma empresa de engenharia foi contratada para realizar um serviço no valor de R$ 71 250,00. Os sócios da empresa decidiram que 40% desse valor seria destinado ao pagamento de três engenheiros que gerenciaram o serviço. O pagamento para cada um deles será feito de forma diretamente proporcional ao total de horas trabalhadas. O número de dias e o número de horas diárias trabalhadas pelos engenheiros foram, respectivamente: • engenheiro I: 4 dias, numa jornada de 5 horas e meia por dia; • engenheiro II: 5 dias, numa jornada de 4 horas por dia; • engenheiro III: 6 dias, numa jornada de 2 horas e meia por dia. Qual a maior diferença, em real, entre os valores recebidos por esse serviço entre dois desses engenheiros?",
+      "solution": "**Pagamento proporcional às horas trabalhadas.**\n\nValor destinado aos engenheiros: 40% de R$ 71 250 = **R$ 28 500**\n\nHoras trabalhadas:\n- Eng. I: 4 × 5,5 = **22 horas**\n- Eng. II: 5 × 4 = **20 horas**\n- Eng. III: 6 × 2,5 = **15 horas**\n- Total: 22 + 20 + 15 = **57 horas**\n\nValor por hora: 28 500 / 57 = **R$ 500/hora**\n\nPagamentos:\n- Eng. I: 22 × 500 = **R$ 11 000**\n- Eng. II: 20 × 500 = **R$ 10 000**\n- Eng. III: 15 × 500 = **R$ 7 500**\n\nMaior diferença: R$ 11 000 − R$ 7 500 = **R$ 3 500**\n\n**Gabarito: C) 3 500.**",
+      "choices": [
+        "1 000",
+        "1 500",
+        "3 500",
+        "3 800",
+        "5 250"
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1023,
+      "year": 2025,
+      "title": "Questão 163 - ENEM 2025",
+      "statement": "Um artista, que costuma fazer desenhos com areia na\npraia, pediu a um banhista que fizesse um pequeno desenho,\nque serviria de esboço para uma grande obra de arte a ser\nfeita na areia. Esse desenho está representado na figura.\nApós a conclusão, a obra de arte obtida manteve as mesmas\nproporções do desenho feito pelo banhista, sendo que as\nmedidas indicadas na figura foram ampliadas para 30 m.\nEm qual escala esse desenho representa a obra de arte?",
+      "solution": "O desenho (esboço) tem medidas indicadas na figura que foram ampliadas para **30 m** na obra de arte.\n\nA escala é a razão entre a medida no desenho e a medida real.\n\nDa figura, a medida indicada é **20 cm** (= 0,20 m):\nEscala = 0,20 m / 30 m = 1 / 150\n\nPortanto, a escala é **1 : 150**.\n\n**Gabarito: E) 1 : 150.**",
+      "choices": [
+        "1 : 1,5",
+        "1 : 2,25",
+        "1 : 10",
+        "1 : 100",
+        "1 : 150"
+      ],
+      "imageUrl": "/questions/2025/q163-review.png",
+      "correctChoice": 4,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1021,
+      "year": 2025,
+      "title": "Questão 161 - ENEM 2025",
+      "statement": "Uma empresa produziu, em um determinado mês,\n110 toneladas de plástico a partir de derivados de petróleo\ne 80 toneladas a partir de plásticos reciclados. O custo para\nreciclar uma tonelada de plástico é de R$ 500,00, que equivale\na 5% do custo para produzir a mesma quantidade de plástico\na partir de derivados de petróleo. Para o mês seguinte, a meta\ndessa empresa é produzir a mesma quantidade de plástico que\nfoi produzida nesse mês, mas com redução de, pelo menos,\n50% no custo de produção.\nPara que no mês seguinte a empresa atinja a meta, a quantidade\nmínima de toneladas de plástico que devem ser produzidas a\npartir de reciclagem deverá ser",
+      "solution": "Custo por tonelada:\n• Reciclagem: R$ 500/t\n• Petróleo: R$ 500 / 0,05 = R$ 10 000/t (pois R$ 500 = 5% do custo de petróleo)\n\nProdução atual (total = 190 t):\n• Petróleo: 110 t → custo: 110 × 10 000 = R$ 1 100 000\n• Reciclagem: 80 t → custo: 80 × 500 = R$ 40 000\n• Custo total: R$ 1 140 000\n\nMeta: reduzir pelo menos 50% → custo máximo = R$ 570 000.\n\nSeja r a qtd reciclada no próximo mês (total = 190 t):\n(190 − r) × 10 000 + r × 500 ≤ 570 000\n1 900 000 − 10 000r + 500r ≤ 570 000\n1 900 000 − 9 500r ≤ 570 000\n9 500r ≥ 1 330 000\nr ≥ 1 330 000 / 9 500 = **140 t**\n\n**Gabarito: B) 140.**",
+      "choices": [
+        "135.",
+        "140.",
+        "155.",
+        "160.",
+        "175."
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Álgebra"
+    },
+    {
+      "id": 1030,
+      "year": 2025,
+      "title": "Questão 170 - ENEM 2025",
+      "statement": "A luminância de um objeto é a grandeza que descreve a\nquantidade de luz produzida ou refletida por sua superfície.\nEla está definida como a razão entre a intensidade luminosa,\nmedida em candela (cd), e o quadrado da distância do objeto\naté o foco de luz, medida em metro (m).\nA unidade de medida da luminância de um objeto é",
+      "solution": "Luminância = intensidade luminosa / (distância)²\n\nUnidade de intensidade luminosa: candela (cd)\nUnidade de distância: metro (m)\n\nUnidade de luminância = cd / m²\n\n**Gabarito: A) cd/m².**",
+      "choices": [
+        {
+          "text": "cd/m²",
+          "imageUrl": null
+        },
+        {
+          "text": "m²/cd",
+          "imageUrl": null
+        },
+        {
+          "text": "cd/m",
+          "imageUrl": null
+        },
+        {
+          "text": "m/cd",
+          "imageUrl": null
+        },
+        {
+          "text": "m/cd²",
+          "imageUrl": null
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 0,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1028,
+      "year": 2025,
+      "title": "Questão 168 - ENEM 2025",
+      "statement": "A figura ilustra o projeto visual para confecção de uma\nmedalha comemorativa, com a forma de um cilindro circular\nreto, de diâmetro 6 cm e espessura 3 mm.\nA figura ABCD tem a forma de um quadrado e é a base de\num prisma que atravessa toda a medalha. A região da medalha\nexterna a esse prisma será cunhada em ouro. Pretende-se\ncunhar 100 dessas medalhas.\nConsidere 3,1 como valor aproximado para π.\nQual é o volume de ouro, em centímetro cúbico, necessário\npara a confecção dessas medalhas?",
+      "solution": "A medalha é um cilindro circular reto:\n• Diâmetro = 6 cm → raio = 3 cm\n• Espessura = 3 mm = 0,3 cm\n\nVolume do cilindro:\n\\(\\mathrm{V}_{\\mathrm{cilindro}}\\) = π × r² × h = 3,1 × 9 × 0,3 = **8,37 cm³**\n\nA figura ABCD é um quadrado inscrito no círculo (diagonal = diâmetro = 6 cm):\nLado do quadrado = 6/√2 → Lado² = 36/2 = **18 cm²**\n\nVolume do prisma quadrado (que atravessa a medalha):\n\\(\\mathrm{V}_{\\mathrm{prisma}}\\) = 18 × 0,3 = **5,4 cm³**\n\nVolume de ouro por medalha:\n\\(\\mathrm{V}_{\\mathrm{ouro}}\\) = 8,37 − 5,4 = **2,97 cm³**\n\nPara 100 medalhas:\n100 × 2,97 = **297 cm³**\n\n**Gabarito: B) 297.**",
+      "choices": [
+        "288",
+        "297",
+        "567",
+        "990",
+        "1 134"
+      ],
+      "imageUrl": "/questions/2025/q168-review.png",
+      "correctChoice": 1,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 1026,
+      "year": 2025,
+      "title": "Questão 166 - ENEM 2025",
+      "statement": "O dono de uma sorveteria armazena sorvete em potes de\n20 000 cm³. Ele serve o sorvete em taças, em porções de 250 mL.\nA quantidade de taças que ele consegue servir a partir de um\npote cheio de sorvete é",
+      "solution": "Volume do pote: 20 000 cm³\n\nSabemos que 1 cm³ = 1 mL, logo:\n20 000 cm³ = 20 000 mL\n\nCada taça: 250 mL\n\nNúmero de taças: 20 000 / 250 = **80**\n\n**Gabarito: D) 80.**",
+      "choices": [
+        "5.",
+        "8.",
+        "50.",
+        "80.",
+        "800."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 940,
+      "year": 2024,
+      "title": "Questão 140 - ENEM 2024",
+      "statement": "Para melhorar o fluxo de ônibus em uma avenida que tem dois semáforos, a prefeitura reduzirá o tempo em que cada sinal ficará vermelho, que atualmente é de 15 segundos a cada 60 segundos. Admita que o instante de chegada de um ônibus a cada semáforo é aleatório. O engenheiro de tráfego da prefeitura calculou a probabilidade de um ônibus encontrar cada um deles vermelho, obtendo 15/60. A partir daí, estabeleceu uma mesma redução na quantidade do tempo, em segundo, em que cada sinal ficará vermelho, de maneira que a probabilidade de um ônibus encontrar ambos os sinais vermelhos numa mesma viagem seja igual a 4/100, considerando os eventos independentes. Para isso, a redução do tempo em que o sinal ficará vermelho, em segundo, estabelecida pelo engenheiro foi de",
+      "solution": "**Probabilidade de dois sinais vermelhos — redução do tempo.**\n\nDados:\n- Ciclo do semáforo: 60 s\n- Tempo vermelho atual: 15 s cada\n- P(vermelho) por sinal = 15/60 = 1/4\n\nNovo tempo vermelho: (15 − x) segundos, onde x é a redução.\nNova probabilidade por sinal: (15 − x)/60\n\nCondição: ambos vermelhos (eventos independentes):\n$$\\left(\\frac{15 - x}{60}\\right)^2 = \\frac{4}{100}$$\n\n$$\\frac{15 - x}{60} = \\frac{2}{10} = \\frac{1}{5}$$\n\n15 − x = 60/5 = **12**\n\nx = 15 − 12 = **3 segundos**\n\n**Gabarito: B) 3,00.**",
+      "choices": [
+        "1,35.",
+        "3,00.",
+        "9,00.",
+        "12,60.",
+        "13,80."
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Probabilidade"
+    },
+    {
+      "id": 941,
+      "year": 2024,
+      "title": "Questão 141 - ENEM 2024",
+      "statement": "A densidade demográfica de uma região é definida como sendo a razão entre o número de habitantes dessa região e sua área, expressa na unidade habitantes por quilômetro quadrado. Uma região R é subdividida em várias outras, sendo uma delas a região Q. A área de Q é igual a três quartos da área de R, e o número de habitantes de Q é igual à metade do número de habitantes de R. As densidades demográficas correspondentes a essas regiões são denotadas por d(Q) e d(R). A expressão que relaciona d(Q) e d(R) é",
+      "solution": "**Densidade demográfica — relação entre d(Q) e d(R).**\n\nDados:\n- Área de Q = (3/4) × Área de R\n- Habitantes de Q = (1/2) × Habitantes de R\n\nDensidades:\n- d(R) = \\(\\mathrm{Hab}_{\\mathrm{R}}\\) / \\(\\mathrm{Área}_{\\mathrm{R}}\\)\n- d(Q) = \\(\\mathrm{Hab}_{\\mathrm{Q}}\\) / \\(\\mathrm{Área}_{\\mathrm{Q}}\\) = (\\(\\mathrm{Hab}_{\\mathrm{R}}\\) / 2) / (3 × \\(\\mathrm{Área}_{\\mathrm{R}}\\) / 4)\n\nSimplificando:\nd(Q) = (\\(\\mathrm{Hab}_{\\mathrm{R}}\\) / 2) × (4 / (3 × \\(\\mathrm{Área}_{\\mathrm{R}}\\)))\nd(Q) = (4 / 6) × (\\(\\mathrm{Hab}_{\\mathrm{R}}\\) / \\(\\mathrm{Área}_{\\mathrm{R}}\\))\nd(Q) = **(2/3) × d(R)**\n\n**Gabarito: E) d(Q) = (2/3) d(R).**",
+      "choices": [
+        "\\(d(Q)=\\frac{1}{4}d(R)\\)",
+        "\\(d(Q)=\\frac{1}{2}d(R)\\)",
+        "\\(d(Q)=\\frac{3}{4}d(R)\\)",
+        "\\(d(Q)=\\frac{3}{2}d(R)\\)",
+        "\\(d(Q)=\\frac{2}{3}d(R)\\)"
+      ],
+      "imageUrl": null,
+      "correctChoice": 4,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 943,
+      "year": 2024,
+      "title": "Questão 143 - ENEM 2024",
+      "statement": "Uma imobiliária iniciou uma campanha de divulgação para promover a venda de apartamentos que podem ser pagos em 100 parcelas mensais. O valor da primeira delas é fixado no momento da compra, com o pagamento dessa primeira parcela. A partir da segunda parcela, o valor é determinado pela aplicação de um acréscimo percentual fixo ao valor da parcela anterior. Como atrativo, a imobiliária fará o pagamento de todas as parcelas correspondentes ao mês de aniversário do comprador. Um cliente, que faz aniversário no mês de maio, decidiu comprar um desses apartamentos por meio do financiamento oferecido pela imobiliária, e pretende escolher o mês mais adequado para realizar essa compra, de modo que o valor total dos pagamentos seja o menor possível. Qual é o mês que esse cliente deverá escolher para realizar a compra do apartamento?",
+      "solution": "As parcelas formam uma progressão geométrica crescente: cada uma é maior que a anterior pelo mesmo percentual.\n\nSe a compra ocorrer em fevereiro, as parcelas de maio serão as de números 4,16,28,40,52,64,76,88 e 100: nove parcelas pagas pela imobiliária.\n\nSe ocorrer em abril, serão 2,14,...,98; em maio, 1,13,...,97. Também são nove, mas cada parcela é menor que a correspondente no início em fevereiro. Em junho e agosto, serão apenas oito parcelas de maio, com índices 12,24,...,96 e 10,22,...,94. Cada uma pode ser pareada com uma parcela maior na sequência de fevereiro, que ainda tem uma parcela adicional.\n\nPortanto, fevereiro maximiza o valor pago pela imobiliária e minimiza o gasto do comprador.\n\n**Gabarito: A) Fevereiro.**",
+      "choices": [
+        "Fevereiro.",
+        "Abril.",
+        "Maio.",
+        "Junho.",
+        "Agosto."
+      ],
+      "imageUrl": null,
+      "correctChoice": 0,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 987,
+      "year": 2025,
+      "title": "Questão 110 - ENEM 2025",
+      "statement": "A química nuclear é uma importante ferramenta\nna produção de substâncias utilizadas na área da saúde\nhumana. A radiação emitida pelo cobalto-60 é utilizada na\nmedicina como ferramenta de diagnóstico e no tratamento\ndo câncer. No entanto, esse radioisótopo tem um tempo de\narmazenamento limitado, pois seu tempo de meia-vida é\nde 5,3 anos. Considere um frasco com uma amostra contendo\n2,00 mg de cobalto-60, armazenado durante um período\nde 26,5 anos.\nA massa de cobalto-60, em miligrama, que restará ao final\ndesse tempo é mais próxima de",
+      "solution": "Dados:\n• Meia-vida (t₁/₂) = 5,3 anos\n• Tempo de armazenamento = 26,5 anos\n• Massa inicial = 2,00 mg\n\nNúmero de meias-vidas:\nn = 26,5 ÷ 5,3 = **5**\n\nA cada meia-vida, a massa é reduzida pela metade:\nm = m₀ / 2ⁿ = 2,00 / 2⁵ = 2,00 / 32 = **0,0625 mg**\n\nO valor mais próximo entre as alternativas é **0,06 mg**.\n\n**Gabarito: E) 0,06 mg.**",
+      "choices": [
+        "2,00 mg.",
+        "1,00 mg.",
+        "0,40 mg.",
+        "0,13 mg.",
+        "0,06 mg."
+      ],
+      "imageUrl": null,
+      "correctChoice": 4,
+      "subject_name": "Física moderna"
+    },
+    {
+      "id": 1001,
+      "year": 2025,
+      "title": "Questão 141 - ENEM 2025",
+      "statement": "Uma fábrica utilizou uma impressora 3D para produzir o\nprotótipo de uma peça. O protótipo tem forma de um poliedro\nconvexo, obtido pela justaposição de dois sólidos distintos, um\ncom a forma de um prisma hexagonal regular reto e o outro com\na forma de um tronco de pirâmide hexagonal reta. A base maior\ndo tronco de pirâmide coincide com uma das bases do prisma.\nApós a impressão do protótipo, ele foi encaminhado ao setor\nde customização para realização da pintura de sua superfície.\nO critério definido para realização da pintura considera que faces\ncongruentes entre si devem ser pintadas com uma mesma cor, e\nfaces não congruentes entre si devem apresentar cores distintas.\nQual é a quantidade de cores utilizadas para pintar o protótipo?",
+      "solution": "O protótipo é formado por um prisma hexagonal regular reto justaposto a um tronco de pirâmide hexagonal.\n\nFaces visíveis:\n1. **6 faces laterais retangulares** do prisma → todas congruentes entre si → **1 cor**\n2. **1 base hexagonal do prisma** (a exposta) → **1 cor**\n3. **6 faces laterais trapezoidais** do tronco de pirâmide → todas congruentes entre si → **1 cor**\n4. **1 base hexagonal menor** do tronco (topo) → **1 cor**\n\nA base maior do tronco coincide com uma base do prisma (face interna, não visível).\n\nAs faces retangulares não são congruentes às trapezoidais, e os dois hexágonos têm tamanhos diferentes — portanto são 4 grupos de faces congruentes.\n\nTotal: **4 cores**.\n\n**Gabarito: D) 4.**",
+      "choices": [
+        {
+          "text": "9"
+        },
+        {
+          "text": "8"
+        },
+        {
+          "text": "6"
+        },
+        {
+          "text": "4"
+        },
+        {
+          "text": "3"
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 1000,
+      "year": 2025,
+      "title": "Questão 140 - ENEM 2025",
+      "statement": "Na cantina de uma escola, há cinco alimentos vendidos em\npacotes com diferentes quantidades de porções.\nAs informações nutricionais contidas nos rótulos desses\nprodutos estão indicadas nas imagens.\nUma estudante opta sempre pelo alimento com a menor\nquantidade total de sódio por pacote.\nQual desses produtos deve ser o escolhido pela estudante?",
+      "solution": "É preciso comparar o sódio total de cada pacote, multiplicando o valor por porção pelo número de porções da embalagem.\n\nOs totais são:\n• Batata chips:510 mg.\n• Palitos:2004 mg.\n• Multigrãos:2112 mg.\n• Biscoito de polvilho:1050 mg.\n• Biscoito água e sal:830 mg.\n\nO menor total é 510 mg, da batata chips.\n\n**Gabarito: A.**",
+      "choices": [
+        "Batata chips.",
+        "Palitos salgados.",
+        "Biscoito multigrãos.",
+        "Biscoito de polvilho.",
+        "Biscoito de água e sal."
+      ],
+      "imageUrl": "/questions/2025/q140-review.png",
+      "correctChoice": 0,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1007,
+      "year": 2025,
+      "title": "Questão 147 - ENEM 2025",
+      "statement": "Em um jogo digital, há três personagens: um herói e dois\nvilões. A programação é feita de tal forma que o herói sempre\nserá atacado pelo vilão que estiver mais próximo dele. Uma das\nmaneiras de “confundir” os vilões é movimentar o herói por\ntrajetórias que o mantenha equidistante dos vilões, gerando\nindefinição entre eles e, com isso, não sendo atacado.\nPara a programação de uma das etapas desse jogo,\no programador considerou, no plano cartesiano, o quadrado\nSTUV como a região de movimentação dos personagens, onde\nV e T representam as posições fixas dos vilões, e S, a posição\ninicial do herói, como apresentado na figura.\nQual é a equação da trajetória em que o herói poderá se\nmovimentar sem ser atacado?",
+      "solution": "O herói deve permanecer equidistante de T e V, isto é, na mediatriz do segmento TV.\n\nNa figura, S=(6,2) e V=(8,6). O vetor SV é(2,4). Como STUV é um quadrado, ST é uma rotação de 90° desse vetor: (−4,2). Assim, T=(2,4).\n\nA inclinação de TV é(6−4)/(8−2)=1/3. A mediatriz é perpendicular a TV, então sua inclinação é−3. Ela passa por S, que é equidistante dos dois vilões:\ny−2=−3(x−6) ⇒ y=−3x+20.\n\n**Gabarito: A.**",
+      "choices": [
+        "y = −3x + 20",
+        "y = −3x + 16",
+        "y = −3x − 20",
+        "y = 3x + 16",
+        "y = 3x − 16"
+      ],
+      "imageUrl": "/questions/2025/q147-review.png",
+      "correctChoice": 0,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 1013,
+      "year": 2025,
+      "title": "Questão 153 - ENEM 2025",
+      "statement": "Para acompanhar o fluxo de visitantes em seu prédio,\numa empresa estabeleceu um código de identificação para a\nvisitação. De acordo com a regra estabelecida, cada visitante será\nidentificado com um código sequencial numérico com 7 dígitos,\ndeterminado, da esquerda para a direita, da seguinte forma:\n•\to primeiro dígito indica o andar ao qual o visitante se\ndirige, que é um número de 1 a 4;\n•\tos dois próximos dígitos correspondem ao número do\nsetor da empresa ao qual o visitante se destina. Esse\nnúmero varia de 01 a 20;\n•\tos três dígitos seguintes correspondem ao número do\nfuncionário da empresa com quem o visitante irá se reunir.\nEsse número varia de 001 a 135;\n•\to último dígito indica se o visitante chegou à empresa\npela manhã, dígito 0, ou à tarde, dígito 1.\nUm visitante chegou à empresa às 10 horas da manhã para\nse reunir com o funcionário identificado pelo número 109,\nque trabalha no setor 08 da empresa, localizado no 2º andar.\nO código de identificação desse visitante é",
+      "solution": "Regra do código (7 dígitos, da esquerda para a direita):\n1. Andar (1 a 4): visitante vai ao **2º andar** → **2**\n2. Setor (01 a 20): setor **08** → **08**\n3. Funcionário (001 a 135): funcionário **109** → **109**\n4. Período (0=manhã, 1=tarde): chegou às 10h (manhã) → **0**\n\nCódigo: 2 | 08 | 109 | 0 = **2081090**\n\n**Gabarito: D) 2081090.**",
+      "choices": [
+        "0109082.",
+        "0281090.",
+        "1010982.",
+        "2081090.",
+        "2810910."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1010,
+      "year": 2025,
+      "title": "Questão 150 - ENEM 2025",
+      "statement": "O controle remoto de um carrinho de brinquedo vem equipado com uma tela que ajusta automaticamente a escala empregada\nna exibição de cada deslocamento. A tela apresenta a imagem do deslocamento, a escala utilizada na geração dessa imagem e\no comprimento desse deslocamento, em centímetro, em conformidade com a escala empregada. As figuras representam a tela\ndo controle remoto exibindo os dados de cinco deslocamentos realizados por esse carrinho.\nA opção que indica o deslocamento de maior comprimento realizado pelo carrinho de brinquedo é",
+      "solution": "Para comparar os deslocamentos, convertemos cada medida da tela em comprimento real usando sua escala.\n\nOs resultados, em centímetros, são:\nI:900; II:1500; III:3000; IV:2100; V:2000.\n\nO maior é 3000 cm, correspondente ao deslocamento III.\n\n**Gabarito: C) III.**",
+      "choices": [
+        "I.",
+        "II.",
+        "III.",
+        "IV.",
+        "V."
+      ],
+      "imageUrl": "/questions/2025/q150-review.png",
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 21,
+      "year": 2025,
+      "title": "Questão 143 - ENEM 2025",
+      "statement": "No atletismo, um grande desafio da prova de 100 metros\nrasos é a sua conclusão num tempo abaixo da marca de\nreferência dos 10,00 segundos. Vários atletas já alcançaram\nesse feito. Em 2009, o jamaicano Usain Bolt estabeleceu o\nrecorde mundial masculino dessa prova, com o tempo de\n9,58 segundos.\nQual é a diferença, em segundo, entre a marca de referência e\na marca estabelecida por Usain Bolt em 2009?",
+      "solution": "Marca de referência: 10,00 s\nRecorde de Usain Bolt (2009): 9,58 s\n\nDiferença = 10,00 − 9,58\n\nPara calcular: de 9,58 para 10,00:\n• 9,58 → 9,60: +0,02\n• 9,60 → 10,00: +0,40\n• Total: 0,02 + 0,40 = **0,42 s**\n\n**Gabarito: B) 0,42.**",
+      "choices": [
+        "0,02",
+        "0,42",
+        "0,52",
+        "1,02",
+        "1,42"
+      ],
+      "imageUrl": null,
+      "correctChoice": 1,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 1019,
+      "year": 2025,
+      "title": "Questão 159 - ENEM 2025",
+      "statement": "Um recipiente tem um formato que faz com que, ao ser\nenchido de água com uma vazão constante, a distância D da\nlâmina de água ao tampo da mesa, em centímetro, aumente\nem relação ao tempo T, em minuto, de acordo com uma função\ndo tipo\nD = k + tg[p(T + m)],\nsendo os parâmetros k, p e m números reais, para T variando\nentre 0 e 4 minutos, conforme ilustrado na figura, na qual estão\napresentadas assíntotas verticais da função tangente utilizada\nna definição de D.\nA expressão algébrica que representa a relação entre D e T é",
+      "solution": "A função tem a forma \\(D=k+\\tan[p(T+m)]\\).\n\nPelo gráfico, o centro do ramo é \\(T=2{,}5\\), \\(D=30\\). Logo, \\(k=30\\) e \\(m=-5/2\\).\n\nAs assíntotas estão em \\((5-2\\pi)/2\\) e \\((5+2\\pi)/2\\); sua distância é \\(2\\pi\\). Como o período da tangente é \\(\\pi/|p|\\), temos \\(|p|=1/2\\). O ramo é crescente, portanto \\(p=1/2\\).\n\nAssim:\n\\[D=30+\\tan\\left[\\frac{1}{2}\\left(T-\\frac{5}{2}\\right)\\right].\\]\n\n**Gabarito: E.**",
+      "choices": [
+        "\\(D=2{,}5+\\tan\\left[30\\left(T-\\frac{5-2\\pi}{2}\\right)\\right]\\)",
+        "\\(D=4+\\tan\\left[30\\left(T+\\frac{5}{2}\\right)\\right]\\)",
+        "\\(D=4+\\tan\\left[2{,}5\\left(T+\\frac{5+2\\pi}{2}\\right)\\right]\\)",
+        "\\(D=30+\\tan\\left[\\frac{1}{2}(T-5)\\right]\\)",
+        "\\(D=30+\\tan\\left[\\frac{1}{2}\\left(T-\\frac{5}{2}\\right)\\right]\\)"
+      ],
+      "imageUrl": "/questions/2025/q159-review.png",
+      "correctChoice": 4,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 1024,
+      "year": 2025,
+      "title": "Questão 164 - ENEM 2025",
+      "statement": "O cortisol é um hormônio produzido pelas glândulas\nadrenais e pode ser considerado um importante marcador\ndo estresse fisiológico. Em um estudo desenvolvido com\nenfermeiros, foi verificado que a concentração de cortisol\nsalivar em um dia de trabalho, denotada por T, era, em média,\n1,59 vezes a concentração de cortisol salivar em um dia de\nfolga, denotada por F.\nROCHA, M. C. P. et al. Estresse em enfermeiros: o uso do cortisol salivar no\ndia de trabalho e de folga. Rev. Esc. Enferm. USP, n. 5, 2013 (adaptado).\nNesse estudo, a relação obtida entre T e F foi",
+      "solution": "O enunciado diz: \"a concentração de cortisol em dia de trabalho (T) era 1,59 vezes a concentração em dia de folga (F)\".\n\nIsso se traduz diretamente como:\nT = 1,59 × F\n\nOu seja: **T/F = 1,59**\n\n**Gabarito: C) T/F = 1,59.**",
+      "choices": [
+        "\\(T=1{,}59+F\\)",
+        "\\(F=1{,}59+T\\)",
+        "\\(\\frac{T}{F}=1{,}59\\)",
+        "\\(\\frac{F}{T}=1{,}59\\)",
+        "\\(F\\cdot T=1{,}59\\)"
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 944,
+      "year": 2024,
+      "title": "Questão 144 - ENEM 2024",
+      "statement": "Um sistema de polias circulares e correias é um dos mecanismos responsáveis pela transmissão de movimento em máquinas rotativas. O manual de um motor traz uma figura representando um sistema composto por duas polias e uma correia de transmissão, tensionada e perfeitamente ajustada sobre as polias, de modo a não apresentar folgas nos contatos com as polias. Considere que as partes dessa correia que não ficam em contato com as polias são representadas por segmentos de reta tangentes às polias. Para substituição dessa correia, é necessária a especificação de seu comprimento. Considere 3 como valor aproximado para π. A medida do comprimento dessa correia, em centímetro, é",
+      "solution": "A correia tem dois trechos retos de 15 cm, um arco de 150° na polia de raio 4 cm e um arco de 210° na polia de raio 8 cm.\n\nUsando π≈3:\n• Trechos retos: 2× 15=30 cm.\n• Arco menor: (150/360)× 2× 3× 4=10 cm.\n• Arco maior: (210/360)× 2× 3× 8=28 cm.\n\nComprimento total: 30+10+28=68 cm.\n\n**Gabarito: D) 68.**",
+      "choices": [
+        "54.",
+        "60.",
+        "66.",
+        "68.",
+        "72."
+      ],
+      "imageUrl": "/questions/2024/q144.png",
+      "correctChoice": 3,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 986,
+      "year": 2025,
+      "title": "Questão 105 - ENEM 2025",
+      "statement": "A tirinha ilustra um processo físico em que uma onda sonora,\nproduzida pela Mônica, causa a quebra das taças de cristal.\nO fenômeno ondulatório que provoca a quebra das taças só é\npossível em razão de uma característica da voz produzida pela\nMônica naquele momento, que, diferentemente do que sugere\na tirinha, não está relacionada à sua intensidade.\nDisponível em: https://artedafisicapibid.blogspot.com.\nAcesso em: 23 nov. 2021 (adaptado).\nEsse fenômeno e a característica associada à voz da Mônica\nsão, respectivamente,",
+      "solution": "A ressonância ocorre quando a frequência da excitação sonora coincide com uma frequência natural de vibração do objeto. Nessa condição, a transferência de energia para a oscilação pode aumentar muito sua amplitude.\n\nA frequência explica a seleção indicada na questão. Para ocorrer ruptura, também é necessário que a energia fornecida e a amplitude sejam suficientes; isso não torna a intensidade irrelevante.\n\n**Gabarito: B) ressonância.**",
+      "choices": [
+        "reflexão e comprimento de onda.",
+        "ressonância e frequência.",
+        "interferência e velocidade.",
+        "ressonância e timbre.",
+        "reflexão e amplitude."
+      ],
+      "imageUrl": "/questions/2025/q105-review.png",
+      "correctChoice": 1,
+      "subject_name": "Ondulatória"
+    },
+    {
+      "id": 993,
+      "year": 2025,
+      "title": "Questão 128 - ENEM 2025",
+      "statement": "Segundo o princípio da independência dos movimentos, de\nGalileu, sempre que a velocidade resultante de um corpo puder\nser decomposta em duas ou mais componentes perpendiculares\nentre si, cada um desses movimentos poderá ser analisado\nseparadamente como se os outros não existissem. Esse princípio\né muito útil para a simplificação de alguns problemas reais, em\ntrês dimensões.\nConsidere um avião que, ao decolar, é instruído pela\ntorre a atingir, em 6 minutos, uma posição de 20 km a Leste,\n20 km a Norte e 1 km de altitude em relação ao ponto de\ndecolagem, conforme a figura (fora de escala). No entanto,\nno instante da decolagem, começa a soprar um vento cujo\nvetor velocidade tem componentes 30 km/h para Leste,\n20 km/h para Sul e 1 km/h de cima para baixo.\nDurante a ação do vento, a velocidade v que o piloto deve\nestabelecer em relação ao ar para que o avião chegue à posição\nesperada no tempo indicado tem as componentes",
+      "solution": "O avião deve atingir, em 6 min (= 0,1 h), a posição:\n• 20 km a Leste → \\(\\mathrm{v}_{\\mathrm{Leste}}\\) = 20 / 0,1 = 200 km/h\n• 20 km a Norte → \\(\\mathrm{v}_{\\mathrm{Norte}}\\) = 20 / 0,1 = 200 km/h\n• 1 km de altitude → \\(\\mathrm{v}_{\\mathrm{cima}}\\) = 1 / 0,1 = 10 km/h\n\nEssa é a velocidade **em relação ao solo**. Mas há vento com componentes:\n• 30 km/h para Leste\n• 20 km/h para Sul\n• 1 km/h para baixo\n\nA velocidade do avião em relação ao ar é:\n\\(\\mathrm{v}_{\\mathrm{ar}}\\) = \\(\\mathrm{v}_{\\mathrm{solo}}\\) − \\(\\mathrm{v}_{\\mathrm{vento}}\\)\n\n• Leste: 200 − 30 = **170 km/h para Leste**\n• Norte: 200 − (−20) = 200 + 20 = **220 km/h para Norte** (vento sopra para Sul, logo subtrai−se −20)\n• Vertical: 10 − (−1) = 10 + 1 = **11 km/h para cima** (vento sopra para baixo)\n\n**Gabarito: D) 170 km/h para Leste, 220 km/h para Norte e 11 km/h para cima.**",
+      "choices": [
+        "230 km/h para Leste, 180 km/h para Sul e 9 km/h para baixo.",
+        "230 km/h para Leste, 180 km/h para Norte e 9 km/h para cima.",
+        "200 km/h para Oeste, 200 km/h para Norte e 10 km/h para cima.",
+        "170 km/h para Leste, 220 km/h para Norte e 11 km/h para cima.",
+        "170 km/h para Leste, 180 km/h para Norte e 11 km/h para cima."
+      ],
+      "imageUrl": "/questions/2025/q128-review.png",
+      "correctChoice": 3,
+      "subject_name": "Cinemática"
+    },
+    {
+      "id": 992,
+      "year": 2025,
+      "title": "Questão 125 - ENEM 2025",
+      "statement": "Em uma comunidade rural, os moradores utilizam uma\nbomba-d’água alimentada por 100 V de tensão contínua,\npodendo variar em até 5 V. Um eletrotécnico pretende instalar\nplacas fotovoltaicas para alimentar essa bomba. As placas são\nidênticas e cada uma apresenta tensão de operação igual a\n34 V com corrente de 7,5 A. Além disso, cada placa apresenta\n40 V de tensão elétrica, quando em circuito aberto. Assim,\nconsiderando que a placa descrita é um gerador não ideal, em\ncircuito aberto ela pode ser representada conforme a figura:\nO eletrotécnico construiu um circuito que permite à\nbomba-d’água operar corretamente com o menor número\npossível de placas conectadas. Para isso, desenhou um diagrama\nno qual todas essas placas são representadas como um único\ngerador não ideal, com a especificação das correspondentes\ncaracterísticas elétricas.\nO diagrama que representa o circuito construído pelo\neletrotécnico é:",
+      "solution": "Cada placa solar funciona como um gerador com:\n• fem (ε) = 40 V (tensão em circuito aberto)\n• Tensão de operação = 34 V com corrente I = 7,5 A\n• Resistência interna: r = (40 − 34) / 7,5 = 6 / 7,5 = 0,8 Ω\n\nA bomba precisa de 100 V (±5 V), ou seja, entre 95 V e 105 V.\n\nAssociando placas **em série**, as tensões se somam:\n• 3 placas: \\(\\mathrm{V}_{\\mathrm{op}}\\) = 3 × 34 = 102 V ✓ (dentro da faixa 95–105 V)\n• 2 placas: \\(\\mathrm{V}_{\\mathrm{op}}\\) = 68 V ✗ (insuficiente)\n\nO diagrama equivalente tem 3 placas em série, representadas como um gerador com fem = 3 × 40 = 120 V e resistência interna = 3 × 0,8 = 2,4 Ω, alimentando a bomba.\n\n**Gabarito: B.**",
+      "choices": [
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q125-a.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q125-b.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q125-c.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q125-d.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q125-e.png"
+        }
+      ],
+      "imageUrl": "/questions/2025/q125-review.png",
+      "correctChoice": 1,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 1025,
+      "year": 2025,
+      "title": "Questão 165 - ENEM 2025",
+      "statement": "Um estacionamento possui 120 vagas para veículos,\ne todas essas vagas estão ocupadas. Cada cliente paga uma\nmensalidade para utilizar uma vaga, que é calculada com base\nnas despesas mensais do estacionamento e no lucro pretendido.\nAs despesas mensais do estacionamento são: R$ 14 240,00 com\nmanutenção mais R$ 36,00 de seguro por veículo. O lucro do\nestacionamento é determinado pela diferença do valor arrecadado\ncom as mensalidades pelas despesas efetuadas. A partir do mês\nseguinte, o valor do seguro por veículo aumentará em 20%,\ne as despesas com manutenção permanecerão sem alterações.\nCom isso, o dono do estacionamento reajustará as mensalidades\npara obter um lucro mensal de R$ 10 000,00. Apesar desse\nreajuste, todas as vagas continuarão ocupadas.\nO valor, em real, da mensalidade reajustada será",
+      "solution": "Dados:\n• 120 vagas (todas ocupadas)\n• Manutenção: R$ 14 240,00/mês\n• Seguro (novo): R$ 36,00 × 1,20 = R$ 43,20 por veículo\n• Lucro desejado: R$ 10 000,00\n\nDespesas mensais:\nR$ 14 240 + 120 × R$ 43,20 = R$ 14 240 + R$ 5 184 = **R$ 19 424**\n\nReceita necessária:\nR$ 19 424 + R$ 10 000 = **R$ 29 424**\n\nMensalidade por veículo:\nR$ 29 424 / 120 = **R$ 245,20**\n\n**Gabarito: C) R$ 245,20.**",
+      "choices": [
+        "185,60.",
+        "226,09.",
+        "245,20.",
+        "268,93.",
+        "285,60."
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 983,
+      "year": 2025,
+      "title": "Questão 101 - ENEM 2025",
+      "statement": "A icterícia é uma doença que acomete recém-nascidos e\npode ser tratada com um método de fototerapia conhecido como\nbanho de luz, que consiste na exposição do recém-nascido a uma\nfonte luminosa equipada com LEDs azuis. Para o monitoramento\nda dosagem dessa radiação, é utilizada a resposta óptica de um\nsensor constituído de materiais orgânicos que luminescem quando\nexpostos à luz azul. Com o passar do tempo, essa radiação oxida os\nmateriais do sensor, alterando sua coloração de vermelho-laranja\npara verde, o que indica o final do tratamento.\nO gráfico apresenta o espectro de fotoluminescência do sensor\nem função do comprimento de onda da luz emitida no início do\ntratamento, quando o sensor, colado na fralda do bebê (Figura 1),\nluminesce na região do vermelho-laranja (∼600 nm). A Figura 2\napresenta a evolução da coloração do sensor, mostrando que a\nfrequência da luz emitida por ele aumenta em função do tempo de\nexposição à luz azul.\nSILVA, M. M. et al. Fabricação de sensor orgânico flexível para aplicação\nem terapia com luz azul. Tecnol. Metal. Mater. Miner.,\nn. 3, jul.-set. 2011 (adaptado).\nOs espectros de fotoluminescência do sensor no início e no final\ndo tratamento estão esboçados no gráfico:",
+      "solution": "O sensor inicialmente emite na região do vermelho-laranja (~600 nm, comprimento de onda mais longo). Com a oxidação provocada pela luz azul, a frequência da luz emitida pelo sensor **aumenta**, o que significa que o comprimento de onda **diminui**, deslocando a emissão em direção ao verde (~550 nm).\n\nNo gráfico correto:\n• O pico inicial (antes da exposição) está na região de ~600 nm.\n• O pico final (após exposição prolongada) desloca-se para comprimentos de onda menores (~550 nm), região do verde.\n\nA alternativa A é a única que mostra esse deslocamento do pico de emissão do vermelho-laranja para o verde (para a esquerda no eixo de comprimento de onda).\n\n**Gabarito: A.**",
+      "choices": [
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q101-a-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q101-b-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q101-c-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q101-d-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q101-e-review.png"
+        }
+      ],
+      "imageUrl": "/questions/2025/q101-review.png",
+      "correctChoice": 0,
+      "subject_name": "Óptica"
+    },
+    {
+      "id": 946,
+      "year": 2024,
+      "title": "Questão 146 - ENEM 2024",
+      "statement": "Projetistas de uma fábrica de amortecedores realizaram uma série de experimentos que produziram oscilações semelhantes ao comportamento do gráfico de uma senoide, para qualquer tipo de estrada. Cada experimento teve duração de 20 minutos, sendo os 9 primeiros minutos em superfície que simula uma rodovia asfaltada, e os 11 minutos restantes em superfície que simula uma estrada de chão. Para os amortecedores serem aprovados no experimento, exige-se que as amplitudes das ondas oscilatórias, em cada tipo de superfície, sejam constantes e, ainda, que a amplitude da oscilação do amortecedor no asfalto seja menor do que sua amplitude da oscilação na estrada de chão. O tipo de gráfico que descreve o comportamento oscilatório de um amortecedor aprovado nesse experimento é A D B E C",
+      "solution": "**Amortecedor aprovado — comportamento senoidal.**\n\nCondições para aprovação:\n1. Amplitude **constante** em cada tipo de superfície\n2. Amplitude no **asfalto menor** que na estrada de chão\n3. Primeiros 9 min: asfalto; últimos 11 min: estrada de chão\n\nO gráfico correto deve mostrar:\n- Uma **senoide com amplitude constante e menor** nos primeiros 9 minutos (asfalto)\n- Uma **senoide com amplitude constante e maior** nos 11 minutos seguintes (estrada de chão)\n- A **transição** ocorre em t = 9 min\n\nA alternativa A apresenta exatamente esse comportamento.\n\n**Gabarito: A).**",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q146-a.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q146-b.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q146-c.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q146-d.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q146-e.png"
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 0,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 981,
+      "year": 2025,
+      "title": "Questão 91 - ENEM 2025",
+      "statement": "TEXTO I\nAs mariposas\nAs mariposa, quando chega o frio\nFica dando volta em volta da lâmpida pra se esquentá. [sic]\nBARBOSA, A. Reviva: Adoniran Barbosa.\nSão Paulo: Som Livre, 2002 (fragmento).\nTEXTO II\nAs mariposas se aproximam das lâmpadas atraídas pela luz,\npois, sendo basicamente criaturas noturnas, estão adaptadas\na seguir o brilho da lua, em um processo conhecido como\norientação transversal. Assim, o que o sambista Adoniran\nBarbosa, no Texto I, descreve não é a causa, mas sim uma das\nconsequências possíveis dessa aproximação. De fato, o calor\ngerado pelas lâmpadas, sobretudo as incandescentes, pode\naquecer as mariposas.\nHERTZBERG, R. Por que as mariposas são tão atraídas por luzes fortes?\nNational Geographic, nov. 2020 (adaptado).\nNesse contexto, o processo de transferência de calor para as\nmariposas que independe da presença de fluidos é a",
+      "solution": "No contexto descrito, as mariposas recebem energia térmica emitida pela lâmpada por ondas eletromagnéticas, especialmente radiação infravermelha. Esse processo é a irradiação e pode ocorrer mesmo no vácuo.\n\nA convecção depende do movimento de um fluido. A condução exige interação entre partículas de um meio material e pode ocorrer em sólidos, líquidos e gases; não deve ser definida como exclusiva dos sólidos. A alternativa que descreve o aquecimento à distância pela emissão da lâmpada é a irradiação.\n\n**Gabarito: C.**",
+      "choices": [
+        "reflexão.",
+        "refração.",
+        "irradiação.",
+        "dispersão.",
+        "convecção."
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Termodinâmica"
+    },
+    {
+      "id": 985,
+      "year": 2025,
+      "title": "Questão 104 - ENEM 2025",
+      "statement": "A Figura 1 apresenta o esquema de um tubo de imagem em que\num filamento, na posição A, libera elétrons por efeito termiônico.\nEsses elétrons formam um feixe estreito, que é acelerado por\ncampos elétricos em direção à parte interna da tela. Nesse\ncaminho, o feixe de elétrons passa por outro campo elétrico, na\nregião B, atingindo, em seguida, a parte interna da tela do tubo,\na qual é recoberta por um material que emite luz ao receber o\nimpacto dos elétrons.\nNa Figura 2, a carga negativa representa o feixe de elétrons\nque é acelerado e, posteriormente, atinge um ponto da tela.\nO campo elétrico na região B apresenta a seguinte configuração:\nFigura 2\nGrupo de Reelaboração do Ensino de Física. Física 3:\neletromagnetismo. São Paulo: Edusp, 2000 (adaptado).\nNessa situação, qual ponto da tela será atingido pelo feixe de\nelétrons?",
+      "solution": "A força elétrica é dada por F=qE. Para o elétron, cuja carga é negativa, ela tem sentido oposto ao campo elétrico.\n\nNa figura, o campo aponta para cima, portanto a força sobre o elétron aponta para baixo. A componente horizontal do movimento prossegue e a trajetória se curva para baixo, chegando ao ponto 2.\n\n**Gabarito: B) 2.**",
+      "choices": [
+        {
+          "text": "1"
+        },
+        {
+          "text": "2"
+        },
+        {
+          "text": "3"
+        },
+        {
+          "text": "4"
+        },
+        {
+          "text": "5"
+        }
+      ],
+      "imageUrl": "/questions/2025/q104-review.png",
+      "correctChoice": 1,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 995,
+      "year": 2025,
+      "title": "Questão 135 - ENEM 2025",
+      "statement": "Réguas elétricas são dispositivos que permitem a ligação\nsegura e simultânea de dois ou mais aparelhos eletroeletrônicos\nà rede elétrica. Uma estudante comprou uma régua com seis\ntomadas, conforme a figura. Essa régua suporta uma intensidade\nmáxima de corrente elétrica igual a 20 A. Acima desse valor, o\nfusível de segurança da régua se rompe, inutilizando-a até que\num novo fusível seja instalado. Considere as potências nominais\nde alguns aparelhos eletroeletrônicos apresentadas no quadro.\nAparelho → Potência (watt)\nLuminária de LED → 5\nComputador → 250\nImpressora a laser → 660\nSecador de cabelos → 750\nCafeteira → 900\nCondicionador de ar portátil → 1 100\n\nEm um dia quente, a estudante mantém o computador e o\ncondicionador de ar portátil ligados à régua permanentemente.\nNessa situação, ela tenta realizar algumas atividades, uma de\ncada vez, utilizando a mesma régua, na seguinte ordem:\n1º – imprimir um trabalho escolar;\n2º – fazer um café com a cafeteira;\n3º – ligar a luminária;\n4º – secar os cabelos.\nSabe-se que a régua foi ligada à tensão elétrica de 110 V,\nadequada para o funcionamento desses aparelhos.\nConsiderando a ordem das tentativas, quantas atividades a\nestudante conseguiu realizar sem queimar o fusível?",
+      "solution": "A tensão da rede é 110 V e o fusível suporta no máximo 20 A.\nPotência máxima: \\(\\mathrm{P}_{\\mathrm{max}}\\) = 20 × 110 = 2 200 W.\n\nAparelhos permanentemente ligados:\n• Computador: 250 W\n• Condicionador de ar: 1 100 W\nSubtotal permanente: **1 350 W** (corrente ≈ 12,3 A)\n\nTentativas em ordem:\n\n**1ª – Impressora a laser (660 W):**\n1 350 + 660 = 2 010 W → corrente = 2 010 / 110 ≈ 18,3 A < 20 A ✅\n\n**2ª – Cafeteira (900 W):**\n1 350 + 900 = 2 250 W → corrente = 2 250 / 110 ≈ 20,5 A > 20 A ❌ — **Fusível queima!**\n\nA estudante conseguiu realizar apenas **1 atividade** (imprimir) antes de queimar o fusível.\n\n**Gabarito: D) 1.**",
+      "choices": [
+        {
+          "text": "4"
+        },
+        {
+          "text": "3"
+        },
+        {
+          "text": "2"
+        },
+        {
+          "text": "1"
+        },
+        {
+          "text": "0"
+        }
+      ],
+      "imageUrl": "/questions/2025/q135-review.png",
+      "correctChoice": 3,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 988,
+      "year": 2025,
+      "title": "Questão 113 - ENEM 2025",
+      "statement": "Em sua maioria, os equipamentos eletrônicos domésticos\ndemandam baixa potência elétrica em corrente contínua.\nPara alimentá-los, uma fonte externa ou embutida transforma\na corrente alternada em corrente contínua de baixa tensão.\nEntretanto, cada equipamento tem suas especificidades, e muitas\nvezes não é possível simplesmente trocar essas fontes sem levar\nem conta a tensão, a corrente ou a potência elétrica de saída.\nConsidere um equipamento de resistência elétrica RC que\nfunciona corretamente apenas em um dado valor de tensão.\nPorém, a única fonte de alimentação disponível fornece uma\ntensão 20% superior à tensão recomendada. Para adaptar essa\nfonte ao aparelho, a associação de um resistor de proteção RP\n,\nde potência adequada, se faz necessária.\nA configuração adequada do circuito e o valor do resistor de\nproteção, em relação ao valor da resistência do equipamento, são:",
+      "solution": "A fonte disponível fornece tensão 20% superior à recomendada. Se \\(\\mathrm{V}_{\\mathrm{C}}\\) é a tensão do equipamento e \\(\\mathrm{R}_{\\mathrm{C}}\\) é sua resistência, a fonte fornece \\(\\mathrm{V}_{\\mathrm{f}}\\) = 1,2·\\(\\mathrm{V}_{\\mathrm{C}}\\).\n\nPara reduzir a tensão, conecta-se um **resistor de proteção \\(\\mathrm{R}_{\\mathrm{P}}\\) em série** com o equipamento.\n\nA tensão no resistor de proteção:\n\\(\\mathrm{V}_{\\mathrm{P}}\\) = \\(\\mathrm{V}_{\\mathrm{f}}\\) − \\(\\mathrm{V}_{\\mathrm{C}}\\) = 1,2·\\(\\mathrm{V}_{\\mathrm{C}}\\) − \\(\\mathrm{V}_{\\mathrm{C}}\\) = 0,2·\\(\\mathrm{V}_{\\mathrm{C}}\\)\n\nComo a corrente é a mesma no circuito série:\nI = \\(\\mathrm{V}_{\\mathrm{C}}\\) / \\(\\mathrm{R}_{\\mathrm{C}}\\) = \\(\\mathrm{V}_{\\mathrm{P}}\\) / \\(\\mathrm{R}_{\\mathrm{P}}\\)\n\nPortanto:\n\\(\\mathrm{R}_{\\mathrm{P}}\\) = \\(\\mathrm{V}_{\\mathrm{P}}\\) / I = 0,2·\\(\\mathrm{V}_{\\mathrm{C}}\\) / (\\(\\mathrm{V}_{\\mathrm{C}}\\) / \\(\\mathrm{R}_{\\mathrm{C}}\\)) = 0,2·\\(\\mathrm{R}_{\\mathrm{C}}\\) = **\\(\\mathrm{R}_{\\mathrm{C}}\\) / 5**\n\nO circuito correto mostra \\(\\mathrm{R}_{\\mathrm{P}}\\) em série com \\(\\mathrm{R}_{\\mathrm{C}}\\), com \\(\\mathrm{R}_{\\mathrm{P}}\\) = \\(\\mathrm{R}_{\\mathrm{C}}\\)/5.\n\n**Gabarito: E.**",
+      "choices": [
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q113-a-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q113-b-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q113-c-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q113-d-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q113-e-review.png"
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 4,
+      "subject_name": "Eletromagnetismo"
+    },
+    {
+      "id": 982,
+      "year": 2025,
+      "title": "Questão 97 - ENEM 2025",
+      "statement": "Por que os olhos ficam vermelhos\nem algumas fotografias?\nEm fotos tiradas com câmeras fotográficas antigas, por\nvezes as pessoas aparecem com os olhos vermelhos. Isso\nocorre porque a luz do flash da câmera incide diretamente\nno globo ocular, sendo refletida por uma região repleta de\nvasos sanguíneos.\nDisponível em: www.uol.com.br. Acesso em: 14 jun. 2017 (adaptado).\nEsse efeito é mais comum à noite ou em lugares pouco iluminados\nporque, com a pupila",
+      "solution": "Em ambientes escuros, a pupila se **dilata** para permitir a entrada de mais luz, adaptando o olho à baixa luminosidade.\n\nQuando o flash dispara, a grande quantidade de luz entra pelo olho com a pupila dilatada, atinge a **retina** (que é rica em vasos sanguíneos, dando-lhe uma coloração avermelhada) e é refletida de volta para a câmera — causando o efeito dos olhos vermelhos na foto.\n\nCom a pupila dilatada, mais luz chega à retina, por isso o efeito é mais intenso em ambientes escuros.\n\n**Gabarito: A) dilatada, chega mais luz à retina.**",
+      "choices": [
+        "dilatada, chega mais luz à retina.",
+        "retraída, chega mais luz vermelha à retina.",
+        "retraída, chega mais luz vermelha aos bastonetes.",
+        "retraída, chegam menos luzes azul e verde aos cones.",
+        "dilatada, chegam menos luzes azul e verde aos bastonetes."
+      ],
+      "imageUrl": null,
+      "correctChoice": 0,
+      "subject_name": "Óptica"
+    },
+    {
+      "id": 989,
+      "year": 2025,
+      "title": "Questão 118 - ENEM 2025",
+      "statement": "A figura ilustra as informações contidas no manual de um\nsistema de alarme que utiliza transmissores e receptores de\nradiação eletromagnética para a detecção de movimento.\nO receptor é regulado pelo tempo de resposta, que corresponde ao\nintervalo de tempo necessário para o corpo do invasor atravessar\ncompletamente o feixe, de diâmetro d = 15 cm. Considere que a\nmenor porção do corpo de um invasor é a sua posição de perfil,\ncuja espessura típica é 20 cm. São indicados cinco possíveis\nmovimentos de um invasor e suas velocidades típicas, que devem\nser observadas para a escolha do tempo de resposta.\nManual de referência e instalação: sensor de barreira ativo.\nDisponível em: cs.ind.br. Acesso em: 2 dez. 2021 (adaptado).\nNesse sistema, o menor tempo de resposta, em milissegundo,\nque garante a detecção de um possível invasor é mais próximo de",
+      "solution": "O feixe tem diâmetro d = 15 cm e a menor porção do corpo do invasor (perfil) tem espessura de 20 cm.\n\nPara \"atravessar completamente o feixe\", o corpo precisa percorrer uma distância igual a d + espessura = 15 + 20 = **35 cm = 0,35 m**.\n\nO menor tempo de resposta que **garante** a detecção deve considerar o invasor mais rápido entre os listados. Entre os cinco movimentos apresentados no manual, o mais veloz corresponde a uma corrida (~5 m/s).\n\nTempo = distância / velocidade = 0,35 / 5 = 0,07 s = **70 ms**\n\nEsse é o menor tempo de resposta que garante a detecção mesmo do invasor mais rápido.\n\n**Gabarito: B) 70 ms.**",
+      "choices": [
+        "30 ms.",
+        "70 ms.",
+        "300 ms.",
+        "400 ms.",
+        "700 ms."
+      ],
+      "imageUrl": "/questions/2025/q118-review.png",
+      "correctChoice": 1,
+      "subject_name": "Cinemática"
+    },
+    {
+      "id": 1002,
+      "year": 2025,
+      "title": "Questão 142 - ENEM 2025",
+      "statement": "Pesquisas na área de neurobiologia confirmam que a prática\nmeditativa é responsável por diminuir consideravelmente\na frequência respiratória para praticantes avançados, que,\napós iniciarem a meditação, têm suas frequências respiratórias\nreduzidas até se estabilizarem em um nível mais baixo. O gráfico\napresenta a relação da frequência respiratória, em incursões de\nrespirações por minuto (rpm), em relação ao tempo, em minuto,\nde um praticante avançado, em que (f1) representa a frequência\nno instante t1, no qual se inicia a prática meditativa; e (f2), a\nfrequência no instante t2, a partir do qual esta se estabiliza\ndurante a meditação.\nDisponível em: www.redepsi.com.br. Acesso em: 3 dez. 2018 (adaptado).\nA partir do instante t1, em que se inicia a prática meditativa,\no comportamento da frequência respiratória, em relação\nao tempo,",
+      "solution": "O gráfico mostra que:\n• No instante t₁, a pessoa inicia a meditação com frequência f₁.\n• A frequência respiratória **diminui** continuamente de f₁ até f₂.\n• A partir do instante t₂, a frequência se **estabiliza** em f₂, permanecendo constante.\n\nIsso corresponde a um decrescimento seguido de um patamar constante — e **não** é proporcional ao tempo (não é uma reta passando pela origem), nem é inversamente proporcional.\n\n**Gabarito: D) diminui até o instante t₂, a partir do qual se torna constante.**",
+      "choices": [
+        "mantém-se constante.",
+        "é diretamente proporcional ao tempo.",
+        "é inversamente proporcional ao tempo.",
+        "diminui até o instante t2, a partir do qual se torna constante.",
+        "diminui de forma proporcional ao tempo, tanto entre t1 e t2 quanto após t2."
+      ],
+      "imageUrl": "/questions/2025/q142-review.png",
+      "correctChoice": 3,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 1008,
+      "year": 2025,
+      "title": "Questão 148 - ENEM 2025",
+      "statement": "Uma livraria comercializa livros dos seguintes gêneros\nliterários: ficção científica, autoajuda, romance e biografia.\nO gráfico apresenta o estoque dos livros que essa livraria tem,\npor gênero literário e por nacionalidade do autor, bem como a\ndemanda por gênero literário, obtida por meio de uma enquete\nfeita com seus clientes habituais.\nEstoque e demanda por livros\nO gerente da livraria fará a encomenda de novos exemplares\nsomente do gênero cuja quantidade em estoque seja insuficiente\npara atender a demanda constatada pela enquete.\nO gênero de livro do qual o gerente deverá encomendar mais\nexemplares é",
+      "solution": "Somando os estoques de autores nacionais e estrangeiros e comparando com a demanda de cada gênero:\n\n• Ficção científica:200 em estoque para demanda 160.\n• Autoajuda:130 em estoque para demanda 135.\n• Romance:145 em estoque para demanda 140.\n• Biografia:95 em estoque para demanda 80.\n\nApenas autoajuda apresenta falta de exemplares:135−130=5.\n\n**Gabarito: C) Autoajuda.**",
+      "choices": [
+        "ficção, pois é o que apresenta maior demanda.",
+        "biografia, pois é o gênero que tem a menor demanda.",
+        "autoajuda, pois a quantidade em estoque é inferior à demanda.",
+        "biografia, pois é o gênero que tem a menor quantidade de livros em estoque.",
+        "romance, pois é o que apresenta o menor estoque de livros de autores brasileiros."
+      ],
+      "imageUrl": "/questions/2025/q148-review.png",
+      "correctChoice": 2,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 1016,
+      "year": 2025,
+      "title": "Questão 156 - ENEM 2025",
+      "statement": "O dono de uma embarcação deve partir do ponto P e\nchegar ao ponto R por meio de dois deslocamentos lineares\ne navegando a uma velocidade constante. Essa viagem será\nfeita durante a noite, e como ele dispõe somente de uma\nbússola e de um relógio, planejou sua rota da seguinte forma:\n1º – partir do ponto P na direção 110 e navegar por 4 horas,\nalcançando um ponto Q;\n2º – partir do ponto Q na direção 90 e navegar por 2 horas,\nalcançando o ponto de destino R.\nNo entanto, ao direcionar o barco para o primeiro\ndeslocamento, o fez na direção 340, em vez de 110. Com isso,\nrealizou os seguintes deslocamentos:\n1º – partiu do ponto P na direção 340 e navegou por 4 horas,\nalcançando um ponto S;\n2º – partiu do ponto S na direção 90 e navegou por 2 horas,\nalcançando o ponto T.\nA figura apresenta a bússola, a rota planejada e a rota\nexecutada.\nO dono da embarcação só percebeu o equívoco ao chegar\nao ponto T. Com isso, agora ele precisa definir a direção e o\ntempo de navegação que lhe permita, partindo do ponto T,\nchegar ao ponto de destino R por meio de uma rota retilínea.\nConsidere 0,64 como aproximação para cos 50°.\nA direção e o tempo aproximado de navegação que o dono da\nembarcação deve utilizar são, respectivamente,",
+      "solution": "Os trechos QR e ST são iguais: ambos duram 2 h na direção leste. Por isso, cancelam-se na diferença entre a posição desejada R e a posição alcançada T.\n\nRestam os vetores de comprimento 4v nas direções 110° e 340°. O ângulo menor entre eles é 130°. Pela lei dos cossenos:\n(TR/v)²=4²+4²−2× 4× 4×cos 130°=32(1+cos 50°).\n\nCom cos 50°≈0,64, o tempo é √52,48≈7,24 h, aproximadamente 7 h 15 min na alternativa.\n\nA diferença entre os vetores aponta igualmente para leste e para sul: direção 135°, sudeste.\n\n**Gabarito: A) 135° e 7 horas e 15 minutos.**",
+      "choices": [
+        "135 e 7 horas e 15 minutos.",
+        "45 e 7 horas e 15 minutos.",
+        "135 e 12 horas.",
+        "135 e 6 horas.",
+        "45 e 6 horas."
+      ],
+      "imageUrl": "/questions/2025/q156-review.png",
+      "correctChoice": 0,
+      "subject_name": "Trigonometria"
+    },
+    {
+      "id": 1017,
+      "year": 2025,
+      "title": "Questão 157 - ENEM 2025",
+      "statement": "Em um estudo clínico, 55 mulheres foram distribuídas, aleatoriamente, em 5 grupos de 11 pessoas. Para testar uma nova\nmedicação, será escolhido um grupo no qual a maioria das mulheres tenham idades entre 20 e 30 anos. Os demais grupos\ntomarão placebo ou medicações já existentes no mercado. O quadro, parcialmente preenchido, informa alguns dados relativos\nàs idades das mulheres desses grupos.\nDados preenchidos no quadro (idades em anos):\nGrupo 1: média 25; desvio padrão 10.\nGrupo 2: mediana 25; desvio padrão 9.\nGrupo 3: moda 25.\nGrupo 4: média 25; desvio padrão 1.\nGrupo 5: menor idade 20; maior idade 35.\nAs demais células não foram preenchidas.\n\nMesmo com o quadro incompleto, foi possível selecionar um desses grupos porque, apenas com os dados apresentados no\nquadro, foi identificado um grupo que, certamente, atendia ao critério de escolha.\nO grupo escolhido foi o",
+      "solution": "O grupo 4 tem média de idade 25 anos e desvio padrão 1 ano. São 11 participantes.\n\nPela definição de desvio padrão populacional, a soma dos quadrados dos desvios em relação à média é 11× 1²=11. Uma única idade fora do intervalo de 20 a 30 anos teria distância da média maior que 5 e contribuiria com mais de 25 para essa soma, o que é impossível.\n\nPortanto, todas as idades do grupo 4 estão no intervalo solicitado, garantindo a maioria. Pela definição amostral, a soma seria 10 e a conclusão seria a mesma. Mediana ou moda isoladamente não garantiriam isso.\n\n**Gabarito: D) 4.**",
+      "choices": [
+        {
+          "text": "1"
+        },
+        {
+          "text": "2"
+        },
+        {
+          "text": "3"
+        },
+        {
+          "text": "4"
+        },
+        {
+          "text": "5"
+        }
+      ],
+      "imageUrl": "/questions/2025/q157-review.png",
+      "correctChoice": 3,
+      "subject_name": "Estatística"
+    },
+    {
+      "id": 1020,
+      "year": 2025,
+      "title": "Questão 160 - ENEM 2025",
+      "statement": "Os quadrados em cinza na figura representam os quarteirões\nde uma parte do bairro onde moram João e seu amigo.\nO quadrado pequeno (A), pintado em preto e localizado no canto\nsuperior esquerdo de um quadrado maior, indica a casa do amigo\nde João. João também mora em uma casa de esquina, mas na\nextremidade nordeste de um quarteirão. Para chegar à casa de\nseu amigo, ao sair de casa, João deve caminhar pelo quarteirão\nonde mora na direção oeste, dobrar à direita, caminhar por três\nquarteirões na direção norte e dobrar à esquerda. A casa de\nseu amigo fica no segundo quarteirão a oeste.\nO quarteirão onde se encontra a casa de João é representado\npelo quadrado com a letra",
+      "solution": "Partindo da casa de João:\n1. Caminha na direção **oeste** pelo quarteirão onde mora.\n2. Dobra à **direita** → vai para o **norte**.\n3. Caminha **3 quarteirões** para o norte.\n4. Dobra à **esquerda** → vai para o **oeste**.\n5. A casa do amigo fica no **2º quarteirão** a oeste (= quadrado A, canto superior esquerdo).\n\nJoão mora na extremidade **nordeste** de um quarteirão. Fazendo o caminho inverso a partir da casa do amigo (marcada como A na figura), identifica-se que o quarteirão de João é o representado pela letra **P**.\n\n**Gabarito: A) P.**",
+      "choices": [
+        "P.",
+        "Q.",
+        "R.",
+        "S.",
+        "T."
+      ],
+      "imageUrl": "/questions/2025/q160-review.png",
+      "correctChoice": 0,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 947,
+      "year": 2024,
+      "title": "Questão 147 - ENEM 2024",
+      "statement": "Um jardineiro dispõe de k metros lineares de cerca baixa para fazer um jardim ornamental. O jardim, delimitado por essa cerca, deve ter a forma de um triângulo equilátero, um quadrado ou um hexágono regular. A escolha será pela forma que resulte na maior área. O jardineiro escolherá a forma de",
+      "solution": "**Jardim com k metros de cerca — maior área.**\n\nUsando todo o perímetro k para cada forma:\n\n**Triângulo equilátero** (lado = k/3):\nÁrea = (√3/4) × (k/3)² = √3 k² / 36\n\n**Quadrado** (lado = k/4):\nÁrea = (k/4)² = k² / 16\n\n**Hexágono regular** (lado = k/6):\nÁrea = (3√3/2) × (k/6)² = (3√3/2) × k²/36 = **k²√3 / 24**\n\nComparando (usando √3 ≈ 1,732):\n- Triângulo: k² × 1,732 / 36 ≈ 0,0481 k²\n- Quadrado: k² / 16 = 0,0625 k²\n- Hexágono: k² × 1,732 / 24 ≈ **0,0722 k²** ✓ (maior!)\n\nO hexágono regular produz a **maior área**: k²√3/24.\n\n**Gabarito: A) Hexágono regular, pois a área do jardim, em metro quadrado, será k²√3/24.**",
+      "choices": [
+        "hexágono regular, pois a área do jardim, em metro quadrado, será \\(\\frac{k^2\\sqrt{3}}{24}\\).",
+        "hexágono regular, pois a área do jardim, em metro quadrado, será \\(\\frac{3k^2\\sqrt{3}}{2}\\).",
+        "quadrado, pois a área do jardim, em metro quadrado, será \\(\\frac{k^2}{16}\\).",
+        "triângulo equilátero, pois a área do jardim, em metro quadrado, será \\(\\frac{k^2\\sqrt{3}}{36}\\).",
+        "triângulo equilátero, pois a área do jardim, em metro quadrado, será \\(\\frac{k^2\\sqrt{3}}{4}\\)."
+      ],
+      "imageUrl": null,
+      "correctChoice": 0,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 948,
+      "year": 2024,
+      "title": "Questão 148 - ENEM 2024",
+      "statement": "Um aeroporto disponibiliza o serviço de transporte gratuito entre seus dois terminais utilizando os ônibus A e B, que partem simultaneamente, de hora em hora, de terminais diferentes. A distância entre os terminais é de 9 000 metros, e o percurso total dos ônibus, de um terminal ao outro, é monitorado por um sistema de cinco câmeras que cobrem diferentes partes do trecho, conforme o esquema. O alcance de cada uma das cinco câmeras é: câmera I: 1/5 do percurso; câmera II: 3/10 do percurso; câmera III: 1/10 do percurso; câmera IV: 1/10 do percurso; câmera V: 3/10 do percurso. Em determinado horário, o ônibus A parte do terminal 1 e realiza o percurso total com velocidade constante de 250 m/min; enquanto o ônibus B, que parte do terminal 2, realiza o percurso total com velocidade constante de 150 m/min. Qual câmera registra o momento em que os ônibus A e B se encontram?",
+      "solution": "**Encontro dos ônibus — câmera que registra.**\n\nDados:\n- Distância entre terminais: 9 000 m\n- Ônibus A: parte do terminal 1, \\(\\mathrm{v}_{\\mathrm{A}}\\) = 250 m/min\n- Ônibus B: parte do terminal 2, \\(\\mathrm{v}_{\\mathrm{B}}\\) = 150 m/min\n- Partem simultaneamente em direções opostas\n\nTempo de encontro:\nt = distância / (\\(\\mathrm{v}_{\\mathrm{A}}\\) + \\(\\mathrm{v}_{\\mathrm{B}}\\)) = 9 000 / (250 + 150) = 9 000 / 400 = **22,5 min**\n\nPosição do encontro (a partir do terminal 1):\n\\(\\mathrm{d}_{\\mathrm{A}}\\) = 250 × 22,5 = **5 625 m**\n\nFração do percurso: 5 625 / 9 000 = **0,625 = 5/8**\n\nAlcance das câmeras (acumulado do terminal 1):\n- Câmera I: 0 a 1/5 = 0 a 0,200 (1 800 m)\n- Câmera II: 1/5 a 1/2 = 0,200 a 0,500 (até 4 500 m)\n- Câmera III: 1/2 a 6/10 = 0,500 a 0,600 (até 5 400 m)\n- Câmera IV: 6/10 a 7/10 = 0,600 a 0,700 (até 6 300 m)\n- Câmera V: 7/10 a 1 = 0,700 a 1,000\n\n5 625 m → 5625/9000 = 0,625 → está no intervalo **0,600 a 0,700** → **Câmera IV**\n\n**Gabarito: D) IV.**",
+      "choices": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V"
+      ],
+      "imageUrl": "/questions/2024/q148.png",
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 949,
+      "year": 2024,
+      "title": "Questão 149 - ENEM 2024",
+      "statement": "A criptografia refere-se à construção e análise de protocolos que impedem terceiros de lerem mensagens privadas. Júlio César, imperador romano, utilizava um código para proteger as mensagens enviadas a seus generais. Assim, se a mensagem caísse em mãos inimigas, a informação não poderia ser compreendida. Nesse código, cada letra do alfabeto era substituída pela letra três posições à frente, ou seja, o “A” era substituído pelo “D”, o “B” pelo “E”, o “C” pelo “F”, e assim sucessivamente. A B C D E F G H I J K L M N O P Q R S T U V W X Y Z A B C Letra do texto codificado A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Letra do texto original Disponível em: www.codifica.ibict.br. Acesso em: 15 out. 2019. Qualquer código que tenha um padrão de substituição de letras como o descrito é considerado uma Cifra de César ou um Código de César. Note que, para decifrar uma Cifra de César, basta descobrir por qual letra o “A” foi substituído, pois isso define todas as demais substituições a serem feitas. Uma mensagem, em um alfabeto de 26 letras, foi codificada usando uma Cifra de César. Considere a probabilidade de se descobrir, aleatoriamente, o padrão utilizado nessa codificação, e que uma tentativa frustrada deverá ser eliminada nas tentativas seguintes. A probabilidade de se descobrir o padrão dessa Cifra de César apenas na terceira tentativa é dada por",
+      "solution": "**Cifra de César — probabilidade de acertar na 3ª tentativa.**\n\nSão 26 letras, logo existem **25 padrões possíveis** de Cifra de César (excluindo o trivial onde A→A).\n\nPara acertar **apenas na 3ª tentativa**:\n- 1ª tentativa: errar → P = **24/25** (24 erradas entre 25)\n- 2ª tentativa: errar → P = **23/24** (23 erradas entre 24 restantes)\n- 3ª tentativa: acertar → P = **1/23** (1 certa entre 23 restantes)\n\nProbabilidade total:\n$$P = \\frac{24}{25} \\times \\frac{23}{24} \\times \\frac{1}{23} = \\frac{1}{25}$$\n\nMas na forma da expressão numérica:\n$$\\frac{24}{25} \\times \\frac{23}{24} \\times \\frac{1}{23}$$\n\n**Gabarito: E) (24/25) × (23/24) × (1/23).**",
+      "choices": [
+        "\\(\\frac{1}{25}+\\frac{1}{25}+\\frac{1}{25}\\)",
+        "\\(\\frac{24}{25}+\\frac{23}{24}+\\frac{1}{23}\\)",
+        "\\(\\frac{1}{25}\\times\\frac{1}{24}\\times\\frac{1}{23}\\)",
+        "\\(\\frac{24}{25}\\times\\frac{23}{25}\\times\\frac{1}{25}\\)",
+        "\\(\\frac{24}{25}\\times\\frac{23}{24}\\times\\frac{1}{23}\\)"
+      ],
+      "imageUrl": "/questions/2024/q149.png",
+      "correctChoice": 4,
+      "subject_name": "Probabilidade"
+    },
+    {
+      "id": 957,
+      "year": 2024,
+      "title": "Questão 157 - ENEM 2024",
+      "statement": "Uma piscina tem capacidade de 2 500 000 litros. Seu sistema de abastecimento foi regulado para ter uma vazão constante de 6 000 litros de água por minuto. O mesmo sistema foi instalado em uma segunda piscina, com capacidade de 2 750 000 litros, e regulado para ter uma vazão, também constante, capaz de enchê-la em um tempo 20% maior que o gasto para encher a primeira piscina. A vazão do sistema de abastecimento da segunda piscina, em litro por minuto, é",
+      "solution": "**Vazão da segunda piscina.**\n\nDados:\n- Piscina 1: 2 500 000 L, vazão = 6 000 L/min\n- Piscina 2: 2 750 000 L, tempo 20% maior que piscina 1\n\nTempo para encher piscina 1:\nt₁ = 2 500 000 / 6 000 ≈ 416,67 min\n\nTempo para piscina 2 (20% maior):\nt₂ = 1,20 × t₁ = 1,20 × 416,67 = **500 min**\n\nVazão da piscina 2:\nQ₂ = 2 750 000 / 500 = **5 500 L/min**\n\n**Gabarito: D) 5 500.**",
+      "choices": [
+        "8 250.",
+        "7 920.",
+        "6 545.",
+        "5 500.",
+        "5 280."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 961,
+      "year": 2024,
+      "title": "Questão 161 - ENEM 2024",
+      "statement": "Uma empresa tem 400 funcionários, distribuídos em três setores: administrativo, logística e produção. O gráfico apresenta a distribuição quantitativa desses funcionários, por setor e por faixa etária. Uma viagem de férias será sorteada entre esses funcionários, de forma que todos terão igual probabilidade de serem sorteados. A maior probabilidade é que o funcionário sorteado esteja na faixa etária",
+      "solution": "Somamos os funcionários de cada faixa etária usando os percentuais de cada setor, que tem tamanhos diferentes: administrativo 80, logística 120 e produção 200.\n\nAté 25 anos: 0,20× 80+0,25× 120+0,40× 200=126.\nEntre 25 e 45 anos: 0,30× 80+0,40× 120+0,35× 200=142.\nA partir de 45 anos: 0,50× 80+0,35× 120+0,25× 200=132.\n\nComo todos têm igual chance, a faixa com maior número de pessoas tem maior probabilidade: entre 25 e 45 anos, com 142/400.\n\n**Gabarito: A.**",
+      "choices": [
+        "entre 25 e 45 anos, pois é a faixa etária com maior quantidade de funcionários.",
+        "entre 25 e 45 anos, pois é a única faixa etária cujas porcentagens são maiores do que as porcentagens mínimas de cada setor.",
+        "até 25 anos, pois é a única faixa etária cujos percentuais associados aos setores aumentam com o aumento da quantidade de funcionários por setor.",
+        "até 25 anos, pois é a faixa etária que apresenta maior quantidade de funcionários no setor de produção, que é o setor que emprega metade dos funcionários dessa empresa.",
+        "a partir de 45 anos, pois a soma das porcentagens associadas a essa faixa etária é 110%, que é maior do que as respectivas somas associadas às outras faixas etárias, que são 105% e 85%."
+      ],
+      "imageUrl": "/questions/2024/q161.png",
+      "correctChoice": 0,
+      "subject_name": "Probabilidade"
+    },
+    {
+      "id": 962,
+      "year": 2024,
+      "title": "Questão 162 - ENEM 2024",
+      "statement": "Em um jogo virtual para celular, um personagem pode percorrer trajetórias retilíneas voando ou se deslocando ao longo de paredes. Considere que o personagem descreve a trajetória ABCDEF, em que os pontos A, D e E estão em um plano paralelo ao que contém os pontos B e C, sendo esses dois planos ortogonais ao plano da base que contém o ponto F, conforme a figura. A projeção ortogonal, sobre o plano da base, da trajetória ABCDEF descrita pelo personagem é",
+      "solution": "Na projeção ortogonal sobre a base, cada ponto é levado perpendicularmente até esse plano. O segmento BC, vertical, projeta-se em um único ponto. Os segmentos AB e CD formam os dois trechos oblíquos que chegam a esse ponto pela esquerda no desenho projetado. D e E estão sobre o mesmo plano vertical; suas projeções, com a de F, determinam os trechos restantes da trajetória. A configuração resultante é a da alternativa C.\n\n**Gabarito: C.**",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q162-a.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q162-b.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q162-c.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q162-d.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "/questions/2024/q162-e.png"
+        }
+      ],
+      "imageUrl": "/questions/2024/q162.png",
+      "correctChoice": 2,
+      "subject_name": "Geometria"
+    },
+    {
+      "id": 969,
+      "year": 2024,
+      "title": "Questão 169 - ENEM 2024",
+      "statement": "Uma criança, utilizando um aplicativo, escreveu uma mensagem para enviar a um amigo. Essa mensagem foi escrita seguindo estas etapas: 1ª etapa: inseriu três figuras do tipo 🙂 no visor de escrita da mensagem: 🙂🙂🙂.\n2ª etapa: copiou o que havia inserido anteriormente e colou ao lado, ficando com seis figuras.\n3ª etapa: copiou o que tinha no visor na segunda etapa e colou ao lado, ficando com doze figuras.\n\nA criança seguiu copiando e colando, em cada etapa, o que tinha no visor na etapa imediatamente anterior, até concluir a 20ª etapa. Em seguida, enviou a mensagem. Qual foi o total de figuras contidas na mensagem enviada?",
+      "solution": "A primeira etapa tem 3 figuras, a segunda tem 6 e a terceira tem 12. A quantidade dobra a cada etapa, formando uma progressão geométrica de razão 2.\n\nAssim, \\(a_n=3\\cdot2^{n-1}\\). Na vigésima etapa, \\(a_{20}=3\\cdot2^{19}\\).\n\nAlternativa A.",
+      "choices": [
+        "\\(3\\times2^{19}\\)",
+        "\\(3\\times2^{20}\\)",
+        "\\(3\\times2^{21}\\)",
+        "\\(3\\times2^{20}-1\\)",
+        "\\(3\\times2^{20}-3\\)"
+      ],
+      "imageUrl": "/questions/2024/q169.png",
+      "correctChoice": 0,
+      "subject_name": "Funções"
+    },
+    {
+      "id": 970,
+      "year": 2024,
+      "title": "Questão 170 - ENEM 2024",
+      "statement": "Uma casa de shows terá um evento cujo custo total de produção é de R$ 34 350,00, sendo que comporta 500 pessoas. O preço do ingresso será de R$ 130,00 e, normalmente, 60% das pessoas adquirem meia-entrada, pagando R$ 65,00 pelo ingresso. Além do faturamento proveniente da venda de ingressos, a casa de shows vende, com 60% de lucro, bebidas e petiscos ao público no dia do evento. Após ter vendido todos os 500 ingressos, constatou-se que a quantidade de meias-entradas vendidas superou em 50% o que estava previsto, impactando o faturamento estimado com a venda de ingressos. No dia do evento, decidiu-se manter o percentual de 60% de lucro sobre as bebidas e petiscos, pois todo o público que comprou ingresso compareceu ao show. Com isso, espera-se ter lucro de R$ 17 000,00 nesse evento. Para que se alcance o lucro esperado, o gasto médio por pessoa com bebidas e petiscos, em real, deverá ser de",
+      "solution": "Estavam previstas 300 meias-entradas (60% de 500). Foram vendidas 50% a mais:300× 1,5=450 meias e 50 inteiras.\n\nReceita dos ingressos:450× 65+50× 130=R$35750,00. Descontado o custo de produção de R$34350,00, o lucro dessa parte é R$1400,00.\n\nPara chegar ao lucro total de R$17000,00, as bebidas e petiscos devem gerar R$15600,00 de lucro. Na interpretação do percentual compatível com o gabarito, o lucro equivale a 60% da receita R desses produtos:\n0,60R=15600 ⇒ R=26000.\n\nO gasto médio dos 500 clientes é 26000/500=R$52,00.\n\nA base do percentual deve ser a receita nessa interpretação; tratar os R$26000 como custo e depois usá-los como gasto dos clientes seria incoerente.\n\n**Gabarito: D) 52,00.**",
+      "choices": [
+        "19,50.",
+        "28,80.",
+        "34,00.",
+        "52,00.",
+        "68,70."
+      ],
+      "imageUrl": null,
+      "correctChoice": 3,
+      "subject_name": "Aritmética"
+    },
+    {
+      "id": 984,
+      "year": 2025,
+      "title": "Questão 103 - ENEM 2025",
+      "statement": "Para transportar uma caixa do primeiro para o segundo\npiso de uma construção, um trabalhador precisará arrasta-lá\nsobre um plano inclinado. O trabalhador começa a arrastar a\ncaixa no primeiro piso, exercendo sobre ela uma força de grande\nintensidade, paralela ao seu deslocamento. Na medida em que a\ncaixa sobe o plano inclinado, ele decide reduzir a força sobre ela,\narrastando-a lentamente até chegar ao segundo piso. Considere\nque a caixa permanece em movimento nos encontros dos pisos\ncom o plano inclinado, e que a rugosidade entre as superfícies\npermanece a mesma durante todo o percurso.\nO comportamento da força de atrito entre a caixa e o chão no\nplano inclinado é representado em:",
+      "solution": "Para determinar o comportamento da força de atrito, devemos analisar a fórmula do **atrito cinético** (ou dinâmico), já que a caixa está em movimento:\n\n$F_{at} = \\mu \\cdot N$\n\nOnde:\n* $\\mu$ é o coeficiente de atrito (depende da rugosidade).\n* N é a força normal (compressão entre as superfícies).\n\n**Análise dos Dados:**\n\n1. **Rugosidade Constante:** O enunciado afirma que a rugosidade não muda, logo $\\mu$ é constante.\n2. **Plano Inclinado:** Em uma rampa com inclinação $\\theta$ constante, a força normal é calculada por:\n $N = m \\cdot g \\cdot \\cos(\\theta)$\n\nComo a massa (m), a gravidade (g) e o ângulo ($\\theta$) permanecem os mesmos durante a subida, a Normal (N) também é constante.\n\n**Conclusão:**\n\nEmbora o trabalhador diminua a força que ele aplica para arrastar a caixa lentamente, isso **não altera** a força de atrito. A força de atrito cinético depende apenas do contato entre as superfícies e da força normal. \n\nComo $\\mu$ e N são constantes, a **força de atrito permanece constante** durante todo o tempo no plano inclinado. O único gráfico que representa uma força constante (linha horizontal) é o da **Alternativa C**.",
+      "choices": [
+        {
+          "text": null,
+          "imageUrl": "https://gwhihslhtyvztbbikfjg.supabase.co/storage/v1/object/public/question-images/-yvm5RP7Cy1Mg9nefp9Up.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "https://gwhihslhtyvztbbikfjg.supabase.co/storage/v1/object/public/question-images/Zvsd3lqSqdKp82fXMxQ8E.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "https://gwhihslhtyvztbbikfjg.supabase.co/storage/v1/object/public/question-images/fyJcfQrILXTgsaMVxE8Oc.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "https://gwhihslhtyvztbbikfjg.supabase.co/storage/v1/object/public/question-images/2tvYxKWr8vr2xJL_1sXeU.png"
+        },
+        {
+          "text": null,
+          "imageUrl": "https://gwhihslhtyvztbbikfjg.supabase.co/storage/v1/object/public/question-images/qpBmcHJgJyCG3WP87jD1A.png"
+        }
+      ],
+      "imageUrl": null,
+      "correctChoice": 2,
+      "subject_name": "Dinâmica"
+    },
+    {
+      "id": 1029,
+      "year": 2025,
+      "title": "Questão 169 - ENEM 2025",
+      "statement": "Três dados cúbicos, com faces numeradas de 1 a 6, foram\nutilizados em um jogo. Artur escolheu dois dados, e João\nficou com o terceiro. O jogo consiste em ambos lançarem\nseus dados, observarem os números nas faces voltadas para\ncima e compararem o maior número obtido por Artur com\no número obtido por João. Vence o jogador que obtiver o\nmaior número. Em caso de empate, a vitória é de João.\nO jogador que tem a maior probabilidade de vitória é",
+      "solution": "Artur lança 2 dados e usa o maior resultado; João lança 1 dado. Artur vence se seu máximo for **maior** que o de João (empate = João vence).\n\nPara cada valor j de João (1 a 6), a probabilidade de ambos os dados de Artur serem ≤ j é (j/6)².\nLogo, P(máx de Artur ≤ j) = j²/36.\n\nP(Artur vence) = (1/6) × Σ P(máx de Artur > j)\n= (1/6) × Σ [1 − j²/36] para j = 1 a 6\n= (1/6) × [6 − (1+4+9+16+25+36)/36]\n= (1/6) × [6 − 91/36]\n= (1/6) × [(216 − 91)/36]\n= (1/6) × 125/36\n= **125/216**\n\n**Gabarito: E) Artur, com probabilidade de 125/216.**",
+      "choices": [
+        "Artur, com probabilidade de \\(\\frac{2}{3}\\)",
+        "João, com probabilidade de \\(\\frac{4}{9}\\)",
+        "Artur, com probabilidade de \\(\\frac{91}{216}\\)",
+        "João, com probabilidade de \\(\\frac{91}{216}\\)",
+        "Artur, com probabilidade de \\(\\frac{125}{216}\\)"
+      ],
+      "imageUrl": null,
+      "correctChoice": 4,
+      "subject_name": "Probabilidade"
+    },
+    {
+      "id": 1027,
+      "year": 2025,
+      "title": "Questão 167 - ENEM 2025",
+      "statement": "A produtividade de soja em uma área cultivada é a média da quantidade de sacas de 50 quilogramas que são produzidas\npor hectare. O quadro apresenta a área cultivada e a produtividade de soja em certa propriedade, ao longo de cinco safras,\ncom períodos de um ano, de 2011 a 2016.\n\nSafra → Área cultivada (hectare); Produtividade (sacas de 50 kg por hectare)\n11–12 → 200; 40\n12–13 → 220; 30\n13–14 → 250; 45\n14–15 → 250; 45\n15–16 → 200; 50\n\nO gráfico de linhas que representa a produção de soja dessa propriedade, em tonelada, nessas cinco safras é",
+      "solution": "A produção, em toneladas, é área cultivada × produtividade em sacas por hectare × 50/1000.\n\nAplicando os dados do quadro às cinco safras, obtemos, na ordem:\n400;330;562,5;562,5;500 toneladas.\n\nO gráfico deve cair entre as duas primeiras safras, subir até 562,5 na terceira, manter esse valor na quarta e cair para 500 na quinta. Esse comportamento está na alternativa A.\n\n**Gabarito: A.**",
+      "choices": [
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q167-a-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q167-b-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q167-c-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q167-d-review.png"
+        },
+        {
+          "text": "",
+          "imageUrl": "/questions/2025/q167-e-review.png"
+        }
+      ],
+      "imageUrl": "/questions/2025/q167-review.png",
+      "correctChoice": 0,
+      "subject_name": "Estatística"
+    }
+  ],
+  "removedDuplicate": {
+    "id": 1003,
+    "retainedId": 21
+  }
+}
