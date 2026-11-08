@@ -1,4 +1,6 @@
 import { createHash } from "node:crypto";
+import { createServer } from "node:http";
+import app from "../api/index";
 import { describe, it, expect, beforeAll } from "vitest";
 import { SignJWT, generateKeyPair, exportJWK, createLocalJWKSet } from "jose";
 import { googleConfig, createGoogleAttempt, verifyGoogleAttempt, verifyGoogleIdentity } from "../api/index";
@@ -51,5 +53,28 @@ describe("Google authentication", () => {
     await expect(verifyGoogleIdentity(await token({ email_verified: false }), "nonce", config, keys)).rejects.toThrow();
     await expect(verifyGoogleIdentity(await token(), "different", config, keys)).rejects.toThrow();
     await expect(verifyGoogleIdentity(await token({ azp: "other-client" }), "nonce", config, keys)).rejects.toThrow();
+  });
+});
+
+describe("Vercel authentication endpoints", () => {
+  it("boots the real API and keeps Google unavailable until configured", async () => {
+    const server = createServer(app);
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const address = server.address() as { port: number };
+    const base = "http://127.0.0.1:" + address.port;
+    try {
+      expect((await fetch(base + "/api/health")).status).toBe(200);
+      const providers = await fetch(base + "/api/auth/providers");
+      expect(await providers.json()).toEqual({ google: false });
+      const start = await fetch(base + "/api/auth/google", { redirect: "manual" });
+      expect(start.status).toBe(303);
+      expect(start.headers.get("location")).toBe("/login?google_error=unavailable");
+      const callback = await fetch(base + "/api/auth/google/callback?code=fake&state=fake", { redirect: "manual" });
+      expect(callback.status).toBe(303);
+      expect(callback.headers.get("set-cookie")).not.toContain("app_session_id");
+    } finally {
+      server.closeAllConnections();
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+    }
   });
 });
