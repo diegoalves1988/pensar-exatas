@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { describe, it, expect, beforeAll } from "vitest";
 import { SignJWT, generateKeyPair, exportJWK, createLocalJWKSet } from "jose";
-import { googleConfig, createGoogleAttempt, verifyGoogleAttempt, verifyGoogleIdentity } from "../shared/googleAuth";
+import { googleConfig, createGoogleAttempt, verifyGoogleAttempt, verifyGoogleIdentity } from "../api/index";
 
 const config = googleConfig({ GOOGLE_CLIENT_ID: "test-client", GOOGLE_CLIENT_SECRET: "test-only", APP_URL: "https://example.com", JWT_SECRET: "a".repeat(48) })!;
 let privateKey: CryptoKey;
