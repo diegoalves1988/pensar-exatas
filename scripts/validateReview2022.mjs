@@ -17,7 +17,7 @@ for (const q of visible) {
   assert.equal(q.choices.length, 5, q.title);
   assert.equal(q.correctChoice, number === "157" ? null : "ABCDE".indexOf(data.officialAnswerKey[number]), q.title);
   assert.equal(q.status, number === "157" ? "annulled" : "active");
-  for (const value of [q.statement, q.solution, ...q.choices]) {
+  for (const value of [q.statement, q.solution, ...q.choices.map(c => typeof c === "string" ? c : c.text), q.imageUrl ?? ""]) {
     assert.equal((value.match(/\\\(/g) || []).length, (value.match(/\\\)/g) || []).length, q.title);
     for (const match of value.matchAll(/\\\(([\s\S]*?)\\\)|\\\[([\s\S]*?)\\\]/g)) {
       katex.renderToString(match[1] ?? match[2], { throwOnError: true });
