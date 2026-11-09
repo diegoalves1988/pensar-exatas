@@ -7,7 +7,9 @@ on:
       - 'drizzle/schema.ts'
       - 'server/db.ts'
       - 'server/questionStatus.test.ts'
-      - 'data/revisao-enem-2023.json'
+      - 'data/revisao-enem-*.json'
+      - 'scripts/validateReview2022.mjs'
+      - 'client/public/questions/2022/**'
       - '.github/workflows/question-review.yml'
   pull_request:
 permissions:
@@ -24,4 +26,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec vitest run server/questionStatus.test.ts server/googleAuth.test.ts
+      - run: curl -fsSL --retry 3 https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js -o "$RUNNER_TEMP/katex.cjs"
+      - run: node scripts/validateReview2022.mjs "$RUNNER_TEMP/katex.cjs"
       - run: pnpm build
