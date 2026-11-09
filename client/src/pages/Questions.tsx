@@ -308,7 +308,7 @@ export default function Questions() {
   };
 
   const sanitizeSolutionArtifacts = (text: string) => {
-    return sanitizePdfArtifacts(text);
+    return sanitizePdfArtifacts(text, { stripShortNumericLines: false });
   };
 
   const stripMarkdownImages = (text: string) => text.replace(MARKDOWN_IMAGE_REGEX, " ");
@@ -1089,8 +1089,8 @@ export default function Questions() {
                       <div>
                         <h4 className="font-bold text-gray-900 mb-2">Resolução</h4>
                         <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
-                          <div className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-justify">
-                            <MaybeKaTeX text={normalizeQuestionText(sanitizeSolutionArtifacts(String(question.solution || "")))} displayMode={false} />
+                          <div className="text-gray-700 whitespace-pre-wrap text-[15px] leading-7 text-left">
+                            <MaybeKaTeX text={sanitizeSolutionArtifacts(String(question.solution || ""))} displayMode={false} />
                           </div>
                         </div>
                       </div>
