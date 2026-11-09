@@ -150,14 +150,14 @@
       "id": 936,
       "year": 2024,
       "title": "Questão 136 - ENEM 2024",
-      "statement": "Uma empresa produz mochilas escolares sob encomenda. Essa empresa tem um custo total de produção, composto por um custo fixo, que não depende do número de mochilas, mais um custo variável, que é proporcional ao número de mochilas produzidas. O custo total cresce de forma linear, e a tabela apresenta esse custo para três quantidades de mochilas produzidas. Quantidade de mochilas → Custo total (\\(\\mathrm{R\\$}\\))\n30 → 1 050,00\n50 → 1 650,00\n100 → 3 150,00\n\nO custo total, em real, para a produção de 80 mochilas será",
-      "solution": "**Custo total de produção linear — 80 mochilas.**\n\nDa tabela:\n- 30 mochilas: \\(\\mathrm{R\\$}\\) 1 050\n- 50 mochilas: \\(\\mathrm{R\\$}\\) 1 650\n- 100 mochilas: \\(\\mathrm{R\\$}\\) 3 150\n\nCusto é linear: C(n) = F + v·n, onde F = custo fixo e v = custo variável por mochila.\n\nDos pares (30, 1050) e (50, 1650):\nv = (1 650 − 1 050) / (50 − 30) = 600 / 20 = **\\(\\mathrm{R\\$}\\) 30/mochila**\n\nF = 1 050 − 30 × 30 = 1 050 − 900 = **\\(\\mathrm{R\\$}\\) 150**\n\nVerificação: C(100) = 150 + 30×100 = 3 150 ✓\n\nC(80) = 150 + 30 × 80 = 150 + 2 400 = **\\(\\mathrm{R\\$}\\) 2 550,00**\n\n**Gabarito: C) 2 550,00.**",
+      "statement": "Uma empresa produz mochilas escolares sob encomenda. Essa empresa tem um custo total de produção, composto por um custo fixo, que não depende do número de mochilas, mais um custo variável, que é proporcional ao número de mochilas produzidas. O custo total cresce de forma linear, e a tabela apresenta esse custo para três quantidades de mochilas produzidas. Quantidade de mochilas → Custo total (\\(\\mathrm{R\\$}\\))\n30 → 1050,00\n50 → 1650,00\n100 → 3150,00\n\nO custo total, em real, para a produção de 80 mochilas será",
+      "solution": "**Custo total de produção linear — 80 mochilas.**\n\nDa tabela:\n- 30 mochilas: \\(\\mathrm{R\\$}\\) 1050\n- 50 mochilas: \\(\\mathrm{R\\$}\\) 1650\n- 100 mochilas: \\(\\mathrm{R\\$}\\) 3150\n\nCusto é linear: C(n) = F + v·n, onde F = custo fixo e v = custo variável por mochila.\n\nDos pares (30, 1050) e (50, 1650):\nv = (1650 − 1050) / (50 − 30) = 600 / 20 = **\\(\\mathrm{R\\$}\\) 30/mochila**\n\nF = 1050 − 30 × 30 = 1050 − 900 = **\\(\\mathrm{R\\$}\\) 150**\n\nVerificação: C(100) = 150 + 30×100 = 3150 ✓\n\nC(80) = 150 + 30 × 80 = 150 + 2400 = **\\(\\mathrm{R\\$}\\) 2550,00**\n\n**Gabarito: C) 2550,00.**",
       "choices": [
-        "2 400,00.",
-        "2 520,00.",
-        "2 550,00.",
-        "2 700,00.",
-        "2 800,00."
+        "2400,00.",
+        "2520,00.",
+        "2550,00.",
+        "2700,00.",
+        "2800,00."
       ],
       "imageUrl": "/questions/2024/q136.png",
       "correctChoice": 2,
@@ -536,13 +536,13 @@
       "year": 2024,
       "title": "Questão 165 - ENEM 2024",
       "statement": "Para abrir a porta de uma empresa, cada funcionário deve cadastrar uma senha utilizando um teclado alfanumérico como o representado na figura. Por exemplo: a tecla que contém o número 2 traz as letras correlacionadas A, B e C. Cada toque nessa tecla mostra, sequencialmente, os seguintes caracteres: 2, A, B e C. Para os próximos toques, essa sequência se repete. As demais teclas funcionam da mesma maneira. As senhas a serem cadastradas pelos funcionários devem conter 5 caracteres, sendo 2 algarismos distintos seguidos de 3 letras diferentes, nessa ordem. Um funcionário irá cadastrar a sua primeira senha, podendo escolher entre as teclas que apresentam os números 1, 2, 5, 7 e 0 e as respectivas letras correlacionadas, quando houver. O número de possibilidades diferentes que esse funcionário tem para cadastrar sua senha é",
-      "solution": "**Senhas com teclado alfanumérico.**\n\nTeclas disponíveis: 1, 2, 5, 7, 0\n\nLetras correlacionadas:\n- 1: (sem letras)\n- 2: A, B, C (3 letras)\n- 5: J, K, L (3 letras)\n- 7: P, Q, R, S (4 letras)\n- 0: (sem letras)\n\nTotal de letras: 3 + 3 + 4 = **10 letras**\n\n**Senha**: 2 algarismos distintos + 3 letras diferentes\n\n**Algarismos** (2 distintos entre {1, 2, 5, 7, 0}, ordem importa):\nA(5, 2) = 5 × 4 = **20**\n\n**Letras** (3 diferentes entre 10, ordem importa):\nA(10, 3) = 10 × 9 × 8 = **720**\n\nTotal = 20 × 720 = **14 400**\n\n**Gabarito: B) 14 400.**",
+      "solution": "**Senhas com teclado alfanumérico.**\n\nTeclas disponíveis: 1, 2, 5, 7, 0\n\nLetras correlacionadas:\n- 1: (sem letras)\n- 2: A, B, C (3 letras)\n- 5: J, K, L (3 letras)\n- 7: P, Q, R, S (4 letras)\n- 0: (sem letras)\n\nTotal de letras: 3 + 3 + 4 = **10 letras**\n\n**Senha**: 2 algarismos distintos + 3 letras diferentes\n\n**Algarismos** (2 distintos entre {1, 2, 5, 7, 0}, ordem importa):\nA(5, 2) = 5 × 4 = **20**\n\n**Letras** (3 diferentes entre 10, ordem importa):\nA(10, 3) = 10 × 9 × 8 = **720**\n\nTotal = 20 × 720 = **14400**\n\n**Gabarito: B) 14400.**",
       "choices": [
-        "11 520.",
-        "14 400.",
-        "18 000.",
-        "312 000.",
-        "390 000."
+        "11520.",
+        "14400.",
+        "18000.",
+        "312000.",
+        "390000."
       ],
       "imageUrl": "/questions/2024/q165.png",
       "correctChoice": 1,
@@ -671,8 +671,8 @@
       "id": 991,
       "year": 2025,
       "title": "Questão 124 - ENEM 2025",
-      "statement": "A laje de um depósito de bebidas tem 50 m² de área útil de\narmazenamento e foi projetada para suportar pressões de até\n10⁴ Pa. O gerente do estabelecimento pretende armazenar um\nproduto cuja densidade é 1 250 kg/m³. Considere a aceleração\nda gravidade igual a 10 m/s².\nA altura máxima, em metro, de empilhamento do produto que\nessa laje é capaz de suportar é",
-      "solution": "A pressão máxima suportada pela laje é P = 10⁴ Pa.\n\nA pressão exercida por uma coluna de produto de densidade ρ e altura h é:\nP = ρ · g · h\n\nIsolando a altura:\nh = P / (ρ · g) = 10⁴ / (1 250 × 10)\n\nh = 10 000 / 12 500 = **0,80 m**\n\n**Gabarito: C) 0,80 m.**",
+      "statement": "A laje de um depósito de bebidas tem 50 m² de área útil de\narmazenamento e foi projetada para suportar pressões de até\n10⁴ Pa. O gerente do estabelecimento pretende armazenar um\nproduto cuja densidade é 1250 kg/m³. Considere a aceleração\nda gravidade igual a 10 m/s².\nA altura máxima, em metro, de empilhamento do produto que\nessa laje é capaz de suportar é",
+      "solution": "A pressão máxima suportada pela laje é P = 10⁴ Pa.\n\nA pressão exercida por uma coluna de produto de densidade ρ e altura h é:\nP = ρ · g · h\n\nIsolando a altura:\nh = P / (ρ · g) = 10⁴ / (1250 × 10)\n\nh = 10000 / 12500 = **0,80 m**\n\n**Gabarito: C) 0,80 m.**",
       "choices": [
         "0,16 m.",
         "0,50 m.",
@@ -733,7 +733,7 @@
       "year": 2025,
       "title": "Questão 136 - ENEM 2025",
       "statement": "No entorno de uma lagoa circular, cujo raio mede 1 km,\nhá uma ciclovia. Devido aos frequentes roubos de bicicleta,\na prefeitura planeja alocar policiais em posições estratégicas\npara patrulhar essa ciclovia, de forma a torná-la totalmente\nprotegida. Um ponto da ciclovia é considerado protegido se\nhouver pelo menos um policial a, no máximo, 200 m de distância\ndaquele ponto, posicionado sobre a ciclovia. A figura ilustra\num ponto P sobre a ciclovia, que estará protegido se houver\npelo menos um policial posicionado sobre a região de cor\ncinza escuro.\nDesconsidere a largura da pista da ciclovia e utilize 3 como\naproximação para π.\nNessas condições, a quantidade mínima necessária de policiais a\nserem alocados ao longo dessa ciclovia para torná-la protegida é",
-      "solution": "A ciclovia é circular com raio 1 km.\n\nPerímetro = 2πr ≈ 2 × 3 × 1 = **6 km = 6 000 m**\n\nCada policial protege 200 m para cada lado, cobrindo um trecho de 2 × 200 = **400 m** da ciclovia.\n\nQuantidade mínima de policiais:\nn = 6 000 / 400 = **15 policiais**\n\n**Gabarito: C) 15.**",
+      "solution": "A ciclovia é circular com raio 1 km.\n\nPerímetro = 2πr ≈ 2 × 3 × 1 = **6 km = 6000 m**\n\nCada policial protege 200 m para cada lado, cobrindo um trecho de 2 × 200 = **400 m** da ciclovia.\n\nQuantidade mínima de policiais:\nn = 6000 / 400 = **15 policiais**\n\n**Gabarito: C) 15.**",
       "choices": [
         "4.",
         "8.",
@@ -749,14 +749,14 @@
       "id": 998,
       "year": 2025,
       "title": "Questão 138 - ENEM 2025",
-      "statement": "Uma distribuidora de combustível possui caminhões-tanque\ncom capacidade de 30 000 litros cada. Em qualquer transporte\nrealizado por esses caminhões, um mesmo volume de combustível\né descartado, pois fica com muitas impurezas. Esse volume\ndescartado independe da quantidade transportada.\nUm posto de combustível encomendou 10 000 litros de\ngasolina dessa distribuidora, que enviou 10 200 litros, considerando\no volume descartado no transporte. Mesmo assim, a quantidade\nde gasolina entregue ao posto foi de 9 900 litros.\nEm um novo pedido, esse posto solicitou que fosse entregue\nexatamente o dobro do volume de gasolina encomendado no\npedido anterior.\nUtilizando o mesmo caminhão da entrega anterior, qual é o volume\nmínimo de gasolina, em litro, que a distribuidora deverá enviar para\ngarantir a entrega da quantidade encomendada nesse novo pedido?",
-      "solution": "No primeiro pedido:\n• Enviados: 10 200 L\n• Entregues: 9 900 L (encomenda era 10 000 L)\n• Volume descartado por viagem: 10 200 − 9 900 = **300 L** (fixo por transporte)\n\nNovo pedido: entregar exatamente 2 × 10 000 = **20 000 L**.\n\nO caminhão tem capacidade de 30 000 L, então dá para enviar em **1 viagem** (descarte de 300 L):\nVolume a enviar = 20 000 + 300 = **20 300 L**\n\n**Gabarito: C) 20 300.**",
+      "statement": "Uma distribuidora de combustível possui caminhões-tanque\ncom capacidade de 30000 litros cada. Em qualquer transporte\nrealizado por esses caminhões, um mesmo volume de combustível\né descartado, pois fica com muitas impurezas. Esse volume\ndescartado independe da quantidade transportada.\nUm posto de combustível encomendou 10000 litros de\ngasolina dessa distribuidora, que enviou 10200 litros, considerando\no volume descartado no transporte. Mesmo assim, a quantidade\nde gasolina entregue ao posto foi de 9900 litros.\nEm um novo pedido, esse posto solicitou que fosse entregue\nexatamente o dobro do volume de gasolina encomendado no\npedido anterior.\nUtilizando o mesmo caminhão da entrega anterior, qual é o volume\nmínimo de gasolina, em litro, que a distribuidora deverá enviar para\ngarantir a entrega da quantidade encomendada nesse novo pedido?",
+      "solution": "No primeiro pedido:\n• Enviados: 10200 L\n• Entregues: 9900 L (encomenda era 10000 L)\n• Volume descartado por viagem: 10200 − 9900 = **300 L** (fixo por transporte)\n\nNovo pedido: entregar exatamente 2 × 10000 = **20000 L**.\n\nO caminhão tem capacidade de 30000 L, então dá para enviar em **1 viagem** (descarte de 300 L):\nVolume a enviar = 20000 + 300 = **20300 L**\n\n**Gabarito: C) 20300.**",
       "choices": [
-        "20 100",
-        "20 200",
-        "20 300",
-        "20 400",
-        "20 600"
+        "20100",
+        "20200",
+        "20300",
+        "20400",
+        "20600"
       ],
       "imageUrl": null,
       "correctChoice": 2,
@@ -938,13 +938,13 @@
       "year": 2025,
       "title": "Questão 152 - ENEM 2025",
       "statement": "Uma fábrica de tijolos ecológicos com 3 funcionários,\ncada um trabalhando 6 horas diárias, produz 720 unidades\npor dia. Para atender ao crescimento da demanda por esse\ntipo de tijolo, essa fábrica passou a ter 5 funcionários, cada um\ntrabalhando 9 horas por dia, aumentando, assim, sua capacidade\nde produção. Todos os funcionários produzem igual quantidade\nde tijolos a cada hora, independentemente de trabalharem\n6 ou 9 horas diárias.\nO número de tijolos fabricados diariamente após o aumento da\ncapacidade de produção é",
-      "solution": "Produção inicial:\n• 3 funcionários × 6 h/dia = 18 homens-hora → 720 tijolos\n• Produtividade: 720 / 18 = **40 tijolos por homem-hora**\n\nNova configuração:\n• 5 funcionários × 9 h/dia = 45 homens-hora\n\nNova produção diária:\n45 × 40 = **1 800 tijolos**\n\n**Gabarito: D) 1 800.**",
+      "solution": "Produção inicial:\n• 3 funcionários × 6 h/dia = 18 homens-hora → 720 tijolos\n• Produtividade: 720 / 18 = **40 tijolos por homem-hora**\n\nNova configuração:\n• 5 funcionários × 9 h/dia = 45 homens-hora\n\nNova produção diária:\n45 × 40 = **1800 tijolos**\n\n**Gabarito: D) 1800.**",
       "choices": [
         "800.",
-        "1 080.",
-        "1 200.",
-        "1 800.",
-        "2 520."
+        "1080.",
+        "1200.",
+        "1800.",
+        "2520."
       ],
       "imageUrl": null,
       "correctChoice": 3,
@@ -1059,14 +1059,14 @@
       "id": 938,
       "year": 2024,
       "title": "Questão 138 - ENEM 2024",
-      "statement": "Uma empresa de engenharia foi contratada para realizar um serviço no valor de \\(\\mathrm{R\\$}\\) 71 250,00. Os sócios da empresa decidiram que 40% desse valor seria destinado ao pagamento de três engenheiros que gerenciaram o serviço. O pagamento para cada um deles será feito de forma diretamente proporcional ao total de horas trabalhadas. O número de dias e o número de horas diárias trabalhadas pelos engenheiros foram, respectivamente: • engenheiro I: 4 dias, numa jornada de 5 horas e meia por dia; • engenheiro II: 5 dias, numa jornada de 4 horas por dia; • engenheiro III: 6 dias, numa jornada de 2 horas e meia por dia. Qual a maior diferença, em real, entre os valores recebidos por esse serviço entre dois desses engenheiros?",
-      "solution": "**Pagamento proporcional às horas trabalhadas.**\n\nValor destinado aos engenheiros: 40% de \\(\\mathrm{R\\$}\\) 71 250 = **\\(\\mathrm{R\\$}\\) 28 500**\n\nHoras trabalhadas:\n- Eng. I: 4 × 5,5 = **22 horas**\n- Eng. II: 5 × 4 = **20 horas**\n- Eng. III: 6 × 2,5 = **15 horas**\n- Total: 22 + 20 + 15 = **57 horas**\n\nValor por hora: 28 500 / 57 = **\\(\\mathrm{R\\$}\\) 500/hora**\n\nPagamentos:\n- Eng. I: 22 × 500 = **\\(\\mathrm{R\\$}\\) 11 000**\n- Eng. II: 20 × 500 = **\\(\\mathrm{R\\$}\\) 10 000**\n- Eng. III: 15 × 500 = **\\(\\mathrm{R\\$}\\) 7 500**\n\nMaior diferença: \\(\\mathrm{R\\$}\\) 11 000 − \\(\\mathrm{R\\$}\\) 7 500 = **\\(\\mathrm{R\\$}\\) 3 500**\n\n**Gabarito: C) 3 500.**",
+      "statement": "Uma empresa de engenharia foi contratada para realizar um serviço no valor de \\(\\mathrm{R\\$}\\) 71250,00. Os sócios da empresa decidiram que 40% desse valor seria destinado ao pagamento de três engenheiros que gerenciaram o serviço. O pagamento para cada um deles será feito de forma diretamente proporcional ao total de horas trabalhadas. O número de dias e o número de horas diárias trabalhadas pelos engenheiros foram, respectivamente: • engenheiro I: 4 dias, numa jornada de 5 horas e meia por dia; • engenheiro II: 5 dias, numa jornada de 4 horas por dia; • engenheiro III: 6 dias, numa jornada de 2 horas e meia por dia. Qual a maior diferença, em real, entre os valores recebidos por esse serviço entre dois desses engenheiros?",
+      "solution": "**Pagamento proporcional às horas trabalhadas.**\n\nValor destinado aos engenheiros: 40% de \\(\\mathrm{R\\$}\\) 71250 = **\\(\\mathrm{R\\$}\\) 28500**\n\nHoras trabalhadas:\n- Eng. I: 4 × 5,5 = **22 horas**\n- Eng. II: 5 × 4 = **20 horas**\n- Eng. III: 6 × 2,5 = **15 horas**\n- Total: 22 + 20 + 15 = **57 horas**\n\nValor por hora: 28500 / 57 = **\\(\\mathrm{R\\$}\\) 500/hora**\n\nPagamentos:\n- Eng. I: 22 × 500 = **\\(\\mathrm{R\\$}\\) 11000**\n- Eng. II: 20 × 500 = **\\(\\mathrm{R\\$}\\) 10000**\n- Eng. III: 15 × 500 = **\\(\\mathrm{R\\$}\\) 7500**\n\nMaior diferença: \\(\\mathrm{R\\$}\\) 11000 − \\(\\mathrm{R\\$}\\) 7500 = **\\(\\mathrm{R\\$}\\) 3500**\n\n**Gabarito: C) 3500.**",
       "choices": [
-        "1 000",
-        "1 500",
-        "3 500",
-        "3 800",
-        "5 250"
+        "1000",
+        "1500",
+        "3500",
+        "3800",
+        "5250"
       ],
       "imageUrl": null,
       "correctChoice": 2,
@@ -1094,7 +1094,7 @@
       "year": 2025,
       "title": "Questão 161 - ENEM 2025",
       "statement": "Uma empresa produziu, em um determinado mês,\n110 toneladas de plástico a partir de derivados de petróleo\ne 80 toneladas a partir de plásticos reciclados. O custo para\nreciclar uma tonelada de plástico é de \\(\\mathrm{R\\$}\\) 500,00, que equivale\na 5% do custo para produzir a mesma quantidade de plástico\na partir de derivados de petróleo. Para o mês seguinte, a meta\ndessa empresa é produzir a mesma quantidade de plástico que\nfoi produzida nesse mês, mas com redução de, pelo menos,\n50% no custo de produção.\nPara que no mês seguinte a empresa atinja a meta, a quantidade\nmínima de toneladas de plástico que devem ser produzidas a\npartir de reciclagem deverá ser",
-      "solution": "Custo por tonelada:\n• Reciclagem: \\(\\mathrm{R\\$}\\) 500/t\n• Petróleo: \\(\\mathrm{R\\$}\\) 500 / 0,05 = \\(\\mathrm{R\\$}\\) 10 000/t (pois \\(\\mathrm{R\\$}\\) 500 = 5% do custo de petróleo)\n\nProdução atual (total = 190 t):\n• Petróleo: 110 t → custo: 110 × 10 000 = \\(\\mathrm{R\\$}\\) 1 100 000\n• Reciclagem: 80 t → custo: 80 × 500 = \\(\\mathrm{R\\$}\\) 40 000\n• Custo total: \\(\\mathrm{R\\$}\\) 1 140 000\n\nMeta: reduzir pelo menos 50% → custo máximo = \\(\\mathrm{R\\$}\\) 570 000.\n\nSeja r a qtd reciclada no próximo mês (total = 190 t):\n(190 − r) × 10 000 + r × 500 ≤ 570 000\n1 900 000 − 10 000r + 500r ≤ 570 000\n1 900 000 − 9 500r ≤ 570 000\n9 500r ≥ 1 330 000\nr ≥ 1 330 000 / 9 500 = **140 t**\n\n**Gabarito: B) 140.**",
+      "solution": "Custo por tonelada:\n• Reciclagem: \\(\\mathrm{R\\$}\\) 500/t\n• Petróleo: \\(\\mathrm{R\\$}\\) 500 / 0,05 = \\(\\mathrm{R\\$}\\) 10000/t (pois \\(\\mathrm{R\\$}\\) 500 = 5% do custo de petróleo)\n\nProdução atual (total = 190 t):\n• Petróleo: 110 t → custo: 110 × 10000 = \\(\\mathrm{R\\$}\\) 1100000\n• Reciclagem: 80 t → custo: 80 × 500 = \\(\\mathrm{R\\$}\\) 40000\n• Custo total: \\(\\mathrm{R\\$}\\) 1140000\n\nMeta: reduzir pelo menos 50% → custo máximo = \\(\\mathrm{R\\$}\\) 570000.\n\nSeja r a qtd reciclada no próximo mês (total = 190 t):\n(190 − r) × 10000 + r × 500 ≤ 570000\n1900000 − 10000r + 500r ≤ 570000\n1900000 − 9500r ≤ 570000\n9500r ≥ 1330000\nr ≥ 1330000 / 9500 = **140 t**\n\n**Gabarito: B) 140.**",
       "choices": [
         "135.",
         "140.",
@@ -1149,7 +1149,7 @@
         "297",
         "567",
         "990",
-        "1 134"
+        "1134"
       ],
       "imageUrl": "/questions/2025/q168-review.png",
       "correctChoice": 1,
@@ -1159,8 +1159,8 @@
       "id": 1026,
       "year": 2025,
       "title": "Questão 166 - ENEM 2025",
-      "statement": "O dono de uma sorveteria armazena sorvete em potes de\n20 000 cm³. Ele serve o sorvete em taças, em porções de 250 mL.\nA quantidade de taças que ele consegue servir a partir de um\npote cheio de sorvete é",
-      "solution": "Volume do pote: 20 000 cm³\n\nSabemos que 1 cm³ = 1 mL, logo:\n20 000 cm³ = 20 000 mL\n\nCada taça: 250 mL\n\nNúmero de taças: 20 000 / 250 = **80**\n\n**Gabarito: D) 80.**",
+      "statement": "O dono de uma sorveteria armazena sorvete em potes de\n20000 cm³. Ele serve o sorvete em taças, em porções de 250 mL.\nA quantidade de taças que ele consegue servir a partir de um\npote cheio de sorvete é",
+      "solution": "Volume do pote: 20000 cm³\n\nSabemos que 1 cm³ = 1 mL, logo:\n20000 cm³ = 20000 mL\n\nCada taça: 250 mL\n\nNúmero de taças: 20000 / 250 = **80**\n\n**Gabarito: D) 80.**",
       "choices": [
         "5.",
         "8.",
@@ -1473,8 +1473,8 @@
       "id": 1025,
       "year": 2025,
       "title": "Questão 165 - ENEM 2025",
-      "statement": "Um estacionamento possui 120 vagas para veículos,\ne todas essas vagas estão ocupadas. Cada cliente paga uma\nmensalidade para utilizar uma vaga, que é calculada com base\nnas despesas mensais do estacionamento e no lucro pretendido.\nAs despesas mensais do estacionamento são: \\(\\mathrm{R\\$}\\) 14 240,00 com\nmanutenção mais \\(\\mathrm{R\\$}\\) 36,00 de seguro por veículo. O lucro do\nestacionamento é determinado pela diferença do valor arrecadado\ncom as mensalidades pelas despesas efetuadas. A partir do mês\nseguinte, o valor do seguro por veículo aumentará em 20%,\ne as despesas com manutenção permanecerão sem alterações.\nCom isso, o dono do estacionamento reajustará as mensalidades\npara obter um lucro mensal de \\(\\mathrm{R\\$}\\) 10 000,00. Apesar desse\nreajuste, todas as vagas continuarão ocupadas.\nO valor, em real, da mensalidade reajustada será",
-      "solution": "Dados:\n• 120 vagas (todas ocupadas)\n• Manutenção: \\(\\mathrm{R\\$}\\) 14 240,00/mês\n• Seguro (novo): \\(\\mathrm{R\\$}\\) 36,00 × 1,20 = \\(\\mathrm{R\\$}\\) 43,20 por veículo\n• Lucro desejado: \\(\\mathrm{R\\$}\\) 10 000,00\n\nDespesas mensais:\n\\(\\mathrm{R\\$}\\) 14 240 + 120 × \\(\\mathrm{R\\$}\\) 43,20 = \\(\\mathrm{R\\$}\\) 14 240 + \\(\\mathrm{R\\$}\\) 5 184 = **\\(\\mathrm{R\\$}\\) 19 424**\n\nReceita necessária:\n\\(\\mathrm{R\\$}\\) 19 424 + \\(\\mathrm{R\\$}\\) 10 000 = **\\(\\mathrm{R\\$}\\) 29 424**\n\nMensalidade por veículo:\n\\(\\mathrm{R\\$}\\) 29 424 / 120 = **\\(\\mathrm{R\\$}\\) 245,20**\n\n**Gabarito: C) \\(\\mathrm{R\\$}\\) 245,20.**",
+      "statement": "Um estacionamento possui 120 vagas para veículos,\ne todas essas vagas estão ocupadas. Cada cliente paga uma\nmensalidade para utilizar uma vaga, que é calculada com base\nnas despesas mensais do estacionamento e no lucro pretendido.\nAs despesas mensais do estacionamento são: \\(\\mathrm{R\\$}\\) 14240,00 com\nmanutenção mais \\(\\mathrm{R\\$}\\) 36,00 de seguro por veículo. O lucro do\nestacionamento é determinado pela diferença do valor arrecadado\ncom as mensalidades pelas despesas efetuadas. A partir do mês\nseguinte, o valor do seguro por veículo aumentará em 20%,\ne as despesas com manutenção permanecerão sem alterações.\nCom isso, o dono do estacionamento reajustará as mensalidades\npara obter um lucro mensal de \\(\\mathrm{R\\$}\\) 10000,00. Apesar desse\nreajuste, todas as vagas continuarão ocupadas.\nO valor, em real, da mensalidade reajustada será",
+      "solution": "Dados:\n• 120 vagas (todas ocupadas)\n• Manutenção: \\(\\mathrm{R\\$}\\) 14240,00/mês\n• Seguro (novo): \\(\\mathrm{R\\$}\\) 36,00 × 1,20 = \\(\\mathrm{R\\$}\\) 43,20 por veículo\n• Lucro desejado: \\(\\mathrm{R\\$}\\) 10000,00\n\nDespesas mensais:\n\\(\\mathrm{R\\$}\\) 14240 + 120 × \\(\\mathrm{R\\$}\\) 43,20 = \\(\\mathrm{R\\$}\\) 14240 + \\(\\mathrm{R\\$}\\) 5184 = **\\(\\mathrm{R\\$}\\) 19424**\n\nReceita necessária:\n\\(\\mathrm{R\\$}\\) 19424 + \\(\\mathrm{R\\$}\\) 10000 = **\\(\\mathrm{R\\$}\\) 29424**\n\nMensalidade por veículo:\n\\(\\mathrm{R\\$}\\) 29424 / 120 = **\\(\\mathrm{R\\$}\\) 245,20**\n\n**Gabarito: C) \\(\\mathrm{R\\$}\\) 245,20.**",
       "choices": [
         "185,60.",
         "226,09.",
@@ -1598,8 +1598,8 @@
       "id": 995,
       "year": 2025,
       "title": "Questão 135 - ENEM 2025",
-      "statement": "Réguas elétricas são dispositivos que permitem a ligação\nsegura e simultânea de dois ou mais aparelhos eletroeletrônicos\nà rede elétrica. Uma estudante comprou uma régua com seis\ntomadas, conforme a figura. Essa régua suporta uma intensidade\nmáxima de corrente elétrica igual a 20 A. Acima desse valor, o\nfusível de segurança da régua se rompe, inutilizando-a até que\num novo fusível seja instalado. Considere as potências nominais\nde alguns aparelhos eletroeletrônicos apresentadas no quadro.\nAparelho → Potência (watt)\nLuminária de LED → 5\nComputador → 250\nImpressora a laser → 660\nSecador de cabelos → 750\nCafeteira → 900\nCondicionador de ar portátil → 1 100\n\nEm um dia quente, a estudante mantém o computador e o\ncondicionador de ar portátil ligados à régua permanentemente.\nNessa situação, ela tenta realizar algumas atividades, uma de\ncada vez, utilizando a mesma régua, na seguinte ordem:\n1º – imprimir um trabalho escolar;\n2º – fazer um café com a cafeteira;\n3º – ligar a luminária;\n4º – secar os cabelos.\nSabe-se que a régua foi ligada à tensão elétrica de 110 V,\nadequada para o funcionamento desses aparelhos.\nConsiderando a ordem das tentativas, quantas atividades a\nestudante conseguiu realizar sem queimar o fusível?",
-      "solution": "A tensão da rede é 110 V e o fusível suporta no máximo 20 A.\nPotência máxima: \\(\\mathrm{P}_{\\mathrm{max}}\\) = 20 × 110 = 2 200 W.\n\nAparelhos permanentemente ligados:\n• Computador: 250 W\n• Condicionador de ar: 1 100 W\nSubtotal permanente: **1 350 W** (corrente ≈ 12,3 A)\n\nTentativas em ordem:\n\n**1ª – Impressora a laser (660 W):**\n1 350 + 660 = 2 010 W → corrente = 2 010 / 110 ≈ 18,3 A < 20 A ✅\n\n**2ª – Cafeteira (900 W):**\n1 350 + 900 = 2 250 W → corrente = 2 250 / 110 ≈ 20,5 A > 20 A ❌ — **Fusível queima!**\n\nA estudante conseguiu realizar apenas **1 atividade** (imprimir) antes de queimar o fusível.\n\n**Gabarito: D) 1.**",
+      "statement": "Réguas elétricas são dispositivos que permitem a ligação\nsegura e simultânea de dois ou mais aparelhos eletroeletrônicos\nà rede elétrica. Uma estudante comprou uma régua com seis\ntomadas, conforme a figura. Essa régua suporta uma intensidade\nmáxima de corrente elétrica igual a 20 A. Acima desse valor, o\nfusível de segurança da régua se rompe, inutilizando-a até que\num novo fusível seja instalado. Considere as potências nominais\nde alguns aparelhos eletroeletrônicos apresentadas no quadro.\nAparelho → Potência (watt)\nLuminária de LED → 5\nComputador → 250\nImpressora a laser → 660\nSecador de cabelos → 750\nCafeteira → 900\nCondicionador de ar portátil → 1100\n\nEm um dia quente, a estudante mantém o computador e o\ncondicionador de ar portátil ligados à régua permanentemente.\nNessa situação, ela tenta realizar algumas atividades, uma de\ncada vez, utilizando a mesma régua, na seguinte ordem:\n1º – imprimir um trabalho escolar;\n2º – fazer um café com a cafeteira;\n3º – ligar a luminária;\n4º – secar os cabelos.\nSabe-se que a régua foi ligada à tensão elétrica de 110 V,\nadequada para o funcionamento desses aparelhos.\nConsiderando a ordem das tentativas, quantas atividades a\nestudante conseguiu realizar sem queimar o fusível?",
+      "solution": "A tensão da rede é 110 V e o fusível suporta no máximo 20 A.\nPotência máxima: \\(\\mathrm{P}_{\\mathrm{max}}\\) = 20 × 110 = 2200 W.\n\nAparelhos permanentemente ligados:\n• Computador: 250 W\n• Condicionador de ar: 1100 W\nSubtotal permanente: **1350 W** (corrente ≈ 12,3 A)\n\nTentativas em ordem:\n\n**1ª – Impressora a laser (660 W):**\n1350 + 660 = 2010 W → corrente = 2010 / 110 ≈ 18,3 A < 20 A ✅\n\n**2ª – Cafeteira (900 W):**\n1350 + 900 = 2250 W → corrente = 2250 / 110 ≈ 20,5 A > 20 A ❌ — **Fusível queima!**\n\nA estudante conseguiu realizar apenas **1 atividade** (imprimir) antes de queimar o fusível.\n\n**Gabarito: D) 1.**",
       "choices": [
         {
           "text": "4"
@@ -1803,8 +1803,8 @@
       "id": 948,
       "year": 2024,
       "title": "Questão 148 - ENEM 2024",
-      "statement": "Um aeroporto disponibiliza o serviço de transporte gratuito entre seus dois terminais utilizando os ônibus A e B, que partem simultaneamente, de hora em hora, de terminais diferentes. A distância entre os terminais é de 9 000 metros, e o percurso total dos ônibus, de um terminal ao outro, é monitorado por um sistema de cinco câmeras que cobrem diferentes partes do trecho, conforme o esquema. O alcance de cada uma das cinco câmeras é: câmera I: 1/5 do percurso; câmera II: 3/10 do percurso; câmera III: 1/10 do percurso; câmera IV: 1/10 do percurso; câmera V: 3/10 do percurso. Em determinado horário, o ônibus A parte do terminal 1 e realiza o percurso total com velocidade constante de 250 m/min; enquanto o ônibus B, que parte do terminal 2, realiza o percurso total com velocidade constante de 150 m/min. Qual câmera registra o momento em que os ônibus A e B se encontram?",
-      "solution": "**Encontro dos ônibus — câmera que registra.**\n\nDados:\n- Distância entre terminais: 9 000 m\n- Ônibus A: parte do terminal 1, \\(\\mathrm{v}_{\\mathrm{A}}\\) = 250 m/min\n- Ônibus B: parte do terminal 2, \\(\\mathrm{v}_{\\mathrm{B}}\\) = 150 m/min\n- Partem simultaneamente em direções opostas\n\nTempo de encontro:\nt = distância / (\\(\\mathrm{v}_{\\mathrm{A}}\\) + \\(\\mathrm{v}_{\\mathrm{B}}\\)) = 9 000 / (250 + 150) = 9 000 / 400 = **22,5 min**\n\nPosição do encontro (a partir do terminal 1):\n\\(\\mathrm{d}_{\\mathrm{A}}\\) = 250 × 22,5 = **5 625 m**\n\nFração do percurso: 5 625 / 9 000 = **0,625 = 5/8**\n\nAlcance das câmeras (acumulado do terminal 1):\n- Câmera I: 0 a 1/5 = 0 a 0,200 (1 800 m)\n- Câmera II: 1/5 a 1/2 = 0,200 a 0,500 (até 4 500 m)\n- Câmera III: 1/2 a 6/10 = 0,500 a 0,600 (até 5 400 m)\n- Câmera IV: 6/10 a 7/10 = 0,600 a 0,700 (até 6 300 m)\n- Câmera V: 7/10 a 1 = 0,700 a 1,000\n\n5 625 m → 5625/9000 = 0,625 → está no intervalo **0,600 a 0,700** → **Câmera IV**\n\n**Gabarito: D) IV.**",
+      "statement": "Um aeroporto disponibiliza o serviço de transporte gratuito entre seus dois terminais utilizando os ônibus A e B, que partem simultaneamente, de hora em hora, de terminais diferentes. A distância entre os terminais é de 9000 metros, e o percurso total dos ônibus, de um terminal ao outro, é monitorado por um sistema de cinco câmeras que cobrem diferentes partes do trecho, conforme o esquema. O alcance de cada uma das cinco câmeras é: câmera I: 1/5 do percurso; câmera II: 3/10 do percurso; câmera III: 1/10 do percurso; câmera IV: 1/10 do percurso; câmera V: 3/10 do percurso. Em determinado horário, o ônibus A parte do terminal 1 e realiza o percurso total com velocidade constante de 250 m/min; enquanto o ônibus B, que parte do terminal 2, realiza o percurso total com velocidade constante de 150 m/min. Qual câmera registra o momento em que os ônibus A e B se encontram?",
+      "solution": "**Encontro dos ônibus — câmera que registra.**\n\nDados:\n- Distância entre terminais: 9000 m\n- Ônibus A: parte do terminal 1, \\(\\mathrm{v}_{\\mathrm{A}}\\) = 250 m/min\n- Ônibus B: parte do terminal 2, \\(\\mathrm{v}_{\\mathrm{B}}\\) = 150 m/min\n- Partem simultaneamente em direções opostas\n\nTempo de encontro:\nt = distância / (\\(\\mathrm{v}_{\\mathrm{A}}\\) + \\(\\mathrm{v}_{\\mathrm{B}}\\)) = 9000 / (250 + 150) = 9000 / 400 = **22,5 min**\n\nPosição do encontro (a partir do terminal 1):\n\\(\\mathrm{d}_{\\mathrm{A}}\\) = 250 × 22,5 = **5625 m**\n\nFração do percurso: 5625 / 9000 = **0,625 = 5/8**\n\nAlcance das câmeras (acumulado do terminal 1):\n- Câmera I: 0 a 1/5 = 0 a 0,200 (1800 m)\n- Câmera II: 1/5 a 1/2 = 0,200 a 0,500 (até 4500 m)\n- Câmera III: 1/2 a 6/10 = 0,500 a 0,600 (até 5400 m)\n- Câmera IV: 6/10 a 7/10 = 0,600 a 0,700 (até 6300 m)\n- Câmera V: 7/10 a 1 = 0,700 a 1,000\n\n5625 m → 5625/9000 = 0,625 → está no intervalo **0,600 a 0,700** → **Câmera IV**\n\n**Gabarito: D) IV.**",
       "choices": [
         "I",
         "II",
@@ -1837,14 +1837,14 @@
       "id": 957,
       "year": 2024,
       "title": "Questão 157 - ENEM 2024",
-      "statement": "Uma piscina tem capacidade de 2 500 000 litros. Seu sistema de abastecimento foi regulado para ter uma vazão constante de 6 000 litros de água por minuto. O mesmo sistema foi instalado em uma segunda piscina, com capacidade de 2 750 000 litros, e regulado para ter uma vazão, também constante, capaz de enchê-la em um tempo 20% maior que o gasto para encher a primeira piscina. A vazão do sistema de abastecimento da segunda piscina, em litro por minuto, é",
-      "solution": "**Vazão da segunda piscina.**\n\nDados:\n- Piscina 1: 2 500 000 L, vazão = 6 000 L/min\n- Piscina 2: 2 750 000 L, tempo 20% maior que piscina 1\n\nTempo para encher piscina 1:\nt₁ = 2 500 000 / 6 000 ≈ 416,67 min\n\nTempo para piscina 2 (20% maior):\nt₂ = 1,20 × t₁ = 1,20 × 416,67 = **500 min**\n\nVazão da piscina 2:\nQ₂ = 2 750 000 / 500 = **5 500 L/min**\n\n**Gabarito: D) 5 500.**",
+      "statement": "Uma piscina tem capacidade de 2500000 litros. Seu sistema de abastecimento foi regulado para ter uma vazão constante de 6000 litros de água por minuto. O mesmo sistema foi instalado em uma segunda piscina, com capacidade de 2750000 litros, e regulado para ter uma vazão, também constante, capaz de enchê-la em um tempo 20% maior que o gasto para encher a primeira piscina. A vazão do sistema de abastecimento da segunda piscina, em litro por minuto, é",
+      "solution": "**Vazão da segunda piscina.**\n\nDados:\n- Piscina 1: 2500000 L, vazão = 6000 L/min\n- Piscina 2: 2750000 L, tempo 20% maior que piscina 1\n\nTempo para encher piscina 1:\nt₁ = 2500000 / 6000 ≈ 416,67 min\n\nTempo para piscina 2 (20% maior):\nt₂ = 1,20 × t₁ = 1,20 × 416,67 = **500 min**\n\nVazão da piscina 2:\nQ₂ = 2750000 / 500 = **5500 L/min**\n\n**Gabarito: D) 5500.**",
       "choices": [
-        "8 250.",
-        "7 920.",
-        "6 545.",
-        "5 500.",
-        "5 280."
+        "8250.",
+        "7920.",
+        "6545.",
+        "5500.",
+        "5280."
       ],
       "imageUrl": null,
       "correctChoice": 3,
@@ -1920,7 +1920,7 @@
       "id": 970,
       "year": 2024,
       "title": "Questão 170 - ENEM 2024",
-      "statement": "Uma casa de shows terá um evento cujo custo total de produção é de \\(\\mathrm{R\\$}\\) 34 350,00, sendo que comporta 500 pessoas. O preço do ingresso será de \\(\\mathrm{R\\$}\\) 130,00 e, normalmente, 60% das pessoas adquirem meia-entrada, pagando \\(\\mathrm{R\\$}\\) 65,00 pelo ingresso. Além do faturamento proveniente da venda de ingressos, a casa de shows vende, com 60% de lucro, bebidas e petiscos ao público no dia do evento. Após ter vendido todos os 500 ingressos, constatou-se que a quantidade de meias-entradas vendidas superou em 50% o que estava previsto, impactando o faturamento estimado com a venda de ingressos. No dia do evento, decidiu-se manter o percentual de 60% de lucro sobre as bebidas e petiscos, pois todo o público que comprou ingresso compareceu ao show. Com isso, espera-se ter lucro de \\(\\mathrm{R\\$}\\) 17 000,00 nesse evento. Para que se alcance o lucro esperado, o gasto médio por pessoa com bebidas e petiscos, em real, deverá ser de",
+      "statement": "Uma casa de shows terá um evento cujo custo total de produção é de \\(\\mathrm{R\\$}\\) 34350,00, sendo que comporta 500 pessoas. O preço do ingresso será de \\(\\mathrm{R\\$}\\) 130,00 e, normalmente, 60% das pessoas adquirem meia-entrada, pagando \\(\\mathrm{R\\$}\\) 65,00 pelo ingresso. Além do faturamento proveniente da venda de ingressos, a casa de shows vende, com 60% de lucro, bebidas e petiscos ao público no dia do evento. Após ter vendido todos os 500 ingressos, constatou-se que a quantidade de meias-entradas vendidas superou em 50% o que estava previsto, impactando o faturamento estimado com a venda de ingressos. No dia do evento, decidiu-se manter o percentual de 60% de lucro sobre as bebidas e petiscos, pois todo o público que comprou ingresso compareceu ao show. Com isso, espera-se ter lucro de \\(\\mathrm{R\\$}\\) 17000,00 nesse evento. Para que se alcance o lucro esperado, o gasto médio por pessoa com bebidas e petiscos, em real, deverá ser de",
       "solution": "Estavam previstas 300 meias-entradas (60% de 500). Foram vendidas 50% a mais:300× 1,5=450 meias e 50 inteiras.\n\nReceita dos ingressos:450× 65+50× 130=\\(\\mathrm{R\\$}\\)35750,00. Descontado o custo de produção de \\(\\mathrm{R\\$}\\)34350,00, o lucro dessa parte é \\(\\mathrm{R\\$}\\)1400,00.\n\nPara chegar ao lucro total de \\(\\mathrm{R\\$}\\)17000,00, as bebidas e petiscos devem gerar \\(\\mathrm{R\\$}\\)15600,00 de lucro. Na interpretação do percentual compatível com o gabarito, o lucro equivale a 60% da receita R desses produtos:\n0,60R=15600 ⇒ R=26000.\n\nO gasto médio dos 500 clientes é 26000/500=\\(\\mathrm{R\\$}\\)52,00.\n\nA base do percentual deve ser a receita nessa interpretação; tratar os \\(\\mathrm{R\\$}\\)26000 como custo e depois usá-los como gasto dos clientes seria incoerente.\n\n**Gabarito: D) 52,00.**",
       "choices": [
         "19,50.",
