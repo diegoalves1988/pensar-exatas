@@ -705,7 +705,7 @@
       "id": 999,
       "year": 2025,
       "title": "Questão 139 - ENEM 2025",
-      "statement": "Uma empresa de tecnologia vai padronizar a velocidade de\nconexão de internet que oferece a seus clientes em dez cidades.\nA direção da empresa decide que seu novo padrão de velocidade de\nreferência será a mediana dos valores das velocidades de referência\nde conexões nessas dez cidades. Esses valores, em megabyte\npor segundo (MB/s), são apresentados no quadro.\nCidade → Velocidade de referência (MB/s)\nC₁ → 390\nC₂ → 380\nC₃ → 320\nC₄ → 390\nC₅ → 340\nC₆ → 380\nC₇ → 390\nC₈ → 400\nC₉ → 350\nC₁₀ → 360\n\nA velocidade de referência, em megabyte por segundo, a ser\nadotada por essa empresa é",
+      "statement": "Uma empresa de tecnologia vai padronizar a velocidade de\nconexão de internet que oferece a seus clientes em dez cidades.\nA direção da empresa decide que seu novo padrão de velocidade de\nreferência será a mediana dos valores das velocidades de referência\nde conexões nessas dez cidades. Esses valores, em megabyte\npor segundo (MB/s), são apresentados no quadro.\nA velocidade de referência, em megabyte por segundo, a ser\nadotada por essa empresa é",
       "solution": "Valores das velocidades (MB/s):\nC1=390, C2=380, C3=320, C4=390, C5=340, C6=380, C7=390, C8=400, C9=350, C10=360\n\nOrdenando em ordem crescente:\n320, 340, 350, 360, **380, 380**, 390, 390, 390, 400\n\nCom 10 valores, a mediana é a média dos 5º e 6º termos:\nMediana = (380 + 380) / 2 = **380 MB/s**\n\n**Gabarito: C) 380.**",
       "choices": [
         {
