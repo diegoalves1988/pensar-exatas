@@ -1,0 +1,27 @@
+name: Question review checks
+on:
+  push:
+    paths:
+      - 'api/index.ts'
+      - 'client/src/pages/Questions.tsx'
+      - 'drizzle/schema.ts'
+      - 'server/db.ts'
+      - 'server/questionStatus.test.ts'
+      - 'data/revisao-enem-2023.json'
+      - '.github/workflows/question-review.yml'
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec vitest run server/questionStatus.test.ts server/googleAuth.test.ts
+      - run: pnpm build

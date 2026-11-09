@@ -4,7 +4,11 @@
 
 Revisão das 60 questões de 2023 cadastradas no banco remoto do Pensar Exatas, confrontadas com a prova impressa da aplicação regular, segundo dia, caderno 7 azul. O código consultado foi o da branch main do GitHub. A cópia local do projeto não foi utilizada.
 
-**Este documento registra achados e correções propostas. Nenhuma questão foi alterada, excluída ou importada nesta etapa.** As questões 171–180 foram apenas examinadas; não houve alteração nessa faixa.
+**Correções autorizadas após a auditoria.** O conjunto revisado está em `data/revisao-enem-2023.json`: 53 registros mantidos (52 ativos e 1 anulado), 7 arquivados e 10 questões novas. Os achados abaixo documentam o estado anterior. A faixa 171–180 de 2024/2025 permanece fora desta atualização; esta revisão trata exclusivamente de 2023.
+
+A migração remota `question_publication_status` adiciona `questions.status` com valores active, annulled e archived. A API e o cliente ocultam os arquivados, permitem consulta da anulada e impedem sua pontuação. IDs e históricos existentes são preservados. As correções de conteúdo e matérias abrangem 2023, incluindo os ajustes identificados em 171–180.
+
+Foram recuperadas 11 imagens do PDF, completados os enunciados e corrigidas as alternativas indicadas. Resoluções revisadas com cálculos explícitos: 52 registros existentes e 10 novos. A resolução da 130 já estava coerente e foi mantida.
 
 Foram lidos enunciados, alternativas e resoluções dos 60 registros; conferidas as 60 letras com o gabarito oficial; examinadas páginas renderizadas para os problemas de figuras, tabelas e gráficos; e verificada a disponibilidade das 86 URLs PNG/JPG únicas referenciadas. Todas responderam HTTP 200 com conteúdo de imagem. Essa disponibilidade não garante que cada recorte esteja correto nem substitui um teste visual de todas as questões no site. Os placeholders broken-image.svg da questão 129 não entram nessa contagem.
 

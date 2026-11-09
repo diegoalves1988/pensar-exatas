@@ -1,0 +1,1264 @@
+{
+  "source": "Inep ENEM 2023, aplicação regular, caderno 7 azul",
+  "questions": [
+    {
+      "id": 864,
+      "year": 2023,
+      "title": "Questão 108 - ENEM 2023",
+      "choices": [
+        "Radiação.",
+        "Condução.",
+        "Campo elétrico variável.",
+        "Campo magnético variável.",
+        "Ressonância eletromagnética."
+      ],
+      "imageUrl": null,
+      "solution": "A bobina do fogão é percorrida por corrente alternada, produzindo um campo magnético variável.\n\nPela lei de Faraday, a variação do fluxo magnético induz correntes no fundo metálico da panela. Essas correntes aquecem o material por efeito Joule.\n\n**Resposta: D — campo magnético variável.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/108",
+      "statement": "O fogão por indução funciona a partir do surgimento de uma corrente elétrica induzida no fundo da panela, com consequente transformação de energia elétrica em calor por efeito Joule. A principal vantagem desses fogões é a eficiência energética, que é substancialmente maior que a dos fogões convencionais.\nA corrente elétrica mencionada é induzida por",
+      "subjectId": 2,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 865,
+      "year": 2023,
+      "title": "Questão 111 - ENEM 2023",
+      "choices": [
+        "Altura.",
+        "Período.",
+        "Amplitude.",
+        "Velocidade.",
+        "Comprimento de onda."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/111/9ae85aec-1b17-4ee7-afd9-e9cf17101aca.png",
+      "solution": "No telefone de lata, a vibração da voz se propaga pelo barbante.\n\nCom um barbante mais longo, há maior dissipação de energia durante a propagação. Assim, a amplitude diminui e o som chega mais fraco ao receptor.\n\nA frequência e o período dependem da fonte. A velocidade depende das propriedades do barbante, mantidas nas condições do enunciado.\n\n**Resposta: C — amplitude.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/111",
+      "statement": "![](https://enem.dev/2023/questions/111/9ae85aec-1b17-4ee7-afd9-e9cf17101aca.png)\n\nSOUSA. M. Disponível em: www.monica.com.br. Acesso em: 2 out. 2012 (adaptado)\n\nNa tirinha de Mauricio de Sousa, os personagens Cebolinha e Cascão fazem uma brincadeira utilizando duas latas e um barbante. Ao perceberem que o som pode ser transmitido através do barbante, resolvem alterar o comprimento do barbante para ficar cada vez mais extenso. As demais condições permaneceram inalteradas durante a brincadeira.\nNa prática, à medida que se aumenta o comprimento do barbante, ocorre a redução de qual característica da onda sonora?",
+      "subjectId": 10,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 866,
+      "year": 2023,
+      "title": "Questão 112 - ENEM 2023",
+      "choices": [
+        "Violeta.",
+        "Azul.",
+        "Verde.",
+        "Vermelho.",
+        "Infravermelho."
+      ],
+      "imageUrl": null,
+      "solution": "Para distinguir cavidades menores no disco, é necessário usar luz de menor comprimento de onda, reduzindo a limitação causada pela difração.\n\nEntre as regiões apresentadas, a violeta tem o menor comprimento de onda.\n\n**Resposta: A — violeta.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/112",
+      "statement": "Informações digitais — dados — são gravadas em discos ópticos, como CD e DVD, na forma de cavidades microscópicas. A gravação e a leitura óptica dessas informações são realizadas por um laser (fonte de luz monocromática). Quanto menores as dimensões dessas cavidades, mais dados são armazenados na mesma área do disco. O fator limitante para a leitura de dados é o espalhamento da luz pelo efeito de difração, fenômeno que ocorre quando a luz atravessa um obstáculo com dimensões da ordem de seu comprimento de onda. Essa limitação motivou o desenvolvimento de lasers com emissão em menores comprimentos de onda, possibilitando armazenar e ler dados em cavidades cada vez menores.\nEm qual região espectral se situa o comprimento de onda do laser que otimiza o armazenamento e a leitura de dados em discos de uma mesma área?",
+      "subjectId": 10,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 867,
+      "year": 2023,
+      "title": "Questão 113 - ENEM 2023",
+      "choices": [
+        "\\(2{,}0\\cdot10^{-6}\\)",
+        "\\(2{,}0\\cdot10^{-5}\\)",
+        "\\(2{,}4\\cdot10^{-5}\\)",
+        "\\(2{,}4\\cdot10^{-3}\\)",
+        "\\(2{,}4\\cdot10^{-1}\\)"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Use a área da esfera**\nA potência se distribui sobre uma esfera de raio 10 m:\n\\(A=4\\pi r^2=4\\cdot3\\cdot10^2=1200\\ \\mathrm{m^2}\\).\n\n**2. Divida a potência pela área**\n\\(P=2{,}4\\ \\mathrm{mW}=2{,}4\\cdot10^{-3}\\ \\mathrm{W}\\).\n\\(I=\\frac{P}{A}=\\frac{2{,}4\\cdot10^{-3}}{1200}=2\\cdot10^{-6}\\ \\mathrm{W/m^2}\\).\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/113",
+      "statement": "O bluetooth é uma tecnologia de comunicação sem fio, de curto alcance, presente em diferentes dispositivos eletrônicos de consumo. Ela permite que aparelhos eletrônicos diferentes se conectem e troquem dados entre si. No padrão bluetooth, denominado de Classe 2, as antenas transmitem sinais de potência igual a 2,4 mW e possibilitam conectar dois dispositivos distanciados até 10 m. Considere que essas antenas se comportam como fontes puntiformes que emitem ondas eletromagnéticas esféricas e que a intensidade do sinal é calculada pela potência por unidade de área. Considere 3 como valor aproximado para π. \nPara que o sinal de bluetooth seja detectado pelas antenas, o valor mínimo de sua intensidade, em W/m², é mais próximo de",
+      "subjectId": 10,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 868,
+      "year": 2023,
+      "title": "Questão 114 - ENEM 2023",
+      "choices": [
+        "Aceleração: T1 = 0 e T2 = 200; frenagem: T1 = 600 e T2 = 0.",
+        "Aceleração: T1 = 0 e T2 = 200; frenagem: T1 = 1400 e T2 = 0.",
+        "Aceleração: T₁ = 0 e T₂ = 600; frenagem: T₁ = 600 e T₂ = 0.",
+        "Aceleração: T1 = 560 e T2 = 0; frenagem: T1 = 0 e T2 = 960.",
+        "Aceleração: T1 = 640 e T2 = 0; frenagem: T1 = 0 e T2 = 1040."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/114/e245e16d-8a95-4b2e-ab33-6dd299ff9474.png",
+      "solution": "**1. Calcule o atrito máximo**\n\\(N=mg=200\\cdot10=2000\\ \\mathrm{N}\\).\n\\(f_{\\max}=\\mu N=0{,}2\\cdot2000=400\\ \\mathrm{N}\\).\n\n**2. Durante a aceleração**\nA carga tende a ficar para trás em relação ao caminhão. O atrito e a corda 2, presa à frente da carga, puxam para a direita; a corda 1 fica frouxa.\n\\(T_2+400=200\\cdot3\\).\nLogo, \\(T_2=200\\ \\mathrm{N}\\) e \\(T_1=0\\).\n\n**3. Durante a frenagem**\nA carga tende a avançar. O atrito e a corda 1, presa atrás da carga, puxam para a esquerda; a corda 2 fica frouxa.\n\\(T_1+400=200\\cdot5\\).\nLogo, \\(T_1=600\\ \\mathrm{N}\\) e \\(T_2=0\\).\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/114",
+      "statement": "Uma equipe de segurança do transporte de uma empresa avalia o comportamento das tensões que aparecem em duas cordas, 1 e 2, usadas para prender uma carga de massa M = 200 kg na carroceria, conforme a ilustração. Quando o caminhão parte do repouso, sua aceleração é constante e igual a 3 m/s² e, quando ele é freado bruscamente, sua frenagem é constante e igual a 5 m/s². Em ambas as situações, a carga encontra-se na iminência de movimento, e o sentido do movimento do caminhão está indicado na figura. O coeficiente de atrito estático entre a caixa e o assoalho da carroceria é igual a 0,2. Considere a aceleração da gravidade igual a 10 m/s², as tensões iniciais nas cordas iguais a zero e as duas cordas ideais.\n\n![](https://enem.dev/2023/questions/114/e245e16d-8a95-4b2e-ab33-6dd299ff9474.png)\n\nNas situações de aceleração e frenagem do caminhão, as tensões nas cordas 1 e 2, em newton, serão",
+      "subjectId": 13,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 870,
+      "year": 2023,
+      "title": "Questão 120 - ENEM 2023",
+      "choices": [
+        "Os mesmos.",
+        "Mais intensos.",
+        "Menos intensos.",
+        "Menos intenso para L1 e o mesmo para L3.",
+        "Mais intenso para L1 e menos intenso para L3."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/120/80ceec42-52be-4ea5-8cf1-c75004d0f166.png",
+      "solution": "**1. Antes da queima**\nCada lâmpada está em paralelo com um resistor. Os três conjuntos estão em série.\n\n**2. Depois da queima de L₂**\nO ramo da lâmpada fica aberto; nesse conjunto, resta apenas o resistor. A resistência equivalente do conjunto aumenta e, portanto, a resistência total também aumenta.\n\n**3. Compare os brilhos**\nCom a mesma tensão da fonte, a corrente total diminui. Os outros dois conjuntos recebem menos corrente, e as lâmpadas L₁ e L₃ dissipam menos potência.\n\n**Resposta: C — brilhos menos intensos.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/120",
+      "statement": "O circuito com três lâmpadas incandescentes idênticas, representado na figura, consiste em uma associação mista de resistores. Cada lâmpada (L1, L2, e L3) é associada, em paralelo, a um resistor de resistência R, formando um conjunto. Esses conjuntos são associados em série, tendo todas as lâmpadas o mesmo brilho quando ligadas à fonte de energia. Após vários dias em uso, apenas a lâmpada L2 queima, enquanto as demais permanecem acesas.\n\n![](https://enem.dev/2023/questions/120/80ceec42-52be-4ea5-8cf1-c75004d0f166.png)\n\nEm relação à situação em que todas as lâmpadas funcionam, após a queima de L2, os brilhos das lâmpadas serão",
+      "subjectId": 2,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 872,
+      "year": 2023,
+      "title": "Questão 122 - ENEM 2023",
+      "choices": [
+        "Somente do calor latente de vaporização.",
+        "Somente do calor latente de condensação.",
+        "Do calor sensível e do calor latente de vaporização.",
+        "Do calor sensível e do calor latente de condensação.",
+        "Do calor latente de condensação e do calor latente de vaporização."
+      ],
+      "imageUrl": null,
+      "solution": "O vapor passa de 120 °C para água líquida a 100 °C.\n\n• Ao esfriar de 120 °C para 100 °C, libera **calor sensível**.\n• Ao passar de vapor para líquido, libera **calor latente de condensação**.\n\nEssa energia é transferida para o doce através da parede do tacho.\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/122",
+      "statement": "Em uma indústria alimentícia, para produção de doce de leite, utiliza-se um tacho de parede oca com uma entrada para vapor de água a 120 °C e uma saída para água líquida em equilíbrio com o vapor a 100 °C. Ao passar pela parte oca do tacho, o vapor de água transforma-se em líquido, liberando energia. A parede transfere essa energia para o interior do tacho, resultando na evaporação de água e consequente concentração do produto.\nNo processo de concentração do produto, é utilizada energia proveniente",
+      "subjectId": 16,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 873,
+      "year": 2023,
+      "title": "Questão 124 - ENEM 2023",
+      "choices": [
+        "30",
+        "42",
+        "72",
+        "288",
+        "360"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Tempo do carro**\nNa estrada: \\(480/100=4{,}8\\) h = 288 min.\nNos pedágios: \\(10\\cdot3=30\\) min.\nTotal: \\(288+30=318\\) min.\n\n**2. Tempo do caminhão**\nCom cobrança automática: \\(480/80=6\\) h = 360 min.\n\n**3. Diferença**\n\\(360-318=42\\) minutos.\n\n**Resposta: B — 42 minutos a menos.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/124",
+      "statement": "Uma concessionária é responsável por um trecho de 480 quilômetros de uma rodovia. Nesse trecho, foram construídas 10 praças de pedágio, onde funcionários recebem os pagamentos nas cabines de cobrança. Também existe o serviço automático, em que os veículos providos de um dispositivo passam por uma cancela, que se abre automaticamente, evitando filas e diminuindo o tempo de viagem. Segundo a concessionária, o tempo médio para efetuar a passagem em uma cabine é de 3 minutos, e as velocidades máximas permitidas na rodovia são 100 km/h, para veículos leves, e 80 km/h, para veículos de grande porte.\nConsidere um carro e um caminhão viajando, ambos com velocidades constantes e iguais às máximas permitidas, e que somente o caminhão tenha o serviço automático de cobrança. Comparado ao caminhão, quantos minutos a menos o carro leva para percorrer toda a rodovia?",
+      "subjectId": 12,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 874,
+      "year": 2023,
+      "title": "Questão 128 - ENEM 2023",
+      "choices": [
+        "Forem ambas audíveis.",
+        "Tiverem a mesma potência.",
+        "Tiverem a mesma frequência.",
+        "Tiverem a mesma intensidade.",
+        "Propagarem-se com velocidades diferentes."
+      ],
+      "imageUrl": null,
+      "solution": "O rádio do avião é sintonizado em uma faixa de frequências para receber a comunicação da torre.\n\nUm sinal indesejado na mesma frequência pode ser captado junto com o sinal desejado, prejudicando a recepção. É essa interferência na comunicação que o enunciado considera.\n\nPotência e intensidade iguais não são condições necessárias. Ondas de rádio são eletromagnéticas, não sons audíveis.\n\n**Resposta: C — tiverem a mesma frequência.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/128",
+      "statement": "É comum em viagens de avião sermos solicitados a desligar aparelhos cujo funcionamento envolva a emissão ou a recepção de ondas eletromagnéticas, como celulares. A justificativa dada para esse procedimento é, entre outras coisas, a necessidade de eliminar fontes de sinais eletromagnéticos que possam interferir nas comunicações, via rádio, dos pilotos com a torre de controle.\n\nEssa interferência poderá ocorrer somente se as ondas emitidas pelo celular e as recebidas pelo rádio do avião",
+      "subjectId": 10,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 876,
+      "year": 2023,
+      "title": "Questão 130 - ENEM 2023",
+      "choices": [
+        "Ter a durabilidade de uma cerâmica e ser totalmente biodegradável.",
+        "Ser tão durável quanto uma cerâmica e ter alta condutividade térmica.",
+        "Ser um mau condutor térmico e aumentar o resíduo biodegradável na natureza.",
+        "Ter baixa condutividade térmica e reduzir o resíduo não biodegradável na natureza.",
+        "Ter alta condutividade térmica e possibilitar a degradação do material no meio ambiente."
+      ],
+      "imageUrl": null,
+      "solution": "O copo é feito de 50% plástico reciclado (não biodegradável) e 50% casca de café. É reutilizável e suporta lavagem.\n\n**Vantagem 1 — Baixa condutividade térmica:**\nO enunciado afirma que o copo \"não esquenta na parte externa\" mesmo com café quente. Isso indica que o material é um **mau condutor térmico** (baixa condutividade térmica), proporcionando conforto ao segurar.\n\n**Vantagem 2 — Reduz resíduo não biodegradável:**\nO copo é **reutilizável**, substituindo vários copos descartáveis de plástico. Cada copo reutilizável evita o descarte de muitos copos de plástico não biodegradável. Além disso, usa plástico **reciclado**, reduzindo a produção de plástico virgem. Assim, o uso desses copos **reduz o resíduo não biodegradável** na natureza.\n\nO copo não é \"totalmente biodegradável\" (contém 50% de plástico), eliminando opções A e E.\n\n**Gabarito: D) Ter baixa condutividade térmica e reduzir o resíduo não biodegradável na natureza.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/130",
+      "statement": "Uma cafeteria adotou copos fabricados a partir de uma composição de 50% de plástico reciclado não biodegradável e 50% de casca de café. O copo é reutilizável e retornável, pois o material, semelhante a uma cerâmica, suporta a lavagem. Embora ele seja comercializado por um preço considerado alto quando comparado ao de um copo de plástico descartável, essa cafeteria possibilita aos clientes retornarem o copo sujo e levarem o café quente servido em outro copo já limpo e higienizado. O material desse copo oferece também o conforto de não esquentar na parte externa.\n\n**Cafeteria adota copo reutilizável feito com casca de café.** Disponível em: www.gazetadopovo.com.br. Acesso em: 5 dez. 2019 (adaptado).\n\nQuais duas vantagens esse copo apresenta em comparação ao copo descartável?",
+      "subjectId": 16,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 877,
+      "year": 2023,
+      "title": "Questão 131 - ENEM 2023",
+      "choices": [
+        "Maior densidade.",
+        "Menor viscosidade.",
+        "Maior volume de gás dissolvido.",
+        "Menor massa de solutos dissolvidos.",
+        "Maior temperatura de congelamento."
+      ],
+      "imageUrl": null,
+      "solution": "As duas versões têm volumes semelhantes, mas a comum contém uma quantidade de açúcar muito maior que a massa dos adoçantes da versão diet.\n\nComo \\(\\rho=\\frac{m}{V}\\), uma massa maior para um mesmo volume corresponde a uma densidade maior.\n\n**Resposta: A — maior densidade.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/131",
+      "statement": "O consumo exagerado de refrigerantes é preocupante, pois contribui para o aumento de casos de obesidade e diabetes. Considere dois refrigerantes enlatados, um comum e um diet, e que ambos possuam a mesma quantidade de aditivos, exceto pela presença de açúcar. O refrigerante comum contém basicamente água carbonatada e grande quantidade de açúcar; já o refrigerante diet tem água carbonatada e adoçantes, cujas massas são muito pequenas.\n\nCAVAGIS, A. D. M.; PEREIRA, E. A.; OLIVEIRA, L. C. Um método simples para avaliar o teor de sacarose e CO2 em refrigerantes. **Química Nova na Escola**, n. 3, ago. 2014 (adaptado).\n\nEntre as duas versões apresentadas, o refrigerante comum possui",
+      "subjectId": 18,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 878,
+      "year": 2023,
+      "title": "Questão 132 - ENEM 2023",
+      "choices": [
+        "[Alternativa com imagem] /questions/2023/q132-a.png",
+        "[Alternativa com imagem] /questions/2023/q132-b.png",
+        "[Alternativa com imagem] /questions/2023/q132-c.png",
+        "[Alternativa com imagem] /questions/2023/q132-d.png",
+        "[Alternativa com imagem] /questions/2023/q132-e.png"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/132/99a53ed4-bbd2-4aa0-9301-ee4cd640a4b6.jpg",
+      "solution": "Pela equação dos gases ideais, \\(PV=nRT\\).\n\nComo o volume e a quantidade de gás são constantes:\n\\(P=\\frac{nR}{V}T\\).\n\nA pressão é diretamente proporcional à temperatura absoluta, em kelvin. Ao resfriar, ambas diminuem, seguindo uma reta de inclinação positiva no gráfico P × T.\n\nA alternativa E representa esse movimento de \\((T_0,P_0)\\) para valores menores.\n\n**Resposta: E.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/132",
+      "statement": "O manual de um automóvel alerta sobre os cuidados em relação à pressão do ar no interior dos pneus. Recomenda-se que a pressão seja verificada com os pneus frios (à temperatura ambiente). Um motorista, desatento a essa informação, realizou uma viagem longa sobre o asfalto quente e, em seguida, verificou que a pressão $P_0$ no interior dos pneus não era a recomendada pelo fabricante. Na ocasião, a temperatura dos pneus era $T_0$. Após um longo período em repouso, os pneus do carro atingiram a temperatura ambiente T. Durante o resfriamento, não há alteração no volume dos pneus e na quantidade de ar no seu interior. Considere o ar dos pneus um gás perfeito (também denominado gás ideal).\n\nDurante o processo de resfriamento, os valores de pressão em relação à temperatura (P x T) são representados pelo gráfico:",
+      "subjectId": 16,
+      "difficulty": "medium",
+      "correctChoice": 4,
+      "status": "active"
+    },
+    {
+      "id": 879,
+      "year": 2023,
+      "title": "Questão 135 - ENEM 2023",
+      "choices": [
+        "270.",
+        "540.",
+        "818.",
+        "1500.",
+        "1800."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/135/11f4c343-9f23-4f60-a61f-10d4dbc2eb6c.png",
+      "solution": "**1. Isole o percurso no líquido**\nO segundo eco percorre o mesmo caminho do primeiro, mais a ida e a volta dentro do líquido.\nDistância adicional: \\(2\\cdot450=900\\) m.\nTempo adicional: \\(1{,}1-0{,}5=0{,}6\\) s.\n\n**2. Calcule a velocidade**\n\\(v=\\frac{900}{0{,}6}=1500\\ \\mathrm{m/s}\\).\n\n**Resposta: D — 1500 m/s.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/135",
+      "statement": "O petróleo é uma matéria-prima muito valiosa e métodos geofísicos são úteis na sua prospecção. É possível identificar a composição de materiais estratificados medindo-se a velocidade de propagação do som (onda mecânica) através deles. Considere que uma camada de 450 m de um líquido se encontra presa no subsolo entre duas camadas rochosas, conforme o esquema. Um pulso acústico (que gera uma vibração mecânica) é emitido a partir da superfície do solo, onde são posteriormente recebidas duas vibrações refletidas (ecos). A primeira corresponde à reflexão do pulso na interface superior do líquido com a camada rochosa. A segunda vibração deve-se à reflexão do pulso na interface inferior. O tempo entre a emissão do pulso e a chegada do primeiro eco é de 0,5 s. O segundo eco chega 1,1 s após a emissão do pulso\n\n![](https://enem.dev/2023/questions/135/11f4c343-9f23-4f60-a61f-10d4dbc2eb6c.png)\n\nA velocidade do som na camada líquida, em metro por segundo, é",
+      "subjectId": 10,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 880,
+      "year": 2023,
+      "title": "Questão 136 - ENEM 2023",
+      "choices": [
+        "1198,8",
+        "1296,0",
+        "1360,8",
+        "4665,6",
+        "4860,0"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/136/565c2d5a-96a0-4468-9bb1-2710707a40fd.png",
+      "solution": "**1. Altura do cone removido**\nPor semelhança, \\(\\frac{3}{9}=\\frac{h}{36}\\), então h=12 cm.\nO tronco tem altura \\(36-12=24\\) cm.\n\n**2. Volume do tronco**\n\\(V_t=\\frac{\\pi h}{3}(R^2+Rr+r^2)=\\frac{3\\cdot24}{3}(81+27+9)=2808\\ \\mathrm{cm^3}\\).\n\n**3. Retire o cilindro**\n\\(V_c=\\pi r^2h=3\\cdot3^2\\cdot24=648\\ \\mathrm{cm^3}\\).\nVolume da escultura: \\(2808-648=2160\\ \\mathrm{cm^3}\\).\n\n**4. Calcule a massa**\n\\(m=0{,}6\\cdot2160=1296\\ \\mathrm{g}\\).\n\n**Resposta: B — 1296,0 g.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/136",
+      "statement": "Um artista plástico esculpe uma escultura a partir de um bloco de madeira de lei, em etapas. Inicialmente, esculpe um cone reto com 36 cm de altura e diâmetro da base medindo 18 cm. Em seguida, remove desse cone um cone menor, cujo diâmetro da base mede 6 cm, obtendo, assim, um tronco de cone, conforme ilustrado na figura.\n\n![](https://enem.dev/2023/questions/136/565c2d5a-96a0-4468-9bb1-2710707a40fd.png)\n\nEm seguida, perfura esse tronco de cone, removendo um cilindro reto, de diâmetro 6 cm, cujo eixo de simetria é o mesmo do cone original. Dessa forma, ao final, a escultura tem a forma de um tronco de cone com uma perfuração cilíndrica de base a base.  \nO tipo de madeira utilizada para produzir essa escultura tem massa igual a 0,6 g por centímetro cúbico de volume. Utilize 3 como aproximação para π.\n\nQual é a massa, em grama, dessa escultura?",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 881,
+      "year": 2023,
+      "title": "Questão 137 - ENEM 2023",
+      "choices": [
+        "2000,00.",
+        "2500,00.",
+        "3250,00.",
+        "4500,00.",
+        "9000,00."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/137/fc161c5c-10e9-46d8-a75d-09c59b21d5a4.png",
+      "solution": "**1. Some os salários pagos**\n• Produção: \\(75\\cdot2000=150000\\) reais.\n• Administração: \\(25\\cdot7000=175000\\) reais.\n\n**2. Divida pelo total de funcionários**\n\\(\\bar{x}=\\frac{150000+175000}{100}=3250\\) reais.\n\nA média considera quantas pessoas recebem cada salário. Somar os dois salários e dividir por 2 daria o mesmo peso a setores de tamanhos diferentes.\n\n**Resposta: C — 3250,00 reais.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/137",
+      "statement": "Os 100 funcionários de uma empresa estão distribuídos em dois setores: Produção e Administração.\n\nOs funcionários de um mesmo setor recebem salários com valores iguais. O quadro apresenta a quantidade de funcionários por setor e seus respectivos salários.\n\n![](https://enem.dev/2023/questions/137/fc161c5c-10e9-46d8-a75d-09c59b21d5a4.png)\n\nA média dos salários dos 100 funcionários dessa empresa, em real, é",
+      "subjectId": 25,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 882,
+      "year": 2023,
+      "title": "Questão 138 - ENEM 2023",
+      "choices": [
+        "20",
+        "60",
+        "64",
+        "68",
+        "80"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Descubra o total inicial da urna B**\nAs 4 bolas pretas representam 25%:\n\\(4/0{,}25=16\\) bolas no total.\n\n**2. Determine o novo total**\nSe N é o novo total de bolas em B:\n\\(0{,}2\\cdot\\frac{4}{N}\\le0{,}01\\).\nLogo, \\(N\\ge80\\).\n\n**3. Calcule a adição**\nSó serão acrescentadas bolas brancas:\n\\(80-16=64\\).\n\n**Resposta: C — 64 bolas.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/138",
+      "statement": "Visando atrair mais clientes, o gerente de uma loja anunciou uma promoção em que cada cliente que realizar uma compra pode ganhar um voucher para ser usado em sua próxima compra. Para ganhar seu voucher, o cliente precisa retirar, ao acaso, uma bolinha de dentro de cada uma das duas urnas A e B disponibilizadas pelo gerente, nas quais há apenas bolinhas pretas e brancas. Atualmente, a probabilidade de se escolher, ao acaso, uma bolinha preta na urna A é igual a 20% e a probabilidade de se escolher uma bolinha preta na urna B é 25%. Ganha o voucher o cliente que retirar duas bolinhas pretas, uma de cada urna.\n\nCom o passar dos dias, o gerente percebeu que, para a promoção ser viável aos negócios, era preciso alterar a probabilidade de acerto do cliente sem alterar a regra da promoção. Para isso, resolveu alterar a quantidade de bolinhas brancas na urna B de forma que a probabilidade de um cliente ganhar o voucher passasse a ser menor ou igual a 1%. Sabe-se que a urna B tem 4 bolinhas pretas e que, em ambas as urnas, todas as bolinhas têm a mesma probabilidade de serem retiradas.\n\nQual é o número mínimo de bolinhas brancas que o gerente deve adicionar à urna B?",
+      "subjectId": 24,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 883,
+      "year": 2023,
+      "title": "Questão 139 - ENEM 2023",
+      "choices": [
+        "Junho.",
+        "Julho.",
+        "Agosto.",
+        "Setembro.",
+        "Outubro."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/139/abba5cb1-da9d-4899-bda7-97099ca51147.png",
+      "solution": "**1. Identifique a variação mensal**\n• Produto I: 80, 90, 100 → aumenta 10 unidades por mês.\n• Produto II: 190, 170, 150 → diminui 20 unidades por mês.\n\n**2. Continue a sequência**\n• Julho: I = 110 e II = 130.\n• Agosto: I = 120 e II = 110.\n\nEm agosto, I supera II pela primeira vez.\n\n**3. Observe o mês de encerramento**\nA produção termina no mês seguinte, portanto em setembro.\n\n**Resposta: D — setembro.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/139",
+      "statement": "O gerente de uma fábrica pretende comparar a evolução das vendas de dois produtos similares (I e II). Para isso, passou a verificar o número de unidades vendidas de cada um desses produtos em cada mês. Os resultados dessa verificação, para os meses de abril a junho, são apresentados na tabela.\n\n![](https://enem.dev/2023/questions/139/abba5cb1-da9d-4899-bda7-97099ca51147.png)\n\nO gerente estava decidido a cessar a produção do produto II no mês seguinte àquele em que as vendas do produto I superassem as do produto II.  \nSuponha que a variação na quantidade de unidades vendidas dos produtos I e II se manteve, mês a mês, como no período representado na tabela.\n\nEm qual mês o produto II parou de ser produzido?",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 884,
+      "year": 2023,
+      "title": "Questão 140 - ENEM 2023",
+      "choices": [
+        "Mediana = média < moda.",
+        "Mediana = moda < média.",
+        "Mediana < média < moda.",
+        "Moda < média < mediana.",
+        "Moda < mediana < média."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/140/846c1155-c9f0-48ad-a862-f9bf883c3935.png",
+      "solution": "**1. Moda**\nO maior grupo tem 55 motoristas que fizeram 3 viagens. A moda é **3**.\n\n**2. Mediana**\nHá 160 motoristas; precisamos das posições 80 e 81 na lista ordenada.\nAté 3 viagens, há \\(10+10+55=75\\) motoristas.\nAté 4 viagens, há \\(75+25=100\\).\nAs posições 80 e 81 correspondem a 4 viagens. A mediana é **4**.\n\n**3. Média**\n\\(\\bar{x}=\\frac{1\\cdot10+2\\cdot10+3\\cdot55+4\\cdot25+6\\cdot50+7\\cdot10}{160}=\\frac{665}{160}=4{,}15625\\).\n\nPortanto: **moda < mediana < média**.\n\n**Resposta: E.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/140",
+      "statement": "Uma empresa de transporte faz regularmente um levantamento do número de viagens realizadas durante o dia por todos os 160 motoristas cadastrados em seu aplicativo. Em um certo dia, foi gerado um relatório, por meio de um gráfico de barras, no qual se relacionaram a quantidade de motoristas com a quantidade de viagens realizadas até aquele instante do dia.\n\n![](https://enem.dev/2023/questions/140/846c1155-c9f0-48ad-a862-f9bf883c3935.png)\n\nComparando os valores da média, da mediana e da moda da distribuição das quantidades de viagens realizadas pelos motoristas cadastrados nessa empresa, obtém-se",
+      "subjectId": 25,
+      "difficulty": "medium",
+      "correctChoice": 4,
+      "status": "active"
+    },
+    {
+      "id": 885,
+      "year": 2023,
+      "title": "Questão 141 - ENEM 2023",
+      "choices": [
+        "\\(\\frac{1}{2}\\)",
+        "\\(\\frac{1}{3}\\)",
+        "\\(\\frac{1}{8}\\)",
+        "\\(\\frac{2}{9}\\)",
+        "\\(\\frac{3}{8}\\)"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Conte os cartões, não os estudantes**\n• Primeiro ano: \\(200\\cdot1=200\\) cartões.\n• Segundo ano: \\(150\\cdot2=300\\) cartões.\n• Terceiro ano: \\(100\\cdot3=300\\) cartões.\n\n**2. Calcule a probabilidade**\nSão \\(200+300+300=800\\) cartões; 300 pertencem ao terceiro ano.\n\\(P=\\frac{300}{800}=\\frac{3}{8}\\).\n\nDividir 100 por 450 seria incorreto: estudantes de anos diferentes recebem quantidades diferentes de cartões.\n\n**Resposta: E.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/141",
+      "statement": "No alojamento de uma universidade, há alguns quartos com o padrão superior ao dos demais. Um desses quartos ficou disponível, e muitos estudantes se candidataram para morar no local. Para escolher quem ficará com o quarto, um sorteio será realizado. Para esse sorteio, cartões individuais com os nomes de todos os estudantes inscritos serão depositados em uma urna, sendo que, para cada estudante de primeiro ano, será depositado um único cartão com seu nome; para cada estudante de segundo ano, dois cartões com seu nome; e, para cada estudante de terceiro ano, três cartões com seu nome. Foram inscritos 200 estudantes de primeiro ano, 150 de segundo ano e 100 de terceiro ano. Todos os cartões têm a mesma probabilidade de serem sorteados.\n\nQual a probabilidade de o vencedor do sorteio ser um estudante de terceiro ano?",
+      "subjectId": 24,
+      "difficulty": "medium",
+      "correctChoice": 4,
+      "status": "active"
+    },
+    {
+      "id": 886,
+      "year": 2023,
+      "title": "Questão 142 - ENEM 2023",
+      "choices": [
+        "50",
+        "60",
+        "80",
+        "140",
+        "150"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Calcule a água disponível**\n\\(V=\\pi r^2h=3\\cdot5^2\\cdot1{,}5=112{,}5\\ \\mathrm{m^3}\\).\nComo 1 m³ corresponde a 1000 litros, restam **112500 litros**.\n\n**2. Divida pelos moradores e pelos dias**\n\\(\\frac{112500}{75\\cdot10}=150\\) litros por morador por dia.\n\n**3. Compare com o consumo habitual**\n\\(200-150=50\\) litros de economia por dia.\n\n**Resposta: A — 50 litros.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/142",
+      "statement": "A água utilizada pelos 75 moradores de um vilarejo provém de um reservatório de formato cilíndrico circular reto cujo raio da base mede 5 metros, sempre abastecido no primeiro dia de cada mês por caminhões-pipa. Cada morador desse vilarejo consome, em média, 200 litros de água por dia.\n\nNo mês de junho de um determinado ano, o vilarejo festejou o dia do seu padroeiro e houve um gasto extra de água nos primeiros 20 dias. Passado esse período, as pessoas verificaram a quantidade de água presente no reservatório e constataram que o nível da coluna de água estava em 1,5 metro. Decidiram, então, fazer um racionamento de água durante os 10 dias seguintes. Considere 3 como aproximação para π.\n\nQual é a quantidade mínima de água, em litro, que cada morador, em média, deverá economizar por dia, de modo que o reservatório não fique sem água nos próximos 10 dias?",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 887,
+      "year": 2023,
+      "title": "Questão 143 - ENEM 2023",
+      "choices": [
+        "10",
+        "11",
+        "13",
+        "30",
+        "33"
+      ],
+      "imageUrl": null,
+      "solution": "A lista deste ano tem \\(400\\cdot1{,}10=440\\) crianças.\n\nPara reduzir essa lista em 25%, é preciso criar vagas para:\n\\(440\\cdot0{,}25=110\\) crianças.\n\nCada nova sala atende 10 crianças:\n\\(110/10=11\\) salas.\n\n**Resposta: B — 11.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/143",
+      "statement": "Em janeiro do ano passado, a direção de uma fábrica abriu uma creche para os filhos de seus funcionários, com 10 salas, cada uma com capacidade para atender 10 crianças a cada ano. As vagas são sorteadas entre os filhos dos funcionários inscritos, enquanto os não contemplados pelo sorteio formam uma lista de espera. No ano passado, a lista de espera teve 400 nomes e, neste ano, esse número cresceu 10%. A direção da fábrica realizou uma pesquisa e constatou que a lista de espera para o próximo ano terá a mesma quantidade de nomes da lista de espera deste ano. Decidiu, então, construir, ao longo desse ano, novas salas para a creche, também com capacidade de atendimento para 10 crianças cada, de modo que o número de nomes na lista de espera no próximo ano seja 25% menor que o deste ano.\n\nO número mínimo de salas que deverão ser construídas é",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 888,
+      "year": 2023,
+      "title": "Questão 144 - ENEM 2023",
+      "choices": [
+        "0,3",
+        "0,5",
+        "0,9",
+        "1,8",
+        "2,7"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/144/c606403f-fd10-4c02-8e46-736fece94b85.png",
+      "solution": "**1. Calcule a subida do nível**\nDas 6h às 8h, \\(\\Delta h=1{,}1-0{,}5=0{,}6\\ \\mathrm{m}\\).\n\n**2. Converta em volume**\nA área da base é 3 m²:\n\\(\\Delta V=3\\cdot0{,}6=1{,}8\\ \\mathrm{m^3}\\).\n\n**3. Divida pelo tempo**\n\\(Q=\\frac{1{,}8}{2}=0{,}9\\ \\mathrm{m^3/h}\\).\n\n**Resposta: C — 0,9 m³/h.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/144",
+      "statement": "A foto mostra a construção de uma cisterna destinada ao armazenamento de água. Uma cisterna como essa, na forma de cilindro circular reto com 3 m² de área da base, foi abastecida por um curso-d’água com vazão constante. O seu proprietário registrou a altura do nível da água no interior da cisterna durante o abastecimento em diferentes momentos de um mesmo dia, conforme o quadro.\n\n![](https://enem.dev/2023/questions/144/c606403f-fd10-4c02-8e46-736fece94b85.png)\n\n![](https://enem.dev/2023/questions/144/2107cabc-64d0-4a1f-9eab-fa7dce0e9ac2.png)\n\nDisponível em: www.paraibamix.com. Acesso em: 3 dez. 2012.\n\nQual foi a vazão, em metro cúbico por hora, do curso-d’água que abasteceu a cisterna?",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 889,
+      "year": 2023,
+      "title": "Questão 145 - ENEM 2023",
+      "choices": [
+        "\\(Q_2\\)",
+        "\\(Q_3\\)",
+        "\\(Q_4\\)",
+        "\\(Q_5\\)",
+        "\\(Q_6\\)"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/145/f338280e-33fe-4896-b296-cfb94ca78430.png",
+      "solution": "Ângulos inscritos que enxergam a mesma corda a partir do mesmo arco têm a mesma medida.\n\nNa figura, A, B, Q₁ e Q₃ pertencem à mesma circunferência. Q₁ e Q₃ estão no mesmo arco delimitado por A e B. Assim:\n\\(\\angle AQ_1B=\\angle AQ_3B\\).\n\nA bola deve ser passada para **Q₃**.\n\n**Resposta: B.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/145",
+      "statement": "Num certo momento de um jogo digital, a tela apresenta a imagem representada na figura. O ponto Q1 representa a posição de um jogador que está com a bola, os pontos Q2, Q3, Q4 , Q5 e Q6  \ntambém indicam posições de jogadores da mesma equipe, e os pontos A e B indicam os dois pés da trave mais próxima deles. No momento da partida retratado, o jogador Q1 tem a posse da bola, que será passada para um dos outros jogadores das posições Qn, n ∈ {2, 3, 4, 5, 6}, cujo ângulo AQnB tenha a mesma medida do ângulo AQ1 B.\n\n![](https://enem.dev/2023/questions/145/f338280e-33fe-4896-b296-cfb94ca78430.png)\n\nQual é o jogador que receberá a bola?",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 890,
+      "year": 2023,
+      "title": "Questão 146 - ENEM 2023",
+      "choices": [
+        "Há somente uma solução possível, e as somas em cada lado do triângulo são iguais a 7.",
+        "Há somente uma solução possível, e as somas em cada lado do triângulo são iguais a 9.",
+        "Há somente duas soluções possíveis, uma em que as somas em cada lado do triângulo são iguais a 7 e outra em que as somas são iguais a 9.",
+        "Há somente duas soluções possíveis, uma em que as somas em cada lado do triângulo são iguais a 9 e outra em que as somas são iguais a 12.",
+        "Há somente duas soluções possíveis, uma em que as somas em cada lado do triângulo são iguais a 10 e outra em que as somas são iguais a 11."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/146/74e0c851-b2af-410d-9f19-3348dd8f883a.jpg",
+      "solution": "**1. Liste os vértices possíveis**\nCom números de 1 a 6 e razão 2, só há dois grupos: **1, 3, 5** e **2, 4, 6**.\n\n**2. Relacione as somas**\nA soma dos seis números é 21. Ao somar os três lados, os vértices são contados duas vezes e os números intermediários uma vez.\nSe S é a soma comum:\n\\(3S=21+\\text{soma dos vértices}\\).\n\n• Vértices 1, 3, 5: \\(3S=21+9=30\\), então **S = 10**.\n• Vértices 2, 4, 6: \\(3S=21+12=33\\), então **S = 11**.\n\n**3. Verifique as disposições**\nPara 1, 3, 5, coloque 6 entre 1 e 3; 4 entre 1 e 5; 2 entre 3 e 5.\nPara 2, 4, 6, coloque 5 entre 2 e 4; 3 entre 2 e 6; 1 entre 4 e 6.\n\nTodos os números são usados sem repetição.\n\n**Resposta: E — somas 10 e 11.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/146",
+      "statement": "O triângulo da figura é denominado triângulo mágico. Nos círculos, escrevem-se os números de 1 a 6, sem repetição, com um número em cada círculo. O objetivo é distribuir os números de forma que as somas dos números em cada lado do triângulo sejam iguais.\n\n![](https://enem.dev/2023/questions/146/74e0c851-b2af-410d-9f19-3348dd8f883a.jpg)\n\nConsidere que os números colocados nos vértices do triângulo estejam em progressão aritmética de razão igual a 2.\nNas condições propostas, quais as possíveis soluções para as somas dos números que formam os lados do triângulo?",
+      "subjectId": 20,
+      "difficulty": "medium",
+      "correctChoice": 4,
+      "status": "active"
+    },
+    {
+      "id": 891,
+      "year": 2023,
+      "title": "Questão 147 - ENEM 2023",
+      "choices": [
+        "1",
+        "4",
+        "6",
+        "7",
+        "8"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Necessidade do casal**\nSão 30 g por pessoa por dia:\n\\(2\\cdot30\\cdot30=1800\\) g em 30 dias.\n\n**2. Carboidratos por pacote**\n\\(18\\cdot15=270\\) g.\n\n**3. Pacotes**\n\\(1800/270\\approx6{,}67\\).\nÉ necessário arredondar para cima para garantir o suprimento.\n\n**Resposta: D — 7 pacotes.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/147",
+      "statement": "Alguns estudos comprovam que os carboidratos fornecem energia ao corpo, preservam as proteínas estruturais dos músculos durante a prática de atividade física e ainda dão força para o cérebro coordenar os movimentos, o que de fato tem impacto positivo no desenvolvimento do praticante. O ideal é consumir 1 grama de carboidrato para cada minuto de caminhada.\nCIRINO, C. Boa pergunta: consumir carboidratos antes dos exercícios melhora o desempenho do atleta? Revista Saúde! É Vital, n. 330, nov. 2010 (adaptado).\nUm casal realizará diariamente 30 minutos de caminhada, ingerindo, antes dessa atividade, a quantidade ideal de carboidratos recomendada. Para ter o consumo ideal apenas por meio do consumo de pão de fôrma integral, o casal planeja garantir o suprimento de pães para um período de 30 dias ininterruptos. Sabe-se que cada pacote desse pão vem com 18 fatias, e que cada uma delas tem 15 gramas de carboidratos.\nA quantidade mínima de pacotes de pão de fôrma necessários para prover o suprimento a esse casal é",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 892,
+      "year": 2023,
+      "title": "Questão 150 - ENEM 2023",
+      "choices": [
+        "C = 0,9q",
+        "C = 0,1q",
+        "C = 1 − 0,1q",
+        "C = 1 − 0,9q",
+        "C = q − 10"
+      ],
+      "imageUrl": null,
+      "solution": "Ao final da primeira hora, a concentração corresponde a 90% da quantidade ingerida:\n\\(C=\\frac{90}{100}q=0{,}9q\\).\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/150",
+      "statement": "Dirigir após ingerir bebidas alcoólicas é uma atitude extremamente perigosa, uma vez que, a partir da primeira dose, a pessoa já começa a ter perda de sensibilidade de movimentos e de reflexos. Apesar de a eliminação e absorção do álcool depender de cada pessoa e de como o organismo consegue metabolizar a substância, ao final da primeira hora após a ingestão, a concentração de álcool (C) no sangue corresponde a aproximadamente 90% da quantidade (q) de álcool ingerida, e a eliminação total dessa concentração pode demorar até 12 horas.\n\nDisponível em: http://g1.globo.com. Acesso em: 1 dez. 2018 (adaptado).\n\nNessas condições, ao final da primeira hora após a ingestão da quantidade q de álcool, a concentração C dessa substância no sangue é expressa algebricamente por",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 893,
+      "year": 2023,
+      "title": "Questão 151 - ENEM 2023",
+      "choices": [
+        "3",
+        "4",
+        "6",
+        "7",
+        "9"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/151/276495a3-e5f2-4e4c-83b0-3473512a5274.png",
+      "solution": "**1. Leia os eixos**\nO eixo horizontal mostra A; o vertical, B. A é maior quando a coordenada horizontal supera a vertical, isto é, abaixo da reta imaginária \\(B=A\\).\n\n**2. Compare os pontos**\nA>B às **9h, 12h, 13h e 14h**.\nÀs 10h e 11h, os valores são iguais. Às 15h, 16h e 17h, B>A.\n\nSão **4 instantes**.\n\n**Resposta: B.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/151",
+      "statement": "Um investidor iniciante observou o gráfico que apresenta a evolução dos valores de duas criptomoedas A e B em relação ao tempo.\n\n![](https://enem.dev/2023/questions/151/276495a3-e5f2-4e4c-83b0-3473512a5274.png)\n\nDurante horas consecutivas, esses valores foram observados em nove instantes, representados por horas exatas.\n\nEm quantos desses instantes a criptomoeda A estava mais valorizada do que a criptomoeda B?",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 894,
+      "year": 2023,
+      "title": "Questão 152 - ENEM 2023",
+      "choices": [
+        "I.",
+        "II.",
+        "III.",
+        "IV.",
+        "V."
+      ],
+      "imageUrl": null,
+      "solution": "**1. Simplifique a expressão**\n\\(N=10\\log_{10}\\left(\\frac{I}{I_0}\\right)\\).\n\n**2. Substitua os dados**\n\\(I=8\\cdot10^{-8}\\ \\mathrm{W/m^2}\\) e \\(I_0=10^{-12}\\ \\mathrm{W/m^2}\\).\n\\(N=10\\log_{10}(8\\cdot10^4)\\).\n\nComo \\(\\log_{10}2\\approx0{,}3\\):\n\\(\\log_{10}8=3\\log_{10}2\\approx0{,}9\\).\nLogo, \\(N=10(0{,}9+4)=49\\ \\mathrm{dB}\\).\n\n**3. Consulte o intervalo**\n49 dB está entre 48 e 55 dB: medida preventiva II.\n\n**Resposta: B — II.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/152",
+      "statement": "A exposição a alguns níveis sonoros pode causar lesões auditivas. Por isso, em uma indústria, são adotadas medidas preventivas de acordo com a máquina que o funcionário opera e o nível N de intensidade do som, medido em decibel (dB), a que o operário é exposto, sendo \\(N=\\log_{10}I^{10}-\\log_{10}I_0^{10}\\), I a intensidade do som e \\(I_0=10^{-12}\\ \\mathrm{W/m^2}\\).\n\nDisponível em: www.sofisica.com.br. Acesso em: 8 jul. 2015 (adaptado).\n\nQuando o som é considerado baixo, ou seja, N = 48 dB ou menos, deve ser utilizada a medida preventiva I. No caso de o som ser moderado, quando N está no intervalo (48 dB, 55 dB), deve ser utilizada a medida preventiva II. Quando o som é moderado alto, que equivale a N no intervalo (55 dB, 80 dB), a medida preventiva a ser usada é a III. Se N estiver no intervalo (80 dB, 115 dB), quando o som é considerado alto, deve ser utilizada a medida preventiva IV. E se o som é considerado muito alto, com N maior que 115 dB, deve-se utilizar a medida preventiva V.  \nUma nova máquina, com \\(I=8\\cdot10^{-8}\\ \\mathrm{W/m^2}\\), foi adquirida e será classificada de acordo com o nível de ruído que produz.  \nConsidere 0,3 como aproximação para \\(\\log_{10}2\\).\n\nO funcionário que operará a nova máquina deverá adotar a medida preventiva",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 895,
+      "year": 2023,
+      "title": "Questão 155 - ENEM 2023",
+      "choices": [
+        "1000",
+        "900",
+        "600",
+        "500",
+        "400"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/155/05746583-c107-4dd6-8a3b-7e7d0da99377.png",
+      "solution": "**1. Lado da piscina**\n\\(\\sqrt{400}=20\\) m.\n\n**2. Lado externo**\nA calçada acrescenta 5 m em cada lado:\n\\(20+5+5=30\\) m.\n\n**3. Área da calçada**\nÁrea externa menos área da piscina:\n\\(30^2-400=900-400=500\\ \\mathrm{m^2}\\).\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/155",
+      "statement": "Na planta baixa de um clube, a piscina é representada por um quadrado cuja área real mede 400 m². Ao redor dessa piscina, será construída uma calçada, de largura constante igual a 5 m.\n\n![](https://enem.dev/2023/questions/155/05746583-c107-4dd6-8a3b-7e7d0da99377.png)\n\nQual é a medida da área, em metro quadrado, ocupada pela calçada?",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 896,
+      "year": 2023,
+      "title": "Questão 156 - ENEM 2023",
+      "choices": [
+        "6",
+        "8",
+        "10",
+        "14",
+        "24"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/156/e9e0b793-5535-48e6-87c6-5516e6d7c8cd.png",
+      "solution": "O sinal é zero nos intervalos em que o gráfico permanece sobre o eixo horizontal.\n\n• De 10 a 12 minutos: 2 minutos.\n• De 16 a 20 minutos: 4 minutos.\n\nTotal: **2 + 4 = 6 minutos**.\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/156",
+      "statement": "Uma pessoa caminha por 30 minutos e utiliza um aplicativo instalado em seu celular para monitorar a variação da intensidade do sinal de internet recebido pelo aparelho durante o deslocamento. Chegando ao seu destino, o aplicativo forneceu este gráfico:\n\n![](https://enem.dev/2023/questions/156/e9e0b793-5535-48e6-87c6-5516e6d7c8cd.png)\n\nPor quantos minutos, durante essa caminhada, o celular dessa pessoa ficou sem receber sinal de internet?",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 897,
+      "year": 2023,
+      "title": "Questão 157 - ENEM 2023",
+      "choices": [
+        "10",
+        "20",
+        "30",
+        "50",
+        "70"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/157/13cfbc97-0034-4904-9100-ff5ca3f6504e.png",
+      "solution": "Trace mentalmente as linhas de massa 80 kg e altura 1,65 m.\n\nPrecisamos dos pontos à esquerda de 80 kg e acima de 1,65 m. Há **2 estudantes**, entre os 10 observados.\n\n\\(\\frac{2}{10}\\cdot100=20\\%\\).\n\n**Resposta: B — 20%.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/157",
+      "statement": "Um professor, para promover a aprendizagem dos estudantes em estatística, propôs uma atividade. O objetivo era verificar o percentual de estudantes com massa corporal abaixo da média e altura acima da média de um grupo de estudantes. Para isso, usando uma balança e uma fita métrica, avaliou uma amostra de dez estudantes, anotando as medidas observadas. O gráfico apresenta a massa corporal, em quilograma, e a altura, em metro, obtidas na atividade\n\n![](https://enem.dev/2023/questions/157/13cfbc97-0034-4904-9100-ff5ca3f6504e.png)\n\nApós a coleta dos dados, os estudantes calcularam a média dos valores obtidos, referentes à massa corporal e à altura, obtendo, respectivamente, 80 kg e 1,65 m.\n\nQual é o percentual de estudantes dessa amostra com massa corporal abaixo da média e altura acima da média?",
+      "subjectId": 25,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 898,
+      "year": 2023,
+      "title": "Questão 158 - ENEM 2023",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Expresse a produção e a receita**\nCom n ajudantes, para n≥1:\n\\(P=300+100(n-1)=200+100n\\) kg.\nReceita: \\(R=5P=1000+500n\\) reais.\n\n**2. Desconte os custos**\nCusto fixo: 900 reais.\nDiárias: 250n reais.\nParticipação dos ajudantes: 4% da receita, no total.\n\\(L=0{,}96(1000+500n)-900-250n=60+230n\\).\n\n**3. Aplique a meta**\n\\(60+230n\\ge800\\), então \\(n\\ge740/230\\approx3{,}22\\).\nO menor inteiro é 4.\n\nCom 3 ajudantes, o lucro é 750 reais; com 4, é 980 reais.\n\n**Resposta: D — 4 ajudantes.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/158",
+      "statement": "Um pescador tem um custo fixo diário de \\(\\mathrm{R\\$}\\) 900,00 com combustível, iscas, manutenção de seu barco e outras pequenas despesas. Ele vende cada quilograma de peixe por \\(\\mathrm{R\\$}\\) 5,00. Sua meta é obter um lucro mínimo de \\(\\mathrm{R\\$}\\) 800,00 por dia. Sozinho, ele consegue, ao final de um dia de trabalho, pescar 180 kg de peixe, o que é suficiente apenas para cobrir o custo fixo diário. Portanto, precisa contratar ajudantes, pagando para cada um \\(\\mathrm{R\\$}\\) 250,00 por dia de trabalho. Além desse valor, 4% da receita obtida pela venda de peixe é repartida igualmente entre os ajudantes. Considerando o tamanho de seu barco, ele pode contratar até 5 ajudantes. Ele sabe que com um ajudante a pesca diária é de 300 kg e que, a partir do segundo ajudante contratado, aumenta-se em 100 kg a quantidade de peixe pescada por ajudante em um dia de trabalho.\n\nA quantidade mínima de ajudantes que esse pescador precisa contratar para conseguir o lucro diário pretendido é",
+      "subjectId": 20,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 899,
+      "year": 2023,
+      "title": "Questão 159 - ENEM 2023",
+      "choices": [
+        "2",
+        "4",
+        "6",
+        "12",
+        "18"
+      ],
+      "imageUrl": null,
+      "solution": "Os 5 litros tratam \\(5\\cdot200000=1000000\\) larvas.\n\nPartindo de 100 larvas, a população precisa ser multiplicada por:\n\\(1000000/100=10000=10^4\\).\n\nSão quatro períodos de crescimento, de 3 dias cada:\n\\(4\\cdot3=12\\) dias.\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/159",
+      "statement": "Um agricultor é informado sobre um método de proteção para sua lavoura que consiste em inserir larvas específicas, de rápida reprodução. A reprodução dessas larvas faz com que sua população multiplique-se por 10 a cada 3 dias e, para evitar eventuais desequilíbrios, é possível cessar essa reprodução aplicando-se um produto X. O agricultor decide iniciar esse método com 100 larvas e dispõe de 5 litros do produto X, cuja aplicação recomendada é de exatamente 1 litro para cada população de 200000 larvas. A quantidade total do produto X de que ele dispõe deverá ser aplicada de uma única vez.\n\nQuantos dias após iniciado esse método o agricultor deverá aplicar o produto X?",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 900,
+      "year": 2023,
+      "title": "Questão 160 - ENEM 2023",
+      "choices": [
+        "Tipo I, pois p1 < p2 < p3.",
+        "Tipo I, pois tem menor quantidade de caracteres.",
+        "Tipo II, pois tem maior quantidade de letras.",
+        "Tipo III, pois p3 < p2 < p1",
+        "Tipo III, pois tem maior quantidade de caracteres."
+      ],
+      "imageUrl": null,
+      "solution": "**1. Conte os caracteres**\nHá 10 algarismos, 52 letras e 6 símbolos: **68 caracteres**.\n\n**2. Conte as senhas**\nNão há repetição. As posições de letras, algarismos e símbolos são fixadas pelo tipo.\n\n• Tipo I: \\(68\\cdot67\\cdot66\\cdot65=19545240\\).\n• Tipo II: \\(52\\cdot51\\cdot50\\cdot10\\cdot6=7956000\\).\n• Tipo III: \\(52\\cdot51\\cdot10\\cdot9\\cdot6\\cdot5=7160400\\).\n\n**3. Compare**\nA probabilidade de acerto é o inverso da quantidade de senhas. Quanto mais possibilidades, menor a chance de acertar.\n\nAssim, \\(p_1<p_2<p_3\\).\n\n**Resposta: A — tipo I.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/160",
+      "statement": "Ao realizar o cadastro em um aplicativo de investimentos, foi solicitado ao usuário que criasse uma senha, sendo permitido o uso somente dos seguintes caracteres:\n\n• algarismos de 0 a 9;\n\n• 26 letras minúsculas do alfabeto;\n\n• 26 letras maiúsculas do alfabeto;\n\n• 6 caracteres especiais !, @, #, $, *, &.\n\nTrês tipos de estruturas para senha foram apresentadas ao usuário:\n\n• tipo I: formada por quaisquer quatro caracteres distintos, escolhidos dentre os permitidos;\n\n• tipo II: formada por cinco caracteres distintos, iniciando por três letras, seguidas por um algarismo e, ao final, um caractere especial;\n\n• tipo III: formada por seis caracteres distintos, iniciando por duas letras, seguidas por dois algarismos e, ao final, dois caracteres especiais.\n\nConsidere \\(p_1\\), \\(p_2\\) e \\(p_3\\) as probabilidades de se descobrirem ao acaso, na primeira tentativa, as senhas dos tipos I, II e III, respectivamente.\n\nNessas condições, o tipo de senha que apresenta a menor probabilidade de ser descoberta ao acaso, na primeira tentativa, é o",
+      "subjectId": 24,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 901,
+      "year": 2023,
+      "title": "Questão 161 - ENEM 2023",
+      "choices": [
+        "6,7%",
+        "10%",
+        "20%",
+        "21,5%",
+        "23,3%"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Calcule as parcelas**\nValor total: \\(1500\\cdot1{,}20=1800\\) reais.\nCada parcela: \\(1800/3=600\\) reais.\n\n**2. Considere a entrada**\nApós pagar 600 reais no ato, o valor financiado é \\(1500-600=900\\) reais.\n\n**3. Traga as parcelas futuras ao presente**\nSe i é a taxa mensal:\n\\(900=\\frac{600}{1+i}+\\frac{600}{(1+i)^2}\\).\n\nFazendo \\(x=1+i\\):\n\\(3x^2-2x-2=0\\).\nA raiz positiva é:\n\\(x=\\frac{2+\\sqrt{28}}{6}\\approx\\frac{2+5{,}29}{6}=1{,}215\\).\n\nAssim, \\(i=1{,}215-1=0{,}215=21{,}5\\%\\).\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/161",
+      "statement": "Uma loja vende seus produtos de duas formas: à vista ou financiado em três parcelas mensais iguais. Para definir o valor dessas parcelas nas vendas financiadas, a loja aumenta em 20% o valor do produto à vista e divide esse novo valor por 3. A primeira parcela deve ser paga no ato da compra, e as duas últimas, em 30 e 60 dias após a compra.\n\nUm cliente da loja decidiu comprar, de forma financiada, um produto cujo valor à vista é \\(\\mathrm{R\\$}\\) 1500,00.\n\nUtilize 5,29 como aproximação para \\(\\sqrt{28}\\).\n\nA taxa mensal de juros compostos praticada nesse financiamento é de",
+      "subjectId": 20,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 902,
+      "year": 2023,
+      "title": "Questão 162 - ENEM 2023",
+      "choices": [
+        "\\(y = 250x\\)",
+        "\\(y = 500x\\)",
+        "\\(y = 750x\\)",
+        "\\(y = 250x + 500\\)",
+        "\\(y = 500x + 250\\)"
+      ],
+      "imageUrl": null,
+      "solution": "O preço tem duas partes:\n• taxa fixa: 500 reais;\n• concreto: 250 reais por m³, ou 250x reais.\n\nSomando:\n\\(y=250x+500\\).\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/162",
+      "statement": "Para concretar a laje de sua residência, uma pessoa contratou uma construtora. Tal empresa informa que o preço y do concreto bombeado é composto de duas partes: uma fixa, chamada de taxa de bombeamento, e uma variável, que depende do volume x de concreto utilizado. Sabe-se que a taxa de bombeamento custa \\(\\mathrm{R\\$}\\) 500,00 e que o metro cúbico do concreto bombeado é de \\(\\mathrm{R\\$}\\) 250,00.\n\nA expressão que representa o preço y em função do volume x, em metro cúbico, é",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 903,
+      "year": 2023,
+      "title": "Questão 163 - ENEM 2023",
+      "choices": [
+        "[Alternativa com imagem] https://enem.dev/2023/questions/163/71c51165-c400-4d10-bb4b-c03ed19ff5ad.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/163/e04c3016-712a-4e6b-a9e5-be3505a57d41.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/163/1706f84a-c72a-48c1-982b-708ed91bcc8a.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/163/d49e3db4-31ee-4123-9a19-599e0b473503.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/163/7f6e3bbf-ef4c-4a6f-9fdb-407513158e78.png"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/163/ff0caefb-56e7-4c17-bae7-b65b91037e9c.png",
+      "solution": "**Leia os três trechos do gráfico**\n• De 0 a 10 min, a distância à base cresce: o vigilante se afasta em linha reta.\n• De 10 a 20 min, a distância permanece em 3 km. Como ele continua em movimento, percorre um arco centrado na base.\n• De 20 a 30 min, a distância diminui até zero: ele retorna à base.\n\nA trajetória formada por dois segmentos radiais e um arco é a alternativa A.\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/163",
+      "statement": "Uma empresa de segurança domiciliar oferece o serviço de patrulha noturna, no qual vigilantes em motocicletas fazem o monitoramento periódico de residências. A empresa conta com uma base, de onde acompanha o trajeto realizado pelos vigilantes durante as patrulhas e orienta o deslocamento de equipes de reforço quando necessário. Numa patrulha rotineira, sem ocorrências, um vigilante conduziu sua motocicleta a uma velocidade constante durante todo o itinerário estabelecido, levando 30 minutos para conclusão. De acordo com os registros do GPS alocado na motocicleta, a distância da posição do vigilante à base, ao longo do tempo de realização do trajeto, é descrita pelo gráfico.\n\n![](https://enem.dev/2023/questions/163/ff0caefb-56e7-4c17-bae7-b65b91037e9c.png)\n\nA vista superior da trajetória realizada pelo vigilante durante a patrulha registrada no gráfico é descrita pela representação",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 904,
+      "year": 2023,
+      "title": "Questão 164 - ENEM 2023",
+      "choices": [
+        "Indígenas.",
+        "Gestantes.",
+        "Doentes crônicos.",
+        "Adultos entre 20 e 29 anos.",
+        "Crianças de 6 meses a 2 anos."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/164/194cf28a-b40d-493d-b106-8f71aee57f51.png",
+      "solution": "**Questão anulada pelo Inep.**\n\nO gabarito oficial do caderno 7 azul de 2023 registra esta questão como anulada. Não há alternativa oficial correta.\n\nO gráfico apresenta percentuais de imunização, não os tamanhos das populações. Não é válido concluir, apenas a partir dele, qual grupo tem o maior número absoluto de pessoas não imunizadas.\n\nDisponível somente para consulta, sem pontuação e fora dos simulados.",
+      "sourceUrl": "https://enem.dev/questoes/2023/164",
+      "statement": "O gráfico expõe alguns números da gripe A-H1N1. Entre as categorias que estão em processo de imunização, uma já está completamente imunizada, a dos trabalhadores da saúde.\n\n![](https://enem.dev/2023/questions/164/194cf28a-b40d-493d-b106-8f71aee57f51.png)\n\nÉpoca, 26 abr. 2010 (adaptado).\n\nDe acordo com o gráfico, entre as demais categorias, a que está mais exposta ao vírus da gripe A-H1N1 é a categoria de",
+      "subjectId": 25,
+      "difficulty": "medium",
+      "correctChoice": null,
+      "status": "annulled"
+    },
+    {
+      "id": 905,
+      "year": 2023,
+      "title": "Questão 165 - ENEM 2023",
+      "choices": [
+        "1,20.",
+        "1,35.",
+        "1,65.",
+        "1,80.",
+        "1,95."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/165/bf369224-eb93-4bba-98c4-ff7d1e17df36.png",
+      "solution": "**1. Pisos**\nSão três retângulos de 0,25 m por 1 m:\n\\(A_{\\text{pisos}}=3\\cdot0{,}25\\cdot1=0{,}75\\ \\mathrm{m^2}\\).\n\n**2. Espelhos**\nSão três retângulos de 0,20 m por 1 m:\n\\(A_{\\text{espelhos}}=3\\cdot0{,}20\\cdot1=0{,}60\\ \\mathrm{m^2}\\).\n\n**3. Laterais**\nDivida cada lateral em três faixas de largura 0,25 m e alturas 0,20 m, 0,40 m e 0,60 m:\n\\(A_{\\text{uma lateral}}=0{,}25(0{,}20+0{,}40+0{,}60)=0{,}30\\ \\mathrm{m^2}\\).\nAs duas laterais somam 0,60 m².\n\n**4. Área total**\n\\(A=0{,}75+0{,}60+0{,}60=1{,}95\\ \\mathrm{m^2}\\).\n\n**Resposta: E.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/165",
+      "statement": "A figura representa uma escada com três degraus, construída em concreto maciço, com suas medidas especificadas.\n\n![](https://enem.dev/2023/questions/165/bf369224-eb93-4bba-98c4-ff7d1e17df36.png)\n\nNessa escada, pisos e espelhos têm formato retangular, e as paredes laterais têm formato de um polígono cujos lados adjacentes são perpendiculares. Pisos, espelhos e paredes laterais serão revestidos em cerâmica.\n\nA área a ser revestida em cerâmica, em metro quadrado, mede",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 4,
+      "status": "active"
+    },
+    {
+      "id": 906,
+      "year": 2023,
+      "title": "Questão 166 - ENEM 2023",
+      "choices": [
+        "Segunda-feira.",
+        "Terça-feira.",
+        "Quarta-feira.",
+        "Quinta-feira.",
+        "Sexta-feira."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/166/80863c14-e426-4ae6-9ff0-03f5b3c71160.png",
+      "solution": "Multiplique as horas de cada atividade pelo gasto por hora e some:\n\n• Segunda: \\(248+0{,}5\\cdot764+2\\cdot492=1614\\) cal.\n• Terça: \\(0{,}5\\cdot248+764+0{,}5\\cdot356+492=1558\\) cal.\n• Quarta: \\(1{,}5\\cdot764+356+0{,}5\\cdot492=1748\\) cal.\n• Quinta: \\(2\\cdot764=1528\\) cal.\n• Sexta: \\(0{,}5\\cdot764+2{,}5\\cdot492=1612\\) cal.\n\nO maior gasto é **1748 cal, na quarta-feira**.\n\n**Resposta: C.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/166",
+      "statement": "Uma pessoa pratica quatro atividades físicas — caminhar, correr, andar de bicicleta e jogar futebol — como parte de seu programa de emagrecimento. Essas atividades são praticadas semanalmente de acordo com o quadro, que apresenta o número de horas diárias por atividade.\n\n![](https://enem.dev/2023/questions/166/80863c14-e426-4ae6-9ff0-03f5b3c71160.png)\n\nEla deseja comemorar seu aniversário e escolhe o dia da semana em que o gasto calórico com as atividades físicas  praticadas for o maior. Para tanto, considera que os valores dos gastos calóricos das atividades por hora (cal/h) são os seguintes:\n\n![](https://enem.dev/2023/questions/166/e3d70b62-2929-4694-ba58-cf45c0ac1374.png)\n\nO dia da semana em que será comemorado o aniversário é",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 907,
+      "year": 2023,
+      "title": "Questão 167 - ENEM 2023",
+      "choices": [
+        "(5,0 ; 5,5).",
+        "(8,0 ; 8,5).",
+        "(11,5 ; 12,5).",
+        "(19,5 ; 20,5).",
+        "(3,5 ; 4,0)."
+      ],
+      "imageUrl": null,
+      "solution": "**1. Quantidade de folhas**\n\\(6000/1200=5\\) folhas por aluno.\nAgora: \\(1150\\cdot5=5750\\) folhas.\n\n**2. Embalagens**\n\\(5750/100=57{,}5\\). É preciso comprar **58 embalagens**.\nCusto: \\(58\\cdot4=232\\) reais.\n\n**3. Desconto**\nA verba é 220 reais; faltam 12 reais de desconto.\n\\(\\frac{232-220}{232}\\cdot100\\approx5{,}17\\%\\).\n\nEsse valor está entre 5,0% e 5,5%.\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/167",
+      "statement": "A cada bimestre, a diretora de uma escola compra uma quantidade de folhas de papel ofício proporcional ao número de alunos matriculados. No bimestre passado, ela comprou 6000 folhas para serem utilizadas pelos 1200 alunos matriculados. Neste bimestre, alguns alunos cancelaram suas matrículas e a escola tem, agora, 1150 alunos. A diretora só pode gastar \\(\\mathrm{R\\$}\\) 220,00 nessa compra, e sabe que o fornecedor da escola vende as folhas de papel ofício em embalagens de 100 unidades a \\(\\mathrm{R\\$}\\) 4,00 a embalagem. Assim, será preciso convencer o fornecedor a dar um desconto à escola, de modo que seja possível comprar a quantidade total de papel ofício necessária para o bimestre.\n\nO desconto necessário no preço final da compra, em porcentagem, pertence ao intervalo",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 908,
+      "year": 2023,
+      "title": "Questão 168 - ENEM 2023",
+      "choices": [
+        "\\(\\frac1{50}\\) e \\(\\frac1{60}\\)",
+        "\\(\\frac1{50}\\) e \\(\\frac1{50}\\)",
+        "\\(\\frac1{50}\\) e \\(\\frac1{10}\\)",
+        "\\(\\frac1{55}\\) e \\(\\frac1{54}\\)",
+        "\\(\\frac1{100}\\) e \\(\\frac1{100}\\)"
+      ],
+      "imageUrl": null,
+      "solution": "**Inscrição 50**\nA unidade 0 tem chance 1/10. Depois, são possíveis 10, 20, 30, 40 e 50: cinco dezenas.\n\\(P(50)=\\frac{1}{10}\\cdot\\frac{1}{5}=\\frac{1}{50}\\).\n\n**Inscrição 02**\nA unidade 2 tem chance 1/10. Depois, são possíveis 02, 12, 22, 32, 42 e 52: seis dezenas.\n\\(P(02)=\\frac{1}{10}\\cdot\\frac{1}{6}=\\frac{1}{60}\\).\n\nAs inscrições não têm todas a mesma chance nesse procedimento.\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/168",
+      "statement": "Em um colégio público, a admissão no primeiro ano se dá por sorteio. Neste ano há 55 candidatos, cujas inscrições são numeradas de 01 a 55. O sorteio de cada número de inscrição será realizado em etapas, utilizando-se duas urnas. Da primeira urna será sorteada uma bola, dentre bolas numeradas de 0 a 9, que representará o algarismo das unidades do número de inscrição a ser sorteado e, em seguida, da segunda urna, será sorteada uma bola para representar o algarismo das dezenas desse número. Depois do primeiro sorteio, e antes de se sortear o algarismo das dezenas, as bolas que estarão presentes na segunda urna serão apenas aquelas cujos números formam, com o algarismo já sorteado, um número de 01 a 55.\n\nAs probabilidades de os candidatos de inscrição número 50 e 02 serem sorteados são, respectivamente,",
+      "subjectId": 24,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 909,
+      "year": 2023,
+      "title": "Questão 169 - ENEM 2023",
+      "choices": [
+        "\\(\\frac{1}{9}L_0\\)",
+        "\\(\\frac{16}{27}L_0\\)",
+        "\\(\\frac{32}{243}L_0\\)",
+        "\\(\\frac{64}{729}L_0\\)",
+        "\\(\\frac{128}{2187}L_0\\)"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Encontre a razão**\nL₀, 2L₀/3, 4L₀/9 e 8L₀/27 mostram que, a cada metro, a intensidade é multiplicada por **2/3**.\n\n**2. Aplique por seis metros**\n\\(L(6)=L_0\\left(\\frac{2}{3}\\right)^6=\\frac{64}{729}L_0\\).\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/169",
+      "statement": "O esquema mostra como a intensidade luminosa decresce com o aumento da profundidade em um rio, sendo \\(L_0\\) a intensidade na sua superfície.\n\n![](https://enem.dev/2023/questions/169/3af229c8-e385-4ca2-891a-22bdf6b2d593.png)\n\nConsidere que a intensidade luminosa diminui, a cada metro acrescido na profundidade, segundo o mesmo padrão do esquema.\n\nA intensidade luminosa correspondente à profundidade de 6 m é igual a",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 910,
+      "year": 2023,
+      "title": "Questão 170 - ENEM 2023",
+      "choices": [
+        "Ótimo.",
+        "Bom.",
+        "Normal.",
+        "Ruim.",
+        "Péssimo."
+      ],
+      "imageUrl": null,
+      "solution": "**1. Identifique a função**\n\\(V(x)=\\frac{x^2}{4}-10x+105\\), em milhar de real.\n\n**2. Encontre o mínimo**\nReorganizando:\n\\(V(x)=\\frac{(x-20)^2}{4}+5\\).\n\nO quadrado nunca é negativo. O mínimo ocorre em x=20, que pertence ao intervalo de 1 a 30 dias.\n\\(V(20)=5\\), ou seja, **5000 reais**.\n\n**3. Classifique**\n5 pertence ao intervalo de 4 a menos de 10 mil reais: desempenho **ruim**.\n\n**Resposta: D.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/170",
+      "statement": "Analisando as vendas de uma empresa, o gerente concluiu que o montante diário arrecadado, em milhar de real, poderia ser calculado pela expressão \\(V(x)=\\frac{x^2}{4}-10x+105\\) , em que os valores de x representam os dias do mês, variando de 1 a 30.\n\nUm dos fatores para avaliar o desempenho mensal da empresa é verificar qual é o menor montante diário \\(V_0\\) arrecadado ao longo do mês e classificar o desempenho conforme as categorias apresentadas a seguir, em que as quantidades estão expressas em milhar de real.\n\n• Ótimo: \\(V_0\\ge24\\).\n• Bom: \\(20\\le V_0<24\\).\n• Normal: \\(10\\le V_0<20\\).\n• Ruim: \\(4\\le V_0<10\\).\n• Péssimo: \\(V_0<4\\).\n\nNo caso analisado, qual seria a classificação do desempenho da empresa?",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 3,
+      "status": "active"
+    },
+    {
+      "id": 911,
+      "year": 2023,
+      "title": "Questão 171 - ENEM 2023",
+      "choices": [
+        "741",
+        "1040",
+        "1460",
+        "2100",
+        "5200"
+      ],
+      "imageUrl": null,
+      "solution": "**1. Converta o período para dias**\n\\(20\\cdot52=1040\\) anos Haab.\n\\(1040\\cdot365=379600\\) dias.\n\n**2. Converta para anos Tzolkim**\nCada ano Tzolkim tem 260 dias:\n\\(379600/260=1460\\).\n\n**Resposta: C — 1460 anos Tzolkim.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/171",
+      "statement": "O calendário maia apresenta duas contagens simultâneas de anos, o chamado ano Tzolkim, composto por 260 dias e que determinava o calendário religioso, e o ano Haab, composto por 365 dias e que determinava o calendário agrícola. Um historiador encontrou evidências de que gerações de uma mesma família governaram certa comunidade maia pelo período de 20 ciclos, sendo cada ciclo formado por 52 anos Haab.\n\nDisponível em: www.suapesquisa.com. Acesso em: 20 ago. 2014.\n\nDe acordo com as informações fornecidas, durante quantos anos Tzolkim aquela comunidade maia foi governada por tal família?",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 912,
+      "year": 2023,
+      "title": "Questão 172 - ENEM 2023",
+      "choices": [
+        "\\(0^\\circ<\\alpha<90^\\circ\\)",
+        "\\(\\alpha=90^\\circ\\)",
+        "\\(90^\\circ<\\alpha<180^\\circ\\)",
+        "\\(\\alpha=180^\\circ\\)",
+        "\\(180^\\circ<\\alpha<360^\\circ\\)"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/172/dcdd2743-6ad6-44e8-94ae-d2adec3a3400.png",
+      "solution": "Sejam a o diâmetro da pizza do professor e b e c os das outras pizzas.\n\nA área de um círculo de diâmetro d é \\(\\pi d^2/4\\). Portanto, a área do professor supera a soma das outras quando:\n\\(a^2>b^2+c^2\\).\n\nPela lei dos cossenos, para o ângulo α oposto a a:\n\\(a^2=b^2+c^2-2bc\\cos\\alpha\\).\n\nA desigualdade exige \\(\\cos\\alpha<0\\). Como α é interno de um triângulo:\n\\(90^\\circ<\\alpha<180^\\circ\\).\n\n**Resposta: C.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/172",
+      "statement": "Sejam a, b e c as medidas dos lados de um triângulo retângulo, tendo a como medida da hipotenusa. Esses valores a, b e c são, respectivamente, os diâmetros dos círculos C1 , C2 e C3, como apresentados na figura.\n\n![](https://enem.dev/2023/questions/172/dcdd2743-6ad6-44e8-94ae-d2adec3a3400.png)\n\nObserve que essa construção assegura, pelo teorema de Pitágoras, que área (C1) = área (C2) + área (C3).\n\nUm professor de matemática era conhecedor dessa construção e, confraternizando com dois amigos em uma pizzaria onde são vendidas pizzas somente em formato de círculo, lançou um desafio: mesmo sem usar um instrumento de medição, poderia afirmar com certeza se a área do círculo correspondente à pizza que ele pedisse era maior, igual ou menor do que a soma das áreas das pizzas dos dois amigos. Assim, foram pedidas três pizzas. O professor as dividiu ao meio e formou um triângulo com os diâmetros das pizzas, conforme indicado na figura.\n\n![](https://enem.dev/2023/questions/172/8bd02f79-d5fb-4b8d-9321-c57434be3374.png)\n\nA partir da medida do ângulo α, o professor afirmou que a área de sua pizza é maior do que a soma das áreas das outras duas pizzas.\n\nA área da pizza do professor de matemática é maior do que a soma das áreas das outras duas pizzas, pois",
+      "subjectId": 22,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 913,
+      "year": 2023,
+      "title": "Questão 173 - ENEM 2023",
+      "choices": [
+        "\\(\\frac{\\mathrm{min}}{\\mathrm{mL}\\cdot\\mathrm{kg}}\\)",
+        "\\(\\frac{\\mathrm{mL}}{\\mathrm{min}\\cdot\\mathrm{kg}}\\)",
+        "\\(\\frac{\\mathrm{min}\\cdot\\mathrm{mL}}{\\mathrm{kg}}\\)",
+        "\\(\\frac{\\mathrm{min}\\cdot\\mathrm{kg}}{\\mathrm{mL}}\\)",
+        "\\(\\frac{\\mathrm{mL}\\cdot\\mathrm{kg}}{\\mathrm{min}}\\)"
+      ],
+      "imageUrl": null,
+      "solution": "O consumo de oxigênio por minuto tem unidade mL/min. Dividindo pela massa, em kg:\n\\(\\frac{\\mathrm{mL/min}}{\\mathrm{kg}}=\\frac{\\mathrm{mL}}{\\mathrm{min}\\cdot\\mathrm{kg}}\\).\n\n**Resposta: B.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/173",
+      "statement": "Entre maratonistas, um parâmetro utilizado é o de economia de corrida (EC). O valor desse parâmetro é calculado pela razão entre o consumo de oxigênio, em mililitro (mL) por minuto (min), e a massa, em quilograma (kg), do atleta correndo a uma velocidade constante.\n\nDisponível em: www.treinamentoonline.com.br. Acesso em: 23 out. 2019 (adaptado).\n\nUm maratonista, visando melhorar sua performance, auxiliado por um médico, mensura o seu consumo de oxigênio por minuto a velocidade constante. Com base nesse consumo e na massa do atleta, o médico calcula o EC do atleta.\nA unidade de medida da grandeza descrita pelo parâmetro EC é",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 914,
+      "year": 2023,
+      "title": "Questão 175 - ENEM 2023",
+      "choices": [
+        "4,68",
+        "6,30",
+        "9,30",
+        "10,50",
+        "10,65"
+      ],
+      "imageUrl": null,
+      "solution": "Sejam a e v os preços dos tíquetes azul e vermelho.\n\n**1. Monte as equações**\nDuas cartelas azuis e uma vermelha:\n\\(18a+9v=32{,}40\\).\nPela diferença informada:\n\\(a-v=v+0{,}05\\), então \\(a=2v+0{,}05\\).\n\n**2. Substitua**\n\\(18(2v+0{,}05)+9v=32{,}40\\).\n\\(45v=31{,}50\\), logo \\(v=0{,}70\\).\n\n**3. Calcule a cartela**\nSão nove tíquetes:\n\\(9\\cdot0{,}70=6{,}30\\) reais.\n\n**Resposta: B.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/175",
+      "statement": "O metrô de um município oferece dois tipos de tíquetes com colorações diferentes, azul e vermelha, sendo vendidos em cartelas, cada qual com nove tíquetes da mesma cor e mesmo valor unitário. Duas cartelas de tíquetes azuis e uma cartela de tíquetes vermelhos são vendidas por \\(\\mathrm{R\\$}\\) 32,40. Sabe-se que o preço de um tíquete azul menos o preço de um tíquete vermelho é igual ao preço de um tíquete vermelho mais cinco centavos.\n\nQual o preço, em real, de uma cartela de tíquetes vermelhos?",
+      "subjectId": 20,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 915,
+      "year": 2023,
+      "title": "Questão 176 - ENEM 2023",
+      "choices": [
+        "59",
+        "83",
+        "86",
+        "89",
+        "92"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/176/d21e916b-a5fc-441e-b782-d2d4aca3522b.png",
+      "solution": "Os números são 1, 5, 12, 22, 35, 51.\n\nAs diferenças sucessivas são **4, 7, 10, 13, 16**, aumentando de 3 em 3.\n\nAs próximas diferenças são 19 e 22:\n• Sétimo termo: 51 + 19 = 70.\n• Oitavo termo: 70 + 22 = **92**.\n\n**Resposta: E.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/176",
+      "statement": "Os números figurados pentagonais provavelmente foram introduzidos pelos pitagóricos por volta do século V a.C. As figuras ilustram como obter os seis primeiros deles, sendo os demais obtidos seguindo o mesmo padrão geométrico.\n\n![](https://enem.dev/2023/questions/176/d21e916b-a5fc-441e-b782-d2d4aca3522b.png)\n\nO oitavo número pentagonal é",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 4,
+      "status": "active"
+    },
+    {
+      "id": 916,
+      "year": 2023,
+      "title": "Questão 177 - ENEM 2023",
+      "choices": [
+        "[Alternativa com imagem] https://enem.dev/2023/questions/177/3837d9d0-2ff6-49d7-affa-9bb60aacb00a.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/177/262c33a1-0c7b-494c-9bd4-92d308154b59.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/177/b9b5c23e-3ae9-4f92-9500-a1bda3ed5638.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/177/03cd2618-be50-4803-b159-da8033fdeb8d.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/177/0624eace-e934-40dc-895c-a505c0c9f183.png"
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/177/27c49bd5-ad8c-450c-9f56-970b9ca9c53c.png",
+      "solution": "A cadeira começa no ponto mais alto. Com velocidade angular constante, a altura varia suavemente e de forma periódica: desce até o mínimo e sobe novamente até o máximo.\n\nUm modelo é \\(h(t)=H+R\\cos(\\omega t)\\), em que H é a altura do centro e R é o raio. Como H>R, a altura mínima é positiva.\n\nO gráfico A começa no máximo e apresenta essa oscilação suave, sem segmentos retos ou pontas.\n\n**Resposta: A.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/177",
+      "statement": "A figura ilustra uma roda-gigante no exato instante em que a cadeira onde se encontra a pessoa P está no ponto mais alto dessa roda-gigante.\n\n![](https://enem.dev/2023/questions/177/27c49bd5-ad8c-450c-9f56-970b9ca9c53c.png)\n\nCom o passar do tempo, à medida que a roda-gigante gira, com velocidade angular constante e no sentido horário, a altura da cadeira onde se encontra a pessoa P, em relação ao solo, vai se alterando.\n\nO gráfico que melhor representa a variação dessa altura, em função do tempo, contado a partir do instante em que a cadeira da pessoa P se encontra na posição mais alta da roda-gigante, é",
+      "subjectId": 23,
+      "difficulty": "medium",
+      "correctChoice": 0,
+      "status": "active"
+    },
+    {
+      "id": 917,
+      "year": 2023,
+      "title": "Questão 178 - ENEM 2023",
+      "choices": [
+        "[Alternativa com imagem] https://enem.dev/2023/questions/178/ad5cc202-0c4f-44fb-aa1a-ec86c2f86da4.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/178/c3b0946f-0e59-4928-858d-3f0a8887fb80.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/178/f9e8ae9f-c9d6-4b83-9376-55b5ecba8a38.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/178/46326c50-0f0b-42cf-a1d5-65299d39a4fd.png",
+        "[Alternativa com imagem] https://enem.dev/2023/questions/178/7ebc0f53-95db-497b-bc23-30cf64649c3a.png"
+      ],
+      "imageUrl": null,
+      "solution": "O gráfico representa o volume acumulado, e não a vazão instantânea.\n\n• De 0 a 3 s: a água sai com vazão constante; o volume cresce linearmente.\n• De 3 a 8 s: a torneira fecha; o volume já liberado permanece constante.\n• De 8 a 11 s: a água volta a sair com a mesma vazão; o volume cresce com a mesma inclinação inicial.\n\nO volume acumulado não volta a zero quando a torneira fecha.\n\n**Resposta: B.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/178",
+      "statement": "Estudantes trabalhando com robótica criaram uma “torneira inteligente” que automatiza sua abertura e seu fechamento durante a limpeza das mãos. A tecnologia funciona da seguinte forma: ao se colocarem as mãos sob a torneira, ela libera água durante 3 segundos para que a pessoa possa molhá-las. Em seguida, interrompe o fornecimento de água por 5 segundos, enquanto a pessoa ensaboa suas mãos, e finaliza o ciclo liberando água para o enxágue por mais 3 segundos. Considere o tempo (t), em segundo, contado a partir do instante em que se inicia o ciclo. A vazão de água nessa torneira é constante.\n\nUm esboço de gráfico que descreve o volume de água acumulado, em litro, liberado por essa torneira durante um ciclo de lavagem das mãos, em função do tempo (t), em segundo, é",
+      "subjectId": 21,
+      "difficulty": "medium",
+      "correctChoice": 1,
+      "status": "active"
+    },
+    {
+      "id": 918,
+      "year": 2023,
+      "title": "Questão 179 - ENEM 2023",
+      "choices": [
+        "Okosa urapum urapum urapum e okosa okosa urapum urapum urapum.",
+        "Okosa okosa urapum e okosa okosa okosa okosa urapum.",
+        "Okosa okosa urapum e okosa okosa okosa urapum.",
+        "Okosa urapum urapum e okosa urapum okosa urapum urapum.",
+        "Okosa okosa urapum e okosa okosa okosa okosa."
+      ],
+      "imageUrl": "https://enem.dev/2023/questions/179/d2b83dd3-33ef-40d6-944a-b98d17f6411b.png",
+      "solution": "O padrão é aditivo: **urapum = 1** e **okosa = 2**.\n\n• 5 = 2 + 2 + 1: **okosa okosa urapum**.\n• 7 = 2 + 2 + 2 + 1: **okosa okosa okosa urapum**.\n\nNão é escrita binária posicional: os valores são somados, sem posições representando potências de 2.\n\n**Resposta: C.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/179",
+      "statement": "As características culturais variam de povo para povo. Há notícias de um povo que possuía formas de contar diferentes das nossas, como indicado no quadrinho a seguir.\n\n![](https://enem.dev/2023/questions/179/d2b83dd3-33ef-40d6-944a-b98d17f6411b.png)\n\nSegundo o padrão de contagem indicado na figura, as representações dos numerais cinco e sete, nessa cultura, devem ser, respectivamente,",
+      "subjectId": 19,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "id": 919,
+      "year": 2023,
+      "title": "Questão 180 - ENEM 2023",
+      "choices": [
+        "Outubro.",
+        "Novembro.",
+        "Dezembro.",
+        "Janeiro.",
+        "Fevereiro."
+      ],
+      "imageUrl": null,
+      "solution": "Calcule a média para cada par de meses consecutivos:\n\n• Outubro/novembro: \\((250+150)/2=200\\) mm.\n• Novembro/dezembro: \\((150+200)/2=175\\) mm.\n• Dezembro/janeiro: \\((200+450)/2=325\\) mm.\n• Janeiro/fevereiro: \\((450+100)/2=275\\) mm.\n• Fevereiro/março: \\((100+200)/2=150\\) mm.\n\nA maior média é **325 mm**, em dezembro e janeiro. O plantio deve começar em dezembro.\n\n**Resposta: C.**",
+      "sourceUrl": "https://enem.dev/questoes/2023/180",
+      "statement": "Um tipo de semente necessita de bastante água nos dois primeiros meses após o plantio. Um produtor pretende estabelecer o melhor momento para o plantio desse tipo de semente, nos meses de outubro a março. Após consultar a previsão do índice mensal de precipitação de chuva (ImPC) da região onde ocorrerá o plantio, para o período chuvoso de 2020-2021, ele obteve os seguintes dados:  \n• outubro/2020: ImPC = 250 mm;  \n• novembro/2020: ImPC = 150 mm;  \n• dezembro/2020: ImPC = 200 mm;  \n• janeiro/2021: ImPC = 450 mm;  \n• fevereiro/2021: ImPC = 100 mm;  \n• março/2021: ImPC = 200 mm.\n\nCom base nessas previsões, ele precisa escolher dois meses consecutivos em que a média mensal de precipitação seja a maior possível.\n\nNo início de qual desses meses o produtor deverá plantar esse tipo de semente?",
+      "subjectId": 25,
+      "difficulty": "medium",
+      "correctChoice": 2,
+      "status": "active"
+    },
+    {
+      "title": "Questão 93 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 44,
+      "statement": "A utilização de tecnologia nuclear é um tema bastante controverso, por causa do risco de acidentes graves, como aqueles ocorridos em Chernobyl (1986), em Goiânia (1987) e em Fukushima (2011). Apesar de muitas desvantagens, como a geração de resíduos tóxicos, a descontaminação ambiental dispendiosa em caso de acidentes e a utilização em armas nucleares, a geração de energia nuclear apresenta vantagens em comparação a outras fontes de energia.\n\nA geração dessa energia tem como característica:",
+      "choices": [
+        "Formar resíduos facilmente recicláveis.",
+        "Promover o aumento do desmatamento.",
+        "Contribuir para a produção de chuva ácida.",
+        "Emitir gases tóxicos que são lançados no ambiente.",
+        "Produzir calor sem o consumo de combustíveis fósseis."
+      ],
+      "solution": "Em uma usina nuclear, a energia liberada pela fissão aquece um fluido e permite gerar eletricidade.\n\nEsse calor não depende da queima de carvão, petróleo ou gás natural. Isso não elimina os resíduos radioativos nem os riscos mencionados no enunciado.\n\n**Resposta: E — produzir calor sem o consumo de combustíveis fósseis.**",
+      "correctChoice": 4,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": null
+    },
+    {
+      "title": "Questão 100 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 12,
+      "statement": "Um professor lança uma esfera verticalmente para cima, a qual retorna, depois de alguns segundos, ao ponto de lançamento. Em seguida, lista em um quadro todas as possibilidades para as grandezas cinemáticas.\n\n![](/questions/2023/q100.png)\n\nEle solicita aos alunos que analisem as grandezas cinemáticas no instante em que a esfera atinge a altura máxima, escolhendo uma combinação para os módulos e sentidos da velocidade e da aceleração.\n\nA escolha que corresponde à combinação correta é",
+      "choices": [
+        "\\(v=0\\) e \\(a\\ne0\\) para cima.",
+        "\\(v\\ne0\\) para cima e \\(a=0\\).",
+        "\\(v=0\\) e \\(a\\ne0\\) para baixo.",
+        "\\(v\\ne0\\) para cima e \\(a\\ne0\\) para cima.",
+        "\\(v\\ne0\\) para baixo e \\(a\\ne0\\) para baixo."
+      ],
+      "solution": "No ponto mais alto, a esfera muda de subida para descida. Nesse instante, sua velocidade é **zero**.\n\nA gravidade continua atuando, mesmo quando a velocidade é nula. Portanto, a aceleração é diferente de zero e aponta **para baixo**.\n\n**Resposta: C.**",
+      "correctChoice": 2,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": "/questions/2023/q100.png"
+    },
+    {
+      "title": "Questão 109 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 13,
+      "statement": "Uma academia decide trocar gradualmente seus aparelhos de musculação. Agora, os frequentadores que utilizam os aparelhos do tipo 1 podem também utilizar os aparelhos do tipo 2, representados na figura, para elevar cargas correspondentes às massas \\(M_1\\) e \\(M_2\\), com velocidade constante. A fim de que o exercício seja realizado com a mesma força F, os usuários devem ser orientados a respeito da relação entre as cargas nos dois tipos de aparelhos, já que as polias fixas apenas mudam a direção das forças, enquanto a polia móvel divide as forças.\n\nEm ambos os aparelhos, considere as cordas inextensíveis, as massas das polias e das cordas desprezíveis e que não há dissipação de energia.\n\n![](/questions/2023/q109.png)\n\nPara essa academia, qual deve ser a razão \\(\\frac{M_2}{M_1}\\) informada aos usuários?",
+      "choices": [
+        "\\(\\frac14\\)",
+        "\\(\\frac12\\)",
+        "1",
+        "2",
+        "4"
+      ],
+      "solution": "**1. Aparelho do tipo 1**\nAs polias são fixas. Com velocidade constante:\n\\(F=M_1g\\).\n\n**2. Aparelho do tipo 2**\nA carga está presa a uma polia móvel, sustentada por dois trechos de corda com a mesma tensão F:\n\\(2F=M_2g\\).\n\n**3. Compare**\nSubstituindo \\(F=M_1g\\):\n\\(2M_1g=M_2g\\), então \\(\\frac{M_2}{M_1}=2\\).\n\n**Resposta: D.**",
+      "correctChoice": 3,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": "/questions/2023/q109.png"
+    },
+    {
+      "title": "Questão 117 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 44,
+      "statement": "Os raios cósmicos são fontes de radiação ionizante potencialmente perigosas para o organismo humano. Para quantificar a dose de radiação recebida, utiliza-se o sievert (Sv), definido como a unidade de energia recebida por unidade de massa. A exposição à radiação proveniente de raios cósmicos aumenta com a altitude, o que pode representar um problema para as tripulações de aeronaves. Recentemente, foram realizadas medições acuradas das doses de radiação ionizante para voos entre Rio de Janeiro e Roma. Os resultados têm indicado que a dose média de radiação recebida na fase de cruzeiro (que geralmente representa 80% do tempo total de voo) desse trecho intercontinental é 2 μSv/h. As normas internacionais da aviação civil limitam em 1000 horas por ano o tempo de trabalho para as tripulações que atuem em voos intercontinentais. Considere que a dose de radiação ionizante para uma radiografia torácica é estimada em 0,2 mSv.\n\nRUAS, A. C. O tripulante de aeronaves e a radiação ionizante. São Paulo: Edição do Autor, 2019 (adaptado).\n\nA quantas radiografias torácicas corresponde a dose de radiação ionizante à qual um tripulante que atue no trecho Rio de Janeiro–Roma é exposto ao longo de um ano?",
+      "choices": [
+        "8",
+        "10",
+        "80",
+        "100",
+        "1000"
+      ],
+      "solution": "**1. Tempo em cruzeiro**\n\\(0{,}8\\cdot1000=800\\) horas.\n\n**2. Dose acumulada**\n\\(800\\cdot2=1600\\ \\mu\\mathrm{Sv}=1{,}6\\ \\mathrm{mSv}\\).\n\n**3. Compare com uma radiografia**\n\\(\\frac{1{,}6}{0{,}2}=8\\).\n\n**Resposta: A — 8 radiografias.**",
+      "correctChoice": 0,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": null
+    },
+    {
+      "title": "Questão 119 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 16,
+      "statement": "De acordo com a Constituição Federal, é competência dos municípios o gerenciamento dos serviços de limpeza e coleta dos resíduos urbanos (lixo). No entanto, há relatos de que parte desse lixo acaba sendo incinerado, liberando substâncias tóxicas para o ambiente e causando acidentes por explosões, principalmente quando ocorre a incineração de frascos de aerossóis (por exemplo: desodorantes, inseticidas e repelentes). A temperatura elevada provoca a vaporização de todo o conteúdo dentro desse tipo de frasco, aumentando a pressão em seu interior até culminar na explosão da embalagem.\n\nZVEIBIL, V. Z. et al. Cartilha de limpeza urbana. Disponível em: www.ibam.org.br. Acesso em: 6 jul. 2015 (adaptado).\n\nSuponha um frasco metálico de um aerossol de capacidade igual a 100 mL, contendo 0,1 mol de produtos gasosos à temperatura de 650 °C, no momento da explosão.\n\nConsidere: \\(R=0{,}082\\ \\frac{\\mathrm{L}\\cdot\\mathrm{atm}}{\\mathrm{mol}\\cdot\\mathrm{K}}\\).\n\nA pressão, em atm, dentro do frasco, no momento da explosão, é mais próxima de",
+      "choices": [
+        "756",
+        "533",
+        "76",
+        "53",
+        "13"
+      ],
+      "solution": "**1. Converta as unidades**\n\\(V=100\\ \\mathrm{mL}=0{,}1\\ \\mathrm{L}\\).\n\\(T=650+273=923\\ \\mathrm{K}\\).\n\n**2. Use a equação dos gases**\n\\(P=\\frac{nRT}{V}=\\frac{0{,}1\\cdot0{,}082\\cdot923}{0{,}1}=75{,}686\\ \\mathrm{atm}\\).\n\nO valor mais próximo é **76 atm**.\n\n**Resposta: C.**",
+      "correctChoice": 2,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": null
+    },
+    {
+      "title": "Questão 148 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 23,
+      "statement": "O mastro de uma bandeira foi instalado perpendicularmente ao solo em uma região plana. Devido aos fortes ventos, três cabos de aço, de mesmo comprimento, serão instalados para dar sustentação ao mastro. Cada cabo de aço ficará perfeitamente esticado, com uma extremidade num ponto P do mastro, a uma altura h do solo, e a outra extremidade, num ponto no chão, como mostra a figura.\n\n![](/questions/2023/q148.png)\n\nOs cabos de aço formam um ângulo α com o plano do chão.\n\nPor medida de segurança, há apenas três opções de instalação:\n• opção I: h = 11 m e α = 30°;\n• opção II: h = 12 m e α = 45°;\n• opção III: h = 18 m e α = 60°.\n\nA opção a ser escolhida é aquela em que a medida dos cabos seja a menor possível.\n\nQual será a medida, em metro, de cada um dos cabos a serem instalados?",
+      "choices": [
+        "\\(\\frac{22\\sqrt3}{3}\\)",
+        "\\(11\\sqrt2\\)",
+        "\\(12\\sqrt2\\)",
+        "\\(12\\sqrt3\\)",
+        "22"
+      ],
+      "solution": "O cabo é a hipotenusa do triângulo retângulo. Assim:\n\\(\\sin\\alpha=\\frac{h}{c}\\), ou \\(c=\\frac{h}{\\sin\\alpha}\\).\n\n• Opção I: \\(c=11/(1/2)=22\\) m.\n• Opção II: \\(c=12/(\\sqrt2/2)=12\\sqrt2\\) m.\n• Opção III: \\(c=18/(\\sqrt3/2)=12\\sqrt3\\) m.\n\nComo \\(\\sqrt2<\\sqrt3\\) e \\((12\\sqrt2)^2=288<484=22^2\\), a opção II tem o menor cabo.\n\n**Resposta: C — 12√2 m.**",
+      "correctChoice": 2,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": "/questions/2023/q148.png"
+    },
+    {
+      "title": "Questão 149 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 19,
+      "statement": "Um controlador de voo dispõe de um instrumento que descreve a altitude de uma aeronave em voo, em função da distância em solo. Essa distância em solo é a medida na horizontal entre o ponto de origem do voo até o ponto que representa a projeção ortogonal da posição da aeronave, em voo, no solo. Essas duas grandezas são dadas numa mesma unidade de medida.\n\nA tela do instrumento representa proporcionalmente as dimensões reais das distâncias associadas ao voo. A figura apresenta a tela do instrumento depois de concluída a viagem de um avião, sendo a medida do lado de cada quadradinho da malha igual a 1 cm.\n\n![](/questions/2023/q149.png)\n\nEssa tela apresenta os dados de um voo cuja maior altitude alcançada foi de 5 km.\n\nA escala em que essa tela representa as medidas reais é",
+      "choices": [
+        "1 : 5",
+        "1 : 11",
+        "1 : 55",
+        "1 : 5000",
+        "1 : 500000"
+      ],
+      "solution": "A maior altitude está a **um quadradinho**, ou 1 cm, acima da linha do solo.\n\nNa realidade, essa altura é 5 km:\n\\(5\\ \\mathrm{km}=5000\\ \\mathrm{m}=500000\\ \\mathrm{cm}\\).\n\nA escala relaciona desenho e realidade na mesma unidade:\n\\(1:500000\\).\n\n**Resposta: E.**",
+      "correctChoice": 4,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": "/questions/2023/q149.png"
+    },
+    {
+      "title": "Questão 153 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 19,
+      "statement": "Um supermercado conta com cinco caixas disponíveis para pagamento. Foram instaladas telas que apresentam o tempo médio gasto por cada caixa para iniciar e finalizar o atendimento de cada cliente, e o número de pessoas presentes na fila de cada caixa em tempo real. Um cliente, na hora de passar sua compra, sabendo que cada um dos cinco caixas iniciará um novo atendimento naquele momento, pretende gastar o menor tempo possível de espera na fila. Ele observa que as telas apresentavam as informações a seguir.\n\n• Caixa I: atendimento 12 minutos, 5 pessoas na fila.\n• Caixa II: atendimento 6 minutos, 9 pessoas na fila.\n• Caixa III: atendimento 5 minutos, 6 pessoas na fila.\n• Caixa IV: atendimento 15 minutos, 2 pessoas na fila.\n• Caixa V: atendimento 9 minutos, 3 pessoas na fila.\n\nPara alcançar seu objetivo, o cliente deverá escolher o caixa",
+      "choices": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V"
+      ],
+      "solution": "O tempo de espera é o tempo de atendimento multiplicado pelo número de pessoas à frente:\n\n• I: \\(12\\cdot5=60\\) min.\n• II: \\(6\\cdot9=54\\) min.\n• III: \\(5\\cdot6=30\\) min.\n• IV: \\(15\\cdot2=30\\) min.\n• V: \\(9\\cdot3=27\\) min.\n\nO menor tempo de espera é **27 minutos, no caixa V**.\n\n**Resposta: E.**",
+      "correctChoice": 4,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": null
+    },
+    {
+      "title": "Questão 154 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 22,
+      "statement": "As figuras pintadas no quadro da sala de estar de uma residência representam as silhuetas de parte das torres de um castelo e, ao fundo, a de uma lua cheia. A lua foi pintada na forma de um círculo, e o telhado da torre mais alta, na forma de triângulo equilátero, foi pintado sobrepondo parte da lua. O centro da lua coincide com um dos vértices do telhado da torre mais alta.\n\n![](/questions/2023/q154.png)\n\nNesse quadro, a parte da lua escondida atrás da torre mais alta do castelo pode ser representada por um",
+      "choices": [
+        "Cone.",
+        "Setor circular.",
+        "Segmento circular.",
+        "Triângulo isósceles.",
+        "Arco de circunferência."
+      ],
+      "solution": "O vértice do telhado coincide com o centro do círculo. Os lados do telhado delimitam dois raios, e a borda da lua delimita um arco.\n\nA região limitada por dois raios e um arco é um **setor circular**.\n\nUm segmento circular seria delimitado por uma corda e um arco; um arco sozinho não é uma região de área.\n\n**Resposta: B.**",
+      "correctChoice": 1,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": "/questions/2023/q154.png"
+    },
+    {
+      "title": "Questão 174 - ENEM 2023",
+      "year": 2023,
+      "subjectId": 22,
+      "statement": "Uma pessoa comprou um ingresso para o cinema em cuja entrada está afixado um mapa com a representação bidimensional do posicionamento das poltronas, conforme a figura. Essa pessoa, após consultar o mapa, começou a subir uma das escadas e parou na posição indicada pela estrela, direcionada para o norte. Ela conferiu seu bilhete e observou que, para encontrar sua poltrona, deveria partir do ponto onde estava, continuar subindo a escada na direção norte por mais quatro fileiras e olhar à sua direita, e sua poltrona será a terceira.\n\n![](/questions/2023/q174.png)\n\nNesse cinema, as poltronas são identificadas por uma letra, que indica a fileira, e um número, que fornece a posição da poltrona na fileira, respectivamente.\n\nA poltrona dessa pessoa é a identificada por",
+      "choices": [
+        "A6.",
+        "H1.",
+        "H6.",
+        "I1.",
+        "I6."
+      ],
+      "solution": "**1. Encontre a fileira**\nA estrela está na fileira E. Quatro fileiras para o norte levam a F, G, H e **I**.\n\n**2. Encontre a posição**\nOlhando à direita a partir dessa escada, as poltronas são 4, 5 e **6**. A terceira é a de número 6.\n\n**Resposta: E — I6.**",
+      "correctChoice": 4,
+      "status": "active",
+      "difficulty": "medium",
+      "sourceUrl": "https://download.inep.gov.br/enem/provas_e_gabaritos/2023_PV_impresso_D2_CD7.pdf",
+      "imageUrl": "/questions/2023/q174.png"
+    }
+  ],
+  "archivedIds": [
+    860,
+    861,
+    862,
+    863,
+    869,
+    871,
+    875
+  ]
+}

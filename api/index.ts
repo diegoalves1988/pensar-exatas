@@ -180,10 +180,11 @@ async function ensureQuestionReportsTable(sql: any) {
 
 async function recalculateUserProgress(sql: any, userId: number) {
   const attempts = await sql`
-    SELECT "answeredCorrect"
-    FROM user_question_resolutions
-    WHERE "userId" = ${userId}
-    ORDER BY "createdAt" ASC, id ASC
+    SELECT r."answeredCorrect"
+    FROM user_question_resolutions r
+    JOIN questions q ON q.id = r."questionId"
+    WHERE r."userId" = ${userId} AND q.status = 'active'
+    ORDER BY r."createdAt" ASC, r.id ASC
   `;
 
   const questionsResolved = attempts.length;
@@ -516,7 +517,7 @@ app.get("/api/favorites", async (req: any, res: any) => {
       SELECT q.id, q.title, q."subjectId"
       FROM user_favorites uf
       JOIN questions q ON q.id = uf."questionId"
-      WHERE uf."userId" = ${user.id}
+      WHERE uf."userId" = ${user.id} AND q.status <> 'archived'
       ORDER BY uf.id DESC
     `;
     return res.json({ items: rows });
@@ -849,8 +850,8 @@ app.get("/api/questions", async (_req: any, res: any) => {
   try {
     const rows = await sql`
             SELECT id, "subjectId", title, statement, solution, year,
-             "sourceUrl", "imageUrl", choices, "correctChoice"
-      FROM questions ORDER BY id DESC LIMIT 1000
+             "sourceUrl", "imageUrl", choices, "correctChoice", status
+      FROM questions WHERE status <> 'archived' ORDER BY id DESC LIMIT 1000
     `;
     const sanitizedRows = rows.map((row: any) => ({
       ...row,
@@ -908,8 +909,15 @@ app.post("/api/questions/:id/resolve", async (req: any, res: any) => {
       return res.status(400).json({ error: "selectedChoice must be a non-negative number" });
     }
 
-    const answeredCorrect = req.body.answeredCorrect;
+    const [question] = await sql`SELECT status, choices, "correctChoice" FROM questions WHERE id = ${questionId}`;
+    if (!question) return res.status(404).json({ error: "question not found" });
+    if (question.status !== "active") return res.status(409).json({ error: "Esta questão não recebe respostas nem pontuação." });
     const selectedChoice = req.body.selectedChoice;
+    if (!Number.isInteger(selectedChoice) || !Array.isArray(question.choices) ||
+        selectedChoice >= question.choices.length || !Number.isInteger(question.correctChoice)) {
+      return res.status(400).json({ error: "invalid choice" });
+    }
+    const answeredCorrect = selectedChoice === question.correctChoice;
     await sql`
       INSERT INTO user_question_resolutions ("userId", "questionId", "selectedChoice", "answeredCorrect", "updatedAt")
       VALUES (${user.id}, ${questionId}, ${selectedChoice}, ${answeredCorrect}, NOW())

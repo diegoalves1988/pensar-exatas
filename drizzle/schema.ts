@@ -56,6 +56,7 @@ export const questions = pgTable("questions", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   subjectId: integer("subjectId").notNull(),
   title: varchar("title", { length: 255 }).notNull(),
+  status: text("status").$type<"active" | "annulled" | "archived">().default("active").notNull(),
   statement: text("statement").notNull(), // question text/enunciation
   solution: text("solution").notNull(), // detailed solution
   difficulty: difficultyEnum("difficulty").default("medium"),

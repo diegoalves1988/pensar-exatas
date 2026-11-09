@@ -426,7 +426,7 @@ export default function Questions() {
     setCurrentPage(1);
   }, [searchTerm, selectedSubject, selectedYear, simuladoQuestionIds]);
 
-  const allQuestions = questions ?? publicQuestions ?? [];
+  const allQuestions = (questions ?? publicQuestions ?? []).filter((q: any) => q.status !== "archived");
   const availableYears = Array.from(
     new Set(
       allQuestions
@@ -457,6 +457,7 @@ export default function Questions() {
 
   const generateSimulado = () => {
     const pool = allQuestions.filter((q: any) => {
+      if (q.status === "annulled") return false;
       const matchesSubjects = simuladoSubjectIds.length === 0 || simuladoSubjectIds.includes(Number(q.subjectId));
       const matchesYear = !simuladoYear || Number(q.year) === simuladoYear;
       return matchesSubjects && matchesYear;
@@ -491,6 +492,7 @@ export default function Questions() {
     const simuladoQs = allQuestions.filter((q: any) => simuladoQuestionIds.includes(Number(q.id)));
     const answerable = simuladoQs.filter(
       (q: any) =>
+        q.status !== "annulled" &&
         Array.isArray(q.choices) &&
         q.choices.length > 0 &&
         q.correctChoice !== null &&
@@ -808,10 +810,11 @@ export default function Questions() {
           </div>
         ) : (
           paginatedQuestions.map((question) => {
-            const effectiveAns = simuladoQuestionIds !== null ? simuladoAnswers[question.id] : answers[question.id];
+            const isAnnulled = question.status === "annulled";
+            const effectiveAns = isAnnulled ? undefined : simuladoQuestionIds !== null ? simuladoAnswers[question.id] : answers[question.id];
             const isLoadingAvulsoAnswer = !simuladoQuestionIds && isAuthenticated && hydratingResolutions && effectiveAns === undefined;
             const hasMultipleChoices = Boolean(question.choices && question.choices.length > 0);
-            const cannotRevealAnswer = hasMultipleChoices && (effectiveAns === undefined || (!simuladoQuestionIds && hydratingResolutions));
+            const cannotRevealAnswer = !isAnnulled && hasMultipleChoices && (effectiveAns === undefined || (!simuladoQuestionIds && hydratingResolutions));
             return (
             <div
               key={question.id}
@@ -848,6 +851,7 @@ export default function Questions() {
                       </div>
                     )}
                     <div className="flex gap-2 mt-3 flex-wrap">
+                      {isAnnulled && <span className="px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-900">Anulada pelo Inep</span>}
                       {question.year && (
                         <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                           ENEM {question.year}
@@ -886,7 +890,7 @@ export default function Questions() {
                       <h4 className="font-bold text-gray-900 mb-2">Enunciado</h4>
                       <div className="space-y-4">
                         {renderStatementWithInlineImages(sanitizeStatementArtifacts(String(question.statement || "")))}
-                        {resolveImageUrl(question.imageUrl) && (
+                        {resolveImageUrl(question.imageUrl) && !String(question.statement || "").includes(String(question.imageUrl)) && (
                           <img
                             src={resolveImageUrl(question.imageUrl) as string}
                             alt="Imagem principal da questão"
@@ -897,6 +901,7 @@ export default function Questions() {
                     </div>
 
                     {/* multiple-choice interaction */}
+                    {isAnnulled && <p className="rounded-lg bg-amber-50 p-3 text-amber-900">Esta questão foi anulada pelo Inep. Ela está disponível para consulta e não entra nos simulados nem na pontuação.</p>}
                     {question.choices && question.choices.length > 0 && (
                       <div className="space-y-2">
                         {(question.choices as ChoiceOption[]).map((opt: ChoiceOption, idx: number) => {
@@ -960,7 +965,7 @@ export default function Questions() {
                                   }
                                 }
                               }}
-                              disabled={isLoadingAvulsoAnswer}
+                              disabled={isAnnulled || isLoadingAvulsoAnswer}
                             >
                               <span className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-current flex items-center justify-center font-bold text-xs leading-none">
                                 {label}
@@ -992,7 +997,7 @@ export default function Questions() {
                         {isAuthenticated && isLoadingAvulsoAnswer && (
                           <p className="text-sm text-gray-500 mt-2 italic">Carregando resposta salva...</p>
                         )}
-                        {effectiveAns === undefined && (
+                        {!isAnnulled && effectiveAns === undefined && (
                           <p className="text-sm text-gray-400 mt-2 italic">
                             {isLoadingAvulsoAnswer
                               ? "Aguarde um instante para sincronizar seu histórico."
@@ -1003,7 +1008,7 @@ export default function Questions() {
                     )}
 
                     <div>
-                      {hasMultipleChoices && effectiveAns === undefined && (simuladoQuestionIds !== null || !hydratingResolutions) && (
+                      {!isAnnulled && hasMultipleChoices && effectiveAns === undefined && (simuladoQuestionIds !== null || !hydratingResolutions) && (
                         <p className="text-sm text-gray-400 mb-2 italic">Responda a questão para liberar a resposta.</p>
                       )}
                       <div className="flex flex-col sm:flex-row gap-2">

@@ -1,4 +1,4 @@
-import { eq, and, inArray } from "drizzle-orm";
+import { eq, ne, and, inArray } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { 
@@ -272,7 +272,7 @@ export async function deleteSubject(id: number) {
 export async function getQuestionsBySubject(subjectId: number): Promise<Question[]> {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(questions).where(eq(questions.subjectId, subjectId));
+  return db.select().from(questions).where(and(eq(questions.subjectId, subjectId), ne(questions.status, "archived")));
 }
 
 export async function getQuestionById(id: number): Promise<Question | undefined> {
@@ -285,7 +285,7 @@ export async function getQuestionById(id: number): Promise<Question | undefined>
 export async function getAllQuestions(): Promise<Question[]> {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(questions);
+  return db.select().from(questions).where(ne(questions.status, "archived"));
 }
 
 export async function createQuestion(data: any) {
@@ -406,7 +406,7 @@ export async function getUserFavorites(userId: number): Promise<Question[]> {
 
   if (questionIds.length === 0) return [];
 
-  return db.select().from(questions).where(inArray(questions.id, questionIds));
+  return db.select().from(questions).where(and(inArray(questions.id, questionIds), ne(questions.status, "archived")));
 }
 
 export async function addFavorite(userId: number, questionId: number) {
