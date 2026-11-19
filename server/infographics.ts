@@ -1,7 +1,7 @@
 import type { Express, Request, Response } from "express";
 import type { Sql } from "postgres";
 import { z } from "zod";
-import { disciplines, imageTypes, infographicTypes, maxInfographicBytes } from "../shared/infographics";
+import { disciplines, imageTypes, infographicTypes, maxInfographicBytes } from "../shared/infographics.js";
 
 const base64 = z.string().min(4).max(maxInfographicBytes * 4 / 3)
   .regex(/^[A-Za-z0-9+/]+={0,2}$/);

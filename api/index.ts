@@ -3,7 +3,7 @@
  */
 
 import express from "express";
-import { registerInfographicRoutes } from "../server/infographics";
+import { registerInfographicRoutes } from "../server/infographics.js";
 import postgres from "postgres";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
