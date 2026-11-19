@@ -5,6 +5,9 @@ import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { registerAdminRoutes } from "./admin";
+import { registerInfographicRoutes } from "../infographics";
+import { getSql } from "../db";
+import { sdk } from "./sdk";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -38,6 +41,7 @@ async function startServer() {
   registerOAuthRoutes(app);
   // Admin and utility routes
   registerAdminRoutes(app);
+  registerInfographicRoutes(app, getSql, req => sdk.authenticateRequest(req).catch(() => null));
   // tRPC API
   app.use(
     "/api/trpc",

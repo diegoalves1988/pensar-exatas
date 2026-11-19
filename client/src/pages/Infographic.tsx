@@ -1,48 +1,97 @@
+import { useQuery } from "@tanstack/react-query";
+import { FileText } from "lucide-react";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { disciplines, type InfographicItem } from "@shared/infographics";
+
+export const infographicsQueryKey = ["infographics"] as const;
+
 export default function Infographic() {
+  const [filter, setFilter] = useState<"Todos" | InfographicItem["discipline"]>("Todos");
+  const [selected, setSelected] = useState<InfographicItem | null>(null);
+  const library = useQuery({
+    queryKey: infographicsQueryKey,
+    queryFn: async ({ signal }): Promise<{ items: InfographicItem[] }> => {
+      const response = await fetch("/api/infographics", { signal });
+      if (!response.ok) throw new Error("Não foi possível carregar os infográficos.");
+      return response.json();
+    },
+  });
+  const items = library.data?.items.filter(item => filter === "Todos" || item.discipline === filter) ?? [];
+
   return (
-    <article className="mx-auto max-w-3xl space-y-6">
+    <section className="mx-auto max-w-5xl space-y-6">
       <h1 className="text-4xl font-bold text-gray-900">Infográficos</h1>
-      <section className="rounded-xl bg-white p-6 shadow-sm sm:p-8">
-        <h2 className="text-2xl font-bold text-gray-900">Teorema de Pitágoras</h2>
-        <div className="mt-6 grid items-center gap-6 sm:grid-cols-2">
-          <figure className="rounded-lg bg-purple-50 p-4 text-center text-purple-900">
-            <div aria-hidden="true" className="relative mx-auto my-8 h-24 w-32">
-              <div className="absolute inset-0 bg-purple-200 [clip-path:polygon(0_0,0_100%,100%_100%)]" />
-              <div className="absolute bottom-0 left-0 size-4 border-r-2 border-t-2 border-purple-700" />
-              <span className="absolute -left-5 top-1/2 -translate-y-1/2 font-semibold">3</span>
-              <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 font-semibold">4</span>
-              <span className="absolute left-1/2 top-5 font-semibold">5</span>
-            </div>
-            <figcaption>Catetos de 3 e 4 e hipotenusa de 5</figcaption>
-          </figure>
-          <div className="space-y-3 text-gray-700">
-            <p>Em um triângulo retângulo, o quadrado da hipotenusa é igual à soma dos quadrados dos catetos.</p>
-            <p className="text-xl font-semibold text-purple-800">3² + 4² = 9 + 16 = 25</p>
-            <p>Logo, a hipotenusa mede √25 = 5 unidades.</p>
-          </div>
+      <div role="group" aria-label="Filtrar por disciplina" className="flex flex-wrap gap-2">
+        {(["Todos", ...disciplines] as const).map(option => (
+          <button key={option} type="button" aria-pressed={filter === option}
+            onClick={() => setFilter(option)}
+            className="rounded-full border border-purple-200 bg-white px-4 py-2 font-medium text-purple-900 hover:bg-purple-50 aria-pressed:bg-purple-700 aria-pressed:text-white">
+            {option}
+          </button>
+        ))}
+      </div>
+      {library.isPending && <p role="status">Carregando infográficos…</p>}
+      {library.isError && (
+        <div role="alert">
+          Não foi possível carregar os infográficos.{" "}
+          <button type="button" onClick={() => library.refetch()} className="font-medium text-purple-700 underline">
+            Tentar novamente
+          </button>
         </div>
-      </section>
-      <section className="rounded-xl bg-white p-6 shadow-sm sm:p-8">
-        <h2 className="text-2xl font-bold text-gray-900">Rapidez média</h2>
-        <div className="mt-6 grid items-center gap-6 sm:grid-cols-2">
-          <figure className="rounded-lg bg-orange-50 p-4 text-orange-950">
-            <div aria-hidden="true" className="grid grid-cols-3 gap-1 text-center">
-              {[1, 2, 3].map(hour => (
-                <div key={hour}>
-                  <div className="rounded bg-orange-200 px-1 py-2 font-semibold">60 km</div>
-                  <div className="mt-1 text-sm">{hour}ª hora</div>
+      )}
+      {library.isSuccess && items.length === 0 && (
+        <p className="rounded-xl bg-white p-6 text-gray-600">
+          {filter === "Todos" ? "Nenhum infográfico publicado ainda." : `Nenhum infográfico de ${filter} publicado ainda.`}
+        </p>
+      )}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map(item => {
+          const base = `/api/infographics/${item.id}`;
+          const preview = item.hasCover ? `${base}/cover` : item.fileType !== "application/pdf" ? `${base}/file` : null;
+          return (
+            <button key={item.id} type="button" onClick={() => setSelected(item)}
+              className="overflow-hidden rounded-xl border bg-white text-left shadow-sm transition hover:border-purple-400 hover:shadow-md">
+              <div className="flex aspect-[4/3] items-center justify-center bg-purple-50">
+                {preview ? (
+                  <img src={preview} alt="" loading="lazy" className="h-full w-full object-contain" />
+                ) : (
+                  <span className="flex items-center gap-2 text-purple-800"><FileText aria-hidden="true" /> PDF</span>
+                )}
+              </div>
+              <div className="space-y-2 p-4">
+                <p className="text-sm font-medium text-gray-600">{item.discipline} · {item.topic}</p>
+                <h2 className="text-lg font-semibold text-gray-900">{item.title}</h2>
+                <span className="font-medium text-purple-700">Ver infográfico</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      <Dialog open={selected !== null} onOpenChange={open => { if (!open) setSelected(null); }}>
+        {selected && (
+          <DialogContent aria-describedby={undefined} className="max-h-[90dvh] overflow-auto sm:max-w-3xl">
+            <DialogTitle className="pr-6">{selected.title}</DialogTitle>
+            {selected.fileType === "application/pdf" ? (
+              <div className="space-y-4">
+                {selected.hasCover && <img src={`/api/infographics/${selected.id}/cover`} alt="" className="mx-auto max-h-[65dvh] object-contain" />}
+                <div className="flex flex-wrap gap-4">
+                  <a href={`/api/infographics/${selected.id}/file`} target="_blank" rel="noopener noreferrer"
+                    className="font-medium text-purple-700 underline">Abrir PDF em nova aba</a>
+                  <a href={`/api/infographics/${selected.id}/file`} download="infografico.pdf"
+                    className="font-medium text-purple-700 underline">Baixar PDF</a>
                 </div>
-              ))}
-            </div>
-            <figcaption className="mt-3 text-center">Em ritmo constante, 180 km em 3 horas</figcaption>
-          </figure>
-          <div className="space-y-3 text-gray-700">
-            <p>Para encontrar a rapidez média de um percurso, divida a distância total pelo tempo total.</p>
-            <p className="text-xl font-semibold text-orange-800">180 km ÷ 3 h = 60 km/h</p>
-            <p>O resultado corresponde a 60 quilômetros por hora, em média.</p>
-          </div>
-        </div>
-      </section>
-    </article>
+              </div>
+            ) : (
+              <img src={`/api/infographics/${selected.id}/file`} alt={selected.title} className="mx-auto w-full" />
+            )}
+          </DialogContent>
+        )}
+      </Dialog>
+    </section>
   );
 }

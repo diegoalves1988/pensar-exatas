@@ -1,9 +1,9 @@
 /**
- * Vercel Serverless Function Entry Point — self-contained, no server/ imports.
- * Uses only npm packages so Vercel can bundle reliably without path-alias issues.
+ * Vercel Serverless Function Entry Point. Local imports use relative paths.
  */
 
 import express from "express";
+import { registerInfographicRoutes } from "../server/infographics";
 import postgres from "postgres";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
@@ -369,6 +369,7 @@ async function sendVerificationEmail(to: string, code: string): Promise<void> {
 const app = express();
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
+registerInfographicRoutes(app, getDb, getSessionUser);
 
 
 app.get("/api/auth/providers", (_req: any, res: any) => {

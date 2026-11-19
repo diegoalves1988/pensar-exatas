@@ -26,7 +26,7 @@ import { ENV } from './_core/env';
 let _db: ReturnType<typeof drizzle> | null = null;
 let _client: ReturnType<typeof postgres> | null = null;
 
-export async function getDb() {
+function initializeDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
       // Ensure sslmode=require for Supabase if not provided
@@ -44,7 +44,16 @@ export async function getDb() {
       _client = null;
     }
   }
+}
+
+export async function getDb() {
+  initializeDb();
   return _db;
+}
+
+export function getSql() {
+  initializeDb();
+  return _client;
 }
 
 // ============= USER FUNCTIONS =============

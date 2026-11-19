@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import AdminInfographics from "@/components/AdminInfographics";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Plus, Edit2, Trash2, Search, X } from "lucide-react";
@@ -33,7 +34,7 @@ type AdminQuestionReport = {
 export default function AdminPanel() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<"questions" | "reports" | "lessons" | "subjects" | "portfolio">("questions");
+  const [activeTab, setActiveTab] = useState<"questions" | "reports" | "lessons" | "subjects" | "portfolio" | "infographics">("questions");
   const [subjects, setSubjects] = useState<SubjectItem[]>([]);
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
   const [reports, setReports] = useState<AdminQuestionReport[]>([]);
@@ -141,7 +142,7 @@ export default function AdminPanel() {
       {/* Header */}
       <div>
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Painel Admin</h1>
-        <p className="text-gray-600">Gerencie questões, aulas, matérias e seu portfólio</p>
+        <p className="text-gray-600">Gerencie questões, aulas, matérias, infográficos e seu portfólio</p>
       </div>
 
       {/* Tabs */}
@@ -185,6 +186,16 @@ export default function AdminPanel() {
           }`}
         >
           Matérias
+        </button>
+        <button
+          onClick={() => setActiveTab("infographics")}
+          className={`px-4 py-2 rounded-lg font-medium transition ${
+            activeTab === "infographics"
+              ? "bg-purple-500 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          Infográficos
         </button>
         <button
           onClick={() => setActiveTab("portfolio")}
@@ -420,6 +431,8 @@ export default function AdminPanel() {
             </div>
           </div>
         )}
+
+        {activeTab === "infographics" && <AdminInfographics />}
 
         {activeTab === "portfolio" && (
           <div className="space-y-6">
