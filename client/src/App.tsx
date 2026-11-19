@@ -7,6 +7,7 @@ import DashboardLayout from "./components/DashboardLayout";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Questions from "./pages/Questions";
+import Infographic from "./pages/Infographic";
 import Portfolio from "./pages/Portfolio";
 import PhysicsFormulas from "./pages/PhysicsFormulas";
 import AdminPanel from "./pages/AdminPanel";
@@ -30,6 +31,7 @@ function Router() {
   <Route path={"/perfil"} component={Profile} />
   <Route path={"/formulas"} component={PhysicsFormulas} />
       <Route path={"/questoes"} component={Questions} />
+      <Route path={"/infografico"} component={Infographic} />
       <Route path={"/portfolio"} component={Portfolio} />
   <Route path={"/admin/questions"} component={AdminQuestions} />
       <Route path={"/admin"} component={AdminPanel} />

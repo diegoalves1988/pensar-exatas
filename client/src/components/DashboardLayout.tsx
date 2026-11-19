@@ -29,12 +29,15 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-6">
             <Link href="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
               Início
             </Link>
             <Link href="/questoes" className="text-gray-700 hover:text-purple-600 font-medium transition">
               Questões
+            </Link>
+            <Link href="/infografico" className="text-gray-700 hover:text-purple-600 font-medium transition">
+              Infográfico
             </Link>
             {isAuthenticated && (
               <Link href="/perfil" className="text-gray-700 hover:text-purple-600 font-medium transition">
@@ -84,7 +87,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
 
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden text-gray-700 hover:text-purple-600"
+              className="lg:hidden text-gray-700 hover:text-purple-600"
             >
               {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -93,12 +96,15 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
 
         {/* Mobile Navigation */}
         {sidebarOpen && (
-          <div className="md:hidden bg-gray-50 border-t border-gray-200 p-4 space-y-2">
+          <div className="lg:hidden bg-gray-50 border-t border-gray-200 p-4 space-y-2">
             <Link href="/" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
               Início
             </Link>
             <Link href="/questoes" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
               Questões
+            </Link>
+            <Link href="/infografico" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
+              Infográfico
             </Link>
             {isAuthenticated && (
               <Link href="/perfil" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
