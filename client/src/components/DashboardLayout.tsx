@@ -37,7 +37,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
               Questões
             </Link>
             <Link href="/infografico" className="text-gray-700 hover:text-purple-600 font-medium transition">
-              Infográfico
+              Infográficos
             </Link>
             {isAuthenticated && (
               <Link href="/perfil" className="text-gray-700 hover:text-purple-600 font-medium transition">
@@ -104,7 +104,7 @@ export default function DashboardLayout({ children, title }: DashboardLayoutProp
               Questões
             </Link>
             <Link href="/infografico" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">
-              Infográfico
+              Infográficos
             </Link>
             {isAuthenticated && (
               <Link href="/perfil" className="block px-4 py-2 text-gray-700 hover:bg-purple-100 rounded transition">

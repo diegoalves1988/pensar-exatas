@@ -1,7 +1,7 @@
 export default function Infographic() {
   return (
     <article className="mx-auto max-w-3xl space-y-6">
-      <h1 className="text-4xl font-bold text-gray-900">Infográfico</h1>
+      <h1 className="text-4xl font-bold text-gray-900">Infográficos</h1>
       <section className="rounded-xl bg-white p-6 shadow-sm sm:p-8">
         <h2 className="text-2xl font-bold text-gray-900">Teorema de Pitágoras</h2>
         <div className="mt-6 grid items-center gap-6 sm:grid-cols-2">
