@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { infographicsQueryKey } from "@/pages/Infographic";
-import { disciplines, imageTypes, infographicTypes, maxInfographicBytes } from "@shared/infographics";
+import { disciplines, imageTypes, infographicTypes, maxInfographicBytes, physicsTopics } from "@shared/infographics";
 
 async function encodeFile(file: File) {
   const data = await new Promise<string>((resolve, reject) => {
@@ -17,6 +17,7 @@ async function encodeFile(file: File) {
 
 export default function AdminInfographics() {
   const queryClient = useQueryClient();
+  const [discipline, setDiscipline] = useState("");
   const [publishing, setPublishing] = useState(false);
   const [feedback, setFeedback] = useState<{ error: boolean; message: string }>();
 
@@ -55,6 +56,7 @@ export default function AdminInfographics() {
         throw new Error(body?.error || "Não foi possível publicar o infográfico.");
       }
       form.reset();
+      setDiscipline("");
       await queryClient.invalidateQueries({ queryKey: infographicsQueryKey });
       setFeedback({ error: false, message: "Infográfico publicado." });
     } catch (error) {
@@ -74,16 +76,28 @@ export default function AdminInfographics() {
             <Input name="title" required maxLength={160} />
           </label>
           <label className="block space-y-1">
-            <span>Tema</span>
-            <Input name="topic" required maxLength={100} />
-          </label>
-          <label className="block space-y-1">
             <span>Disciplina</span>
-            <select name="discipline" required defaultValue="" className="block w-full rounded-md border bg-white p-2">
+            <select name="discipline" required value={discipline}
+              onChange={event => setDiscipline(event.target.value)}
+              className="block w-full rounded-md border bg-white p-2">
               <option value="" disabled>Selecione a disciplina</option>
               {disciplines.map(discipline => <option key={discipline}>{discipline}</option>)}
             </select>
           </label>
+          {discipline === "Física" ? (
+            <label className="block space-y-1">
+              <span>Tópico de Física</span>
+              <select name="topic" required defaultValue="" className="block w-full rounded-md border bg-white p-2">
+                <option value="" disabled>Selecione o tópico</option>
+                {physicsTopics.map(topic => <option key={topic}>{topic}</option>)}
+              </select>
+            </label>
+          ) : (
+            <label className="block space-y-1">
+              <span>Tema</span>
+              <Input name="topic" required maxLength={100} />
+            </label>
+          )}
           <label className="block space-y-1">
             <span>Arquivo (PNG, JPEG, WebP ou PDF)</span>
             <Input name="file" type="file" required accept={infographicTypes.join(",")} aria-describedby="infographic-size" />

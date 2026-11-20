@@ -6,12 +6,13 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { disciplines, type InfographicItem } from "@shared/infographics";
+import { disciplines, normalizeInfographicTopic, physicsTopics, type InfographicItem } from "@shared/infographics";
 
 export const infographicsQueryKey = ["infographics"] as const;
 
 export default function Infographic() {
   const [filter, setFilter] = useState<"Todos" | InfographicItem["discipline"]>("Todos");
+  const [topic, setTopic] = useState<(typeof physicsTopics)[number] | null>(null);
   const [selected, setSelected] = useState<InfographicItem | null>(null);
   const library = useQuery({
     queryKey: infographicsQueryKey,
@@ -21,7 +22,11 @@ export default function Infographic() {
       return response.json();
     },
   });
-  const items = library.data?.items.filter(item => filter === "Todos" || item.discipline === filter) ?? [];
+  const items = library.data?.items.filter(item => {
+    if (filter === "Todos") return true;
+    if (item.discipline !== filter) return false;
+    return !topic || normalizeInfographicTopic(item.topic) === normalizeInfographicTopic(topic);
+  }) ?? [];
 
   return (
     <section className="mx-auto max-w-5xl space-y-6">
@@ -29,12 +34,29 @@ export default function Infographic() {
       <div role="group" aria-label="Filtrar por disciplina" className="flex flex-wrap gap-2">
         {(["Todos", ...disciplines] as const).map(option => (
           <button key={option} type="button" aria-pressed={filter === option}
-            onClick={() => setFilter(option)}
+            onClick={() => {
+              if (option !== filter) setTopic(null);
+              setFilter(option);
+            }}
             className="rounded-full border border-purple-200 bg-white px-4 py-2 font-medium text-purple-900 hover:bg-purple-50 aria-pressed:bg-purple-700 aria-pressed:text-white">
             {option}
           </button>
         ))}
       </div>
+      {filter === "Física" && (
+        <div className="space-y-2">
+          <h2 id="physics-topics" className="font-semibold text-gray-900">Tópicos de Física</h2>
+          <div role="group" aria-labelledby="physics-topics" className="flex flex-wrap gap-2">
+            {[null, ...physicsTopics].map(option => (
+              <button key={option ?? "all"} type="button" aria-pressed={topic === option}
+                onClick={() => setTopic(option)}
+                className="rounded-full border border-purple-200 bg-white px-3 py-1.5 text-sm font-medium text-purple-900 hover:bg-purple-50 aria-pressed:bg-purple-100 aria-pressed:border-purple-600">
+                {option ?? "Todos os tópicos"}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       {library.isPending && <p role="status">Carregando infográficos…</p>}
       {library.isError && (
         <div role="alert">
@@ -46,7 +68,7 @@ export default function Infographic() {
       )}
       {library.isSuccess && items.length === 0 && (
         <p className="rounded-xl bg-white p-6 text-gray-600">
-          {filter === "Todos" ? "Nenhum infográfico publicado ainda." : `Nenhum infográfico de ${filter} publicado ainda.`}
+          {filter === "Todos" ? "Nenhum infográfico publicado ainda." : `Nenhum infográfico de ${topic ?? filter} publicado ainda.`}
         </p>
       )}
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
