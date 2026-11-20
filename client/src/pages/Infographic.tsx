@@ -6,13 +6,13 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { disciplines, normalizeInfographicTopic, physicsTopics, type InfographicItem } from "@shared/infographics";
+import { disciplines, infographicTopics, normalizeInfographicTopic, type InfographicItem, type InfographicTopic } from "@shared/infographics";
 
 export const infographicsQueryKey = ["infographics"] as const;
 
 export default function Infographic() {
   const [filter, setFilter] = useState<"Todos" | InfographicItem["discipline"]>("Todos");
-  const [topic, setTopic] = useState<(typeof physicsTopics)[number] | null>(null);
+  const [topic, setTopic] = useState<InfographicTopic | null>(null);
   const [selected, setSelected] = useState<InfographicItem | null>(null);
   const library = useQuery({
     queryKey: infographicsQueryKey,
@@ -43,11 +43,11 @@ export default function Infographic() {
           </button>
         ))}
       </div>
-      {filter === "Física" && (
+      {filter !== "Todos" && (
         <div className="space-y-2">
-          <h2 id="physics-topics" className="font-semibold text-gray-900">Tópicos de Física</h2>
-          <div role="group" aria-labelledby="physics-topics" className="flex flex-wrap gap-2">
-            {[null, ...physicsTopics].map(option => (
+          <h2 id="discipline-topics" className="font-semibold text-gray-900">Tópicos de {filter}</h2>
+          <div role="group" aria-labelledby="discipline-topics" className="flex flex-wrap gap-2">
+            {[null, ...infographicTopics[filter]].map(option => (
               <button key={option ?? "all"} type="button" aria-pressed={topic === option}
                 onClick={() => setTopic(option)}
                 className="rounded-full border border-purple-200 bg-white px-3 py-1.5 text-sm font-medium text-purple-900 hover:bg-purple-50 aria-pressed:bg-purple-100 aria-pressed:border-purple-600">

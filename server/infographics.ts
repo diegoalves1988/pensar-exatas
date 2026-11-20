@@ -1,7 +1,7 @@
 import type { Express, Request, Response } from "express";
 import type { Sql } from "postgres";
 import { z } from "zod";
-import { disciplines, imageTypes, infographicTypes, maxInfographicBytes, physicsTopics } from "../shared/infographics.js";
+import { disciplines, imageTypes, infographicTypes, maxInfographicBytes, infographicTopics } from "../shared/infographics.js";
 
 const base64 = z.string().min(4).max(maxInfographicBytes * 4 / 3)
   .regex(/^[A-Za-z0-9+/]+={0,2}$/);
@@ -106,8 +106,8 @@ export function registerInfographicRoutes(
     if (!parsed.success) return res.status(400).json({ error: "Confira o título, o tema e os arquivos enviados." });
 
     const { title, topic, discipline, file, cover } = parsed.data;
-    if (discipline === "Física" && !physicsTopics.some(option => option === topic)) {
-      return res.status(400).json({ error: "Selecione um dos tópicos de Física." });
+    if (!infographicTopics[discipline].some(option => option === topic)) {
+      return res.status(400).json({ error: `Selecione um dos tópicos de ${discipline}.` });
     }
     const content = Buffer.from(file.data, "base64");
     const thumbnail = cover ? Buffer.from(cover.data, "base64") : null;
