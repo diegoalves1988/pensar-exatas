@@ -3,7 +3,7 @@ import AdminInfographics from "@/components/AdminInfographics";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Plus, Edit2, Trash2, Search, X } from "lucide-react";
-import { useLocation } from "wouter";
+import { useLocation, useSearch } from "wouter";
 
 type SubjectItem = {
   id: number;
@@ -34,7 +34,10 @@ type AdminQuestionReport = {
 export default function AdminPanel() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<"questions" | "reports" | "lessons" | "subjects" | "portfolio" | "infographics">("questions");
+  const search = useSearch();
+  const [activeTab, setActiveTab] = useState<"questions" | "reports" | "lessons" | "subjects" | "portfolio" | "infographics">(
+    () => new URLSearchParams(search).get("aba") === "infograficos" ? "infographics" : "questions",
+  );
   const [subjects, setSubjects] = useState<SubjectItem[]>([]);
   const [questions, setQuestions] = useState<AdminQuestion[]>([]);
   const [reports, setReports] = useState<AdminQuestionReport[]>([]);

@@ -95,8 +95,37 @@ export default function AdminInfographics() {
   return (
     <section className="rounded-xl bg-white p-6 shadow-sm">
       <h2 className="text-2xl font-bold">Gerenciar infográficos</h2>
-      <form onSubmit={publish} className="mt-5 max-w-xl space-y-4">
-        <fieldset disabled={publishing} className="space-y-4">
+      <div className="mt-5 space-y-3">
+        <h3 className="text-lg font-semibold">Infográficos publicados</h3>
+        {deleteFeedback && <p role={deleteFeedback.error ? "alert" : "status"}>{deleteFeedback.message}</p>}
+        {library.isPending && <p role="status">Carregando infográficos…</p>}
+        {library.isError && (
+          <div className="flex flex-wrap items-center gap-2">
+            <p role="alert">Não foi possível carregar a lista.</p>
+            <Button type="button" variant="outline" size="sm" onClick={() => library.refetch()}>Tentar novamente</Button>
+          </div>
+        )}
+        {library.isSuccess && library.data.items.length === 0 && <p>Nenhum infográfico publicado ainda.</p>}
+        {!!library.data?.items.length && (
+          <ul className="divide-y rounded-md border">
+            {library.data.items.map(item => (
+              <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 p-3">
+                <div className="min-w-0 break-words">
+                  <p className="font-medium">{item.title}</p>
+                  <p className="text-sm text-gray-600">{item.discipline} · {item.topic}</p>
+                </div>
+                <Button type="button" variant="destructive" size="sm" disabled={deletingId !== null}
+                  aria-label={`Excluir ${item.title}`} onClick={() => deleteInfographic(item)}>
+                  {deletingId === item.id ? "Excluindo…" : "Excluir"}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <form onSubmit={publish} className="mt-8 space-y-4 border-t pt-6">
+        <h3 className="text-lg font-semibold">Publicar novo infográfico</h3>
+        <fieldset disabled={publishing} className="max-w-xl space-y-4">
           <label className="block space-y-1">
             <span>Título</span>
             <Input name="title" required maxLength={160} />
@@ -132,34 +161,6 @@ export default function AdminInfographics() {
         </fieldset>
         {feedback && <p role={feedback.error ? "alert" : "status"}>{feedback.message}</p>}
       </form>
-      <div className="mt-8 space-y-3 border-t pt-6">
-        <h3 className="text-lg font-semibold">Infográficos publicados</h3>
-        {deleteFeedback && <p role={deleteFeedback.error ? "alert" : "status"}>{deleteFeedback.message}</p>}
-        {library.isPending && <p role="status">Carregando infográficos…</p>}
-        {library.isError && (
-          <div className="flex flex-wrap items-center gap-2">
-            <p role="alert">Não foi possível carregar a lista.</p>
-            <Button type="button" variant="outline" size="sm" onClick={() => library.refetch()}>Tentar novamente</Button>
-          </div>
-        )}
-        {library.isSuccess && library.data.items.length === 0 && <p>Nenhum infográfico publicado ainda.</p>}
-        {!!library.data?.items.length && (
-          <ul className="divide-y rounded-md border">
-            {library.data.items.map(item => (
-              <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 p-3">
-                <div className="min-w-0 break-words">
-                  <p className="font-medium">{item.title}</p>
-                  <p className="text-sm text-gray-600">{item.discipline} · {item.topic}</p>
-                </div>
-                <Button type="button" variant="destructive" size="sm" disabled={deletingId !== null}
-                  aria-label={`Excluir ${item.title}`} onClick={() => deleteInfographic(item)}>
-                  {deletingId === item.id ? "Excluindo…" : "Excluir"}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
     </section>
   );
 }
