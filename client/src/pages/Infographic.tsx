@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { FileText } from "lucide-react";
 import { useState } from "react";
 import {
@@ -8,20 +8,20 @@ import {
 } from "@/components/ui/dialog";
 import { disciplines, infographicTopics, normalizeInfographicTopic, type InfographicItem, type InfographicTopic } from "@shared/infographics";
 
-export const infographicsQueryKey = ["infographics"] as const;
+export const infographicsQuery = queryOptions({
+  queryKey: ["infographics"],
+  queryFn: async ({ signal }): Promise<{ items: InfographicItem[] }> => {
+    const response = await fetch("/api/infographics", { signal });
+    if (!response.ok) throw new Error("Não foi possível carregar os infográficos.");
+    return response.json();
+  },
+});
 
 export default function Infographic() {
   const [filter, setFilter] = useState<"Todos" | InfographicItem["discipline"]>("Todos");
   const [topic, setTopic] = useState<InfographicTopic | null>(null);
   const [selected, setSelected] = useState<InfographicItem | null>(null);
-  const library = useQuery({
-    queryKey: infographicsQueryKey,
-    queryFn: async ({ signal }): Promise<{ items: InfographicItem[] }> => {
-      const response = await fetch("/api/infographics", { signal });
-      if (!response.ok) throw new Error("Não foi possível carregar os infográficos.");
-      return response.json();
-    },
-  });
+  const library = useQuery(infographicsQuery);
   const items = library.data?.items.filter(item => {
     if (filter === "Todos") return true;
     if (item.discipline !== filter) return false;

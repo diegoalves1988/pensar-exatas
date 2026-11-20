@@ -124,4 +124,12 @@ export function registerInfographicRoutes(
     `;
     res.status(201).json({ id: item.id });
   }, true));
+
+  app.delete("/api/admin/infographics/:id", route(async (req, res, sql) => {
+    const id = z.uuid().safeParse(req.params.id);
+    if (!id.success) return res.status(400).json({ error: "Infográfico inválido." });
+
+    await sql`DELETE FROM public.infographics WHERE id = ${id.data}`;
+    res.sendStatus(204);
+  }, true));
 }

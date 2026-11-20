@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { infographicsQueryKey } from "@/pages/Infographic";
-import { disciplines, imageTypes, infographicTypes, maxInfographicBytes, infographicTopics, type InfographicDiscipline } from "@shared/infographics";
+import { infographicsQuery } from "@/pages/Infographic";
+import { disciplines, imageTypes, infographicTypes, maxInfographicBytes, infographicTopics, type InfographicDiscipline, type InfographicItem } from "@shared/infographics";
 
 async function encodeFile(file: File) {
   const data = await new Promise<string>((resolve, reject) => {
@@ -17,6 +17,9 @@ async function encodeFile(file: File) {
 
 export default function AdminInfographics() {
   const queryClient = useQueryClient();
+  const library = useQuery(infographicsQuery);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteFeedback, setDeleteFeedback] = useState<{ error: boolean; message: string }>();
   const [discipline, setDiscipline] = useState<InfographicDiscipline | "">("");
   const [publishing, setPublishing] = useState(false);
   const [feedback, setFeedback] = useState<{ error: boolean; message: string }>();
@@ -57,12 +60,35 @@ export default function AdminInfographics() {
       }
       form.reset();
       setDiscipline("");
-      await queryClient.invalidateQueries({ queryKey: infographicsQueryKey });
+      await queryClient.invalidateQueries({ queryKey: infographicsQuery.queryKey });
       setFeedback({ error: false, message: "Infográfico publicado." });
     } catch (error) {
       setFeedback({ error: true, message: error instanceof Error ? error.message : "Falha na publicação." });
     } finally {
       setPublishing(false);
+    }
+  }
+
+  async function deleteInfographic(item: InfographicItem) {
+    if (!window.confirm(`Excluir “${item.title}” da biblioteca? Esta ação é permanente.`)) return;
+    setDeletingId(item.id);
+    setDeleteFeedback(undefined);
+    try {
+      const response = await fetch(`/api/admin/infographics/${item.id}`, { method: "DELETE" });
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.error || "Não foi possível excluir o infográfico.");
+      }
+      await queryClient.cancelQueries({ queryKey: infographicsQuery.queryKey });
+      queryClient.setQueryData(infographicsQuery.queryKey, current => current && ({
+        items: current.items.filter(entry => entry.id !== item.id),
+      }));
+      await queryClient.invalidateQueries({ queryKey: infographicsQuery.queryKey });
+      setDeleteFeedback({ error: false, message: "Infográfico excluído." });
+    } catch (error) {
+      setDeleteFeedback({ error: true, message: error instanceof Error ? error.message : "Falha na exclusão." });
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -106,6 +132,34 @@ export default function AdminInfographics() {
         </fieldset>
         {feedback && <p role={feedback.error ? "alert" : "status"}>{feedback.message}</p>}
       </form>
+      <div className="mt-8 space-y-3 border-t pt-6">
+        <h3 className="text-lg font-semibold">Infográficos publicados</h3>
+        {deleteFeedback && <p role={deleteFeedback.error ? "alert" : "status"}>{deleteFeedback.message}</p>}
+        {library.isPending && <p role="status">Carregando infográficos…</p>}
+        {library.isError && (
+          <div className="flex flex-wrap items-center gap-2">
+            <p role="alert">Não foi possível carregar a lista.</p>
+            <Button type="button" variant="outline" size="sm" onClick={() => library.refetch()}>Tentar novamente</Button>
+          </div>
+        )}
+        {library.isSuccess && library.data.items.length === 0 && <p>Nenhum infográfico publicado ainda.</p>}
+        {!!library.data?.items.length && (
+          <ul className="divide-y rounded-md border">
+            {library.data.items.map(item => (
+              <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 p-3">
+                <div className="min-w-0 break-words">
+                  <p className="font-medium">{item.title}</p>
+                  <p className="text-sm text-gray-600">{item.discipline} · {item.topic}</p>
+                </div>
+                <Button type="button" variant="destructive" size="sm" disabled={deletingId !== null}
+                  aria-label={`Excluir ${item.title}`} onClick={() => deleteInfographic(item)}>
+                  {deletingId === item.id ? "Excluindo…" : "Excluir"}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </section>
   );
 }
